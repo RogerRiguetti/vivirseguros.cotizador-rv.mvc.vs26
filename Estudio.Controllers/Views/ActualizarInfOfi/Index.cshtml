@@ -1,0 +1,265 @@
+﻿
+@{
+    ViewBag.Title = "Actualiza Información";
+    ViewBag.Header = "Actualiza Información";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 530px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    hr {
+        margin-top: 0px !important;
+        margin-bottom: 10px !important;
+        border: 0;
+        border-top: 2px solid #eee;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+        input[type="radio"] + label span {
+            display: inline-block;
+            width: 27px;
+            height: 27px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+
+    .modal-content {
+        left: -40% !important;
+        width: 180% !important;
+    }
+
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .imgmod {
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+</style>
+
+
+<form id="myform">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Búsqueda
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group col-lg-3 col-md-3">
+                            <label class="form-label" for="txtNumOperacion">N° Operación</label>
+                            <input type="text" class="form-control" name="txtNumOperacion" id="txtNumOperacion" onkeypress="return soloNumeros(event);">
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3">
+                            <label class="form-label" for="txtCUSPP">CUSPP</label>
+                            <input type="text" maxlength="12" class="form-control" name="txtCUSPP" id="txtCUSPP" style="text-transform:uppercase;" onkeyup="return validanumyletras(event)">
+                        </div>
+                        <div class="form-group col-lg-1 col-md-1" style="margin-top:25px">
+                            <button type="button" class="btn btn-default btnDark" onclick="busqueda();"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                        </div>
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL-->
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Datos
+                    </div>
+                    <div class="panel-body" id="caja" style="display:none">
+                        <div style="display:none;" id="datosDiv">
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divOperacion">
+                                <label class="form-label" for="txtNumOperacion2">N° Operación</label>
+                                <input type="text" class="form-control" name="txtNumOperacion2" id="txtNumOperacion2">
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divCUSPP">
+                                <label class="form-label" for="txtCUSPP2">CUSPP</label>
+                                <input type="text" class="form-control" name="txtCUSPP2" id="txtCUSPP2">
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divDNI">
+                                <label class="form-label" for="txtDNI">DNI</label>
+                                <input type="text" class="form-control" name="txtDNI" id="txtDNI">
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divAsegurado">
+                                <label class="form-label" for="txtAsegurado">Asegurado</label>
+                                <input type="text" class="form-control" name="txtAsegurado" id="txtAsegurado">
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divFec">
+                                <label class="form-label" for="txtFecNac">Fecha de Nacimiento</label>
+                                <input type="text" class="form-control" name="txtFecNac" id="txtFecNac">
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divSexo">
+                                <label class="form-label" for="txtSexo">Sexo</label>
+                                <input type="text" class="form-control" name="txtSexo" id="txtSexo">
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divAFP">
+                                <label class="form-label" for="txtAFP">AFP</label>
+                                <input type="text" class="form-control" name="txtAFP" id="txtAFP">
+                            </div>
+                            <div class="form-group col-lg-4 col-md-6 col-sm-6" id="divCIC">
+                                <label class="form-label" for="txtCIC">CIC</label>
+                                <input type="text" class="form-control" name="txtCIC" id="txtCIC">
+                            </div>
+                        </div>
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL-->
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table-bordered table-striped table-hover" id="tblConsulta" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Moneda</th>
+                                        <th>Modalidad</th>
+                                        <th>Periodo Diferido</th>
+                                        <th>% Renta Temporal</th>
+                                        <th>Periodo Garantizado</th>
+                                        <th>% Renta Escalonada</th>
+                                        <th>Prima Única</th>
+                                        <th>Renta Temporal/1er Tramo</th>
+                                        <th>Pension Vitalicia/2nd Tramo</th>
+                                        <th>Tasa de Venta</th>
+                                        <th>TIR</th>
+                                        <th>Perdida</th>
+                                        <th>Comisión</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="RConsultaBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-xs-0 col-sm-0 col-md-0 col-lg-0"></div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Prima (S/.)</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtMTO_PRIUNIDIF" id="txtMTO_PRIUNIDIF" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Prima AFP (S/.)</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtMTO_CTAINDAFP" id="txtMTO_CTAINDAFP" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Pensión RT / 1er Tramo</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtMTO_RENTATMPAFP" id="txtMTO_RENTATMPAFP" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Pensión / 2do Tramo</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtMTO_PENSION" id="txtMTO_PENSION" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">TV</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtPRC_TASAVTA" id="txtPRC_TASAVTA" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">TIR</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtPRC_TASATIR" id="txtPRC_TASATIR" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Pérdida</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtPRC_PERCON" id="txtPRC_PERCON" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Estado de Cotización</label>
+                                <input type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtCOD_ESTCOT" id="txtCOD_ESTCOT" disabled></input>
+                            </div>
+                            @*<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="control-label col-xs-3 col-sm-3 col-md-3 col-lg-3">IND_FILTROCOTIZA</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtIND_FILTROCOTIZA" id="txtIND_FILTROCOTIZA" value="">
+                            </div>*@
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">SiCotiza/NoCotiza</label>
+                                <select type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtIND_FILTROCOTIZA" id="txtIND_FILTROCOTIZA">
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="S">Si</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Mejora/Excepción</label>
+                                <select type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtIND_MEJEX" id="txtIND_MEJEX">
+                                    <option value="">-- Seleccione --</option>
+                                    <option value="N">N</option>
+                                    <option value="M">M</option>
+                                    <option value="E">E</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Comisión</label>
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtComision" id="txtComision" value="" onkeyup="this.value = validaDecimales(this.value, 2);">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top:5px;margin-bottom:5px;">
+                                <input type="text" class="form-control input-md col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtTipCambio" id="txtTipCambio" value="" style="visibility:hidden">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Iconos de opciones*@
+                <div style="text-align: center">
+                    <button type="button" id="btnCargar" name="btnCargar" class="btn btn-default btnGreen" onclick="Validacion();" style="margin-right: 20px; width: 120px;"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Guardar</button>
+                    <button type="button" id="btnImprimir" name="btnImprimir" class="btn btn-default btnLight" onclick="limpiar('todo');" style="margin-right: 20px; width: 120px;"><i class="fa fa-times fa-lg" aria-hidden="true"></i> Cancelar</button>
+                </div>
+    <br/>
+</form>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+<meta http-equiv="Cache-Control" content="no-cache" />
+
+@Html.Hidden("urlBusqueda", Url.Action("busqueda", "ActualizarInfOfi"))
+@Html.Hidden("urlGuardar", Url.Action("Guardar", "ActualizarInfOfi"))
+@Html.Hidden("urlBusquedaMod", Url.Action("busquedaMod", "ActualizarInfOfi"))
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsActualizaInfOfi.js"></script>
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+}

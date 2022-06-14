@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://eisei.net.mx/webserviceoficiales" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://eisei.net.mx/webserviceoficiales" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://eisei.net.mx/webserviceoficiales">
+      <s:element name="calculoXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="__docXML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nombreArchivo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="calculoXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="calculoXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="calculoMejoras">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cuspp" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="num_oper" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="modalidad" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="moneda" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="aniosRT" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="porcentajeRVD" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="periodoGarantizado" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="derechoCrecer" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gratificacion" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="prc_Tv" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="prc_Com" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="calculoMejorasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="calculoMejorasResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="grabarExcepcionExterna">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cuspp" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="num_operacion" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="modalidad" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="moneda" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="aniosRT" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="porcentajeRVD" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="periodoGarantizado" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="derechoCrecer" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gratificacion" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="grabarExcepcionExternaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="grabarExcepcionExternaResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="guardarMejoras">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cuspp" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="num_oper" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="modalidad" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="moneda" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="aniosRT" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="porcentajeRVD" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="periodoGarantizado" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="derechoCrecer" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gratificacion" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="prc_Tv" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="prc_Com" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="guardarMejorasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guardarMejorasResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="calculoXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:calculoXML" />
+  </wsdl:message>
+  <wsdl:message name="calculoXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:calculoXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="calculoMejorasSoapIn">
+    <wsdl:part name="parameters" element="tns:calculoMejoras" />
+  </wsdl:message>
+  <wsdl:message name="calculoMejorasSoapOut">
+    <wsdl:part name="parameters" element="tns:calculoMejorasResponse" />
+  </wsdl:message>
+  <wsdl:message name="grabarExcepcionExternaSoapIn">
+    <wsdl:part name="parameters" element="tns:grabarExcepcionExterna" />
+  </wsdl:message>
+  <wsdl:message name="grabarExcepcionExternaSoapOut">
+    <wsdl:part name="parameters" element="tns:grabarExcepcionExternaResponse" />
+  </wsdl:message>
+  <wsdl:message name="guardarMejorasSoapIn">
+    <wsdl:part name="parameters" element="tns:guardarMejoras" />
+  </wsdl:message>
+  <wsdl:message name="guardarMejorasSoapOut">
+    <wsdl:part name="parameters" element="tns:guardarMejorasResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebServiceOficialesSoap">
+    <wsdl:operation name="calculoXML">
+      <wsdl:input message="tns:calculoXMLSoapIn" />
+      <wsdl:output message="tns:calculoXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="calculoMejoras">
+      <wsdl:input message="tns:calculoMejorasSoapIn" />
+      <wsdl:output message="tns:calculoMejorasSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="grabarExcepcionExterna">
+      <wsdl:input message="tns:grabarExcepcionExternaSoapIn" />
+      <wsdl:output message="tns:grabarExcepcionExternaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="guardarMejoras">
+      <wsdl:input message="tns:guardarMejorasSoapIn" />
+      <wsdl:output message="tns:guardarMejorasSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServiceOficialesSoap" type="tns:WebServiceOficialesSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="calculoXML">
+      <soap:operation soapAction="http://eisei.net.mx/webserviceoficiales/calculoXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="calculoMejoras">
+      <soap:operation soapAction="http://eisei.net.mx/webserviceoficiales/calculoMejoras" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="grabarExcepcionExterna">
+      <soap:operation soapAction="http://eisei.net.mx/webserviceoficiales/grabarExcepcionExterna" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="guardarMejoras">
+      <soap:operation soapAction="http://eisei.net.mx/webserviceoficiales/guardarMejoras" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServiceOficialesSoap12" type="tns:WebServiceOficialesSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="calculoXML">
+      <soap12:operation soapAction="http://eisei.net.mx/webserviceoficiales/calculoXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="calculoMejoras">
+      <soap12:operation soapAction="http://eisei.net.mx/webserviceoficiales/calculoMejoras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="grabarExcepcionExterna">
+      <soap12:operation soapAction="http://eisei.net.mx/webserviceoficiales/grabarExcepcionExterna" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="guardarMejoras">
+      <soap12:operation soapAction="http://eisei.net.mx/webserviceoficiales/guardarMejoras" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebServiceOficiales">
+    <wsdl:port name="WebServiceOficialesSoap" binding="tns:WebServiceOficialesSoap">
+      <soap:address location="http://localhost:28760/WebServiceOficiales.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServiceOficialesSoap12" binding="tns:WebServiceOficialesSoap12">
+      <soap12:address location="http://localhost:28760/WebServiceOficiales.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

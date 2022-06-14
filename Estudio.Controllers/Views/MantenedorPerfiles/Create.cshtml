@@ -1,0 +1,69 @@
+﻿@model Estudio.Repository.Core.Domain.gzUser
+@{
+    ViewBag.Title = "Crear";
+    ViewBag.Header = "Permisos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    List<SelectListItem> listSistemas = new List<SelectListItem>();
+    listSistemas.AddRange(new SelectList(new Estudio.Controllers.Controllers.MantenedorPerfilesController().ObtenerSistemas(), "IdSistema", "NombreSistema"));
+
+}
+<form id="myform">
+
+    <div class="row">
+
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6 col-sm-8">
+                    <label class="form-label" for='txtNamePantalla'>Nombre pantalla</label>
+                    <input id='txtNamePantalla' class='form-control' type="text" name="txtNamePantalla" maxlength="30" />
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-8">
+                    <label class="form-label" for='txtClave'>Clave del Permiso</label>
+                    <input id='txtClave' class='form-control' type="text" name="txtClave" maxlength="30" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6 col-sm-8">
+                    <label class="form-label" for="txtDescripcion">Descripción Detallada</label>
+                    <textarea id='txtDescripcion' class="form-control" type="text" name="txtDescripcion" maxlength="500"></textarea>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-8">
+                    <label class="form-label" for='txtClave'>Nodo Padre</label>
+                    <input id='txtNodoPadre' class='form-control' type="text" name="txtNodoPadre" maxlength="250" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-6 col-sm-8">
+                    <label class="form-label" for="txtSistema">Sistema</label>
+                    @Html.DropDownList("cmbxSistemas", listSistemas, "Seleccione un Sistema", new { @class = "form-control" })
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 text-left">
+            <a class="btn btn-vida btn-md" href="@Url.Action("Index", "MantenedorPerfiles")">Regresar <span class="fa fa-reply fa-lg"></span></a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 text-left">
+            <a class="btn btn-vida btn-md" id="btnSave">Guardar <span class="fa fa-save fa-lg"></span></a>
+        </div>
+    </div>
+
+</form>
+
+@Html.Hidden("url", Url.Action("Create", "MantenedorPerfiles"))
+@Html.Hidden("urlIndex", Url.Action("Index", "MantenedorPerfiles"))
+
+@section scriptsFooter
+    {
+    <script src="~/Resources/js/jsMantenedorPerfilesSave.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+}
+

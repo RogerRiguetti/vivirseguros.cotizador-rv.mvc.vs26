@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Estudio.Logic.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Estudio_Logic_xmlEnvio_AdmIntegracionCotizador" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://192.168.0.149:82/AdmIntegracionCotizador.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

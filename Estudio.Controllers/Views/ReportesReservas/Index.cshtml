@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Header = "Reportes de Reservas";
+    ViewBag.Title = "Reportes de Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+            <label class="form-label" for="txtFechaPeriodo">Fecha de búsqueda:</label>
+            <input type="text" class="form-control" name="txtFechaPeriodo" id="txtFechaPeriodo" placeholder="YYYYMM" maxlength="7" onKeyUp="this.value = formateafechaYearMes(this.value);">
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Generación de reportes
+    </div>
+    <div class="panel-body">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btnDark" id="btnFlujosPasivos" style="margin-right: 20px;">Flujos de Pasivos</button>
+            <button type="button" class="btn btn-default btnDark" id="btnTxtFlujosPasivosNuevos" style="margin-right: 20px;">Anexo 17 - Nuevas</</button>
+            <button type="button" class="btn btn-default btnDark" id="btnTxtFlujosPasivosAntiguos" style="margin-right: 20px;">Anexo 17 - Antigüas</button>
+            <button type="button" class="btn btn-default btnDark" id="btnTxtFlujosPasivosMixtos" style="margin-right: 20px;">Anexo 17 - Mixtas</button>
+            <button type="button" class="btn btn-default btnDark" id="btnResumenReservas" style="margin-right: 20px;">Resumen Reservas</button>
+            <button type="button" class="btn btn-default btnDark" id="btnResumenAdecuacion" style="margin-right: 20px;">Resumen Adecuación</button>
+            <button type="button" class="btn btn-default btnDark" id="btnBaseSbs" style="margin-right: 20px;">Base SBS</button>
+        </div>
+    </div>
+</div>
+
+
+@*<div id="wrapper">
+    <div id="page-wrapper" style="width: 90%;">
+
+        <div class="main-header">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h1 class="page-header">Reportes de Reservas</h1>
+            </div>
+        </div>
+
+        <div class="container col-sm-12 col-md-12 col-lg-12 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Generación de reportes
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col-lg-2" style="width: auto;">
+                            <label class="form-label">Fecha de búsqueda: </label>
+                        </div>
+                        <div class="col-lg-2">
+                            <input class="form-control" id="txtFechaPeriodo" maxlength="7" onKeyUp="this.value = formateafechaYearMes(this.value);" style="max-width: 170px;"/>
+                        </div>
+                    </div>
+
+                    <div class="row" style="">
+                        <div class="col-lg-2">
+                            <button class="btn btn-vida btn-md" id="btnFlujosPasivos" name="btnFlujosPasivos" style="width: 180px;height: 30px;background-color:#00cbdf;padding: 4px 12px;font-weight: 600;" onclick="">Flujos de Pasivos</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-vida btn-md" id="btnResumenReservas" name="btnResumenReservas" style="width: 180px;height: 30px;background-color:#00cbdf;padding: 4px 12px;font-weight: 600;" onclick="">Resumen Reservas</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-vida btn-md" id="btnResumenAdecuacion" name="btnResumenAdecuacion" style="width: 180px;height: 30px;background-color:#00cbdf;padding: 4px 12px;font-weight: 600;" onclick="">Resumen Adecuación</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-vida btn-md" id="btnBaseSbs" name="btnBaseSbs" style="width: 180px;height: 30px;background-color:#00cbdf;padding: 4px 12px;font-weight: 600;" onclick="">Base SBS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>*@
+
+@* Begins Hiddens *@
+@Html.Hidden("urlReporteFlujosPasivos", Url.Action("ExportarFlujosPasivos", "ReportesReservas"))
+@Html.Hidden("urlReporteSbs", Url.Action("ReporteSbs", "ReportesReservas"))
+@Html.Hidden("urlArchivoTxt", Url.Action("ArchivoTxt", "ReportesReservas"))
+@Html.Hidden("urlReporteResumenReservas", Url.Action("ReporteResumenReservas", "ReportesReservas"))
+@Html.Hidden("urlReporteResumenAdecuacion", Url.Action("ReporteResumenAdecuacion", "ReportesReservas"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/jsReportesReservas.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+}
+

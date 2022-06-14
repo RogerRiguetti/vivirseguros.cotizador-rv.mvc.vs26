@@ -1,0 +1,1024 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5039039-7B68-478B-BA08-862AE6F7D655}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Estudio.Controllers</RootNamespace>
+    <AssemblyName>Estudio.Controllers</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.4.2\lib\net45\ExcelDataReader.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.DataSet.3.4.2\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.4.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.4.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.4.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.4.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.4.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.4.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\GeneradorSolicitudes\GeneradorSolicitudes\Generador\bin\Debug\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="NPOI, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Estudio.Logic\bin\Debug\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="SpreadsheetLight, Version=3.4.8.0, Culture=neutral, PublicKeyToken=32fbb46dc1730c57, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpreadsheetLight.3.4.10\lib\net40\SpreadsheetLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.5.0\lib\net46\System.IO.Packaging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Assets\Identity.cs" />
+    <Compile Include="Assets\Utils.cs" />
+    <Compile Include="clXML.cs" />
+    <Compile Include="Controllers\MantenedorPerfilesController.cs" />
+    <Compile Include="Controllers\CotizacionController.cs" />
+    <Compile Include="Controllers\EstudioController.cs" />
+    <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\Oficiales\ActualizarInfOfiController.cs" />
+    <Compile Include="Controllers\Oficiales\CargaActivosController.cs" />
+    <Compile Include="Controllers\Oficiales\EliminarCargasController.cs" />
+    <Compile Include="Controllers\Oficiales\ExcepcionesController.cs" />
+    <Compile Include="Controllers\Oficiales\GastosSepelioController.cs" />
+    <Compile Include="Controllers\Oficiales\GenArMelerController.cs" />
+    <Compile Include="Controllers\Oficiales\LimiteCotizacionExtraOficialController.cs" />
+    <Compile Include="Controllers\Oficiales\LimiteCotizacionInicialController.cs" />
+    <Compile Include="Controllers\Oficiales\LimiteCotizacionMejoradaController.cs" />
+    <Compile Include="Controllers\Oficiales\ManCurvaTasasController.cs" />
+    <Compile Include="Controllers\Oficiales\ManCurvaTasasResController.cs" />
+    <Compile Include="Controllers\Oficiales\ManFecAceptacionCotizacionController.cs" />
+    <Compile Include="Controllers\Oficiales\MantenedorFiltrosController.cs" />
+    <Compile Include="Controllers\Oficiales\MantenedorIPCController.cs" />
+    <Compile Include="Controllers\Oficiales\MejorasController.cs" />
+    <Compile Include="Controllers\Oficiales\ParametroGastoController.cs" />
+    <Compile Include="Controllers\Oficiales\PeriodosController.cs" />
+    <Compile Include="Controllers\Oficiales\ProCarArchivoController.cs" />
+    <Compile Include="Controllers\Oficiales\ReporteGanadosController.cs" />
+    <Compile Include="Controllers\Oficiales\ReportesReservasController.cs" />
+    <Compile Include="Controllers\Oficiales\ReservasController.cs" />
+    <Compile Include="Controllers\Oficiales\SolicitudCotizacionController.cs" />
+    <Compile Include="Controllers\Oficiales\TasaAnclajeController.cs" />
+    <Compile Include="Controllers\Oficiales\TasaCalceController.cs" />
+    <Compile Include="Controllers\Oficiales\TasaRentabilidadController.cs" />
+    <Compile Include="Controllers\Oficiales\TasasMercadoController.cs" />
+    <Compile Include="Controllers\Oficiales\TasaVentaProController.cs" />
+    <Compile Include="Controllers\Oficiales\ValoresMMController.cs" />
+    <Compile Include="Controllers\Oficiales\ValoresMonedaController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EstudioModel.cs" />
+    <Compile Include="Models\ModuleModel.cs" />
+    <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Models\PermissionModel.cs" />
+    <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SystemModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\reports\CotizacionReporteC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CotizacionReporteC.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\MA_Rpt_EcoCuoMor.cs">
+      <DependentUpon>MA_Rpt_EcoCuoMor.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\MA_Rpt_EcoIPC.cs">
+      <DependentUpon>MA_Rpt_EcoIPC.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\MA_Rpt_EcoMoneda1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MA_Rpt_EcoMoneda.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\MA_Rpt_EcoMonedaMen.cs">
+      <DependentUpon>MA_Rpt_EcoMonedaMen.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\MA_Rpt_EcoTasasTM.cs">
+      <DependentUpon>MA_Rpt_EcoTasasTM.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\MA_Rpt_ParTasaAnclaje.cs">
+      <DependentUpon>MA_Rpt_ParTasaAnclaje.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_ErroresCargaCotizacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_ErroresCargaCotizacion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_Gastos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_Gastos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\Pt_Rpt_ParCotizacionIni1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pt_Rpt_ParCotizacionIni.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\Pt_Rpt_ParCotizacionMej1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pt_Rpt_ParCotizacionMej.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_PrcRentabilidad.cs">
+      <DependentUpon>PT_Rpt_PrcRentabilidad.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_ProCarResRes.cs">
+      <DependentUpon>PT_Rpt_ProCarResRes.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_ProCarSolRes.cs">
+      <DependentUpon>PT_Rpt_ProCarSolRes.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolGanadas.cs">
+      <DependentUpon>PT_Rpt_SolGanadas.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolOfeCal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_SolOfeCal.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolOfeNoEnv.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_SolOfeNoEnv.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolOtrosAFP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_SolOtrosAFP.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolOtrosCia.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_SolOtrosCia.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolPerdidasAFP.cs">
+      <DependentUpon>PT_Rpt_SolPerdidasAFP.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\PT_Rpt_SolPerdidasCia.cs">
+      <DependentUpon>PT_Rpt_SolPerdidasCia.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Resources\reports\TasaCalceReporte.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TasaCalceReporte.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Web References\prueba\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\wsXML\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Content Include="Content\bootstrap-multiselect.css" />
+    <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Resources\css\jquery-ui.css" />
+    <Content Include="Resources\css\Menu.css" />
+    <Content Include="Resources\css\StyleMenu.css" />
+    <Content Include="Resources\img\Calcula.png" />
+    <Content Include="Resources\img\Calculadas.png" />
+    <Content Include="Resources\img\calcular.png" />
+    <Content Include="Resources\img\cargar.png" />
+    <Content Include="Resources\img\circuloMenu.png" />
+    <Content Include="Resources\img\dropdown.png" />
+    <Content Include="Resources\img\Exportar.png" />
+    <Content Include="Resources\img\iconos\calculadas.png" />
+    <Content Include="Resources\img\iconos\check.png" />
+    <Content Include="Resources\img\iconos\cheked.png" />
+    <Content Include="Resources\img\iconos\enviar.png" />
+    <Content Include="Resources\img\iconos\error.png" />
+    <Content Include="Resources\img\iconos\exportar.png" />
+    <Content Include="Resources\img\iconos\exportarExcel.png" />
+    <Content Include="Resources\img\iconos\icono-aceptar.png" />
+    <Content Include="Resources\img\iconos\icono-calcular.png" />
+    <Content Include="Resources\img\iconos\icono-cancelar.png" />
+    <Content Include="Resources\img\iconos\icono-cargar.png" />
+    <Content Include="Resources\img\iconos\icono-estadistica-resumen.png" />
+    <Content Include="Resources\img\iconos\icono-regresar.png" />
+    <Content Include="Resources\img\iconos\icono-siguiente.png" />
+    <Content Include="Resources\img\iconos\no-calculadas.png" />
+    <Content Include="Resources\img\iconos\rombo1.png" />
+    <Content Include="Resources\img\iconos\rombo2.png" />
+    <Content Include="Resources\img\iconos\rombo3.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 1.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 10.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 11.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 2.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 3.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 4.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 5.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 6.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 7.png" />
+    <Content Include="Resources\img\iconos\vcRecurso 9.png" />
+    <Content Include="Resources\img\ImgVCamara.png" />
+    <Content Include="Resources\img\Logo vertical.png" />
+    <Content Include="Resources\img\LogoReporte.png" />
+    <Content Include="Resources\img\LogoS.png" />
+    <Content Include="Resources\img\logo_login.png" />
+    <Content Include="Resources\img\logo_menu.png" />
+    <Content Include="Resources\img\modal1.gif" />
+    <Content Include="Resources\img\modal2.gif" />
+    <Content Include="Resources\img\no calculadas.png" />
+    <Content Include="Resources\img\noCalculadas.png" />
+    <Content Include="Resources\img\salir.png" />
+    <Content Include="Resources\img\sort_desc.png" />
+    <Content Include="Resources\img\spinner.gif" />
+    <Content Include="Resources\img\vida-camara-logo-png.png" />
+    <Content Include="Resources\js\dataTables.fixedColumns.min.js" />
+    <Content Include="Resources\js\dataTables.scroller.min.js" />
+    <Content Include="Resources\js\jsActualizaInfOfi.js" />
+    <Content Include="Resources\js\jsAsignacionIntermediario.js" />
+    <Content Include="Resources\js\jsCalculoCotizacion.js" />
+    <Content Include="Resources\js\jsCargaActivos.js" />
+    <Content Include="Resources\js\jsEliminarCargas.js" />
+    <Content Include="Resources\js\jsExcepciones.js" />
+    <Content Include="Resources\js\jsGastosSepelio.js" />
+    <Content Include="Resources\js\jsGenArMeler.js" />
+    <Content Include="Resources\js\jsLimiteCotizacionExtraOficial.js" />
+    <Content Include="Resources\js\jsLimiteCotizacionInicial.js" />
+    <Content Include="Resources\js\jsLimiteCotizacionMejorada.js" />
+    <Content Include="Resources\js\jsManCurvaTasas.js" />
+    <Content Include="Resources\js\jsManCurvaTasasRes.js" />
+    <Content Include="Resources\js\jsMantenedorFiltros.js" />
+    <Content Include="Resources\js\jsManFecAceptacionCotizacion.js" />
+    <Content Include="Resources\js\jsMantenedorIPC.js" />
+    <Content Include="Resources\js\jsMejoras.js" />
+    <Content Include="Resources\js\jsMenu.js" />
+    <Content Include="Resources\js\jsParametroGasto.js" />
+    <Content Include="Resources\js\jsPeriodos.js" />
+    <Content Include="Resources\js\jsProCarArchivo.js" />
+    <Content Include="Resources\js\jsReporteGanados.js" />
+    <Content Include="Resources\js\jsReservas.js" />
+    <Content Include="Resources\js\jsSolicitudCotizacion.js" />
+    <Content Include="Resources\js\jsTasaAnclaje.js" />
+    <Content Include="Resources\js\jsTasaCalce.js" />
+    <Content Include="Resources\js\jsTasaRentabilidad.js" />
+    <Content Include="Resources\js\jsTasasMercado.js" />
+    <Content Include="Resources\js\jsTasaVentaPro.js" />
+    <Content Include="Resources\js\jsMantenedorPerfilesSave.js" />
+    <Content Include="Resources\js\jsMantenedorPerfiles.js" />
+    <Content Include="Resources\js\jsValoresMM.js" />
+    <Content Include="Resources\js\jsValoresMoneda.js" />
+    <Content Include="Resources\reports\CotizacionReporte.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CotizacionReporte.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Estudio.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\css\BarrasFondo.css" />
+    <Content Include="Resources\css\bootstrap-datepicker.min.css" />
+    <Content Include="Resources\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Resources\css\checked.gif" />
+    <Content Include="Resources\css\chosen-sprite%402x.png" />
+    <Content Include="Resources\css\chosen-sprite.png" />
+    <Content Include="Resources\css\chosen.min.css" />
+    <Content Include="Resources\css\cs-select.css" />
+    <Content Include="Resources\css\cs-skin-underline.css" />
+    <Content Include="Resources\css\dataTables.bootstrap.css" />
+    <Content Include="Resources\css\dataTables.jqueryui.css" />
+    <Content Include="Resources\css\dataTables.responsive.css" />
+    <Content Include="Resources\css\demo.css" />
+    <Content Include="Resources\css\DivButtonText.css" />
+    <Content Include="Resources\css\dropzones.css" />
+    <Content Include="Resources\css\font-awesome.min.css" />
+    <Content Include="Resources\css\jquery.dataTables.min.css" />
+    <Content Include="Resources\css\login3.css" />
+    <Content Include="Resources\css\metisMenu.min.css" />
+    <Content Include="Resources\css\normalize.css" />
+    <Content Include="Resources\css\organigrama.css" />
+    <Content Include="Resources\css\sb-admin-2.css" />
+    <Content Include="Resources\css\schTheme.css" />
+    <Content Include="Resources\css\smock.min.css" />
+    <Content Include="Resources\css\style.css" />
+    <Content Include="Resources\css\unchecked.gif" />
+    <Content Include="Resources\css\validate.css" />
+    <Content Include="Resources\fonts\codropsicons\codropsicons.svg" />
+    <Content Include="Resources\fonts\codropsicons\license.txt" />
+    <Content Include="Resources\fonts\fontawesome-webfont.svg" />
+    <Content Include="Resources\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Resources\fonts\icomoon\icomoon.svg" />
+    <Content Include="Resources\img\checked.gif" />
+    <Content Include="Resources\img\delete.ico" />
+    <Content Include="Resources\img\edit.ico" />
+    <Content Include="Resources\img\logo.png" />
+    <Content Include="Resources\img\search.ico" />
+    <Content Include="Resources\img\search.png" />
+    <Content Include="Resources\img\sodisa.jpg" />
+    <Content Include="Resources\img\sort_asc.png" />
+    <Content Include="Resources\img\sort_both.png" />
+    <Content Include="Resources\img\unchecked.gif" />
+    <Content Include="Resources\js\additional-methods.min.js" />
+    <Content Include="Resources\js\bootstrap-datepicker.min.js" />
+    <Content Include="Resources\js\chosen.jquery.min.js" />
+    <Content Include="Resources\js\classie.js" />
+    <Content Include="Resources\js\dataTables.bootstrap.min.js" />
+    <Content Include="Resources\js\dataTables.responsive.js" />
+    <Content Include="Resources\js\dropzones.js" />
+    <Content Include="Resources\js\Index.js" />
+    <Content Include="Resources\js\interact.min.js" />
+    <Content Include="Resources\js\jquery.dataTables.min.js" />
+    <Content Include="Resources\js\jquery.mask.min.js" />
+    <Content Include="Resources\js\jsCotizaciones.js" />
+    <Content Include="Resources\js\jsCotizacionSave.js" />
+    <Content Include="Resources\js\jsEstudio.js" />
+    <Content Include="Resources\js\jsModule.js" />
+    <Content Include="Resources\js\jsModuleSave.js" />
+    <Content Include="Resources\js\jsOrden.js" />
+    <Content Include="Resources\js\jsPage.js" />
+    <Content Include="Resources\js\jsPageConfigure.js" />
+    <Content Include="Resources\js\jsPageSave.js" />
+    <Content Include="Resources\js\jsPermission.js" />
+    <Content Include="Resources\js\jsPermissionSave.js" />
+    <Content Include="Resources\js\jsProyecto.js" />
+    <Content Include="Resources\js\jsPuesto.js" />
+    <Content Include="Resources\js\jsPuestoSave.js" />
+    <Content Include="Resources\js\jsRole.js" />
+    <Content Include="Resources\js\jsRoleConfigure.js" />
+    <Content Include="Resources\js\jsRoleSave.js" />
+    <Content Include="Resources\js\jsServicio.js" />
+    <Content Include="Resources\js\jsServicioSave.js" />
+    <Content Include="Resources\js\jsSystem.js" />
+    <Content Include="Resources\js\jsSystemSave.js" />
+    <Content Include="Resources\js\jsUser.js" />
+    <Content Include="Resources\js\jsUserConfigure.js" />
+    <Content Include="Resources\js\jsUserSave.js" />
+    <Content Include="Resources\js\metisMenu.min.js" />
+    <Content Include="Resources\js\sb-admin-2.js" />
+    <Content Include="Resources\js\selectFx.js" />
+    <Content Include="Resources\js\smock.min.js" />
+    <Content Include="Resources\js\System.js" />
+    <Content Include="Resources\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Scripts\additional-methods.min.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.js" />
+    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap-multiselect.min.js" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Resources\css\bootstrap-datepicker.min.css.map" />
+    <Content Include="Resources\css\bootstrap-datepicker3.min.css.map" />
+    <Content Include="Resources\fonts\codropsicons\codropsicons.eot" />
+    <Content Include="Resources\fonts\codropsicons\codropsicons.ttf" />
+    <Content Include="Resources\fonts\codropsicons\codropsicons.woff" />
+    <Content Include="Resources\fonts\fontawesome-webfont.eot" />
+    <Content Include="Resources\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Resources\fonts\fontawesome-webfont.woff" />
+    <Content Include="Resources\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Resources\fonts\FontAwesome.otf" />
+    <Content Include="Resources\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Resources\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Resources\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Resources\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Resources\fonts\icomoon\icomoon.eot" />
+    <Content Include="Resources\fonts\icomoon\icomoon.ttf" />
+    <Content Include="Resources\fonts\icomoon\icomoon.woff" />
+    <Content Include="Resources\less\animated.less" />
+    <Content Include="Resources\less\bordered-pulled.less" />
+    <Content Include="Resources\less\core.less" />
+    <Content Include="Resources\less\extras.less" />
+    <Content Include="Resources\less\fixed-width.less" />
+    <Content Include="Resources\less\font-awesome.less" />
+    <Content Include="Resources\less\icons.less" />
+    <Content Include="Resources\less\larger.less" />
+    <Content Include="Resources\less\list.less" />
+    <Content Include="Resources\less\mixins.less" />
+    <Content Include="Resources\less\path.less" />
+    <Content Include="Resources\less\rotated-flipped.less" />
+    <Content Include="Resources\less\screen-reader.less" />
+    <Content Include="Resources\less\spinning.less" />
+    <Content Include="Resources\less\stacked.less" />
+    <Content Include="Resources\less\variables.less" />
+    <Content Include="Resources\scss\_animated.scss" />
+    <Content Include="Resources\scss\_bordered-pulled.scss" />
+    <Content Include="Resources\scss\_core.scss" />
+    <Content Include="Resources\scss\_extras.scss" />
+    <Content Include="Resources\scss\_fixed-width.scss" />
+    <Content Include="Resources\scss\_icons.scss" />
+    <Content Include="Resources\scss\_larger.scss" />
+    <Content Include="Resources\scss\_list.scss" />
+    <Content Include="Resources\scss\_mixins.scss" />
+    <Content Include="Resources\scss\_path.scss" />
+    <Content Include="Resources\scss\_rotated-flipped.scss" />
+    <Content Include="Resources\scss\_screen-reader.scss" />
+    <Content Include="Resources\scss\_spinning.scss" />
+    <Content Include="Resources\scss\_stacked.scss" />
+    <Content Include="Resources\scss\_variables.scss" />
+    <Content Include="Resources\scss\font-awesome.scss" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Files\SolicitudesCalculadas_20181123-908.xls" />
+    <Content Include="Files\Base SBS.xlsx" />
+    <Content Include="Files\Calculo Reservas.xlsx" />
+    <Content Include="Files\Flujo de pasivos.xlsx" />
+    <Content Include="Files\Modelo Reporte Flujos Ant.xlsx" />
+    <Content Include="Files\Modelo Reporte Flujos.xlsx" />
+    <Content Include="Files\Reservas Migracion.xlsx" />
+    <Content Include="Files\Resumen_Adecuacion.xlsx" />
+    <Content Include="Files\Resumen_Reservas.xlsx" />
+    <None Include="Properties\PublishProfiles\AntonioQuezada.pubxml" />
+    <None Include="Properties\PublishProfiles\Publicacion Excel.pubxml" />
+    <None Include="Properties\PublishProfiles\PublicacionPepe.pubxml" />
+    <None Include="Properties\PublishProfiles\Publicación VCE.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Resources\handler\cargaCotizaciones23.xsd" />
+    <Content Include="Resources\handler\descargaSolicitudesEESS25.xsd" />
+    <Content Include="Resources\handler\descargaResultados22.xsd">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Resources\handler\descargaConfirmaciones20.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Scripts\bootstrap-select.min.js.map" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\_Layout.js" />
+    <Content Include="Views\ProCarArchivo\Index.cshtml" />
+    <Content Include="Views\Excepciones\Index.cshtml" />
+    <Content Include="Views\GenArMeler\Index.cshtml" />
+    <Content Include="Views\Mejoras\Index.cshtml" />
+    <Content Include="Views\ManFecAceptacionCotizacion\Index.cshtml" />
+    <Content Include="Views\Excepciones\ExcepcionesExternas.cshtml" />
+    <Content Include="Views\User\CambioClave.cshtml" />
+    <Content Include="Views\TasaVentaPro\Index.cshtml" />
+    <Content Include="Views\LimiteCotizacionExtraOficial\Index.cshtml" />
+    <Content Include="Views\MantenedorFiltros\Index.cshtml" />
+    <Content Include="Views\ManCurvaTasas\Index.cshtml" />
+    <Content Include="Views\EliminarCargas\Index.cshtml" />
+    <Content Include="Views\ActualizarInfOfi\Index.cshtml" />
+    <Content Include="Views\CargaActivos\Index.cshtml" />
+    <Content Include="Views\ManCurvaTasasRes\Index.cshtml" />
+    <Content Include="Views\Periodos\Index.cshtml" />
+    <Content Include="Views\Reservas\Index.cshtml" />
+    <Content Include="Views\ReporteGanados\Index.cshtml" />
+    <Content Include="Views\ReportesReservas\Index.cshtml" />
+    <Content Include="Views\MantenedorPerfiles\Create.cshtml" />
+    <Content Include="Views\MantenedorPerfiles\Edit.cshtml" />
+    <Content Include="Views\MantenedorPerfiles\Index.cshtml" />
+    <Content Include="Views\MantenedorPerfiles\Details.cshtml" />
+    <None Include="Web References\prueba\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\prueba\WebServiceOficiales.wsdl" />
+    <None Include="Web References\wsXML\AdmIntegracionCotizador.disco" />
+    <None Include="Web References\prueba\WebServiceOficiales.disco" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Cotizacion\Index.cshtml" />
+    <Content Include="Views\Cotizacion\Create.cshtml" />
+    <Content Include="Views\Cotizacion\Edit.cshtml" />
+    <Content Include="Views\TasaCalce\Index.cshtml" />
+    <Content Include="Views\TasaRentabilidad\Index.cshtml" />
+    <Content Include="Views\LimiteCotizacionInicial\Index.cshtml" />
+    <Content Include="Views\ParametroGasto\Index.cshtml" />
+    <Content Include="Views\LimiteCotizacionMejorada\Index.cshtml" />
+    <Content Include="Views\TasaAnclaje\Index.cshtml" />
+    <Content Include="Views\TasasMercado\Index.cshtml" />
+    <Content Include="Views\GastosSepelio\Index.cshtml" />
+    <Content Include="Views\MantenedorIPC\Index.cshtml" />
+    <Content Include="Views\ValoresMM\Index.cshtml" />
+    <Content Include="Views\ValoresMoneda\Index.cshtml" />
+    <Content Include="Views\SolicitudCotizacion\Index.cshtml" />
+    <Content Include="Views\SolicitudCotizacion\AsignacionIntermediario.cshtml" />
+    <Content Include="Views\SolicitudCotizacion\CalculoCotizacion.cshtml" />
+    <None Include="Web References\wsXML\AdmIntegracionCotizador.wsdl" />
+    <Content Include="Web References\wsXML\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Estudio\Index.cshtml" />
+    <Content Include="Views\Estudio\Login.cshtml" />
+    <Content Include="Views\Estudio\Menu.cshtml" />
+    <Content Include="Views\Module\Create.cshtml" />
+    <Content Include="Views\Module\Details.cshtml" />
+    <Content Include="Views\Module\Edit.cshtml" />
+    <Content Include="Views\Module\Index.cshtml" />
+    <Content Include="Views\Page\Configure.cshtml" />
+    <Content Include="Views\Page\Create.cshtml" />
+    <Content Include="Views\Page\Details.cshtml" />
+    <Content Include="Views\Page\Edit.cshtml" />
+    <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Views\Permission\Create.cshtml" />
+    <Content Include="Views\Permission\Details.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
+    <Content Include="Views\Permission\Index.cshtml" />
+    <Content Include="Views\Role\Configure.cshtml" />
+    <Content Include="Views\Role\Create.cshtml" />
+    <Content Include="Views\Role\Details.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\System\Create.cshtml" />
+    <Content Include="Views\System\Details.cshtml" />
+    <Content Include="Views\System\Edit.cshtml" />
+    <Content Include="Views\System\Index.cshtml" />
+    <Content Include="Views\User\Configure.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Estudio.Logic\Estudio.Logic.csproj">
+      <Project>{126b47d6-d44f-4276-854c-c2fdc190308b}</Project>
+      <Name>Estudio.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Estudio.Process\Estudio.Process.csproj">
+      <Project>{3BD4F8CA-D128-455D-872F-3853C5CF6C79}</Project>
+      <Name>Estudio.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Estudio.Repository\Estudio.Repository.csproj">
+      <Project>{6488fc62-e66d-4b6e-816b-75c2c6ad033b}</Project>
+      <Name>Estudio.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\reports\CotizacionReporte.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CotizacionReporte.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\reports\MA_Rpt_EcoCuoMor.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MA_Rpt_EcoCuoMor.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\MA_Rpt_EcoIPC.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MA_Rpt_EcoIPC.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\MA_Rpt_EcoMoneda.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MA_Rpt_EcoMoneda1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\MA_Rpt_EcoMonedaMen.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MA_Rpt_EcoMonedaMen.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\MA_Rpt_EcoTasasTM.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MA_Rpt_EcoTasasTM.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\MA_Rpt_ParTasaAnclaje.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MA_Rpt_ParTasaAnclaje.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_Gastos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_Gastos.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\Pt_Rpt_ParCotizacionIni.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Pt_Rpt_ParCotizacionIni1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\Pt_Rpt_ParCotizacionMej.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Pt_Rpt_ParCotizacionMej1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_PrcRentabilidad.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_PrcRentabilidad.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolOfeCal.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolOfeCal.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\TasaCalceReporte.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TasaCalceReporte.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\reports\CotizacionReporteC.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CotizacionReporteC.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_ErroresCargaCotizacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_ErroresCargaCotizacion.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_ProCarResRes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_ProCarResRes.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_ProCarSolRes.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_ProCarSolRes.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolGanadas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolGanadas.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolOfeNoEnv.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolOfeNoEnv.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolOtrosAFP.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolOtrosAFP.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolOtrosCia.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolOtrosCia.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolPerdidasAFP.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolPerdidasAFP.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\reports\PT_Rpt_SolPerdidasCia.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolPerdidasCia.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://192.168.0.149:82/AdmIntegracionCotizador.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\wsXML\</RelPath>
+      <UpdateFromURL>http://192.168.0.149:82/AdmIntegracionCotizador.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Estudio_Controllers_wsXML_AdmIntegracionCotizador</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost:28760/WebServiceOficiales.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\prueba\</RelPath>
+      <UpdateFromURL>http://localhost:28760/WebServiceOficiales.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Estudio_Controllers_prueba_WebServiceOficiales</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>36741</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1534/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:1874/" workingDir="" />
+          </servers>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

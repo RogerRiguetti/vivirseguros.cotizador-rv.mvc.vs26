@@ -1,0 +1,537 @@
+﻿@model  Estudio.Repository.Core.Domain.Cotizacion
+@{
+    ViewBag.Title = "Modificar";
+    ViewBag.Header = "MODIFICACIÓN DE COTIZACIONES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int userId = Convert.ToInt32(this.Session["UserId"].ToString());
+    string rol = this.Session["Name"].ToString();
+    var res = new Estudio.Controllers.Controllers.UserController().GetPermissions(userId);
+    Estudio.Logic.Identity identity = new Estudio.Logic.Identity();
+    identity = (Estudio.Logic.Identity)res.Object;
+}
+
+<style>
+    .center {
+        margin-top: 50px;
+    }
+
+    .modal-header {
+        padding-bottom: 5px;
+    }
+
+    .modal-footer .btn-group button {
+        height: 40px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border: none;
+        border-right: 1px solid #ddd;
+    }
+
+    .modal-footer .btn-group:last-child > button {
+        border-right: 0;
+        margin-left: 5px;
+    }
+
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    /*img {
+        margin-left: 40%;
+        margin-top: 10%;
+    }*/
+    /*.requiredClass {
+    position: inherit;
+    }*/
+</style>
+
+<form id="myform">
+    <div class="panel-group" id="accordionCot">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="btnCollapse" id="pestanaBuscar" data-toggle="collapse" data-parent="#accordionCot" href="#collapseBus">Busqueda</a>
+        </div>
+        <div id="collapseBus" class="panel-collapse collapse ">
+            <div class="panel-body">
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="cmbxTiposDocumentoBus">Tipo Documento</label>
+                    @Html.DropDownList("cmbxTiposDocumentoBus", (IEnumerable<SelectListItem>)ViewBag.TiposDocumento, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTiposDocumentoBus" })
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtDocumentoBus">Núm. Documento</label>
+                    <input type="text" id="txtDocumentoBus" maxlength="12" class="form-control" name="txtDocumentoBus" onkeyup="pulsar(event)" />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtCuspp">CUSPP</label>
+                    <input type="text" id="txtCuspp" maxlength="15" class="form-control" name="txtCuspp" onkeyup="pulsar(event)" />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6" style="margin-top:25px">
+                    <a class="btn btn-vida btn-md" id="btnBuscarAsegurado" name="btnBuscarAsegurado">Buscar <span class="fa fa-search"></span></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="btnCollapse" data-toggle="collapse" data-parent="#accordionCot" href="#collapseCab">Asegurado</a>
+        </div>
+        <div id="collapseCab" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="cmbxTiposDocumentoCot">Tipo Documento</label>
+                    @Html.DropDownList("cmbxTiposDocumentoCot", (IEnumerable<SelectListItem>)ViewBag.TiposDocumento, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTiposDocumentoCot" })
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtDocumentoCot">Núm. Documento</label>
+                    <input type="text" id="txtDocumentoCot" maxlength="12" class="form-control" name="txtDocumentoCot" onkeyup="pulsar(event)" />
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtNombresCot">Nombres</label>
+                    <input type="text" id="txtNombresCot" maxlength="50" class="form-control" name="txtNombresCot" onkeypress="return soloLetras(event)" disabled />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtApellidoPaternoCot">Apellido Paterno</label>
+                    <input type="text" id="txtApellidoPaternoCot" maxlength="30" class="form-control" name="txtApellidoPaternoCot" onkeypress="return soloLetras(event)" disabled />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtApellidoMaternoCot">Apellido Materno</label>
+                    <input type="text" id="txtApellidoMaternoCot" maxlength="30" class="form-control" name="txtApellidoMaternoCot" onkeypress="return soloLetras(event)" disabled />
+                </div>
+                <div class="clearfix"></div>
+                
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtCUSPPCot">CUSPP</label>
+                    <input type="text" id="txtCUSPPCot" maxlength="20" class="form-control" name="txtCUSPPCot" disabled onkeypress="return validanumyletras(event)" />
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="cmbxAsesoresCot">Asesor</label>
+                    @Html.DropDownList("cmbxAsesoresCot", (IEnumerable<SelectListItem>)ViewBag.Asesores, "-- Seleccione --", new { @class = "form-control", @name = "cmbxAsesoresCot", @disabled = true })
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="cmbxDepartamentosCot">Departamento</label>
+                                @Html.DropDownList("cmbxDepartamentosCot", (IEnumerable<SelectListItem>)ViewBag.Departamentos, "-- Seleccione --", new { @class = "form-control", @name = "cmbxDepartamentosCot", @disabled = true })
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="cmbxProvinciasCot">Provincia</label>
+                                @Html.DropDownList("cmbxProvinciasCot", (IEnumerable<SelectListItem>)ViewBag.Provincias, "-- Seleccione --", new { @class = "form-control", @name = "cmbxProvinciasCot", @disabled = true })
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="cmbxDistritosCot">Distrito</label>
+                                @Html.DropDownList("cmbxDistritosCot", (IEnumerable<SelectListItem>)ViewBag.Distritos, "-- Seleccione --", new { @class = "form-control", @name = "cmbxDistritosCot", @disabled = true })
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="cmbxSexoCot">Sexo</label>
+                                @Html.DropDownList("cmbxSexoCot", (IEnumerable<SelectListItem>)ViewBag.Sexo, "-- Seleccione --", new { @class = "form-control", @name = "cmbxSexoCot", @disabled = true })
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="txtFechaNacimientoCot">Nacimiento</label>
+                                <input type="text" id="txtFechaNacimientoCot" maxlength="10" class="form-control" name="txtFechaNacimientoCot" onKeyUp="this.value=formateafecha(this.value);" disabled />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="cmbxAfpCot">AFP</label>
+                                @Html.DropDownList("cmbxAfpCot", (IEnumerable<SelectListItem>)ViewBag.Afp, "-- Seleccione --", new { @class = "form-control", @name = "cmbxAfpCot", @disabled = true })
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="cmbxPensionesCot">AFP</label>
+                                @if (identity.CotizacionEdit) {
+                                    @Html.DropDownList("cmbxPensionesCot", (IEnumerable<SelectListItem>)ViewBag.Pensiones, "-- Seleccione --", new { @class = "form-control", @name = "cmbxPensionesCot" })
+                                } else {
+                                    @Html.DropDownList("cmbxPensionesCot", (IEnumerable<SelectListItem>)ViewBag.Pensiones, "-- Seleccione --", new { @class = "form-control", @name = "cmbxPensionesCot", @disabled = true })
+                                }
+                            </div>
+
+                            <input type="hidden" class="form-control" id="txtFechaFallecimientoCot" placeholder="Fecha Fallecimiento" name="txtFechaFallecimientoCot" onKeyUp="this.value=formateafecha(this.value);" tabindex="10" disabled>
+                            <input type="hidden" class="form-control" id="txtFechaInvalidezCot" placeholder="Fecha Invalidez" name="txtFechaInvalidezCot" onKeyUp="this.value=formateafecha(this.value);" disabled tabindex="9">
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="txtCICCot">Cic</label>
+                                @if (identity.CotizacionEdit) {
+                                    <input type="text" id="txtCICCot" maxlength="21" class="form-control" name="txtCICCot" onkeypress="return filterFloat(event,this,3);" />
+                                } else {
+                                    <input type="text" id="txtCICCot" maxlength="21" class="form-control" name="txtCICCot" onkeypress="return filterFloat(event,this,3);" disabled />
+                                }
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="txtDevSolCot">Dev.Sol</label>
+                                @if (identity.CotizacionEdit){
+                                    <input type="text" id="txtDevSolCot" maxlength="10" class="form-control" name="txtDevSolCot" onKeyUp="this.value=formateafecha(this.value);" />
+                                } else {
+                                    <input type="text" id="txtDevSolCot" maxlength="10" class="form-control" name="txtDevSolCot" onKeyUp="this.value=formateafecha(this.value);" disabled />
+                                }
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="txtGastoSepelioCot">Gasto Sepelio</label>
+                                <input type="text" id="txtGastoSepelioCot" maxlength="21" class="form-control" name="txtGastoSepelioCot" onkeypress="return filterFloat(event,this,2);" disabled />
+                            </div>
+
+                            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                                <label class="form-label" for="txtTipoCambio">Tipo Cambio</label>
+                                <input type="text" id="txtTipoCambio" maxlength="6" class="form-control" name="txtTipoCambio" onkeypress="return filterFloat(event,this,3);" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="btnCollapse" id="pestanaBeneficiario" data-toggle="collapse" data-parent="#accordionCot" href="#collapseBen">Beneficiario</a>
+        </div>
+        <div id="collapseBen" class="panel-collapse collapse">
+            <div class="panel-body">
+                @if (identity.CotizacionEdit)
+                {
+                    <div>
+                        <button class="btn btn-vida" id="btnAgregarBenTitular" style="display:none">Agregar Titular</button>
+                        <button data-toggle="modal" data-target="#ModalBen" class="btn btn-vida" id="btnAgregarBen">Agregar</button>
+                        <button class="btn btn-danger" id="btnEliminarBen" style="float:right;">Borrar Todo</button>
+                    </div>
+                    <br />
+                }
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="tablaBen">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Parentesco</th>
+                                <th>Tipo Documento</th>
+                                <th>Núm. Documento</th>
+                                <th>Fec. Nacimiento</th>
+                                <th>Sexo</th>
+                                <th>Situación de Invalidez</th>
+                                <th>Porcentaje Pensión</th>
+                                <th class="td-actions"></th>
+                                <th class="td-actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="btnCollapse" data-toggle="collapse" data-parent="#accordionCot" href="#collapseCot">Modalidades</a>
+        </div>
+        <div id="collapseCot" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div>
+                    @if (identity.CotizacionEdit)
+                    {
+                        <div class="form-group col-lg-3 col-md-3 col-sm-6">
+                            <label class="form-label" for="cmbxPaquetesMod">Paquetes: </label>
+                            @Html.DropDownList("cmbxPaquetesMod", (IEnumerable<SelectListItem>)ViewBag.Paquetes, "-- Seleccione --", new { @class = "form-control" })
+                        </div>
+                        <div class="clearfix"></div>
+                        <input type="button" id="btnAgregarPaqMod" class="btn btn-vida" value="Agregar Paquete" name="btnAgregarPaqMod" />
+                        <button id="btnAgregarMod" data-toggle="modal" data-target="#ModalDet" class="btn btn-vida" name="btnAgregarMod">Agregar Modalidad</button>
+                            <button class="btn btn-danger" id="btnEliminarMod" style="float:right;">Borrar Todo</button>
+                            <a class="btn btn-vida btn-md" id="btnCalcularPension" name="btnCalcularPension">Calcular Pensión</a>
+
+                    }
+                    <button class="btn btn-vida btn-md" id="btnReporteT" name="btnReporteT">Reporte con Tasa</button>
+                    <button class="btn btn-vida btn-md" id="btnReporte" name="btnReporte">Reporte sin Tasa</button>
+                </div>
+                <br />
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="tablaMod">
+                        <thead>
+                            <tr>
+                                <th style="width:auto">Item</th>
+                                <th style="width:auto">Tipo Moneda</th>
+                                <th style="width:auto">Tipo Renta</th>
+                                <th style="width:auto">Per.Dif.</th>
+                                <th style="width:auto">Modal.</th>
+                                <th style="width:auto">Per.Gar.</th>
+                                <th style="width:auto">%Rent.Tmp</th>
+                                <th style="width:auto">Gratif.</th>
+                                <th style="width:auto">Primer Tramo</th>
+                                <th style="width:auto">Segundo Tramo</th>
+                                <th style="width:auto" class="td-actions"></th>
+                                <th style="width:auto" class="td-actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="col-xs-6 text-left">
+            <a class="btn btn-vida btn-md" id="btnRegresar">Regresar <span class="fa fa-reply"></span></a>
+        </div>
+    </div>
+
+    </div>
+</form>
+
+<div class="modal fade" id="ModalBen" tabindex="-1" role="dialog" data-backdrop="static" onkeyup="validaTeclaEscBen(event)">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="lineModalLabel">Registro de Beneficiarios</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formBen">
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtNombresBen">Nombres</label>
+                            <input class="form-control" id="txtNombresBen" placeholder="Nombres" name="txtNombresBen" onkeypress="return soloLetras(event)" tabindex="1" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtApellidosBen">Apellidos</label>
+                            <input class="form-control" id="txtApellidosBen" placeholder="Apellidos" name="txtApellidosBen" onkeypress="return soloLetras(event)" tabindex="2" onkeyup="javascript:this.value=this.value.toUpperCase();">
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxParentescosBen">Parentesco</label>
+                            @Html.DropDownList("cmbxParentescosBen", (IEnumerable<SelectListItem>)ViewBag.Parentescos, "-- Seleccione --", new { @class = "form-control", @nmae = "cmbxParentescosBen", @tabindex = "3" })
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtFechaNacimientoBen">Fecha Nacimiento</label>
+                            <input class="form-control" id="txtFechaNacimientoBen" placeholder="Fecha Nacimiento" name="txtFechaNacimientoBen" onKeyUp="this.value=formateafecha(this.value);" tabindex="4">
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxTiposDocumentoBen">Tipo Documento</label>
+                            @Html.DropDownList("cmbxTiposDocumentoBen", (IEnumerable<SelectListItem>)ViewBag.TiposDocumento, "-- Seleccione --", new { @class = "form-control", @nmae = "cmbxTiposDocumentoBen", @tabindex = "5" })
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtNumDocumentoBen">Núm. Documento</label>
+                            <input class="form-control" id="txtNumDocumentoBen" placeholder="Número Doc" name="txtNumDocumentoBen" maxlength="12" tabindex="6">
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxSexoBen">Sexo</label>
+                            @Html.DropDownList("cmbxSexoBen", (IEnumerable<SelectListItem>)ViewBag.Sexo, "-- Seleccione --", new { @class = "form-control", @name = "cmbxSexoBen", tabindex = "7" })
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxSitInvalidezBen">Situación Invalidez</label>
+                            @Html.DropDownList("cmbxSitInvalidezBen", (IEnumerable<SelectListItem>)ViewBag.SituacionesInvalidez, "-- Seleccione --", new { @class = "form-control", @name = "cmbxSitInvalidezBen", @tabindex = "8" })
+                        </div>
+                    </div>
+                 </form>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align: center">
+                    <button type="button" id="saveImage" class="btn btn-default btnLight" onclick="javascript: fn_agregarBen();" data-action="save" style="margin-right: 20px; width: 120px">Aceptar</button>
+                    <button type="button" class="btn btn-default btnDark" data-dismiss="modal" onclick="javascript: limpiarBen();" style="margin-right: 20px;  width: 120px">Cerrar</button>
+                </div>
+                @*<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" id="saveImage" class="btn btn-default btn-hover-green" onclick="javascript: fn_agregarBen();" data-action="save" role="button">Aceptar</button>
+                    </div>
+                    <div class="btn-group btn-delete hidden" role="group">
+                        <button type="button" id="delImage" class="btn btn-default btn-hover-red" data-dismiss="modal" role="button">Delete</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" role="button" onclick="javascript: limpiarBen();">Cerrar</button>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDet" tabindex="-1" role="dialog" data-backdrop="static" onkeyup="validaTeclaEscMod(event)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="lineModalLabel">Registro Modalidades</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="formMod">
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxMonedasMod">Moneda</label>
+                            @Html.DropDownList("cmbxMonedasMod", (IEnumerable<SelectListItem>)ViewBag.Monedas, "-- Seleccione --", new { @class = "form-control", @name = "cmbxMonedasMod" })
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxModalidadesMod">Modalidad</label>
+                            @Html.DropDownList("cmbxModalidadesMod", (IEnumerable<SelectListItem>)ViewBag.Modalidades, "-- Seleccione --", new { @class = "form-control", @name = "cmbxModalidadesMod" })
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxTiposRentaMod">Tipo de Renta</label>
+                            @Html.DropDownList("cmbxTiposRentaMod", (IEnumerable<SelectListItem>)ViewBag.TiposhRenta, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTiposRentaMod" })
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxAniosGarantizadosMod">Años Garantizados</label>
+                            <select id="cmbxAniosGarantizadosMod" class="form-control input-md" name="cmbxAniosGarantizadosMod"></select>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxAniosDiferidosMod">Años Diferidos</label>
+                            <select id="cmbxAniosDiferidosMod" class="form-control input-md" name="cmbxAniosDiferidosMod"></select>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxGratificacionMod">Gratificación</label>
+                            <select id="cmbxGratificacionMod" name="cmbxGratificacionMod" class="form-control input-md" disabled>
+                                <option value="No">NO</option>
+                                @*<option value="Si">SI</option>*@
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtRentaAfpMod">% Rentabilidad AFP</label>
+                            <input class="form-control" id="txtRentaAfpMod" placeholder="% Rentabilidad AFP" name="txtRentaAfpMod" onkeypress="return NumCheck(event, this, 2)" maxlength="6">
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="cmbxRentaTemporalMod">% Renta Temporal</label>
+                            <select id="cmbxRentaTemporalMod" class="form-control input-md" name="cmbxRentaTemporalMod"></select>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtPrimerTramoMod">Primer Tramo</label>
+                            <div class="input-group">
+                                <select class="form-control" id="txtPrimerTramoMod" placeholder="Primer Tramo" name="txtPrimerTramoMod" onkeypress="return soloNumeros(event)" disabled maxlength="10" onkeyup="pulsarModalidades(event)"></select>
+                                <div class="input-group-addon"><input id="añosPrimerTramo" name="añosPrimerTramo" value="Años" disabled style="width:36px; background-color:#eee; border-width: 0px 0px"></div>
+                            </div>
+                        </div>
+                            <label id="rqPrimerTramo" style="display:none " for="txtPrimerTramoMod" class="requiredClass"> Requerido </label>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtSegundoTramoMod">Segundo Tramo</label>
+                            <div class="input-group">
+                                <select class="form-control" id="txtSegundoTramoMod" placeholder="Segundo Tramo" name="txtSegundoTramoMod" onkeypress="return NumCheck(event, this, 2)" disabled maxlength="6" onkeyup="pulsarModalidades(event)"></select>
+                                <div class="input-group-addon"><input id="simboloPorcentaje" name="simboloPorcentaje" value="%" disabled style="width:30px; background-color:#eee; border-width: 0px 0px"></div>
+                            </div>
+                        </div>
+                            <label id="rqSegundoTramo" style="display:none" for="txtSegundoTramoMod" class="requiredClass"> Requerido </label>
+                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                            @Html.TextBox("cmbxComisionesMod", (int)ViewBag.Comisiones, new { @class = "form-control", @name = "cmbxComisionesMod", style = "display:none" })
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align: center">
+                    <button type="button" id="saveImage" class="btn btn-default btnLight" onclick="javascript: fn_agregarMod();" data-action="save" style="margin-right: 20px; width: 120px">Aceptar</button>
+                    <button type="button" class="btn btn-default btnDark" data-dismiss="modal" onclick="javascript: limpiarMod();" style="margin-right: 20px;  width: 120px">Cerrar</button>
+                </div>
+                @*<div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                    <div class="btn-group" role="group">
+                        <button type="button" id="saveImage" class="btn btn-default btn-hover-green" onclick="javascript: fn_agregarMod();" data-action="save" role="button">Aceptar</button>
+                    </div>
+                    <div class="btn-group btn-delete hidden" role="group">
+                        <button type="button" id="saveImage" class="btn btn-default btn-hover-red" data-dismiss="modal" role="button">Delete</button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" role="button" onclick="javascript: limpiarMod();">Cerrar</button>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Beneficiarios -->
+@Html.Hidden("urlRegistrarBen", Url.Action("RegistrarModificarBeneficiario", "Cotizacion"))
+@Html.Hidden("urlEliminarBen", Url.Action("EliminarBeneficiario", "Cotizacion"))
+@Html.Hidden("urlValidaBen", Url.Action("ValidacionRegresar", "Cotizacion"))
+@Html.Hidden("urlConsultarBen", Url.Action("ConsultarBeneficiario", "Cotizacion"))
+@Html.Hidden("urlConsultarBens", Url.Action("ConsultaBeneficiarios", "Cotizacion"))
+@Html.Hidden("urlPorcentajesBen", Url.Action("PorcentajesBeneficiarios", "Cotizacion"))
+@Html.Hidden("urlEliminarBens", Url.Action("EliminarBeneficiarios", "Cotizacion"))
+
+<!-- Modalidades -->
+@Html.Hidden("urlRegistrarMod", Url.Action("RegistrarModificarModalidad", "Cotizacion"))
+@Html.Hidden("urlEliminarMod", Url.Action("EliminarModalidad", "Cotizacion"))
+@Html.Hidden("urlValidaMod", Url.Action("ValidacionRegresarMod", "Cotizacion"))
+@Html.Hidden("urlConsultarMod", Url.Action("ConsultarModalidad", "Cotizacion"))
+@Html.Hidden("urlConsultarSI", Url.Action("ConsultarSituacionesInvalidez", "Cotizacion"))
+@Html.Hidden("urlEliminarMods", Url.Action("EliminarModalidades", "Cotizacion"))
+@Html.Hidden("urlConsultarVM", Url.Action("ConsultarValidacionesModalidades", "Cotizacion"))
+
+<!-- Paquetes -->
+@Html.Hidden("urlRegistrarPaq", Url.Action("RegistrarPaquete", "Cotizacion"))
+
+<!-- Cotizaciones -->
+@Html.Hidden("urlRegistrarCot", Url.Action("RegistrarModificarCotizacion", "Cotizacion"))
+@Html.Hidden("urlConsultaAse", Url.Action("ConsultarAsegurado", "Cotizacion"))
+@Html.Hidden("urlIndex", Url.Action("Index", "Cotizacion"))
+@Html.Hidden("urlConsultarCotizacion", Url.Action("ConsultarCotizacion", "Cotizacion"))
+@Html.Hidden("hdnModificar")
+@Html.Hidden("urlTipoDocumento", Url.Action("ValidaDocumento", "Cotizacion"))
+@Html.Hidden("urlConsultaProvincias", Url.Action("ConsultaProvincias", "Cotizacion"))
+@Html.Hidden("urlConsultaDistrito", Url.Action("ConsultaDistrito", "Cotizacion"))
+
+@Html.Hidden("urlReporte", Url.Action("ReporteTasa", "Cotizacion"))
+@Html.Hidden("urlReporteT", Url.Action("Reporte", "Cotizacion"))
+
+@if (identity.CotizacionEdit)
+{
+    @Html.Hidden("hdnPermisos")
+}
+
+@section scriptsFooter
+{
+    <link href="~/Resources/css/jquery-ui.css" rel="stylesheet" />
+
+    <script src="~/Resources/js/jquery.mask.min.js"></script>
+    <script src="~/Resources/js/jsCotizacionSave.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+}
+
+
+
+

@@ -1,0 +1,252 @@
+﻿@{
+    ViewBag.Title = "Tasa de Calce";
+    ViewBag.Header = "Mantenedor de Tasas de Calce";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: auto;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .focus {
+        background-color: beige !important;
+        color: #000000;
+        font-weight: bold;
+        border-top: 2px solid #c9cad0;
+        border-bottom: 2px solid #c9cad0;
+    }
+
+    .panel.noborder {
+        border: none;
+        box-shadow: none;
+    }
+
+    .panel.noborder > .panel-heading {
+        border: 1px solid #dddddd;
+        border-radius: 0;
+    }
+
+    @@media(max-width: 1024px) {
+        div.form-group.btnBus {
+            margin-top: 20px !important;
+        }
+    }
+
+</style>
+
+
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+                Busqueda
+        </div>
+        <div class="panel-body">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                <div class="col-xs-12 col-sm-8 col-md-7 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="padding: 0px;">
+                        <label class="form-label" for="cmbxTipoMoneda" style="padding-left: 0px;">Tipo de Moneda</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="padding: 0px;">
+                        @Html.DropDownList("cmbxTipoMoneda", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTipoMoneda", @style = "margin-bottom: 10px;" })
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-8 col-md-7 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="padding: 0px;">
+                        <label class="form-label" for="cmbxPeriodos" style="padding-left: 0px;">Periodos</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="padding: 0px;">
+                        @Html.DropDownList("cmbxPeriodos", (IEnumerable<SelectListItem>)ViewBag.Periodos, "-- Seleccione --", new { @class = "form-control", @name = "CmbxPeriodos", @style = "margin-bottom: 10px;" })
+                    </div>
+                </div>
+                
+                <div class="col-xs-12 col-sm-8 col-md-7 col-lg-12" style="padding: 0px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="padding: 0px;">
+                        <label class="form-label" style="padding-left: 0px;">Fecha</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="padding: 0px;">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding: 0px;">
+                            <input type="date" class="form-control" style="" name="fecIni" id="fecIni" value="" placeholder="Inicio">
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center; margin-top: 5px;">
+                            <label class="form-label" >-</label>
+                        </div>
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding: 0px;">
+                            <input type="date" class="form-control" style="" name="fecFin" id="fecFin" value="" placeholder="Fin" disabled>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group btnBus col-xs-12 col-sm-12 col-md-2 col-lg-2" style="margin-top: 55px; text-align: center;">
+                <button type="button" class="btn btn-default btnDark" id="btnBuscar"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+            </div>
+        </div>
+    </div><!--DIV QUE CIERRA PANEL - BUSQUEDA-->
+
+
+    @*Panel de Resultados*@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Resultado
+        </div>
+        <div class="panel-body">
+
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-6" style="">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                        <label class="form-label" style="padding-left: 0px;" >Resultado del Tipo de Moneda</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding: 0px;">
+                        <input type="text" class="form-control" name="txtTipoMon" id="txtTipoMon" style="" disabled>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                        <label class="form-label" style="padding-left: 0px;">Vigencia</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding: 0px;">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding: 0px;">
+                            <input type="date" class="form-control" name="fecIniRes" id="fecIniRes" placeholder="Inicio" disabled>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="padding: 0px; text-align: center; margin-top: 5px;">
+                            <label class="form-label" style="">-</label>
+                        </div>
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" style="padding: 0px;">
+                            <input type="date" class="form-control" name="fecFinRes" id="fecFinRes" placeholder="Fin" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div> <!--DIV QUE CIERRA FORM GROUP-->
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="padding: 0px; margin-right: 20px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Tabla de Descuento Anual
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive table-wrapper-scroll-y">
+                                <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblConsultaDescuentoAnual" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:auto">Tramo</th>
+                                            <th style="width:auto">AK</th>
+                                            <th style="width:auto">BK</th>
+                                            <th style="width:auto">CK</th>
+                                            <th style="width:auto">CPK</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="RConsultaDescAnual"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL - TABLA DE DESCUENTO ANUAL-->
+
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-3" style="padding: 0px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            A Modificar
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px; text-align: center;">
+                                        <label class="form-label" for="tramo" style="text-align: center;">Tramo</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                                        <input id="Tramo" class="form-control" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px; text-align: center;">
+                                        <label class="form-label" for="AK" style="text-align: center;">AK</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                                        <input id="AK" class="form-control" onblur="calculoCPK()" onkeyup="this.value = validaDecimales(this.value, 2);" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px; text-align: center;">
+                                        <label class="form-label" for="BK" style="text-align: center;">BK</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                                        <input id="BK" class="form-control" onblur="calculoCPK()" onkeyup="this.value = validaDecimales(this.value, 2);" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 10px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px; text-align: center;">
+                                        <label class="form-label" for="CK" style="text-align: center;">CK</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                                        <input id="CK" class="form-control" onblur="calculoCPK()" onkeyup="this.value = validaDecimales(this.value, 2);" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 20px;">
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px; text-align: center;">
+                                        <label class="form-label" for="CPK" style="text-align: center;">CPK</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="padding: 0px;">
+                                        <input id="CPK" class="form-control" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin-bottom: 5px; text-align: center;">
+                                    <button type="button" class="btn btn-default btnDark" id="btnActualizar"><i class="fa fa-refresh" aria-hidden="true"></i> Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL - A MODIFICAR-->
+            </div> 
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="">
+                    <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2" style="padding: 0px; text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-default btnDark" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i> Grabar</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2" style="padding: 0px; text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-default btnDark" id="btnEliminar"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2" style="padding: 0px; text-align: center; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-default btnDark" id="btnImprimir"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2" style="padding: 0px; text-align: center; margin-bottom: 30px;">
+                        <button type="button" class="btn btn-default btnLight" id="btnLimpiar"><i class="fa fa-file-o" aria-hidden="true"></i> Limpiar</button>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2" style="padding: 0px; text-align: center; ">
+                        <button type="button" class="btn btn-default btnGreen" id="btnSalir"><img class="btnIcon" src="~/Resources/img/salir.png" /> Salir</button>
+                    </div>
+                </div>
+            </div><!--CIERRE DE DIV DE BOTONES-->
+
+        </div>
+    </div><!--DIV QUE CIERRA PANEL - RESULTADOS-->
+
+</form>
+
+@Html.Hidden("urlConsultaPeriodos", Url.Action("ConsultaPeriodos", "TasaCalce"))
+@Html.Hidden("urlConsultaTasaDescAnual", Url.Action("ConsultaTasaDescAnual", "TasaCalce"))
+@Html.Hidden("urlConsultaTramo", Url.Action("ConsultaTramo", "TasaCalce"))
+@Html.Hidden("urlConsultaPeriodoVigencia", Url.Action("ConsultaPeriodoVigencia", "TasaCalce"))
+@Html.Hidden("urlVerificacionTasaCalce", Url.Action("VerificacionTasaCalce", "TasaCalce"))
+@Html.Hidden("urlRegModTasaCalce", Url.Action("RegistrarModificarTasaCalce", "TasaCalce"))
+@Html.Hidden("urlEliminarTasaCalce", Url.Action("EliminarTasaCalce", "TasaCalce"))
+@Html.Hidden("urlReporte", Url.Action("Reporte", "TasaCalce"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsTasaCalce.js"></script>
+
+    <link href="~/Resources/css/StyleMenu.css" rel="stylesheet" />
+}

@@ -1,0 +1,136 @@
+
+
+BODY {
+        BACKGROUND: #0B2343;
+    BACKGROUND: -WEBKIT-LINEAR-GRADIENT(LEFT TOP, #0B2343, #193C69, #2D588F,#193C69,#0B2343);
+    BACKGROUND: -O-LINEAR-GRADIENT(BOTTOM RIGHT, #0B2343, #193C69, #2D588F,#193C69,#0B2343);
+    BACKGROUND: -MOZ-LINEAR-GRADIENT(BOTTOM RIGHT, #0B2343, #193C69, #2D588F,#193C69,#0B2343);
+    
+        COLOR: #FFF;
+}
+
+
+
+/*#DivLogin {
+   
+    height: 32px;
+    border: 0;
+    padding-left: 5px;
+    border-radius: 6px:;
+}
+
+    #DivLogin: hover {
+        -webkit-box-shadow: 4px 9px 5px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 4px 9px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: 4px 9px 5px 0px rgba(0,0,0,0.75);
+    }*/
+/* Bordered form */
+/*form {
+    padding: 150px 4px 4px 4px;
+}*/
+
+/* Full-width inputs */
+h1 {
+       color: #2D588F;
+}
+input[type=text], input[type=password] {
+   
+    color: #2D588F;
+}
+
+/* Set a style for all buttons */
+/*button {
+    background-color: #29518E;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border-radius: 2px;
+    border: 1px;
+    cursor: pointer;
+    width: 100%;
+}*/
+
+/* Extra style for the cancel button (red) */
+
+
+#ModalHeader, #ModalBody {
+        color: #193C69;
+    border-color: #2D588F;
+}
+
+a {
+     color: #0B2343;
+}
+
+.submitbtn {
+    width: 100%;
+    padding: 10px 18px;
+    background-color: #193C69;
+}
+
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #2D588F;
+}
+
+    .cancelbtn:hover {
+        background-color: 0B2343;
+    }
+
+/* Center the avatar image inside this container */
+/*.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}*/
+
+/* Avatar image */
+/*img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}*/
+
+/* Add padding to containers */
+/*.container {
+    padding: 16px;
+}*/
+
+/* The "Forgot password" text */
+/*span.psw {
+    float: right;
+    padding-top: 16px;
+}*/
+
+/* Change styles for span and cancel button on extra small screens */
+/*@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+
+    .cancelbtn {
+        width: 100%;
+    }
+}*/
+
+
+
+
+/*input:valid {
+    background-image: url(aceptar.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-attachment: 5%;
+    background-attachment: #green;
+    color: #green;
+    border-color: #green;
+}
+
+input:invalid {
+    background-image: url(novalido.png);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-attachment: 5%;
+    border-color: #red;
+    background-attachment: #red;
+}*/

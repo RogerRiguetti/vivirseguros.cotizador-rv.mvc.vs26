@@ -1,0 +1,212 @@
+﻿@{
+    ViewBag.Title = "AsignacionIntermediario";
+    ViewBag.Header = "Asignación de Intermediarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .bordesTabla {
+        /*width: auto !important; */
+        border-left: 2px solid black !important;
+        border-bottom: 2px solid black !important;
+        border-right-color: black !important;
+        border-width: 2px !important;
+        border-left-color: black !important;
+        border-top-color: white !important;
+        text-align: center;
+    }
+
+    .bordeBajo {
+        border-bottom: 2px solid black !important;
+    }
+
+    .encabezado {
+        background-color: #ececec !important;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 480px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table1 {
+        width: 100%;
+        display: block;
+        border: 1px solid #ddd;
+    }
+
+    .thead1 {
+        display: table;
+        width: 99%;
+        height: 20px;
+    }
+
+    .tbody1 {
+        height: 559px;
+        display: inline-block;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .ImgModal{
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+    @@media (max-width: 820px) {
+        .page-header {
+            font-size: 2em !important;
+        }
+    }
+</style>
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Selección de Cotizaciones
+        </div>
+        <div class="panel-body">
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                <label for="Numero" class="form-label">Número de Archivo</label>
+                <input type="text" class="form-control" name="Numero" id="Numero" value="@ViewBag.NumArchivo" disabled />
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                <label for="Nombre" class="form-label">Nombre</label>
+                <Input type="text" class="form-control" name="Nombre" id="Nombre" value="@ViewBag.NomArchivo" disabled />
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 btnCargarDIV" style="text-align: right">
+        <button type="button" id="btnCalcular" name="btnCalcular" class="btn btn-default btnGreen" style="width: 150px"><i class="fa fa-calculator fa-lg" aria-hidden="true"></i> Calcular</button>
+        <br />
+    </div>
+    
+    <div class="clearfix">
+    </div>
+    <br />
+    <!--PANEL cotizacion-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive ">
+                <table class="table-bordered table-striped" id="tblAsignacionIntemediario" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="display:none;">cot</th>
+                            <th>Numero de Operación  </th>
+                            <th>CUSSPP</th>
+                            <th>Tipo de Documento</th>
+                            <th>Documento</th>
+                            <th>Nombre de Cliente</th>
+                            <th>Localidad</th>
+                            <th>MontoCIC</th>
+                            <th>Asesor Asignado</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Informacion != null)
+                        {
+
+                            foreach (var info in ViewBag.Informacion)
+                            {
+
+                                <tr class="bordeBajo">
+                                    <td class="strNumCot" style="display:none;">@info.strNumCot</td>
+                                    <td class="intNumOpe">@info.intNumOpe </td>
+                                    <td class="strCussp">@info.strCussp </td>
+                                    <td class="strTipoDoc">@info.strTipoDoc </td>
+                                    <td class="strNumDoc">@info.strNumDoc </td>
+                                    <td class="strNom">@info.strNom </td>
+                                    <td class="strLugCita">@info.strLugCita </td>
+                                    <td class="strMonPro">@info.strMtoCIC </td>
+                                    <td>
+                                        <select id="@info.intNumOpe" class="form-control">
+                                            <option value="0" selected>SELECCIONAR...</option>
+                                            @foreach (var info2 in ViewBag.cmbxAsesores)
+                                            {
+                                                if (info2.idAsesor == info.numAgente)
+                                                {
+                                                    <option selected value=@info2.idAsesor>@info2.nomAsesor</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value=@info2.idAsesor>@info2.nomAsesor</option>
+                                                }
+
+                                            }
+                                        </select>
+
+                                        @*@Html.DropDownList("cmbxAsesores", (IEnumerable<SelectListItem>)ViewBag.cmbxAsesores, null, new { @class = "form-control", @name = "cmbxTipoMoneda" })*@
+
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="intNumOpe"> No se encotraron datos... </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    @*<div style="text-align:  right;">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                <img id="btnCalcular" src="~/Resources/img/iconos/icono-calcular.png" style="height: 50px; text-align:  center; cursor:pointer;" /><br />
+                <label for="" class="control-label txtBoton">Calcular</label>
+            </div>
+        </div>*@
+
+</form>
+
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Calculando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* Begins Hiddens *@
+@Html.Hidden("urlCalcularAsignacionIntermediario", Url.Action("CalcularAsignacionIntermediario", "SolicitudCotizacion"))
+@Html.Hidden("urlUsuario", (object)ViewBag.usuario)
+@Html.Hidden("urlReportes", Url.Action("CalculoCotizacion", "SolicitudCotizacion"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsAsignacionIntermediario.js"></script>
+
+}

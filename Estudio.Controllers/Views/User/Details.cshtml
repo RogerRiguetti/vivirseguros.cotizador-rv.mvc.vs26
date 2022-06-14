@@ -1,0 +1,135 @@
+﻿@model Estudio.Repository.Core.Domain.gzUser
+@{
+    ViewBag.Title = "Detalles";
+    ViewBag.Header = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .bootstrap-select .bs-ok-default::after {
+        width: 0.3em;
+        height: 0.6em;
+        border-width: 0 0.1em 0.1em 0;
+        transform: rotate(45deg) translateY(0.5rem);
+    }
+
+    .btn.dropdown-toggle:focus {
+        outline: none !important;
+    }
+
+    .btn-default:hover {
+        background-color: #0481A6;
+        border-color: #0481A6;
+        color: white;
+        font-weight: bold;
+    }
+
+    .btn-default {
+        background-color: #0ab6de;
+        border-color: #0ab6de;
+        color: white;
+        font-weight: bold;
+    }
+    .comboMultiple > button {
+        BORDER: 1px solid #ccc !important;
+        BACKGROUND: WHITE !important;
+        color: #555555 !important;
+    }
+</style>
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtAccount'>Usuario</label>
+                <input  hide="true" id='txtId' class="form-control" type="hidden" name="txtId" value="@Model.Id" disabled="disabled" />
+                <input id='txtAccount' class="form-control" type="text" name="txtAccount" value="@Model.Account" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtNumeroAgente'>Número Agente</label>
+                <input id='txtNumeroAgente' class="form-control" type="text" name="txtNumeroAgente" value="@Model.NumeroAgente" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtPassword'>Contraseña</label>
+                <input id='txtPassword' class="form-control" type="text" name="txtPassword" value="@Model.Password" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtNombres'>Nombres</label>
+                <input id='txtNombres' class="form-control" type="text" name="txtNombres" value="@Model.Names" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtApellidos'>Apellidos</label>
+                <input id='txtApellidos' class='form-control' type="text" name="txtApellidos" value="@Model.LastNames" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtActive'>Estado</label>
+                <input id='txtActive' class='form-control' type="text" name="txtActive" value="@Model.Active" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtCorreo'>Correo</label>
+                <input id='txtCorreo' class='form-control' type="text" name="txtCorreo" value="@Model.Correo" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label">Día de Creación</label>
+                <input id='txtDateCreated' class='form-control' type="text" name="txtDateCreated" value="@Model.DateCreated" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtDateModified'>Última Modificación</label>
+                <input id='txtDateModified' class='form-control' type="text" name="txtDateModified" value="@Model.DateModified" disabled="disabled" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtUserProfile'>Rol</label>
+                <select id="cmbxRolesDetails" name="cmbxRolesDetails" disabled style="width: 85%;" multiple data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
+                        class="selectpicker w-100 form-control comboMultiple" data-none-selected-text="Selecione los Roles">
+                </select>
+            </div>
+
+                @if (Model.Supervisor != "")
+                {
+                    <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                        <span class="input">
+                            <input id='txtSupervisor' class='input_field inputsize2' type="text" name="txtSupervisor" value="@Model.Supervisor" disabled="disabled" />
+                            <label for='txtSupervisor'>
+                                <span>Supervisor</span>
+                            </label>
+                        </span>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    <div class="col-xs-6">
+        <a class="btn btn-vida btn-md" href="@Url.Action("Index", "User")">Regresar <span class='fa fa-reply'></span></a>
+    </div>
+
+</form>
+
+@Html.Hidden("url", Url.Action("Details", "User"))
+@Html.Hidden("urlConsultarRoles", Url.Action("ConsultarRoles", "User"))
+
+@section scriptsFooter
+{
+
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsUserSave.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    }
+
+
+
+

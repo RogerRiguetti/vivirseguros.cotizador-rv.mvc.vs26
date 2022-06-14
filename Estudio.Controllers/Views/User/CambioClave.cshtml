@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Cambio Clave";
+    ViewBag.Header = "Cambio Clave";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row ">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label class="form-label" for="txtAntPass">Antigua Password</label>
+                    <input type="password" class="form-control" id="txtAntPass" placeholder="AntiguaPass" name="txtAntPass" tabindex="1">
+                </div>
+        </div>
+        <div class="row">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label class="form-label" for="txtPass">Password Nueva</label>
+                    <input type="password" class="form-control" id="txtPass" placeholder="Password" name="txtPass" maxlength="20" tabindex="2">
+                </div>
+        </div>
+        <div class="row">
+                <div class="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <label class="form-label" for="txtPassConf">Confirmar Password Nueva</label>
+                    <input type="password" class="form-control" id="txtPassConf" placeholder="Confirme Password" name="txtPassConf" maxlength="20" tabindex="3">
+                </div>
+        </div>
+        <div>
+            <div role="group" aria-label="group button">
+                <div role="group">
+                    <a class="btn btn-vida btn-md" id="btnAceptar" onclick="CambioClave();" tabindex="4">Aceptar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@* Begins Hiddens *@
+@Html.Hidden("urlCambioClave", Url.Action("CambiaClave", "User"))
+@Html.Hidden("id", (object)ViewBag.id)
+@Html.Hidden("password", (object)ViewBag.password)
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+
+@section scriptsFooter
+        {
+    <script src="~/Resources/js/jsUserSave.js"></script>
+}
+
+
+
+
+

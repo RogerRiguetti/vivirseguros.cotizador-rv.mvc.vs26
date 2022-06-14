@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Gasto de Sepelio";
+    ViewBag.Header = "MANTENEDOR DE GASTOS DE SEPELIO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 530px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    @@media(max-width: 767px) {
+        .page-header {
+            font-size: 1.5em !important;
+        }
+    }
+
+    @@media(min-width: 768px) and (max-width: 915px) {
+        .page-header {
+            font-size: 2em !important;
+        }
+    }
+
+    input.form-control.input-sm {
+        width: 150px;
+    }
+
+</style>
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin: 0px; padding: 10px 10px 20px 10px;">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <label class="form-label" for="txtFechaTMM">Fecha Inicio Vigencia</label>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="date" class="form-control" name="fecIni" id="fecIni" value="@ViewBag.fecha" />
+                    </div>
+                </div>
+            </div> <!--DIV QUE CIERRA CAMPO FECHA INI VIG-->
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin: 0px; padding: 10px 10px 20px 10px">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <label class="form-label" for="fecFin">Fecha Término Vigencia</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <input type="date" class="form-control" name="fecFin" id="fecFin" value="@ViewBag.fecha" disabled />
+                </div>
+            </div> <!--DIV QUE CIERRA CAMPO FECHA TER VIG-->
+
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin: 0px; padding: 10px 10px 20px 10px">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <label class="form-label" for="txtValorTMM">Valor Gasto</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 input-group" style="padding: 0px;">
+                    <input type="text" class="form-control" id="txtValorTMM" placeholder="Valor" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" />
+                    <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                </div>
+            </div> <!--DIV QUE CIERRA CAMPO VALOR GASTO-->
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" style="padding: 7.5px;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive" style="padding: 10px;">
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="tblConsultaGastosSepelio">
+                                <thead>
+                                    <tr>
+                                        <th style="width:1px">  </th>
+                                        <th style="width:auto">Fecha Inicio</th>
+                                        <th style="width:auto">Fecha Término</th>
+                                        <th style="width:auto">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> <!--DIV QUE CIERRA PANEL DE TABLA-->
+            </div><!--DIV QUE CIERRA TABLA-->
+
+        </div>
+    </div> <!--DIV QUE CIERRA PANEL DE LOS CAMPOS-->
+
+    <div class="btn-group" style="float: right">
+        <button type="button" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar</button>
+        <button type="button" class="btn btn-default btnDark" onclick="Eliminar();" style="margin-right: 20px;"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>&nbsp;Eliminar</button>
+        <button type="button" class="btn btn-default btnDark" onclick="Imprimir();"  style="margin-right: 20px;"><i class="fa fa-print fa-lg" aria-hidden="true"></i>&nbsp;Imprimir</button>
+        <button type="button" class="btn btn-default btnLight" onclick="Limpiar()" style="margin-right: 20px;"><i class="fa fa-file fa-lg" aria-hidden="true"></i>&nbsp;Limpiar</button>
+        <button type="button" class="btn btn-default btnGreen" onclick="Salir();" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+    </div>
+
+</form>
+@* Begins Hiddens *@
+@Html.Hidden("urlCargarTabla", Url.Action("CargaFechas", "GastosSepelio"))
+@Html.Hidden("urlConsulta", Url.Action("ConsultaFecha", "GastosSepelio"))
+@Html.Hidden("urlGrabarSepelio", Url.Action("GrabarSepelio", "GastosSepelio"))
+@Html.Hidden("urlEliminarSepelio", Url.Action("EliminarSepelio", "GastosSepelio"))
+@Html.Hidden("urlReporte", Url.Action("Reporte", "GastosSepelio"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@Html.Hidden("backFecha", (object)ViewBag.fecha)
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsGastosSepelio.js"></script>
+
+}

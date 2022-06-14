@@ -1,0 +1,221 @@
+﻿
+@{
+    ViewBag.Title = "TasaRentabilidad";
+    ViewBag.Header = "Mantenedor de Tasas de Rentabilidad";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 460px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .focus {
+        background-color: beige !important;
+        color: #000000;
+        font-weight: bold;
+        border-top: 2px solid #c9cad0;
+        border-bottom: 2px solid #c9cad0;
+    }
+
+    .panel.noborder {
+        border: none;
+        box-shadow: none;
+    }
+
+        .panel.noborder > .panel-heading {
+            border: 1px solid #dddddd;
+            border-radius: 0;
+        }
+
+    @@media(max-width: 767px) {
+        .page-header {
+            font-size: 1.5em !important;
+        }
+    }
+
+    @@media(min-width: 768px) and (max-width: 985px) {
+        .page-header {
+            font-size: 1.8em !important;
+        }
+    }
+
+</style>
+
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Búsqueda
+        </div>
+        <div class="panel-body">
+            <div class="form-group col-lg-3 col-md-3">
+                <label class="form-label" for="cmbxTipoMoneda">Tipo de Moneda</label>
+                @Html.DropDownList("cmbxTipoMoneda", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTipoMoneda" })
+            </div>
+
+            <div class="form-group col-lg-3 col-md-3">
+                <label class="form-label" for="cmbxPeriodos">Periodos</label>
+                @Html.DropDownList("cmbxPeriodos", (IEnumerable<SelectListItem>)ViewBag.Periodos, "-- Seleccione --", new { @class = "form-control", @name = "CmbxPeriodos"})
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="form-group col-lg-3 col-md-3 col-sm-4">
+                <label class="form-label" for="fecIni">Fecha Inicio</label>
+                <Input type="date" class="form-control" name="fecIni" id="fecIni" disabled />
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1 hidden-xs" style="text-align:center; margin-top: 25px;">
+                <i class="fa fa-minus form-label" aria-hidden="true"></i>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-4">
+                <label class="form-label" for="fecFin">Fecha Fin</label>
+                <Input type="date" class="form-control" name="fecFin" id="fecFin" disabled />
+            </div>
+
+            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                <button type="button" class="btn btn-default btnDark" id="btnBuscar"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+            </div>
+
+
+                    @*<div class="col-md-8 col-lg-8">
+                        <div class="col-md-12 col-lg-12" style="padding: 0px;">
+                            <label class="form-label col-lg-2 col-md-4" for="cmbxTipoMoneda" style="margin-top:1%">Tipo de Moneda</label>
+                            @Html.DropDownList("cmbxTipoMoneda", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTipoMoneda", @style = "max-width: 400px;" })
+                        </div>
+                    </div>*@
+
+                    @*<div class="col-md-8 col-lg-8" style="margin-top:1%;">
+                        <div class="col-md-12 col-lg-12" style="padding: 0px;">
+                            <label class="form-label col-md-2" for="cmbxPeriodos" style="margin-top:1%">Periodos</label>
+                            @Html.DropDownList("cmbxPeriodos", (IEnumerable<SelectListItem>)ViewBag.Periodos, "-- Seleccione --", new { @class = "form-control", @name = "CmbxPeriodos", @style = "max-width: 400px;" })
+                        </div>
+                    </div>*@
+
+                    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8" style="margin-top:1%;">
+                        <label class="form-label col-xs-12 col-sm-12 col-md-2 col-lg-2">Fecha</label>
+                        <div class="col-xs-12 col-sm-4 col-md-4 w-100 col-lg-3" style="padding-left:0px!important;padding-right:10px!important">
+                            <input type="date" class="form-control" name="fecIni" id="fecIni" value="" disabled placeholder="Inicio">
+                        </div>
+                        <label style="margin-top:1%;padding: 0px;width: 1px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1">-</label>
+                        <div class="col-xs-12 col-sm-4 col-md-4 w-100 col-lg-3" style="padding-left:10px!important;padding-right:0px!important">
+                            <input type="date" class="form-control" name="fecFin" id="fecFin" value="" disabled placeholder="Fin">
+                        </div>
+                    </div>*@
+
+
+                    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                        <button type="button" class="btn btn-default btnDark" id="btnBuscar" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                    </div>*@
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"> Resultado </div>
+        <div class="panel-body">
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label" for="txtTipoMon">Resultado del Tipo de Moneda</label>
+                <input type="text" class="form-control" name="txtTipoMon" id="txtTipoMon" disabled>
+            </div>
+
+            <div class="col-lg-9 col-md-8 col-sm-12">
+                <label class="form-label col-lg-12 col-sm-12 col-md-12">Vigencia</label>
+                <div class="form-group col-lg-3 col-md-4 col-sm-5">
+                    <Input type="date" class="form-control" name="fecIniRes" id="fecIniRes" value="@ViewBag.fecha" disabled />
+                </div>
+                <div class="col-sm-1 col-md-1 col-lg-1 hidden-xs" style="text-align:center;">
+                    <i class="fa fa-minus form-label" aria-hidden="true"></i>
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-5">
+                    <Input type="date" class="form-control" name="fecFinRes" id="fecFinRes" value="@ViewBag.fecha" disabled />
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-lg-9 col-md-8 col-sm-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Tabla de Descuento Anual
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive ">
+                            <table class="table table-bordered table-striped table-hover" id="tblConsultaDescuentoAnual" style="width:100%">
+                                <thead>
+                                    <tr id="0" onclick="fn_CargarTasaRen('0', 'false', '0.00');">
+                                        <th>Años</th>
+                                        <th>Tasa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tBody"></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        A Modificar
+                    </div>
+                    <div class="panel-body">
+                        <label class="form-label" for="txtDesde">Desde</label>
+                        <div class="form-group col-lg-12 col-md-12 input-group">
+                            <input type="text" id="txtDesde" class="form-control" onkeypress="return filterFloat(event,this,2);" disabled />
+                            <span class="input-group-addon">Años</span>
+                        </div>
+
+                        <label class="form-label" for="txtHasta">Hasta</label>
+                        <div class="form-group col-lg-12 col-md-12 input-group">
+                            <input type="text" id="txtHasta" class="form-control" onkeypress="return filterFloat(event,this,2);" disabled />
+                            <span class="input-group-addon">Años</span>
+                        </div>
+                        <label class="form-label" for="txtTasa">Tasa</label>
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12 input-group">
+                            <input type="text" id="txtTasa" class="form-control" onkeyup="this.value = validaDecimales(this.value, 2);" disabled />
+                            <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                        </div>
+
+                        <div class="col-xs-1 col-sm-1 col-md-12 col-lg-12" style="text-align:  center;">
+                            <button type="button" id="btnActualizar" name="btnGrabar" class="btn btn-default btnGreen" onclick="ActualizarTasa();"><i class="fa fa-refresh fa-lg" aria-hidden="true"></i>&nbsp;Actualizar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group" style="float: right;">
+                <button type="button" id="btnGrabar" name="btnGrabar" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar</button>
+                <button type="button" id="btnElminar" name="btnEliminar" class="btn btn-default btnDark" onclick="Eliminar();" style="margin-right: 20px;"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>&nbsp;Eliminar</button>
+                <button type="button" id="btnImprimir" name="btnImprimir" class="btn btn-default btnDark" style="margin-right: 20px;"><i class="fa fa-print fa-lg" aria-hidden="true"></i>&nbsp;Imprimir</button>
+                <button type="button" id="btnLimpiar" name="btnLimpiar" class="btn btn-default btnLight" onclick="Limpiar()" style="margin-right: 20px;"><i class="fa fa-file fa-lg" aria-hidden="true"></i>&nbsp;Limpiar</button>
+                <button type="button" id="btnSalir" name="btnSalir" class="btn btn-default btnDark" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</form>
+
+@Html.Hidden("urlConsultaPeriodos", Url.Action("ConsultaPeriodos", "TasaRentabilidad"))
+@Html.Hidden("urlConsultaRentabilidad", Url.Action("ConsultaRentabilidad", "TasaRentabilidad"))
+@Html.Hidden("urlConsultaTasaRen", Url.Action("ConsultaTasaRen", "TasaRentabilidad"))
+@Html.Hidden("urlGrabarTasaRen", Url.Action("GrabarTasaRentabilidad", "TasaRentabilidad"))
+@Html.Hidden("urlEliminarTasaRen", Url.Action("EliminarTasaRentabilidad", "TasaRentabilidad"))
+@Html.Hidden("backFecha", (object)ViewBag.fecha)
+@Html.Hidden("urlReporte", Url.Action("Reporte", "TasaRentabilidad"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+
+<script src="~/Resources/js/jsTasaRentabilidad.js"></script>
+}

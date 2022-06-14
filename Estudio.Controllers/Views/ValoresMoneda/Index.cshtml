@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "TC DIario";
+    ViewBag.Header = "Mantenedor de Valores de Moneda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    input.form-control.input-sm {
+        width: 150px;
+    }
+
+</style>
+
+
+<form id="myform">
+
+    <div class="panel panel-default"> 
+        <div class="panel-body">
+            <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                <label class="form-label" for="cmbxTipoMoneda">Tipo de Moneda</label>
+                @Html.DropDownList("cmbxTipoMoneda", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTipoMoneda" })
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                <label class="form-label" for="txtFecVM">Fecha</label>
+                <Input type="date" class="form-control" name="txtFecVM" id="txtFecVM" value="@ViewBag.fecha" />
+            </div>
+            <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                <label class="form-label" for="txtValorVM">Valor</label>
+                @Html.TextBox("txtValorVM", (string)ViewBag.ValorVM, new { @onkeyup = "this.value = validaDecimales(this.value, 3);", @maxlength = "10", @class = "form-control", @name = "txtValorVM" })
+            </div>
+        </div>
+    </div> <!--DIV QUE CIERRA PANEL - CAMPOS-->
+
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table id="tblValoresMoneda" class="table table-striped table-bordered table-hover" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Fecha</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div><!--DIV QUE CIERRA PANEL - TABLA-->
+
+    <div class="btn-group" style="float: right;">
+        <button type="button" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar</button>
+        <button type="button" class="btn btn-default btnDark" onclick="Eliminar();" style="margin-right: 20px;"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>&nbsp;Eliminar</button>
+        <button type="button" onclick="Imprimir();" class="btn btn-default btnDark" style="margin-right: 20px;"><i class="fa fa-print fa-lg" aria-hidden="true"></i>&nbsp;Imprimir</button>
+        <button type="button" class="btn btn-default btnLight" onclick="Limpiar()" style="margin-right: 20px;"><i class="fa fa-file fa-lg" aria-hidden="true"></i>&nbsp;Limpiar</button>
+        <button type="button" onclick="Salir();" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+    </div>
+
+
+
+</form>
+@* Begins Hiddens *@
+@Html.Hidden("urlValorMoneda", Url.Action("ListaValoresVM", "ValoresMoneda"))
+@Html.Hidden("urlBuscarVM", Url.Action("BuscarValor", "ValoresMoneda"))
+@Html.Hidden("urlGrabarVM", Url.Action("GrabarValor", "ValoresMoneda"))
+@Html.Hidden("urlEliminaVM", Url.Action("EliminarValor", "ValoresMoneda"))
+@Html.Hidden("urlImprimirVM", Url.Action("ReporteVM", "ValoresMoneda"))
+@Html.Hidden("backFecha", (object)ViewBag.fecha)
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsValoresMoneda.js"></script>
+
+}

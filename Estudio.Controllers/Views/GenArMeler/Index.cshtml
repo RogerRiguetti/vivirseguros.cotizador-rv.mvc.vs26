@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "Generación de Archivo";
+    ViewBag.Header = "Generación de Archivo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media (max-width: 767px) {
+        .page-header {
+            font-size: 2em !important;
+        }
+    }
+</style>
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 500px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    hr {
+        margin-top: 0px !important;
+        margin-bottom: 10px !important;
+        border: 0;
+        border-top: 2px solid #eee;
+    }
+
+    .focus {
+        background-color: beige !important;
+        color: #000000;
+        font-weight: bold;
+        border-top: 2px solid #c9cad0;
+        border-bottom: 2px solid #c9cad0;
+        border-left: 2px solid #c9cad0;
+        border-right: 2px solid #c9cad0;
+    }
+
+    .panel.noborder {
+        border: none;
+        box-shadow: none;
+    }
+
+        .panel.noborder > .panel-heading {
+            border: 1px solid #dddddd;
+            border-radius: 0;
+        }
+
+    .textoTablas {
+        font-size: 10px;
+        white-space: nowrap;
+    }
+     .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .ImgModal{
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+    
+    #tblRegistrosMeler td:nth-child(1) {
+    text-align: center;
+}
+
+</style>
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Generación de Archivos a Enviar a MELER
+        </div>
+        <div class="panel-body">
+            <form id="form-file" method="post" enctype="multipart/form-data">
+                @*Inputs para realizar la busqueda*@
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtFecha">Fecha</label>
+                    <input type="date" class="form-control" name="txtFecha" id="txtFecha" onkeypress="return buscarNumArchivos(event);" style="letter-spacing:0.5em;">
+                </div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="cmbArchivos">N° Archivo</label>
+                    <select class="form-control" name="cmbArchivos" id="cmbArchivos" disabled="disabled">
+                        <option value="-1" selected="">SELECCIONAR...</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--DIV QUE CIERRA PANEL-->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Tabla de registros para la generación de archivos
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive table-wrapper-scroll-y">
+                <table class="table table-bordered table-striped table-hover" id="tblRegistrosMeler" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>N° Archivo</th>
+                            <th>Nombre del Archivo</th>
+                            <th>Fecha Envio</th>
+                            <th>Fecha Cierre</th>
+                            <th>NrosOperacion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="RConsulArchivos">
+                        @if (ViewBag.Informacion != null)
+                        {
+
+                            for (int i = 0; i < ViewBag.Informacion.Count; i++)
+                            {
+                                <tr id=@ViewBag.Informacion[i].regTablaMeler style="cursor:pointer;" onclick="BuscarArchivo(@ViewBag.Informacion[i].fecSuscripcion,@ViewBag.Informacion[i].numArch);">
+                                    <td><span class="dot" style="background-color: @ViewBag.Informacion[i].color"></span></td>
+                                    <td class="strnumArch">@ViewBag.Informacion[i].numArch</td>
+                                    <td class="strnomArch">@ViewBag.Informacion[i].nomArchivo</td>
+                                    <td class="strfecEnvio">@ViewBag.Informacion[i].fecEnvio </td>
+                                    <td class="strfecCierre">@ViewBag.Informacion[i].fecCierre </td>
+                                    <td class="strnrosOperacion">@ViewBag.Informacion[i].nrosOperacion </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <th class="panel-heading intNumOpe" style="width:1%"> No se encotraron datos... </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="text-align: right">
+        <button type="button" id="btnExportar" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/exportar.png" /> Exportar</button>
+        <button type="button" id="btnCargar" class="btn btn-default btnGreen" style="margin-right: 20px;" onclick="generar();"><i class="fa fa-download fa-lg"></i> Generar</button>
+        <a id="descargar" hidden></a>
+    </div>
+    <br />
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive table-wrapper-scroll-y" style="width:100%">
+                <table class="table table-striped table-bordered table-hover dataTable no-footer " id="tblConsulta">
+                    <thead>
+                        <tr>
+                            <th>Número de Operación</th>
+                            <th>Correlativo</th>
+                            <th>Fecha de Calculo</th>
+                            <th>Asegurado</th>
+                            <th>Moneda</th>
+                            <th>Modalidad</th>
+                            <th>Periodo Diferido</th>
+                            <th>% Renta Temporal</th>
+                            <th>Periodo Garantizado</th>
+                            <th>% Renta Escalonada</th>
+                            <th>Prima Única</th>
+                            <th>Renta Temporal/1er Tramo</th>
+                            <th>Pension Vitalicia/2nd Tramo</th>
+                            <th>Tasa de Venta</th>
+                            <th>TIR</th>
+                            <th>Perdida</th>
+                            <th>Comisión</th>
+                            <th style="text-align: center;">No Cotiza<input type="checkbox" name="select-all-NoCotiza" id="select-all-NoCotiza" /></th>
+                            <th style="text-align: center;">Selecccionar <input type="checkbox" name="select-all" id="select-all" /></th>
+                        </tr>
+                    </thead>
+                    <tbody id="RConsultaMeler"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</form>
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+@* Begins Hiddens *@
+@Html.Hidden("urlBuscarArchivo", Url.Action("BuscarArchivo", "GenArMeler"))
+@Html.Hidden("urlBuscarNumerosArchivo", Url.Action("BuscarNumerosArchivo", "GenArMeler"))
+@Html.Hidden("urlGenerarXML", Url.Action("GenerarXML", "GenArMeler"))
+@Html.Hidden("urlCrearExcel", Url.Action("ExportarCalculadas", "SolicitudCotizacion"))
+@Html.Hidden("urlRefrescarGrilla", Url.Action("refrescarGrilla", "GenArMeler"))
+@*@Html.ActionLink("Click here to download", "ExportarGenArch", new { })*@
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsGenArMeler.js"></script>
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+}

@@ -1,0 +1,115 @@
+﻿@model Estudio.Repository.Core.Domain.gzPage
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+
+    int systemId = new Estudio.Controllers.Models.ModuleModel().Details(Model.ModuleId).SystemId;
+    //For SelectFx
+    // SelectListItem _defaultSystem =
+    //new SelectListItem { Text = "Systems...", Value = "", Disabled = true, Selected = false };
+
+    List<SelectListItem> listSystem = new List<SelectListItem>();
+    //listSystem.Add(_defaultSystem);
+    listSystem.AddRange(
+        new SelectList(
+            new Estudio.Controllers.Models.SystemModel().Search("", Estudio.Repository.Helpers.EnumValues.ActiveValue), "Id", "Description", selectedValue: systemId));
+
+}
+
+
+
+
+<form id="myform">
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="page-header">Pages</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtDescription' class='input_field' type="text" name="txtDescription" value="@Model.Description" />
+                                <label for='txtDescription'>
+                                    <span>Description</span>
+                                </label>
+                            </span>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label for="lstSystem">System</label>
+                                @Html.DropDownList("lstSystem", listSystem,
+                                new { @class = "chosen-select" })
+
+                                <br />
+                                <span id="lblRequiredSystem" class="requiredClass" style="display: none;">required</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+
+                            <div class="form-group">
+                                <label for="lstModule">Module</label>
+                                <select id="lstModule" class="chosen-select" name="lstModule"></select>
+                                <br />
+                                <span id="lblRequiredModule" class="requiredClass" style="display: none;">required</span>
+                            </div>
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <a class="btn btn-default" href="@Url.Action("Index", "Page")">Return <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <a class="btn btn-default" id="btnSave">Save <span class="glyphicon glyphicon-floppy-saved"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Hidden("url", Url.Action("Edit", "Page"))
+@Html.Hidden("UrlGetModulesBySystem", Url.Action("GetModulesBySystem", "Page"))
+@Html.Hidden("modelModuleId", Model.ModuleId)
+@Html.Hidden("modelSystemId", systemId)
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsPageSave.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+    <script>
+        // just for the demos, avoids form submit
+        jQuery.validator.setDefaults({
+            debug: true,
+            success: "valid"
+        });
+        $("#myform").validate({
+            errorClass: "requiredClass",
+            rules: {
+                txtDescription: { required: false },
+                lstModule: { required: true }
+            }
+        });
+    </script>
+}
+
+
+
+

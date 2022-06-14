@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Estudio.Controllers.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Estudio_Controllers_wsXML_AdmIntegracionCotizador" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://192.168.0.150:80/AdmIntegracionCotizador.asmx</Value>
+    </Setting>
+    <Setting Name="Estudio_Controllers_prueba_WebServiceOficiales" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:28760/WebServiceOficiales.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

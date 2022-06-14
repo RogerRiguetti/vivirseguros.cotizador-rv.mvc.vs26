@@ -1,0 +1,58 @@
+﻿@model Estudio.Repository.Core.Domain.gzRole
+@{
+    ViewBag.Title = "Crear";
+    ViewBag.Header = "Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="myform">
+    @*<div class="col-xs-12 text-left">
+            <a class="btn btn-default" id="btnAdd" href="@Url.Action("Create", "Role")">Add</span></a>
+        </div>*@
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Agregar Rol
+        </div>
+        <div class="panel-body">
+            <div class="form-group col-lg-4 col-md-6 col-sm-8">
+                <label class="form-label" for='txtClave'>Clave</label>
+                <input id='txtClave' class='form-control' type="text" onkeypress="return soloLetras(event)" name="txtClave" />
+            </div>
+            <div class="form-group col-lg-4 col-md-6 col-sm-8">
+                <label class="form-label" for='txtDescription'>Descripción</label>
+                <input id='txtDescription' class='form-control' type="text" onkeypress="return soloLetras(event)" name="txtDescription" />
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <a class="btn btn-default btnDark" href="@Url.Action("Index", "Role")" style="margin-right: 20px; width: 120px;"><i class="fa fa-reply fa-lg" aria-hidden="true"></i> Regresar</a>
+        <a id="btnSave" class="btn btn-default btnLight" style="margin-right: 20px; width: 120px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i> Guardar</a>
+    </div>
+
+
+    @*<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 text-left">
+        <a class="btn btn-vida btn-md" href="@Url.Action("Index", "Role")">Regresar <span class="fa fa-reply"></span></a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 text-left">
+        <a class="btn btn-vida btn-md" id="btnSave">Guardar <span class="fa fa-save"></span></a>
+    </div>*@
+
+
+</form>
+
+@Html.Hidden("url", Url.Action("Create", "Role"))
+@Html.Hidden("urlcreate", Url.Action("Index", "Role"))
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsRoleSave.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+}
+
+
+
+

@@ -1,0 +1,83 @@
+﻿@model Estudio.Repository.Core.Domain.gzPage
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    //SelectFx
+    //SelectListItem _defaultModule =
+    //    new SelectListItem { Text = "Modules...", Value = "", Disabled = true, Selected = false };
+
+    Estudio.Repository.Core.Domain.gzModule Module =
+        new Estudio.Controllers.Models.ModuleModel().Details(Model.ModuleId);
+
+    string textModule = Module.Description;
+
+    string textSystem = new Estudio.Controllers.Models.SystemModel().Details(Module.SystemId).Description;
+}
+
+
+<form id="myform">
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="page-header">Pages</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtDescription' disabled="disabled" class='input_field' type="text" name="txtDescription" value="@Model.Description" />
+                                <label for='txtDescription'>
+                                    <span>Description</span>
+                                </label>
+                            </span>
+                        </div>
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtSystem' disabled="disabled" class='input_field' type="text" name="txtSystem" value="@textSystem" />
+                                <label for='txtSystem'>
+                                    <span>System</span>
+                                </label>
+                            </span>
+
+                        </div>
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtModule' disabled="disabled" class='input_field' type="text" name="txtModule" value="@textModule" />
+                                <label for='txtModule'>
+                                    <span>Module</span>
+                                </label>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <a class="btn btn-default" href="@Url.Action("Index", "Page")">Return <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Hidden("url", Url.Action("Details", "Page"))
+@Html.Hidden("modelModuleId", Model.ModuleId)
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsPageSave.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
+}
+

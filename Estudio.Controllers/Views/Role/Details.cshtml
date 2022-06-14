@@ -1,0 +1,42 @@
+﻿@model Estudio.Repository.Core.Domain.gzRole
+@{
+    ViewBag.Title = "Detalles";
+    ViewBag.Header = "Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Detalles Rol
+        </div>
+        <div class="panel-body">
+            <div class="form-group col-lg-4 col-md-6 col-sm-8">
+                <label class="form-label" for='txtClave'>Clave</label>
+                <input id='txtClave' disabled class='form-control' type="text" onkeypress="return soloLetras(event)" name="txtClave" value="@Model.Clave" />
+            </div>
+            <div class="form-group col-lg-4 col-md-6 col-sm-8">
+                <label class="form-label" for='txtDescription'>Descripción</label>
+                <input type="text" class='form-control' id='txtDescription' name="txtDescription" disabled value="@Model.Description" />
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a id="btnReturn" class="btn btn-default btnDark" href="@Url.Action("Index", "Role")" style="margin-right: 20px; width: 120px;"><i class="fa fa-reply fa-lg" aria-hidden="true"></i> Regresar</a>
+    </div>
+
+</form>
+
+@Html.Hidden("url", Url.Action("Details", "Role"))
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsRoleSave.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+}
+
+
+
+

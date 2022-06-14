@@ -1,0 +1,97 @@
+﻿@model Estudio.Repository.Core.Domain.gzUser
+@{
+    ViewBag.Title = "Crear";
+    ViewBag.Header = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+    List<SelectListItem> supervisores = new List<SelectListItem>();
+    supervisores.AddRange(new SelectList(new Estudio.Controllers.Controllers.UserController().ObtenerSupervisores(), "Id", "NombreCompleto"));
+}
+<style>
+     .comboMultiple > button {
+        BORDER: 1px solid #ccc !important;
+        BACKGROUND: WHITE !important;
+        color: #555555 !important;
+    }
+</style>
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for='txtAccount'>Usuario</label>
+                <input id='txtAccount' class='form-control' type="text" name="txtAccount" onkeyup="pulsar(event)" maxlength="20" />
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for='txtNumeroAgente'>Número Agente</label>
+                <input id='txtNumeroAgente' class='form-control' type="text" name="txtNumeroAgente" maxlength="8" onkeypress="return IsNumeric(event)" onkeyup="pulsar(event)" />
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for="txtNombres">Nombres</label>
+                <input id='txtNombres' class="form-control" type="text" name="txtNombres" maxlength="50" onkeypress="return soloLetras(event)" onkeyup="pulsar(event)" />
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for="txtApellidos">Apellidos</label>
+                <input id='txtApellidos' class="form-control" type="text" name="txtApellidos" maxlength="60" onkeypress="return soloLetras(event)" onkeyup="pulsar(event)" />
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for="txtCorreo">Correo</label>
+                <input id='txtCorreo' class="form-control" type="text" name="txtCorreo" onkeyup="pulsar(event)" maxlength="100" />
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for="txtPassword">Contraseña</label>
+                <input id='txtPassword' class="form-control" type="password" name="txtPassword" onkeyup="pulsar(event)" maxlength="20" />
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label class="form-label" for="txtConfirm">Confirmar Contraseña</label>
+                <input id='txtConfirm' class="form-control" type="password" name="txtConfirm" onkeyup="pulsar(event)" maxlength="20" />
+                <span id="lblPasswordConfirm" style="display: none;">La contraseña no coincide con la contraseña de confirmación.</span>
+            </div>
+
+            <div class="form-group col-lg-3 col-md-6 col-sm-6 col-xs-12 text-left">
+                <label class="form-label" for='txtUserProfile'>Rol</label>
+                <select id="cmbxRolesDetails" name="cmbxRolesDetails" style="width: 85%;" multiple data-style="bg-white rounded-pill px-4 py-3 shadow-sm "
+                        class="selectpicker w-100 form-control comboMultiple" data-none-selected-text="Selecione los Roles">
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 text-left">
+            <a class="btn btn-vida btn-md" href="@Url.Action("Index", "User")">Regresar <span class="fa fa-reply fa-lg"></span></a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 text-left">
+            <a class="btn btn-vida btn-md" id="btnSave">Guardar <span class="fa fa-save fa-lg"></span></a>
+        </div>
+    </div>
+    @*<div class="row">
+            <div class="col-xs-12 text-left">
+                <a class="btn btn-primary btn-md" id="btnAdd" href="@Url.Action("Create", "User")">Add <span class="fa fa-plus"></span></a>
+            </div>
+        </div>*@
+
+</form>
+
+@Html.Hidden("url", Url.Action("Create", "User"))
+@Html.Hidden("urlIndex", Url.Action("Index", "User"))
+@Html.Hidden("urlConsultarRolesCrear", Url.Action("ConsultarRolesCrear", "User"))
+@section scriptsFooter
+{
+
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsUserSave.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-multiselect.min.js"></script>
+
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+}
+

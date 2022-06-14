@@ -1,0 +1,258 @@
+﻿
+@{
+    ViewBag.Title = "Resumen Ganados";
+    ViewBag.Header = "Resumen Ganados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 530px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    hr {
+        margin-top: 0px !important;
+        margin-bottom: 10px !important;
+        border: 0;
+        border-top: 2px solid #eee;
+    }
+
+    table.dataTable tfoot th, table.dataTable tfoot td {
+        border-top: 2px solid #d6d7d6 !important;
+        color: #848484 !important;
+        font-weight: bold;
+    }
+
+    input[type="radio"] {
+    }
+
+        input[type="radio"] + label span {
+            display: inline-block;
+            width: 27px;
+            height: 27px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+
+    .modal-content {
+        left: -40% !important;
+        width: 180% !important;
+    }
+
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .imgmod {
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+
+    .seleccionado {
+        color:#000000;
+        background-color: inherit;
+    }
+
+    table.dataTable tbody td {
+        color: black;
+    }
+
+</style>
+
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Datos
+        </div>
+        <div class="panel-body" id="caja">
+            <div id="datosDiv">
+                <div class="form-group col-lg-3 col-md-3 col-sm-6">
+                    <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Departamento</label>
+                    <select type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="cboDepartamento" id="cboDepartamento">
+                        <option value="T">-- Seleccione --</option>
+                        <option value="T">TODOS</option>
+                        <option value="14">LIMA</option>
+                        <option value="99">PROVINCIAS</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-lg-3 col-md-3 col-sm-6" id="divDecisionAfiliado">
+                    <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Decisión Afiliado</label>
+                    <select type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="cboDecisionAfiliado" id="cboDecisionAfiliado">
+                        <option value="T">-- Seleccione --</option>
+                        <option value="EL">EL - ELEGIDA</option>
+                        <option value="RE">RE - RECOTIZADA</option>
+                        <option value="DE">DE - DESISTIDA</option>
+                        <option value="T">TODOS</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6" id="divCIC">
+                    
+                    
+                    <div class="form-group col-lg-12 col-md-6 input-group">
+                        <div class="form-group col-lg-6 col-md-12">
+                            <label class="form-label" for="txtDesde">Rango CIC </label>
+                            <label class="form-label" for="txtDesde"> Desde</label>
+                            <input type="text" id="txtDesde" class="form-control" />
+                        </div>
+                            <div class="form-group col-lg-6 col-md-6">
+                                <label class="form-label" for="txtHasta">Hasta (*)</label>
+                                <input type="text" id="txtHasta" class="form-control" />
+                            </div>
+                        </div>
+                </div>
+
+                    
+                <div class="clearfix"></div>
+
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtFechaDesde">Fecha Desde (*)</label>
+                    <input type="date" class="form-control" name="txtFechaDesde" id="txtFechaDesde" style="letter-spacing:0.5em;">
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="txtFechaHasta">Fecha Hasta (*)</label>
+                    <input type="date" class="form-control" name="txtFechaHasta" id="txtFechaHasta" style="letter-spacing:0.5em;">
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label" for="cboMoneda">Moneda (*)</label>
+                    @Html.DropDownList("cboMoneda", (IEnumerable<SelectListItem>)ViewBag.Monedas, "-- Seleccione --", new { @class = "form-control", @name = "cboMoneda" })
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                    <label class="form-label col-lg-12" for="cboPestacion">Prestación (*)</label>
+                    @Html.DropDownList("cboPrestacion", (IEnumerable<SelectListItem>)ViewBag.Pensiones, new { @class = "form-control", @name = "cboPrestacion[]", multiple = "multiple" })
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-6" style="margin-top:5px;margin-bottom:5px;">
+                    <label class="form-label col-lg-12" for="cboModalidad">Modalidad (*)</label>
+                    @Html.DropDownList("cboModalidad", (IEnumerable<SelectListItem>)ViewBag.TiposRenta, new { @class = "form-control col-lg-12", @name = "cboModalidad[]", multiple = "multiple" })
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;margin-bottom:5px;">
+                    <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Cotiza</label>
+                    <select type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="cboCotiza" id="cboCotiza">
+                        <option value="T">-- Seleccione --</option>
+                        <option value="S">SI</option>
+                        <option value="N">NO</option>
+                        <option value="T">TODO</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top:5px;margin-bottom:5px;">
+                    <label class="form-label col-xs-12 col-sm-12 col-md-12 col-lg-12">Gana</label>
+                    <select type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="cboGana" id="cboGana">
+                        <option value="T">-- Seleccione --</option>
+                        <option value="S">SI</option>
+                        <option value="N">NO</option>
+                        <option value="T">TODO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <br />
+            <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" align="center">
+                <a class="btn btn-vida btn-md" id="btnSearch" style="margin-right: 20px;"><i class="fa fa-search" aria-hidden="true"></i> Buscar</a>
+            </div>
+        </div>
+        
+    </div><!--DIV QUE CIERRA PANEL-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Resultados</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table-bordered table-striped table-hover" id="tblConsulta" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>CSV</th>
+                            <th># Cotizado</th>
+                            <th>Pensión</th>
+                            <th>Tasa Venta</th>
+                            <th>Diferencia de Pensión</th>
+                            <th>Diferencia de Tasa de Venta</th>
+                            <th># Ganados</th>
+                            <th># Casos Totales</th>
+                            <th>Participación de Mercado</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td>TOTALES </td>
+                            <td id="totalNumeroCotizado"></td>
+                            <td id="totalPension"></td>
+                            <td id="totalTasaVenta"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @*<tr><td>Vida Cámara</td><td>32</td><td>795</td><td>5.71</td><td>0</td><td>0</td><td>10</td><td>1</td></tr><!--1-->
+                        <tr><td>Protecta</td><td>32</td><td>792</td><td>5.68</td><td>3</td><td>0.03</td><td>8</td><td>1</td></tr><!--2-->
+                        <tr><td>La Positiva</td><td>32</td><td>770</td><td>5.43</td><td>25</td><td>0.28</td><td>6</td><td>1</td></tr><!--3-->
+                        <tr><td>InterSeguro</td><td>32</td><td>737</td><td>5.57</td><td>58</td><td>0.14</td><td>4</td><td>1</td></tr><!--4-->
+                        <tr><td>Pacífico</td><td>32</td><td>734</td><td>4.96</td><td>61</td><td>0.75</td><td>2</td><td>1</td></tr><!--5-->
+                        <tr><td>Rímac</td><td>31</td><td>703</td><td>4.41</td><td>92</td><td>1.30</td><td>1</td><td>1</td></tr><!--6-->*@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    @*Iconos de opciones*@
+    <div style="text-align: right">
+        <button type="button" id="btnExportar" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/exportar.png" /> Exportar</button>
+        <a id="descargar" hidden></a>
+    </div>
+    <br />
+</form>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+<meta http-equiv="Cache-Control" content="no-cache" />
+
+@Html.Hidden("urlBusquedaInformacion", Url.Action("BusquedaInformacion", "ReporteGanados"))
+@Html.Hidden("urlCrearExcel", Url.Action("CrearExcelReportesGanados", "ReporteGanados"))
+@Html.Hidden("urlGuardarExcel", Url.Action("ExportarReporteGanados", "ReporteGanados"))
+
+@section scriptsFooter
+{
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-multiselect.min.js"></script>
+
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsReporteGanados.js"></script>
+}

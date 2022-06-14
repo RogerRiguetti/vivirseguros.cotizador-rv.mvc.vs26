@@ -1,0 +1,88 @@
+﻿@model Estudio.Repository.Core.Domain.gzUser
+@{
+    ViewBag.Title = "Configure";
+    ViewBag.Header = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="myform">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 text-left">
+                            <span class="input">
+                                <input id='txtDescription' disabled="disabled" class='input_field' type="text" name="txtDescription" value="@Model.Account" />
+                                <label for='txtDescription'>
+                                    <span>Account</span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#menu0">Roles</a></li>
+                            </ul>
+                            <div id="lblRequired" style="display:none;">
+                                <br />
+                                <span style="color:red;">Por favor marque al menos un elemento.</span>
+                                <br />
+                            </div>
+                            <div class="tab-content">
+                                <div id="menu0" class="tab-pane fade in active">
+                                    <table class="table table-striped table-bordered table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th class="sch-col-width-left">Role</th>
+                                                <th class="text-center sch-col-width-right"> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.Roles)
+                                            {
+                                                <tr>
+                                                    <td class="sch-col-width-left">
+                                                        @item.Description
+                                                    </td>
+                                                    <td class="text-center sch-col-width-right">
+                                                        @Html.CheckBox("chkRole", ((item.Unassigned == null) ? false : true), new { data_value = item.Id, @onchange = "checkRequired(this);" })
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <a class="btn btn-default" href="@Url.Action("Index", "User")">Return <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <a class="btn btn-default" id="btnSave">Save <span class="glyphicon glyphicon-floppy-saved"></span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+</form>
+
+@Html.Hidden("url", Url.Action("Configure", "User"))
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsUserConfigure.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
+}
+
+
+
+

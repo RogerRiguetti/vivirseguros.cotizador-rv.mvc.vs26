@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Periodos";
+    ViewBag.Header = "Periodos";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}                        
+@*Tabla*@
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <!--TABLA-->
+                <table class="display table-striped table-bordered table-hover" id="tblConsultaPeriodos" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Fecha Periodo</th>
+                            <th>Estado</th>
+                            <th>Cantidad de Polizas</th>
+                            <th>Cantidad de Beneficiarios</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group" style="float: right">
+        <button type="button" id="btnPeriodoNuevo" name="btnPeriodoNuevo" class="btn btn-default btnDark" data-toggle="modal" data-target="#nuevoPeriodo" style="margin-right: 20px"><i class="fa fa-calendar-plus-o fa-lg" aria-hidden="true"></i> Abrir Nuevo Periodo</button>
+        <button type="button" id="btnPeriodoSelec" name="btnPeriodoSelec" class="btn btn-default btnLight" onclick="PeriodoSeleccionado();" style="margin-right: 20px"><i class="fa fa-calendar-check-o fa-lg" aria-hidden="true"></i> Abrir Periodo Seleccionado</button>
+    </div>
+
+    @*Botones*@
+    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:left; margin-bottom:10px;">
+        <input type="button" class="btn btn-vida btn-md" id="btnPeriodoNuevo" name="btnPeriodoNuevo" style="width:205px;font-weight: 600;" data-toggle="modal" data-target="#nuevoPeriodo" value="Abrir Nuevo Periodo">
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align:left;">
+        <input type="button" class="btn btn-vida btn-md" id="btnPeriodoSelec" name="btnPeriodoSelec" style="width:205px;font-weight: 600;" value="Abrir Periodo Seleccionado" onclick="PeriodoSeleccionado();">
+    </div>*@
+
+
+
+<!-- Modal Nuevo Periodo-->
+<div id="nuevoPeriodo" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nuevo Periodo</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-lg-8 col-md-8 col-sm-6">
+                        <label for="inputNuevoPeriodo" class="form-label">Ingresar fecha del nuevo periodo.</label>
+                        <input type="text" class="form-control" name="inputNuevoPeriodo" id="inputNuevoPeriodo" maxlength="7" onKeyUp="this.value = formateafechaYearMes(this.value);" placeholder="AAAA/MM" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btnDark" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btnLight" data-dismiss="modal" id="btnguardar">Guardar nuevo periodo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Begins Hiddens *@
+@Html.Hidden("urlPeriodos", Url.Action("ConsultarPeriodos", "Periodos"))
+@Html.Hidden("urlGuardarPeriodo", Url.Action("GuardarNuevoPeriodoRepository", "Periodos"))
+@Html.Hidden("urlReabrirPeriodo", Url.Action("ReabrirPeriodo", "Periodos"))
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/jsPeriodos.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+
+   <!-- <link href="~/Resources/css/jquery.dataTables.min.css" rel="stylesheet" />-->
+}
+

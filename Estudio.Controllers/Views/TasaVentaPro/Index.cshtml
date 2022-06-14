@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Tasa de Venta Promedio";
+    ViewBag.Header = "Tasa de Venta Promedio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media(max-width: 565px) {
+        .page-header {
+            font-size: 2em !important;
+        }
+    }
+</style>
+
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @*Combo tipo moneda*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label" for="cmbxTipoMoneda">Moneda</label>
+                @Html.DropDownList("cmbxTipoMoneda", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTipoMoneda" })
+            </div>
+            @*Combo Rango*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label" for="cmbxPresta">Prestación</label>
+                @Html.DropDownList("cmbxPresta", (IEnumerable<SelectListItem>)ViewBag.RangoTasa, null, new { @class = "form-control", @name = "cmbxPresta" })
+            </div>
+            @*Mes*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label" for="txtMes">Mes</label>
+                <input type="text" class="form-control" name="txtMes" id="txtMes" placeholder="YYYYMM" onKeyUp="this.value = formateafechaYearMes(this.value);">
+            </div>
+            @*Tasa Vta Promedio*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label class="form-label" for="txtTVPro">Tasa Vta Promedio</label>
+                <input type="text" class="form-control" name="txtTVPro" id="txtTVPro" placeholder="Valor" onkeyup="this.value = validaDecimales(this.value, 2);">
+            </div>
+        </div>
+    </div>
+
+    <!--PANEL DE LA TABLA-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <!--TABLA-->
+                <table class="table table-bordered table-striped table-hover" id="tblConsultaTasaVentaPro" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Mes</th>
+                            <th>Tasa Venta Promedio</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @*Iconos de opciones*@
+    <div class="btn-group" style="float: right">
+        <button type="button" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Grabar</button>
+        <button type="button" class="btn btn-default btnLight" onclick="Limpiar();" style="margin-right: 20px;"><i class="fa fa-file-o fa-lg" aria-hidden="true"></i> Limpiar</button>
+        <button type="button" class="btn btn-default btnGreen" onclick="Salir();" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/salir.png" /> Salir</button>
+    </div>
+
+</form>
+
+@Html.Hidden("urlCargarTabla", Url.Action("CargarTabla", "TasaVentaPro"))
+@Html.Hidden("urlGuardar", Url.Action("Guardar", "TasaVentaPro"))
+@Html.Hidden("urlBuscaTasa", Url.Action("BuscarTasa", "TasaVentaPro"))
+@Html.Hidden("urlNuevaTasa", Url.Action("NuevaTasaVta", "TasaVentaPro"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/jsTasaVentaPro.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+}
+

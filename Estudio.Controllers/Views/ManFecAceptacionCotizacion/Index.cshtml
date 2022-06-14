@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Mantenedor de Fechas de Aceptacion de Cotización";
+    ViewBag.Header = "Mantenedor de Fechas de Aceptacion de Cotización";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media (max-width: 1265px) {
+        .page-header {
+            font-size: 30px !important;
+        }
+    }
+
+    @@media (max-width: 1095px) {
+        .page-header {
+            font-size: 20px !important;
+        }
+    }
+
+    @@media (max-width: 767px) {
+        .page-header {
+            font-size: 1.8em !important;
+            margin: 0px !important;
+        }
+    }
+
+    @@media (max-width: 450px) {
+        .page-header {
+            font-size: 1.5em !important;
+            margin: 0px !important;
+        }
+    }
+</style>
+
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-heading">Busqueda por solicitud de cotización</div>
+        <div class="panel-body">
+            <form id="form-file" method="post" enctype="multipart/form-data">
+                @*Inputs para realizar la busqueda*@
+                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <label class="form-label">CUSPP</label>
+                    <input type="text" class="form-control" name="txtCUSPP" id="txtBCUSPP">
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <label class="form-label">N° Operación</label>
+                    <input type="text" class="form-control" name="txtNumOperacion" id="txtNumOperacion">
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <label class="form-label">N° Cot</label>
+                    <input type="text" class="form-control" name="txtNumCot" id="txtNumCot">
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <label class="form-label">N° Corr</label>
+                    <input type="text" class="form-control" name="txtNumCor" id="txtNumCor">
+                </div>
+                @*Parte del boton para cargar el archivo*@
+                <div class="form-group col-lg-12" style="text-align:right">
+                    <button type="button" class="btn btn-default btnDark" onclick="BuscarArchivo();" style="width:150px;"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                </div>
+
+                @*<div class="image-upload col-xs-12 col-sm-12 col-md-2 col-md-offset-3 col-lg-1" style="margin:5px">
+                    <img id="btnBuscar" src="/Resources/img/iconos/vcRecurso 6.png" style="height: 30px; cursor:pointer;" onclick="BuscarArchivo();"><br>
+                    <label for="" class="control-label txtBoton">Buscar</label>
+                </div>*@
+            </form>
+        </div>
+    </div>
+   @*Parte de antecedentes generales*@
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Antecedentes generales</div>
+        <div class="panel-body">
+            @*CUSPP*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">CUSPP</label>
+                <input type="text" class="form-control" name="txtCUSPP" id="txtCUSPP" disabled>
+            </div>
+            @*Modena*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Moneda</label>
+                <input type="text" class="form-control" name="txtModena" id="txtModena" disabled>
+            </div>
+            @*Mododalidad*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Modalidad</label>
+                <input type="text" class="form-control" name="txtMododalidad" id="txtMododalidad" disabled>
+            </div>
+            @*Cober. Conyuge*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Cober. Conyuge</label>
+                <input type="text" class="form-control" name="txtCoberConyuge" id="txtCoberConyuge" disabled>
+            </div>
+            @*Monto prima*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Monto prima</label>
+                <input type="text" class="form-control" name="txtMtoPrima" id="txtMtoPrima" disabled>
+            </div>
+            @*Derecho Crecer*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Derecho Crecer</label>
+                <input type="text" class="form-control" name="txtDerCre" id="txtDerCre" disabled>
+            </div>
+            @*Monto pension*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Monto pension</label>
+                <input type="text" class="form-control" name="txtMtoPension" id="txtMtoPension" disabled>
+            </div>
+            @*Gratificacion*@
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <label class="form-label">Gratificación</label>
+                <input type="text" class="form-control" name="txtGratificacion" id="txtGratificacion" disabled>
+            </div>
+            @*Fechas*@
+
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @*Fecha de aceptación actual de la cotización*@
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <label class="form-label">Fecha de aceptación actual de la cotización</label>
+                            <input type="text" class="form-control" name="txtFecAceptacionAct" id="txtFecAceptacionAct" disabled>
+                        </div>
+                        @*Fecha de aceptación a modificar*@
+                        <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <label class="form-label">Fecha de aceptación a modificar</label>
+                            <input type="date" class="form-control" name="txtFecAceptacionMod" id="txtFecAceptacionMod" value="@ViewBag.fecha" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group" style="float: right">
+        <button type="button" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="Aceptar();"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i> Aceptar</button>
+        <button type="button" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="LimpiarCampos();"><img class="btnIcon" src="~/Resources/img/cargar.png" /> Limpiar</button>
+        <button type="button" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="salir();"><img class="btnIcon" src="~/Resources/img/salir.png" /> Salir</button>
+    </div>
+
+    @*Iconos de opciones*@
+    @*<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <img src="/Resources/img/iconos/vcRecurso 1.png" style="height: 30px; cursor:pointer;" onclick="Aceptar();"><br>
+        <label for="" class="control-label txtBoton">Aceptar</label>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align:  center; top: 10px;">
+        <img src="/Resources/img/iconos/vcRecurso 5.png" style="height: 30px; cursor:pointer;" onclick="LimpiarCampos();"><br>
+        <label for="" class="control-label txtBoton">Limpiar</label>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align:  center; top: 10px;">
+        <img src="/Resources/img/iconos/vcRecurso 7.png" style="height: 30px; cursor:pointer;" onclick="salir();"><br>
+        <label for="" class="control-label txtBoton">Salir</label>
+    </div>*@
+</form>
+@* Begins Hiddens *@
+@Html.Hidden("urlBuscarArchivo", Url.Action("BuscarArchivo", "ManFecAceptacionCotizacion"))
+@Html.Hidden("urlActualizarArchivo", Url.Action("ActualizarArchivo", "ManFecAceptacionCotizacion"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="~/Resources/js/jsManFecAceptacionCotizacion.js"></script>
+
+}

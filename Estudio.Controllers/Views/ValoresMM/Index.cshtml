@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "TC Mensual";
+    ViewBag.Header = "Mantenedor de Valores de Moneda Mensuales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    input.form-control.input-sm {
+        width: 150px;
+    }
+</style>
+
+<form id="myform">
+
+        <!--DIV DE CAMPOS Y BOTONES-->
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                    <label class="form-label" for="CmbxTipoValorMM">Tipo de Valor</label>
+                    @Html.DropDownList("CmbxTipoValorMM", (IEnumerable<SelectListItem>)ViewBag.TipoValor, null, new { @class = "form-control", @name = "CmbxTipoValorMM" })
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                    <label class="form-label" for="CmbxTipoMonedaMM">Tipo de Moneda</label>
+                    @Html.DropDownList("CmbxTipoMonedaMM", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, null, new { @class = "form-control", @name = "CmbxTipoMonedaMM" })
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                    <label class="form-label" for="txtFechaTMM">Periodo</label>
+                    <input type="text" class="form-control" id="txtFechaTMM" placeholder="YYYY/MM" onKeyUp="this.value = formateafechaYearMes(this.value);" />
+                </div>
+                <div class="form-group col-lg-3 col-md-4 col-sm-4">
+                    <label class="form-label" for="txtValorTMM">Valor</label>
+                    <input type="text" class="form-control" id="txtValorTMM" onkeyup="this.value = validaDecimales(this.value, 3);" />
+                </div>
+            </div>
+        </div> <!--DIV QUE CIERRA PANEL - CAMPOS-->
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover" id="tblConsultaMonedaMensual" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!--DIV QUE CIERRA PANEL - TABLA-->
+
+    <div class="btn-group" style="float: right;">
+        <button type="button" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar</button>
+        <button type="button" class="btn btn-default btnDark" onclick="Eliminar();" style="margin-right: 20px;"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>&nbsp;Eliminar</button>
+        <button type="button" onclick="Imprimir();" class="btn btn-default btnDark" style="margin-right: 20px;"><i class="fa fa-print fa-lg" aria-hidden="true"></i>&nbsp;Imprimir</button>
+        <button type="button" class="btn btn-default btnLight" onclick="Limpiar()" style="margin-right: 20px;"><i class="fa fa-file fa-lg" aria-hidden="true"></i>&nbsp;Limpiar</button>
+        <button type="button" onclick="Salir();" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+    </div>
+
+</form>
+
+@* Begins Hiddens *@
+@Html.Hidden("urlCargarTabla", Url.Action("CargarTabla", "ValoresMM"))
+@Html.Hidden("urlConsulta", Url.Action("Consulta", "ValoresMM"))
+@Html.Hidden("urlGrabar", Url.Action("GrabarValoresMoneda", "ValoresMM"))
+@Html.Hidden("urlEliminar", Url.Action("EliminarValoresMoneda", "ValoresMM"))
+@Html.Hidden("urlReporte", Url.Action("Reporte", "ValoresMM"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsValoresMM.js"></script>
+
+}

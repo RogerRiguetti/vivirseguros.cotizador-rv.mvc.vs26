@@ -1,0 +1,42 @@
+﻿  .panel-default > .panel-heading  {
+  color: #fff;
+  background-color: #0B2343;
+  border-color: #ddd;
+  background-image: linear-gradient(to bottom,#2D588F 0,#0B2343 100%);
+}
+
+.ImagenBoton {
+    color: #dc0e0e;
+}
+
+label {
+    color: #0B2343;
+}
+
+
+.BotonRojo {
+    color: #fff;
+    background-color: #dc0e0e;
+}
+
+
+.BotonRojo hover {
+    color: #0B2343;
+    background-color: #dc0e0e;
+}
+
+.BotonAceptar {
+    color: #fff;
+    background-color: #0B2343;
+}
+
+.BotonAceptar hover {
+    color: #0B2343;
+    background-color: #0B2343;
+}
+
+.Etiquetas
+{
+     color: #0B2343;
+      
+}

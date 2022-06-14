@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Header = "Reservas";
+    ViewBag.Title = "Reservas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media(max-width: 565px) {
+        .page-header {
+            font-size: 2em !important;
+        }
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+        input[type="checkbox"] + label span {
+            display: inline-block;
+            width: 17px;
+            height: 17px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+</style>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+            <label class="form-label" for="txtMesCal">Mes Cálculo</label>
+            <input type="text" class="form-control" name="txtMesCal" id="txtMesCal" placeholder="YYYYMM" maxlength="7" onKeyUp="this.value = formateafechaYearMes(this.value);" disabled>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Proceso de Migración</div>
+    <div class="panel-body">
+        <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
+            <button type="button" id="btnProMigracion" class="btn btn-default btnGreen" onclick="Buscar();" style="width: 100%;"><i class="fa fa-cogs fa-lg" aria-hidden="true"></i> Procesar</button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-3">
+            <label class="unprocessed" id="txtProMigracion"><i class="fa fa-circle fa-lg fa-spinner unprocessed" aria-hidden="true" id="ProMigracion"></i> Proceso Completo</label>
+        </div>
+        <div class="form-group col-lg-3 col-md-3 col-sm-4">
+            <button type="button" class="btn btn-default btnLight" id="btnResMigracion" onclick="exportarExcelReservas();"><img class="btnIcon" src="/Resources/img/exportar.png"> Exportar Excel</button>
+        </div>
+        <div class="clearfix"></div>
+        <hr />
+        @using (Html.BeginForm("UploadFile", "Reservas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken() // si tienes el decorador [ValidateAntiForgeryToken] en tu accion del controlador
+
+            <div class="form-group col-lg-3 col-md-3">
+                <label class="form-label" for="txtArchivoCargado">Carga Excel</label>
+                <input type="text" class="form-control" name="txtArchivoCargado" id="txtArchivoCargado" disabled>
+            </div>
+
+            <div class="col-lg-8 col-md-6 col-sm-6" style="margin-top: 25px;">
+                @*Parte del boton para buscar el archivo*@
+                <label for="file-input" name="__labelInput" class="btn btn-default btnLight"><i class="fa fa-search" aria-hidden="true"></i> Buscar</label>
+                <input id="file-input" name="file" type="file" accept=".xls, .xlsx" style="display:none;" validateRequest="false" onchange="return cambiarFile();" valid />
+                @*Parte del boton para cargar el archivo*@
+                <label for="file-submit" name="__labelsubmit" class="btn btn-default btnDark"><i class="fa fa-folder-open-o fa-lg" aria-hidden="true"></i> Cargar</label>
+                <input id="file-submit" type="submit" style="display:none;" disabled  onclick="return abrirModal();"/>
+            </div>
+        }
+    </div>
+</div>
+
+@*Cálculo de flujo total de Cartera*@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Cálculo de Flujo Total de Cartera
+    </div>
+    <div class="panel-body">
+        <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
+            <button type="button" id="btnProCartera" class="btn btn-default btnGreen" style="width: 100%;"><i class="fa fa-cogs fa-lg" aria-hidden="true"></i> Procesar</button>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-6">
+            <label class="unprocessed" id="txtProCartera"><i class="fa fa-circle fa-lg fa-spinner unprocessed" aria-hidden="true" id="ProCartera"></i> Proceso Completo</label>
+        </div>
+        @*<div class="progress col-xs-6 col-sm-6 col-md-6 col-lg-6" style="width:400px;border-radius:80px;padding:0px;height:35px;margin-bottom: 0px;border: solid 1px #009bbc;">
+            <div id="barCartera" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:0%;border-radius:80px;background-color:#00cbdf;">
+                <h4 class="modal-title" id="myModalLabel"><p id="demoflujo"></p>%</h4>
+            </div>
+        </div>*@
+        <div class="clearfix"></div>
+        <hr />
+
+        <div class="btn-group col-lg-12">
+            <button type="button" id="btnResCartera" class="btn btn-default btnDark" onclick="imprimirResumen();" style="margin-right: 20px">Flujo Cálculo Nuevo</button>
+            <button type="button" id="btnResCarteraAnt" class="btn btn-default btnDark" onclick="imprimirErrores();" style="margin-right: 20px">Flujo Cálculo Antigüo</button>
+            <button type="button" id="btnLog" class="btn btn-default btnDark" onclick="imprimirLog();" style="margin-right: 20px">Exportar Log</button>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Cálculo de Reserva
+    </div>
+    <div class="panel-body">
+        <div class="form-group col-lg-2 col-md-3 col-sm-3 col-xs-12">
+            <button type="button" id="btnProCalcular" class="btn btn-default btnGreen" style="width: 100%;"><i class="fa fa-cogs fa-lg" aria-hidden="true"></i> Procesar</button>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-3">
+            <label class="unprocessed" id="txtProReserva"><i class="fa fa-circle fa-lg fa-spinner unprocessed" aria-hidden="true" id="ProReserva"></i> Proceso Completo</label>
+        </div>
+
+        <div class="form-group col-lg-3 col-md-3 col-sm-4">
+            <button type="button" class="btn btn-default btnLight" id="btnResCalcular"><img class="btnIcon" src="/Resources/img/exportar.png"> Exportar Excel</button>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Reportes
+    </div>
+    <div class="panel-body">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btnDark" id="btnReporte1" onclick="ReporteFlujosPasivos();" style="margin-right: 20px;">Flujos de Pasivos</button>
+            <button type="button" class="btn btn-default btnDark" id="btnArchivoTxt" onclick="TxtFlujosPasivosNuevos();" style="margin-right: 20px;">Anexo 17 - Nuevas</</button>
+            <button type="button" class="btn btn-default btnDark" id="btnArchivoTxt2" onclick="TxtFlujosPasivosAntiguos();" style="margin-right: 20px;">Anexo 17 - Antigüas</button>
+            <button type="button" class="btn btn-default btnDark" id="btnArchivoTxt3" onclick="TxtFlujosPasivosMixtos();" style="margin-right: 20px;">Anexo 17 - Mixtas</button>
+            <button type="button" class="btn btn-default btnDark" id="btnReporte2" style="margin-right: 20px;">Resumen Reservas</button>
+            <button type="button" class="btn btn-default btnDark" id="btnReporte3" onclick="ReporteResumenAdecuacion();" style="margin-right: 20px;">Resumen Adecuación</button>
+            <button type="button" class="btn btn-default btnDark" id="btnReporte4" onclick="ReporteSbs();" style="margin-right: 20px;">Base SBS</button>
+            <button type="button" class="btn btn-default btnDark" id="btnReporteContable" style="margin-right: 20px;">Reporte Contable</button>
+        </div>
+    </div>
+</div>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* Begins Hiddens *@
+@Html.Hidden("urlPeriodo", Url.Action("Periodo", "Reservas"))
+@Html.Hidden("urlUPeriodo", Url.Action("UPeriodo", "Reservas"))
+@Html.Hidden("urlIniciar", Url.Action("IniciarCalculo", "Reservas"))
+@Html.Hidden("ExportarCsv", Url.Action("ExportarReservas", "Reservas"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@Html.Hidden("urllistasSeleccionadas", Url.Action("listasSeleccionadas", "MantenedorFiltros"))
+@Html.Hidden("urlCargaMasiva", Url.Action("UploadFile", "Reservas"))
+@Html.Hidden("urlMensaje", (object)ViewBag.mensaje)
+@Html.Hidden("urlCalculoFlujos", Url.Action("Calculo_Flujos", "Reservas"))
+@Html.Hidden("urlValidaCalculoFlujos", Url.Action("Valida_CalculoFlujos", "Reservas"))
+@Html.Hidden("urlValidaCurvaTasas", Url.Action("Valida_CurvaTasas", "Reservas"))
+@Html.Hidden("urlCalculoReserva", Url.Action("CalculoReserva", "Reservas"))
+@Html.Hidden("urlExportarReserva", Url.Action("ExportarExcel", "Reservas"))
+@Html.Hidden("urlExportarLog", Url.Action("ExportarLog", "Reservas"))
+@Html.Hidden("urlReporteResumenReservas", Url.Action("ReporteResumenReservas", "Reservas"))
+@Html.Hidden("urlReporteSbs", Url.Action("ReporteSbs", "Reservas"))
+@Html.Hidden("urlReporteFlujosPasivos", Url.Action("ReporteFlujosPasivos", "Reservas"))
+@Html.Hidden("urlReporteResumenAdecuacion", Url.Action("ReporteResumenAdecuacion", "Reservas"))
+@Html.Hidden("urlReporteContable", Url.Action("ReporteContableReservas", "Reservas"))
+@Html.Hidden("urlRptFlujosCartera", Url.Action("exportarFlujosCartera", "Reservas"))
+@Html.Hidden("urlRptFlujosCarteraAnt", Url.Action("exportarFlujosCarteraAnt", "Reservas"))
+@Html.Hidden("ExportarCalculoRes", Url.Action("ExportarCalculoRes", "Reservas"))
+@Html.Hidden("urlArchivoTxt", Url.Action("ArchivoTxt", "Reservas"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/jsReservas.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+}
+
+
+
+

@@ -1,0 +1,235 @@
+﻿body {
+    background: #F7FBFE;
+}
+.nav-side-menu {
+  font-family: verdana;
+  font-size: 12px;
+  font-weight: 200;
+  background-color: #0090B2;
+  left: 0px;
+  height: 100vh;
+  color: #757575;
+  padding: 0;
+  margin-top: 80px !important;
+}
+.nav-side-menu .brand {
+  background-color: transparent;
+  line-height: 50px;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+}
+.nav-side-menu .toggle-btn {
+  display: none;
+}
+.nav-side-menu ul,
+.nav-side-menu li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  line-height: 35px;
+  cursor: pointer;
+  /*    
+    .collapsed{
+       .arrow:before{
+                 font-family: FontAwesome;
+                 content: "\f053";
+                 display: inline-block;
+                 padding-left:10px;
+                 padding-right: 10px;
+                 vertical-align: middle;
+                 float:right;
+            }
+     }
+*/
+}
+.nav-side-menu ul :not(collapsed) .arrow:before,
+.nav-side-menu li :not(collapsed) .arrow:before {
+  font-family: FontAwesome;
+  content: "\f0d9";
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+  float: right;
+  font-size: 15px;
+  color: #FFFFFF;
+}
+
+.nav-side-menu ul :not(collapsed) .down:before,
+.nav-side-menu li :not(collapsed) .down:before {
+  font-family: FontAwesome;
+  content: "\f0d7";
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+  float: right;
+  font-size: 15px;
+  color: #FFFFFF;
+}
+
+.nav-side-menu ul .active,
+.nav-side-menu li .active {
+  border-left: 3px solid #2e353d;
+  /*background-color: #e7f1f3;*/
+}
+.nav-side-menu ul .sub-menu li.active,
+.nav-side-menu li .sub-menu li.active {
+    color: #d19b3d;
+}
+.nav-side-menu ul .sub-menu li.active a,
+.nav-side-menu li .sub-menu li.active a {
+    color: #d19b3d;
+    background-color:mediumvioletred;
+
+}
+.nav-side-menu ul .sub-menu li,
+.nav-side-menu li .sub-menu li {
+  background-color: #008BAA;
+  border: none;
+  line-height: 28px;
+  margin-left: 0px;
+}
+
+.nav-side-menu li:focus{
+  color: white;
+}
+
+ul.sub-menu {
+    padding-left: 7px;
+}
+/*.nav-side-menu ul .prop li,
+.nav-side-menu li .prop li {
+  padding-left: 15px;
+}
+
+.nav-side-menu .sub-menu li {
+    padding-left: 10px;
+}*/
+
+.nav-side-menu li {
+  padding-left: 0px;
+}
+.nav-side-menu li a {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+.nav-side-menu li a i {
+  padding-left: 10px;
+  width: 20px;
+  padding-right: 20px;
+}
+.nav-side-menu li:hover {
+  background-color: #007790;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.nav-side-menu ul .sub-menu li:hover, .nav-side-menu li .sub-menu li:hover {
+  background-color: #007790;
+}
+
+.nav-side-menu ul .sub-menu li.activa, .nav-side-menu li .sub-menu li.activa {
+  background-color: #007790;
+}
+
+.icono-menu {
+    font-size: 1.7em !important;
+}
+.icono-submenu {
+    width: 15px;
+}
+@media (max-width: 767px) {
+  .nav-side-menu {
+    width: 100%;
+    margin-bottom: 10px;
+    height: auto !important;
+    z-index: 1!important;
+  }
+  .nav-side-menu .toggle-btn {
+    display: block;
+    right: 0px;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 15px;
+  }
+  .brand {
+    text-align: left !important;
+    font-size: 22px;
+    padding-left: 20px;
+    line-height: 50px !important;
+  }
+    .container-main {
+      margin-top: 0 !important;
+  }
+}
+@media (min-width: 767px) {
+  .nav-side-menu .menu-list .menu-content {
+    display: block;
+  }
+}
+.caret{
+    margin-left:10px!important;
+}
+.collapsed.active{
+    border-top:1px solid #f8f8f8;
+}
+.ImgLogo{
+    background-color:transparent;
+    width:130px;
+    height: 100px;
+}
+#Mantenimiento li a { margin: 0px; display: inline-block; width: 86%; height: 100%; }
+#ProcesoCarga li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#RecepcionRes li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#DescargaRes li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#Excepciones li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#Mejoras li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#Cuenta li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#Mantenedor li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+#ExtraOficiales li a { margin: 0px; display: inline-block; width: 87%; height: 100%; }
+.logo{
+    z-index:2;
+    position:fixed!important;
+}
+
+/*Propiedad para focus en texto de menú*/
+.navbar-default li a.active,
+.navbar-default li a:focus,
+.navbar-default li a:hover {
+    opacity: 1!important;
+    background-color: transparent!important;
+}
+
+.menu-content > li:hover > a{
+    color:white;
+}
+
+/*Propiedades menu en responsivo*/
+@media (max-width: 767px){
+    .hidden-xs {
+    display: none!important;
+    }
+    .ImgLogo{
+        width:150px!important;
+        height: 85px!important;
+    }
+    .sidebar {
+        margin-top: 70px;
+    }
+}
+
+.main-header > div {
+    padding: 0px!important;
+}
+
+
+.navbar-header {
+    background: #007790;
+    border-bottom: 1px solid #ffffff;
+}

@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "Tasas de Mercado";
+    ViewBag.Header = "Mantenedor de Tasas de Mercado Históricas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+</style>
+
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin: 0px;">
+                <div class="col-md-3 col-lg-3" style="">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="CmbxTipoMonedaTMH" class="form-label">Tipo de Moneda</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        @Html.DropDownList("CmbxTipoMonedaTMH", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @style = " margin:  auto; ", @name = "CmbxTipoMonedaTMH" })<br />
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3" style="">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="CmbxTipoMonedaTMH" class="form-label">Año</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        @Html.DropDownList("cmbxYear", (IEnumerable<SelectListItem>)ViewBag.Year, "-- Seleccione --", new { @class = "form-control", @style = " margin:  auto; ", @name = "cmbxYear" })<br />
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3" style="">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; height: 25px;"> </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtYear" placeholder="Año" maxlength="4" style="margin:auto;" onkeypress="return soloNumeros(event);" /><br />
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3" style="">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; height: 25px;"> </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <button type="button" class="btn btn-default btnDark" id="btnBuscar" onclick="Buscar();"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!--DIV QUE CIERRA PANEL - CAMPOS-->
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; margin: 0px;"">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtEneroTMH" class="form-label">Enero</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtEneroTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtFebreroTMH" class="form-label">Febrero</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtFebreroTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtMarzoTMH" class="form-label">Marzo</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtMarzoTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtAbrilTMH" class="form-label">Abril</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtAbrilTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtMayoTMH" class="form-label">Mayo</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtMayoTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtJunioTMH" class="form-label">Junio</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtJunioTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtJulioTMH" class="form-label">Julio</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtJulioTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtAgostoTMH" class="form-label">Agosto</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtAgostoTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtSeptiembreTMH" class="form-label">Septiembre</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtSeptiembreTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtOctubreTMH" class="form-label">Octubre</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtOctubreTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtNoviembreTMH" class="form-label">Noviembre</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtNoviembreTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <label for="txtDiciembreTMH" class="form-label">Diciembre</label><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                        <input type="text" class="form-control" id="txtDiciembreTMH" placeholder="" maxlength="20" onkeyup="this.value = validaDecimales(this.value, 2);" /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!--DIV QUE CIERRA PANEL - MESES-->
+
+    <div class="btn-group" style="float: right;">
+        <button type="button" id="btnGrabar" name="btnGrabar" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar</button>
+        <button type="button" id="btnElminar" name="btnEliminar" class="btn btn-default btnDark" onclick="Eliminar();" style="margin-right: 20px;"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>&nbsp;Eliminar</button>
+        <button type="button" id="btnImprimir" name="btnImprimir" class="btn btn-default btnDark" style="margin-right: 20px;"><i class="fa fa-print fa-lg" aria-hidden="true"></i>&nbsp;Imprimir</button>
+        <button type="button" id="btnLimpiar" name="btnLimpiar" class="btn btn-default btnLight" onclick="Limpiar()" style="margin-right: 20px;"><i class="fa fa-file fa-lg" aria-hidden="true"></i>&nbsp;Limpiar</button>
+        <button type="button" id="btnSalir" name="btnSalir" class="btn btn-default btnDark" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+    </div>
+
+</form>
+
+@* Begins Hiddens *@
+@Html.Hidden("urlYear", Url.Action("ListaYear", "TasasMercado"))
+@Html.Hidden("urlBuscarYear", Url.Action("BuscarYear", "TasasMercado"))
+@Html.Hidden("urlGrabarYear", Url.Action("GrabarTasaMercado", "TasasMercado"))
+@Html.Hidden("urlEliminarYear", Url.Action("EliminarTasaMercado", "TasasMercado"))
+@Html.Hidden("urlReporte", Url.Action("Reporte", "TasasMercado"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsTasasMercado.js"></script>
+
+}

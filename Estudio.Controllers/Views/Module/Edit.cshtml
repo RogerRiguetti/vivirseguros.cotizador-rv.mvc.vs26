@@ -1,0 +1,90 @@
+﻿@model Estudio.Repository.Core.Domain.gzModule
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    //For SelectFx
+    //SelectListItem _defaultSystem =
+    //    new SelectListItem { Text = "Systems...", Value = "", Disabled = true, Selected = false };
+
+    List<SelectListItem> listSystem = new List<SelectListItem>();
+    //listSystem.Add(_defaultSystem);
+    listSystem.AddRange(
+        new SelectList(
+            new Estudio.Controllers.Models.SystemModel().Search("", Estudio.Repository.Helpers.EnumValues.ActiveValue), "Id", "Description", selectedValue: Model.SystemId));
+}
+
+
+
+
+<form id="myform">
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="page-header">Modules</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <span class="input">
+                                <input id='txtDescription' class='input_field' type="text" name="txtDescription" value="@Model.Description" />
+                                <label for='txtDescription'>
+                                    <span>Description</span>
+                                </label>
+                            </span>
+                        </div>
+                        <div class="col-xs-3 text-left">
+                            @Html.DropDownList("lstSystem", listSystem,
+                               new { @class = "cs-select cs-skin-underline" })
+                            <span id="lblSystemRequired" style="display: none;">required</span>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <a class="btn btn-default" href="@Url.Action("Index", "Module")">Return <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <a class="btn btn-default" id="btnSave">Save <span class="glyphicon glyphicon-floppy-saved"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Hidden("url", Url.Action("Edit", "Module"))
+
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsModuleSave.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+    <script>
+            // just for the demos, avoids form submit
+            jQuery.validator.setDefaults({
+                debug: true,
+                success: "valid"
+            });
+            $("#myform").validate({
+                errorClass: "requiredClass",
+                rules: {
+                    txtDescription: { required: false },
+                    lstSystem: { required: true }
+                }
+            });
+    </script>
+}
+
+
+
+

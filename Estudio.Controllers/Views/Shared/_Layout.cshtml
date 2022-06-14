@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Resources/css/chosen.min.css" rel="stylesheet" />
+    <link href="~/Resources/css/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Resources/css/dataTables.responsive.css" rel="stylesheet" />
+    <link href="~/Resources/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+    <link href="~/Resources/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/resources/css/style.css" rel="stylesheet" />
+    <link href="~/Resources/css/schTheme.css" rel="stylesheet" />
+    <link href="~/Resources/css/StyleMenu.css" rel="stylesheet" />
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <script src="~/Resources/js/chosen.jquery.min.js"></script>
+    <script src="~/Resources/js/additional-methods.min.js"></script>
+    @*<script src="~/Resources/js/bootstrap-datepicker.min.js"></script>*@
+    <script src="~/Resources/js/metisMenu.min.js"></script>
+    <script src="~/Resources/js/System.js"></script>
+    <script src="~/Resources/js/classie.js"></script>
+    <script src="~/Resources/js/selectFx.js"></script>
+    <script src="~/Scripts/_Layout.js"></script>
+    <script src="~/Resources/js/jsMenu.js"></script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    @RenderSection("styles", false)
+    <link href="~/Resources/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/Resources/css/cs-select.css" rel="stylesheet" />
+    <link href="~/Resources/css/cs-skin-underline.css" rel="stylesheet" />
+
+</head>
+<body>
+    @RenderSection("scriptsHeader", false)
+
+    <div class="page-header navbar-fixed-top" style="height:80px;">
+        <div class="hidden-xs col-lg-2 col-md-3 col-sm-3 container-img">
+            <img height="70" src="~/Resources/img/logo_menu.png" />
+        </div>
+        <div class="col-lg-10 col-md-9 col-sm-9 title-header">
+            <label class="titulo-header">@ViewBag.Header</label>
+        </div>
+    </div>
+
+    @Html.Partial("~/Views/Estudio/Menu.cshtml")
+    <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12 container-main" style="margin-top:97px">
+        @RenderBody()
+    </div>
+
+
+
+
+
+    <div id='sch_modal_confirm' class='modal fade' tabindex='-1' role='dialog' data-controls-modal="sch_modal_confirm" data-backdrop="static" data-keyboard="false">
+        <div class='modal-dialog modal-sm' role='document'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="msg_modal_header_confirm"></span>
+                </div>
+                <div class="modal-body">
+                    <span id="msg_modal_body_confirm"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class='btn btn-vida' id="btn_modal_aceptar_confirm">Ok</button>
+                    <button type="button" class="btn btn-danger" data-dismiss='modal' id="btn_modal_cerrar">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='modal_aviso_dos' class='modal fade' tabindex='-1' role='dialog' data-controls-modal="modal_aviso_dos" data-backdrop="static" data-keyboard="false">
+        <div class='modal-dialog modal-sm' role='document'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="modal_aviso_confirm"></span>
+                </div>
+                <div class="modal-body">
+                    <span id="msg_modal_aviso_confirm"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class='btn btn-vida' id="btn_modal_aviso_confirm">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="ModalBusArchivo" role='dialog' data-backdrop="static" data-keyboard="false" data-controls-modal="ModalBusArchivo">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Buscar Archivo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label for="modalFechaB" class="form-label">Fecha</label>
+                       
+                        @*<input type="date" class="form-control" name="txtFecha" id="modalFechaB" style="letter-spacing:0.5em;">*@
+                        <input type="text" id="modalFechaB" maxlength="10" class="form-control" name="txtFecha" placeholder="dd/mm/yyyy" onKeyUp="this.value=formateafecha(this.value);" />
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                        <label for="cmbModalArchivos" class="form-label">N° Archivo</label>
+                        <select class="form-control" id="cmbModalArchivos" disabled="disabled">
+                            <option value="-1" selected="">SELECCIONAR...</option>
+                        </select>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="form-group col-lg-4 col-md-4">
+                        <label for="NumOperacion" class="form-label">N° Archivo</label>
+                        <input type="text" class="form-control" name="NumOperacion" id="modalNumArchivo" disabled>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4">
+                        <label for="modalNombArchivo" class="form-label">Nombre Archivo</label>
+                        <input type="text" class="form-control" name="NombArchivo" id="modalNombArchivo" disabled>
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4">
+                        <label for="modalFechaCar" class="form-label">Fecha Carga</label>
+                        <input type="text" class="form-control" name="FechaCar" id="modalFechaCar" disabled>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div style="text-align: right">
+                        <button type="button" id="btnAcpetarM" class="btn btn-default btnLight" style="margin-right: 20px;">Aceptar</button>
+                        <button type="button" id="btnCancelarM" class="btn btn-default btnLight" data-dismiss="modal" style="margin-right: 20px;">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id='sch_modal' class='modal fade' tabindex='-1' role='dialog' onkeypress="pulsarmodal(event)" data-controls-modal="sch_modal" data-backdrop="static" data-keyboard="false">
+        <div class='modal-dialog modal-sm' role='document'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="~/Resources/img/iconos/error.png" /><br />
+                    <span id="msg_modal_header"></span>
+                </div>
+                <div class="modal-body" style="text-align: center; color: #09A6CA;">
+                    <span id="msg_modal_body"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class='btn btn-vida' id="btn_modal_aceptar">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Hidden("UrlLogin", Url.Action("Login", "Estudio"))
+    @Html.Hidden("UrlLogOut", Url.Action("LogOut", "Estudio"))
+    @Html.Hidden("UrlRenewSession", Url.Action("RenewSession", "Estudio"))
+
+    @RenderSection("scriptsFooter", false)
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

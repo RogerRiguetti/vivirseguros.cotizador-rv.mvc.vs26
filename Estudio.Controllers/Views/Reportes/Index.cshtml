@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Reporte Casos Ganados";
+    ViewBag.Header = "Reporte Casos Ganados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 530px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    hr {
+        margin-top: 0px !important;
+        margin-bottom: 10px !important;
+        border: 0;
+        border-top: 2px solid #eee;
+    }
+
+    table.dataTable tfoot th, table.dataTable tfoot td {
+        border-top: 2px solid #d6d7d6 !important;
+        color: #848484 !important;
+        font-weight: bold;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+        input[type="radio"] + label span {
+            display: inline-block;
+            width: 27px;
+            height: 27px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+
+    .modal-content {
+        left: -40% !important;
+        width: 180% !important;
+    }
+
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .imgmod {
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+
+    .seleccionado {
+        color: #000000;
+        background-color: inherit;
+    }
+
+    table.dataTable tbody td {
+        color: black;
+    }
+</style>
+
+<form id="myform">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Datos
+        </div>
+        <div class="panel-body" id="caja">
+            <div class="form-group col-lg-12 col-md-6 col-sm-12">
+                    <div class="form-group col-lg-6 col-md-6" id="divParametrosRV">
+                        <label class="form-label col-lg-4">Parámetros Reporte RV</label>
+                        <input type="radio" name="rdParametrosRV" id="rdSuscripcion" value="Sus" checked><label class="form-label col-lg-3" for="rdSuscripcion"><span></span>Fecha Suscripción</label>
+                        <input type="radio" name="rdParametrosRV" id="rdTraspaso" value="Tra"><label class="form-label col-lg-3" for="rdTraspaso"><span></span>Fecha Traspaso de Prima</label>
+                        
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6" id="divParametrosRP">
+                        <label class="form-label col-lg-4">Parámetros Reporte RP</label>
+                        <input type="radio" name="rdParametrosRP" id="rdSolicitud" value="Sol" checked><label class="form-label col-lg-3" for="rdSolicitud"><span></span>Fecha Solictud</label>
+                        <input type="radio" name="rdParametrosRP" id="rdAbono" value="Abo"><label class="form-label col-lg-3" for="rdAbono"><span></span>Fecha Abono</label>
+                    </div>
+                </div>
+            <div class="form-group col-lg-12 col-md-2 col-sm-12">
+                <div class="form-group col-lg-4 col-md-2 col-sm-12">
+                    <label class="form-label">Fecha Desde</label>
+                    <input type="date" class="form-control" id="FecDesde" name="FecDesde" placeholder="Desde">
+                </div>
+                <div class="form-group col-lg-4 col-md-2 col-sm-12 mr">
+                    <label class="form-label">Fecha Hasta</label>
+                    <input type="date" class="form-control" id="FecHasta" name="FecHasta" placeholder="Hasta">
+                </div>
+                <br />
+                <div class="form-group col-lg-2 col-md-2 col-sm-12">
+                    <button type="button" id="btnExportar" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/exportar.png" /> Exportar</button>
+                    <a id="descargar" hidden></a>
+                </div>
+                </div>
+            </div>
+
+    </div><!--DIV QUE CIERRA PANEL-->
+    
+</form>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+<meta http-equiv="Cache-Control" content="no-cache" />
+
+@Html.Hidden("urlGenerarReporteGanados", Url.Action("GenerarReporteGanados", "Reportes"))
+@Html.Hidden("urlGuardarExcel", Url.Action("ExportarReporteGanados", "Reportes"))
+
+@section scriptsFooter
+{
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-multiselect.min.js"></script>
+
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsReportesCasosGanados.js"></script>
+}

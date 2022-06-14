@@ -1,0 +1,308 @@
+﻿
+@{
+    ViewBag.Title = "ProCarArchivo";
+    ViewBag.Header = "Proceso Carga Archivo - Resultados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 530px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    hr {
+        margin-top: 0px !important;
+        margin-bottom: 10px !important;
+        border: 0;
+        border-top: 2px solid #eee;
+    }
+
+    input[type="radio"] {
+        display: none;
+    }
+
+        input[type="radio"] + label span {
+            display: inline-block;
+            width: 27px;
+            height: 27px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .ImgModal {
+        margin-left: 40%;
+        margin-top: 10%;
+    }
+</style>
+
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Seleccionar el Archivo a Cargar
+        </div>
+        <div class="panel-body">
+
+            <form id="form-file" method="post" enctype="multipart/form-data">
+                @*Input donde se mostrara el nombre del xml*@
+                <div class="form-group col-lg-6">
+                    <input type="text" class="form-control" name="txtCargaArchivo" id="txtCargaArchivo" disabled>
+                </div>
+                @*Parte del boton para cargar el archivo*@
+                <div class="form-group col-lg-3">
+                    <label for="file-input" name="__labelInput" class="btn btn-default btnDark"><i class="fa fa-search" aria-hidden="true"></i> Buscar Archivo</label>
+                    <input id="file-input" name="__fileInput" type="file" accept=".xml" style="display:none;" validateRequest="false" onchange="return cambiarFile();" valid />
+                </div>
+            </form>
+        </div>
+    </div><!--DIV QUE CIERRA PANEL-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Antecedentes Generales
+        </div>
+        <div class="panel-body">
+
+            @*Carga el nombre del archivo*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNombreArchivo" class="form-label">Nombre del Archivo</label>
+                <input type="text" class="form-control" name="txtNombreArchivo" id="txtNombreArchivo" disabled>
+            </div>
+
+            @*Carga el tipo de archivo*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtTipoArchivo" class="form-label">Tipo de Archivo</label>
+                <input type="text" class="form-control" name="txtTipoArchivo" id="txtTipoArchivo" disabled>
+            </div>
+
+            @*Carga el usuario*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtUsuario" class="form-label">Usuario</label>
+                <input type="text" class="form-control" name="txtUsuario" id="txtUsuario" disabled>
+            </div>
+
+            <div class="clearfix hidden-sm"></div>
+
+            @*Fecha de carga*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtFechaCarga" class="form-label">Fecha de Carga</label>
+                <input type="text" class="form-control" name="txtFechaCarga" id="txtFechaCarga" disabled>
+            </div>
+
+            @*Hora de carga*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtHoraCarga" class="form-label">Hora de Carga</label>
+                <input type="text" class="form-control" name="txtHoraCarga" id="txtHoraCarga" disabled>
+            </div>
+
+        </div>
+    </div><!--DIV QUE CIERRA PANEL-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Resumen de Carga
+        </div>
+        <div class="panel-body">
+            @*Estado de Carga*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtEstadoCarga" class="form-label">Estado de Carga</label>
+                <input type="text" class="form-control" name="txtEstadoCarga" id="txtEstadoCarga" disabled>
+            </div>
+
+            @*N° Totales de Solicitudes*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumTotalSol" class="form-label">N° Totales de Solicitudes</label>
+                <input type="text" class="form-control" name="txtNumTotalSol" id="txtNumTotalSol" disabled>
+            </div>
+
+            @*N° Solicitudes Aceptadas*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumSolAcep" class="form-label">N° Solicitudes Aceptadas</label>
+                <input type="text" class="form-control" name="txtNumSolAcep" id="txtNumSolAcep" disabled>
+            </div>
+
+            <div class="clearfix hidden-sm"></div>
+
+            @*N° Solicitudes Recotizadas*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumSolReco" class="form-label">N° Solicitudes Recotizadas</label>
+                <input type="text" class="form-control" name="txtNumSolReco" id="txtNumSolReco" disabled>
+            </div>
+
+            @*N° Solicitudes Ganadas Otras CIA*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumSolGanOtraCia" class="form-label">N° Solicitudes Ganadas Otras CIA</label>
+                <input type="text" class="form-control" name="txtNumSolGanOtraCia" id="txtNumSolGanOtraCia" disabled>
+            </div>
+
+            @*N° Solicitudes Desistidas*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumSolDesi" class="form-label">N° Solicitudes Desistidas</label>
+                <input type="text" class="form-control" name="txtNumSolDesi" id="txtNumSolDesi" disabled>
+            </div>
+            <div class="clearfix hidden-sm"></div>
+
+            @*N° Solicitudes Ganadas AFP*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumSolGanAFP" class="form-label">N° Solicitudes Ganadas AFP</label>
+                <input type="text" class="form-control" name="txtNumSolGanAFP" id="txtNumSolGanAFP" disabled>
+            </div>
+
+            @*N° Solicitudes Caducadas*@
+            <div class="form-group col-lg-3 col-md-4 col-sm-6">
+                <label for="txtNumSolCadu" class="form-label">N° Solicitudes Caducadas</label>
+                <input type="text" class="form-control" name="txtNumSolCadu" id="txtNumSolCadu" disabled>
+            </div>
+        </div>
+    </div><!--DIV QUE CIERRA PANEL-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Opciones de Impresión
+        </div>
+        <div class="panel-body">
+
+            @*N° Solicitudes Ganadas AFP*@
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+                <input type="radio" name="check" id="checkSolGanAFP" checked><label class="form-label" for="checkSolGanAFP"><span></span>Resumen de Carga de Archivos</label>
+            </div>
+
+            @*Recotizadas*@
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                <input type="radio" name="check" id="checkRecoti"><label class="form-label" for="checkRecoti"><span></span>Detalle Recotizadas</label>
+            </div>
+            <div class="clearfix hidden-sm"></div>
+
+            @*Aceptadas*@
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                <input type="radio" name="check" id="checkAceptadas"><label class="form-label" for="checkAceptadas"><span></span>Aceptadas</label>
+            </div>
+
+            @*Desistidas*@
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                <input type="radio" name="check" id="checkDesistidas"><label class="form-label" for="checkDesistidas"><span></span>Detalle Desistidas</label>
+            </div>
+            <div class="clearfix hidden-sm"></div>
+
+            @*Caducadas*@
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                <input type="radio" name="check" id="checkCaducadas"><label class="form-label" for="checkCaducadas"><span></span>Detalle Caducadas</label>
+            </div>
+
+            @*Ganadas Otras Cias/AFP*@
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                <input type="radio" name="check" id="checkGanOtrasCia"><label class="form-label" for="checkGanOtrasCia"><span></span>Ganadas Otras Cia./AFP</label>
+            </div>
+            
+        </div>
+    </div><!--DIV QUE CIERRA PANEL-->
+
+    <div class="btn-group" style="float: right">
+        <button type="button" id="btnBuscar" class="btn btn-default btnDark" data-toggle="modal" data-target="#ModalBusArchivo" style="margin-right: 20px;"><i class="fa fa-search fa-lg" aria-hidden="true"></i> Buscar</button>
+        <button type="button" id="btnCargar" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="cargar();"><img class="btnIcon" src="~/Resources/img/cargar.png" /> Cargar</button>
+        <button type="button" id="btnImprimir" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="imprimir();"><i class="fa fa-print fa-lg" aria-hidden="true"></i> Imprimir</button>
+        <button type="button" id="btnSalir" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="salir();"><img class="btnIcon" src="~/Resources/img/salir.png" /> Salir</button>
+    </div>
+
+
+    @*<div class="panel panel-default">
+        <div class="panel-body">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align:  center;">
+                    <img id="btnCargar" src="/Resources/img/iconos/vcRecurso 10.png" style="height: 30px; cursor:pointer;" onclick="cargar();"><br>
+                    <label for="" class="control-label txtBoton">Cargar</label>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align:  center;">
+                    <img id="btnImprimir" src="/Resources/img/iconos/vcRecurso 3.png" style="height: 30px; cursor:pointer;" onclick="imprimir();"><br>
+                    <label for="" class="control-label txtBoton">Imprimir</label>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align:  center;">
+                    <img id="btnBuscar" src="/Resources/img/iconos/vcRecurso 6.png" style="height: 30px; cursor:pointer;" data-toggle="modal" data-target="#ModalBusArchivo"><br>
+                    <label for="" class="control-label txtBoton">Buscar</label>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" style="text-align:  center;">
+                    <img id="btnSalir" src="/Resources/img/iconos/vcRecurso 7.png" style="height: 30px; cursor:pointer;" onclick="salir();"><br>
+                    <label for="" class="control-label txtBoton">salir</label>
+                </div>
+            </div>
+        </div>*@
+</form>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando validaciones</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@Html.Hidden("urlCargarArchivoB", Url.Action("CargarArchivoB", "ProCarArchivo"))
+
+@Html.Hidden("urlCargarXML", Url.Action("cargarXML", "ProCarArchivo"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@Html.Hidden("urlUsuario", (object)ViewBag.usuario)
+
+@* URL PARA REPORTES *@
+@Html.Hidden("urlRptResumen", Url.Action("RptResumen", "ProCarArchivo"))
+@Html.Hidden("urlValidaRpts", Url.Action("validaReportes", "ProCarArchivo"))
+@Html.Hidden("urlRptGanadas", Url.Action("RptGanadas", "ProCarArchivo"))
+@Html.Hidden("urlValidaRptPerdidasCia", Url.Action("validaRptPerdidasCia", "ProCarArchivo"))
+@Html.Hidden("urlRptPerdidasCIA", Url.Action("RptPerdidasCia", "ProCarArchivo"))
+@Html.Hidden("urlRptPerdidasAFP", Url.Action("RptPerdidasAfp", "ProCarArchivo"))
+
+@Html.Hidden("urlValidaRptsCIA", Url.Action("validaRptsCia", "ProCarArchivo"))
+@Html.Hidden("urlValidaRptsAFP", Url.Action("validaRptsAfp", "ProCarArchivo"))
+
+
+@* RECOTIZADAS *@
+@Html.Hidden("urlRptRecotizadasCIA", Url.Action("RptRecotizadasCia", "ProCarArchivo"))
+@Html.Hidden("urlRptRecotizadasAFP", Url.Action("RptRecotizadasAfp", "ProCarArchivo"))
+
+@* DESISTIDAS *@
+@Html.Hidden("urlRptDesistidasCIA", Url.Action("RptDesistidasCia", "ProCarArchivo"))
+@Html.Hidden("urlRptDesistidasAFP", Url.Action("RptDesistidasAfp", "ProCarArchivo"))
+
+
+@* CADUCADAS *@
+@Html.Hidden("urlRptCaducadasCIA", Url.Action("RptCaducadasCia", "ProCarArchivo"))
+@Html.Hidden("urlRptCaducadasAFP", Url.Action("RptCaducadasAfp", "ProCarArchivo"))
+
+@Html.Hidden("urlBuscarNumerosArchivo", Url.Action("BuscarNumerosArchivo", "ProCarArchivo"))
+@section scriptsFooter
+{
+    
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script src="~/Resources/js/jsProCarArchivo.js"></script>
+
+}

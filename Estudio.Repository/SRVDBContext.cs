@@ -1,0 +1,165 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Estudio.Repository
+{
+    public class SRVDBContext<T>
+    {
+        /// <summary>
+        /// Antonio Quezada
+        /// 2018-02-13
+        /// </summary>
+        /// <param name="parameterName"> Nombre del parámetro recibido en el procedimiento almacenado </param>
+        /// <param name="parameterType"> Tipo de parámetro requerido por el procedimiento almacenado </param>
+        /// <param name="parameterValue"> Valor que tendrá el parámetro </param>
+        /// <param name="parameterDirection"> Direcciòn del parámetro </param>
+        /// <returns> Regresa el parámetro con sus respectivas propiedades </returns>
+
+        public static SqlParameter AddParams(string parameterName, SqlDbType parameterType, object parameterValue, ParameterDirection parameterDirection)
+        {
+            SqlParameter parameters = new SqlParameter();
+            parameters.ParameterName = parameterName;
+            parameters.SqlDbType = parameterType;
+            parameters.Value = parameterValue;
+            parameters.Direction = parameterDirection;
+
+            return parameters;
+        }
+
+        /// <summary>
+        /// Antonio Quezada
+        /// 2018-02-13
+        /// Ejecuta un procedimiento almacenado que necesita parámetros
+        /// </summary>
+        /// <param name="storedProcedure"> Nombre del procedimiento almacenado </param>
+        /// <param name="parameters"> Parámetros requeridos por el procedimiento </param>
+        /// <param name="copyRow"> Registros que regresa el procedimiento </param>
+        /// <returns> Regresa los registros de base de datos </returns>
+
+        public static IEnumerable<T> CallStoreProcedure(string storedProcedure, List<SqlParameter> parameters, Func<IDataRecord, T> copyRow)
+        {
+            using (SqlConnection Conexion = new SqlConnection(SRVConectionString.Connection()))
+            {
+                using (SqlCommand cmd = new SqlCommand(storedProcedure, Conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 0;
+
+                    parameters.ForEach(x => cmd.Parameters.Add(x));
+
+                    Conexion.Open();
+                    using (var rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            yield return copyRow(rdr);
+                        }
+                        rdr.Close();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Antonio Quezada
+        /// 2018-04-13
+        /// Ejecuta una consulta en base de datos
+        /// </summary>
+        /// <param name="query"> Consulta que se va a ejecutar en la base de datos </param>
+        /// <param name="copyRow"> Registros que regresa el procedimiento </param>
+        /// <returns></returns>
+
+        public static IEnumerable<T> CallSelectStatement(string query, Func<IDataRecord, T> copyRow)
+        {
+            using (SqlConnection Conexion = new SqlConnection(SRVConectionString.Connection()))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, Conexion))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandTimeout = 0;
+
+                    Conexion.Open();
+                    using (var rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            yield return copyRow(rdr);
+                        }
+                        rdr.Close();
+                    }
+                }
+            }
+        }
+
+        public static DataTable CallStoreProcedureDt(string storedProcedure, List<SqlParameter> parameters)
+        {
+            var dataTable = new DataTable();
+
+            using (SqlConnection Conexion = new SqlConnection(SRVConectionString.Connection()))
+            {
+                using (SqlCommand cmd = new SqlCommand(storedProcedure, Conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 0;
+
+                    parameters.ForEach(x => cmd.Parameters.Add(x));
+
+                    Conexion.Open();
+
+                    var dataReader = cmd.ExecuteReader();
+                    dataTable.Load(dataReader);
+                }
+            }
+
+            return dataTable;
+        }
+
+        public static DataTable CallSelectStatementDt(string query, Func<IDataRecord, T> copyRow)
+        {
+            var dataTable = new DataTable();
+
+            using (SqlConnection Conexion = new SqlConnection(SRVConectionString.Connection()))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, Conexion))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandTimeout = 0;
+
+                    Conexion.Open();
+
+                    var dataReader = cmd.ExecuteReader();
+                    dataTable.Load(dataReader);
+                }
+            }
+
+            return dataTable;
+        }
+
+        public static IEnumerable<T> CallSelectStatementConection(string conectionString, string query, Func<IDataRecord, T> copyRow)
+        {
+            using (SqlConnection Conexion = new SqlConnection(conectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, Conexion))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandTimeout = 0;
+
+                    Conexion.Open();
+                    using (var rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            yield return copyRow(rdr);
+                        }
+                        rdr.Close();
+                    }
+                }
+            }
+        }
+    }
+}

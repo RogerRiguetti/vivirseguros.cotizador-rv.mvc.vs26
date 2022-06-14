@@ -1,0 +1,52 @@
+﻿@model Estudio.Repository.Core.Domain.gzSystem
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="myform">
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="page-header">Systems</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-3 text-left">
+                            <span class="input">
+                                <input id='txtDescription' class='input_field' type="text" name="txtDescription" disabled="disabled" value="@Model.Description" />
+                                <label for='txtDescription'>
+                                    <span>Description</span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <a class="btn btn-default" href="@Url.Action("Index", "System")">Return <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Hidden("url", Url.Action("Details", "System"))
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsSystemSave.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
+}
+
+
+
+

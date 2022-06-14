@@ -1,0 +1,124 @@
+﻿@model Estudio.Repository.Core.Domain.gzPage
+@{
+    ViewBag.Title = "Configure";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+    Estudio.Repository.Core.Domain.gzModule Module =
+        new Estudio.Controllers.Models.ModuleModel().Details(Model.ModuleId);
+
+    string textModule = Module.Description;
+
+    string textSystem = new Estudio.Controllers.Models.SystemModel().Details(Module.SystemId).Description;
+}
+
+
+<form id="myform">
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="page-header">Pages</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtDescription' disabled="disabled" class='input_field' type="text" name="txtDescription" value="@Model.Description" />
+                                <label for='txtDescription'>
+                                    <span>Description</span>
+                                </label>
+                            </span>
+                        </div>
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtSystem' disabled="disabled" class='input_field' type="text" name="txtSystem" value="@textSystem" />
+                                <label for='txtSystem'>
+                                    <span>System</span>
+                                </label>
+                            </span>
+
+                        </div>
+                        <div class="col-xs-4 text-left">
+                            <span class="input">
+                                <input id='txtModule' disabled="disabled" class='input_field' type="text" name="txtModule" value="@textModule" />
+                                <label for='txtModule'>
+                                    <span>Module</span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#menu0">Permissions</a></li>
+                            </ul>
+                            <div id="lblRequired" style="display:none;">
+                                <br />
+                                <span style="color:red;">Por favor marque al menos una pantalla.</span>
+                                <br />
+                            </div>
+                            <div class="tab-content">
+                                <div id="menu0" class="tab-pane fade in active">
+                                    <table class="table table-striped table-bordered table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th class="sch-col-width-left">Permission</th>
+                                                <th class="text-center sch-col-width-right"> </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.Permissions)
+                                            {
+                                                <tr>
+                                                    <td class="sch-col-width-left">
+                                                        @item.Description
+                                                    </td>
+                                                    <td class="text-center sch-col-width-right">
+                                                        @Html.CheckBox("chkPermission", ((item.Unassigned == null) ? false : true), new { data_value = item.Id, @onchange = "checkRequired(this);" })
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="height:60px;"></div>
+                    <div class="row">
+                        <div class="col-xs-6 text-left">
+                            <a class="btn btn-default" href="@Url.Action("Index", "Page")">Return <span class="glyphicon glyphicon-arrow-left"></span></a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <a class="btn btn-default" id="btnSave">Save <span class="glyphicon glyphicon-floppy-saved"></span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@Html.Hidden("url", Url.Action("Configure", "Page"))
+@Html.Hidden("modelModuleId", Model.ModuleId)
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsPageConfigure.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+
+}
+
+
+
+

@@ -1,0 +1,209 @@
+﻿
+@{
+    ViewBag.Title = "Mantenedor de Filtros";
+    ViewBag.Header = "Mantenedor de Filtro de Selección";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media(max-width: 450px) {
+        label.form-label.lblFiltrosCheck {
+            font-size: 12px;
+        }
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+        input[type="checkbox"] + label span {
+            display: inline-block;
+            width: 17px;
+            height: 17px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+
+    input[class="chk_filtros"] {
+        display: inline;
+        margin-right: 5px;
+    }
+</style>
+
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-heading">Características de Cotizaciones</div>
+        <div class="panel-body">
+            @*Combo Prestación*@
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 7.5px; margin: 0px;">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px;">
+                    <label class="form-label" for="cmbxPeriodos">Presentación</label>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3" style="padding: 0px 50px 10px 0px;">
+                    <select class="control-label" name="prestacion" id="cmbPrincipal">
+                        <option value="JubLegal">Jubilación Legal</option>
+                        <option value="JubAnticipada">Jubilación Anticipada</option>
+                        <option value="Sobrevivencia">Sobrevivencia</option>
+                        <option value="InParcial">Invalidez Parcial</option>
+                        <option value="InTotal">Invalidez Total</option>
+                    </select>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="padding: 0px 0px 10px 0px;">
+                    <button type="button" class="btn btn-default btnDark" id="btnGrabar" onclick="Buscar();"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                </div>
+            </div>
+
+            @*Tipo Renta*@
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="padding: 7.5px;">
+                <div class="panel panel-default" style="margin: 0px;">
+                    <div class="panel-heading">Tipo Renta</div>
+                    <div class="panel-body">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="TipoRentaBox" style="margin: 0px;"></div>
+                    </div>
+                </div> <!--DIV QUE CIERRA PANEL TIPO RENTA-->
+            </div>
+
+            @*Tipo Moneda y Prima*@
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="padding: 0px;">
+                @*Tipo Moneda*@
+                <div class="col-xs-12 col-sm-8 col-md-6 col-lg-12" style="padding: 7.5px;">
+                    <div class="panel panel-default" style="margin: 0px;">
+                        <div class="panel-heading">Tipo Moneda</div>
+                        <div class="panel-body">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="TipoMonedaBox" style="margin: 0px;"></div>
+                        </div>
+                    </div> <!--DIV QUE CIERRA PANEL TIPO MONEDA-->
+                </div>
+                @*Prima*@
+                <div class="col-xs-12 col-sm-4 col-md-6 col-lg-12" style="padding: 7.5px;">
+                    <div class="panel panel-default" style="margin: 0px;">
+                        <div class="panel-heading">Prima</div>
+                        <div class="panel-body">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="PrimaBox" style="margin: 0px; padding: 0px;">
+                                <div class="col-xs-5 col-sm-12 col-md-5 col-lg-3" style="padding: 0px;">
+                                    <input type="text" class="form-control Punto" name="txtMes" id="txtPrimaDesde" placeholder="Desde" maxlength="12" style="">
+                                </div>
+                                <div class="col-xs-2 col-sm-12 col-md-2 col-lg-1" style="padding: 0px; text-align: center; margin-top: 5px;">
+                                    <label class="form-label" style="">-</label>
+                                </div>
+                                <div class="col-xs-5 col-sm-12 col-md-5 col-lg-3" style="padding: 0px;">
+                                    <input type="text" class="form-control Punto" name="txtMes" id="txtPrimaHasta" placeholder="Hasta" maxlength="12" style="">
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--DIV QUE CIERRA PANEL PRIMA-->
+                </div>
+            </div> <!--DIV QUE CIERRA TIPO MONEDA Y PRIMA-->
+
+            @*Modalidad y Cliente Grupo*@
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4" style="padding: 0px;">
+                @*Modalidad*@
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8" style="padding: 7.5px;">
+                    <div class="panel panel-default" style="margin: 0px;">
+                        <div class="panel-heading">Modalidad</div>
+                        <div class="panel-body">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="ModalidadBox" style="margin: 0px;"></div>
+                        </div>
+                    </div> <!--DIV QUE CIERRA PANEL MODALIDAD-->
+                </div>
+                @*Cliente Grupo*@
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-8" style="padding: 7.5px;">
+                    <div class="panel panel-default" style="margin: 0px;">
+                        <div class="panel-heading">Cliente Grupo</div>
+                        <div class="panel-body">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="ClienteGrupoBox" style="margin: 0px;"></div>
+                        </div>
+                    </div> <!--DIV QUE CIERRA PANEL CLIENTE GRUPO-->
+                </div>
+            </div> <!--DIV QUE CIERRA MODALIDAD Y CLIENTE-->
+
+            @*Características Beneficiario*@
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10" style="padding: 15px 0px 0px 0px;">
+                <div class="panel panel-default" style="margin: 0px;">
+                    <div class="panel-heading">
+                        Características Beneficiario
+                    </div>
+                    <div class="panel-body" style="padding: 10px;">
+                        @*Estado Civil*@
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" style="padding: 7.5px;">
+                            <div class="panel panel-default" style="margin: 0px;">
+                                <div class="panel-heading">Estado Civil</div>
+                                <div class="panel-body">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="EstadoCivilBox" style="margin: 0px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Sexo y Edad*@
+                        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" style="padding: 0px">
+                            @*Sexo*@
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="padding: 7.5px;">
+                                <div class="panel panel-default" style="margin: 0px;">
+                                    <div class="panel-heading">Sexo</div>
+                                    <div class="panel-body">
+                                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="SexoBox" style="margin: 0px;"></div>
+                                    </div>
+                                </div> <!--DIV QUE CIERRA PANEL SEXO-->
+                            </div>
+                            @*Edad*@
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" style="padding: 7.5px;">
+                                <div class="panel panel-default" style="margin: 0px;">
+                                    <div class="panel-heading">Edad (Años)</div>
+                                    <div class="panel-body">
+                                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" id="EdadBox" style="margin: 0px; padding: 0px;">
+                                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-3" style="padding: 0px;">
+                                                <input name="myinput_drs" oninput="maxLengthCheck(this)" type="number" class="form-control Num" id="txtEdadIni" style="" placeholder="0" min="0" max="150" maxlength="3">
+                                            </div>
+                                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1" style="padding: 0px; text-align: center; margin-top: 5px;">
+                                                <label class="form-label" style="">-</label>
+                                            </div>
+                                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-3" style="padding: 0px;">
+                                                <input name="myinput_drs" oninput="maxLengthCheck(this)" type="number" class="form-control Num" id="txtEdadFin" style="" placeholder="150" min="0" max="150" maxlength="3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!--DIV QUE CIERRA PANEL EDAD-->
+                            </div>
+                        </div> <!--DIV QUE CIERRA SEXO Y EDAD-->
+
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL CARACTERÍSTICAS DE BENEFICIARIO-->
+            </div>
+
+
+            @*Boton*@
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 15px 0px 0px 0px;">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 0px; text-align : center;">
+                    <button type="button" class="btn btn-default btnGreen" onclick="Seleccionar();"><img class="btnIcon" src="~/Resources/img/iconos/cheked.png">&nbsp;Seleccionar Todo</button>
+                </div>
+            </div>
+        </div>
+    </div><!--DIV QUE CIERRA PANEL GENERAL-->
+
+    @*Iconos de opciones*@
+    <div class="btn-group" style="float: right">
+        <button type="button" class="btn btn-default btnDark" onclick="aceptar();" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/iconos/icono-aceptar.png">&nbsp;Aceptar</button>
+        <button type="button" class="btn btn-default btnGreen" onclick="salir();" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+    </div>
+</form>
+@* Begins Hiddens *@
+@Html.Hidden("filtros_Load", Url.Action("filtros_Load", "MantenedorFiltros"))
+@Html.Hidden("urlAceptar", Url.Action("aceptar", "MantenedorFiltros"))
+@Html.Hidden("urlBuscar", Url.Action("buscar", "MantenedorFiltros"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+@Html.Hidden("urllistasSeleccionadas", Url.Action("listasSeleccionadas", "MantenedorFiltros"))
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/jsMantenedorFiltros.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+}

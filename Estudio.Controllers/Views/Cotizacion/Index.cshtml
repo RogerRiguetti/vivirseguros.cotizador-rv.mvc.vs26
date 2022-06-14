@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Consultar";
+    ViewBag.Header = "Listado de Cotizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    int userId = Convert.ToInt32(this.Session["UserId"].ToString());
+    string rol = this.Session["Name"].ToString();
+    int idTipoDocumento = Convert.ToInt32(this.Session["IdTipoDocumento"]);
+    string documento = this.Session["Documento"] == null ? "" : this.Session["Documento"].ToString();
+    string nombres = this.Session["Nombres"] == null ? "" : this.Session["Nombres"].ToString();
+    string apellidos = this.Session["Apellidos"] == null ? "" : this.Session["Apellidos"].ToString();
+    int asesor = Convert.ToInt32(this.Session["Asesor"]);
+    string cuspp = this.Session["CUSPP"] == null ? "" : this.Session["CUSPP"].ToString();
+
+    var res = new Estudio.Controllers.Controllers.UserController().GetPermissions(userId);
+    Estudio.Logic.Identity identity = new Estudio.Logic.Identity();
+    identity = (Estudio.Logic.Identity)res.Object;
+    System.Globalization.CultureInfo ciCurr = System.Globalization.CultureInfo.CurrentCulture;
+
+    if (rol == "Administrador")
+    {
+        @Html.Hidden("urlConsultaAdmin")
+    }
+}
+
+
+@*<div class="main-header">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="page-header">Listado de Cotizaciones</h1>
+        </div>
+    </div>*@
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Seleccionar archivo a cargar
+    </div>
+    <div class="panel-body">
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
+            <label class="form-label" for="cmbxTiposDocumento">Seleccione tipo de documento</label>
+            @Html.DropDownList("cmbxTiposDocumento", (IEnumerable<SelectListItem>)ViewBag.TiposDocumento, "-- Seleccione --", new { @class = "form-control" })
+        </div>
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
+            <label class="form-label" for="Buscar">Número de Documento</label>
+            @Html.TextBox("Buscar", documento, new { @disabled = true, @class = "form-control", @name = "documento", @onkeyup = "return pulsar(event);", })
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
+            <label class="form-label" for="BuscarN">Nombres</label>
+            @Html.TextBox("BuscarN", nombres, new { @maxLenght = "50", @class = "form-control", @name = "BuscarN", @onkeypress = "return soloLetras(event);", @onkeyup = "return pulsar(event);", })
+        </div>
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
+            <label class="form-label" for="BuscarAp">Apellidos</label>
+            @Html.TextBox("BuscarAp", apellidos, new { @maxLenght = "60", @class = "form-control", @name = "BuscarAp", @onkeypress = "return soloLetras(event);", @onkeyup = "return pulsar(event);", })
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
+            <label class="form-label" for="BuscarCuspp">CUSPP</label>
+            @Html.TextBox("BuscarCuspp", cuspp, new { @maxLenght = "12", @class = "form-control", @name = "BuscarCuspp", @onkeyup = "return pulsar(event);", })
+        </div>
+        <div class="form-group col-lg-3 col-md-4 col-sm-6">
+            <label class="form-label" for="cmbxAsesores">Seleccione Asesor</label>
+            @if (rol == "Supervisor" || rol == "Administrador" || rol == "Gerente")
+            {
+                @Html.DropDownList("cmbxAsesores", null, "-- Seleccione --", new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownList("cmbxAsesores", null, "-- Seleccione --", new { style = "display:none", @class = "form-control" })
+            }
+        </div>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" align="right">
+            <a class="btn btn-vida btn-md" id="btnSearch" style="margin-right: 20px;"><i class="fa fa-search" aria-hidden="true"></i> Buscar</a>
+            <a class="btn btn-vida btn-md" id="btnAdd" href="@Url.Action("Create", "Cotizacion")"><i class="fa fa-plus" aria-hidden="true"></i> Registrar</a>
+        </div>
+
+    </div>
+</div>
+
+@*<div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="center">
+            <div class="form-group col-lg-6 col-md-9 col-sm-12 col-xs-12 pull-right">
+                @Html.DropDownList("cmbxTiposDocumento", (IEnumerable<SelectListItem>)ViewBag.TiposDocumento, "Seleccione tipo documento", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="center">
+            <div class="form-group col-lg-6 col-md-9 col-sm-12 col-xs-12">
+                @Html.TextBox("Buscar", documento, new { @disabled = true, @placeholder = "Número de Documento", @class = "form-control", @name = "documento", @onkeyup = "return pulsar(event);", })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="center">
+            <div class="form-group col-lg-6 col-md-9 col-sm-12 col-xs-12 pull-right">
+                @Html.TextBox("BuscarN", nombres, new { @maxLenght = "50", @placeholder = "Nombres", @class = "form-control", @name = "BuscarN", @onkeypress = "return soloLetras(event);", @onkeyup = "return pulsar(event);", })
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="center">
+            <div class="form-group col-lg-6 col-md-9 col-sm-12 col-xs-12">
+                @Html.TextBox("BuscarAp", apellidos, new { @maxLenght = "60", @placeholder = "Apellidos", @class = "form-control", @name = "BuscarAp", @onkeypress = "return soloLetras(event);", @onkeyup = "return pulsar(event);", })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" align="center">
+            <div class="form-group col-lg-6 col-md-9 col-sm-12 col-xs-12 pull-right">
+                @Html.TextBox("BuscarCuspp", cuspp, new { @maxLenght = "12", @placeholder = "CUSPP", @class = "form-control", @name = "BuscarCuspp", @onkeyup = "return pulsar(event);", })
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-6 col-xs-6" align="center">
+            <div class="form-group col-lg-6 col-md-9 col-sm-12 col-xs-12">
+                @if (rol == "Supervisor" || rol == "Administrador" || rol == "Gerente")
+                {
+                    @Html.DropDownList("cmbxAsesores", null, "Seleccione Asesor", new { @class = "form-control" })
+                }
+                else
+                {
+                    @Html.DropDownList("cmbxAsesores", null, "Seleccione Asesor", new { style = "display:none", @class = "form-control" })
+                }
+            </div>
+        </div>
+    </div>*@
+<div class="panel panel-default">
+    <div class="panel-heading">Resultados</div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover" id="tblConsultaCotizaciones" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Número Cotización</th>
+                        <th>Tipo documento</th>
+                        <th>Número Documento</th>
+                        <th>CUSPP</th>
+                        <th>Nombres</th>
+                        <th>Ape.Paterno</th>
+                        <th>Ape.Materno</th>
+                        <th>Fecha Cotiza</th>
+                        <th>Asesor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@* Begins Hiddens *@
+
+@Html.Hidden("modal_delete_header", (object)ViewBag.modal_delete_header)
+@Html.Hidden("modal_delete_body", (object)ViewBag.modal_delete_body)
+@Html.Hidden("url", Url.Action("Search", "Cotizacion"))
+@Html.Hidden("urlModificar", Url.Action("Edit", "Cotizacion"))
+@Html.Hidden("urlClonar", Url.Action("Edit", "Cotizacion"))
+@Html.Hidden("urlReporte", Url.Action("Reporte", "Cotizacion"))
+@Html.Hidden("urlReporteT", Url.Action("ReporteTasa", "Cotizacion"))
+@Html.Hidden("hdnGenerarReporte")
+@Html.Hidden("UrlSearch", Url.Action("Search", "Cotizacion"))
+@Html.Hidden("urlTipoDocumento", Url.Action("ValidaDocumento", "Cotizacion"))
+@Html.Hidden("urlEliminaCoti", Url.Action("EliminaCotizacion", "Cotizacion"))
+
+@if (identity.CotizacionEdit)
+{
+    @Html.Hidden("hdnModificar")
+}
+
+    @* End Hiddens *@
+
+    @section scriptsFooter
+{
+        <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+        <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/Resources/js/dataTables.responsive.js"></script>
+        <script src="~/Resources/js/jsCotizaciones.js"></script>
+
+    }

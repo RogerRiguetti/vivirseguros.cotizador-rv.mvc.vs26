@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "CalculoCotizacion";
+    ViewBag.Header = "Cálculo de Cotizaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table-wrapper-scroll-y {
+        display: block;
+        max-height: 250px;
+        overflow-y: auto;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    @@media (max-width: 767px) {
+        .page-header {
+            font-size: 2em !important;
+        }
+    }
+
+     .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .ImgModal{
+        margin-left: 40%;
+        margin-top: 15%;
+    }
+    td.sorting {
+    width: initial;
+    }
+
+    .textoTablas {
+        font-size: 10px;
+        white-space: nowrap;
+    }
+</style>
+
+<form id="myform">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Selección de cotizaciones
+        </div>
+        <div class="panel-body">
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                <label for="txtNumArchivo" class="form-label">Número de Archivo</label>
+                <input type="text" class="form-control" name="txtNumArchivo" id="txtNumArchivo" value="@ViewBag.NumArchivo" disabled />
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                <label for="txtNomArchivo" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="txtNomArchivo" id="txtNomArchivo" value="@ViewBag.NomArchivo" disabled />
+            </div>
+        </div>
+    </div>
+
+    <!--PANEL tabilador-->
+    <!--Contenedor-->
+    <div class="panel panel-default">
+        <ul class="nav nav-tabs" id="tabulador">
+            <li class="active"><a data-toggle="tab" href="#tabCalculadas">Calculadas</a></li>
+            <li><a data-toggle="tab" href="#tabNoCalculadas">No Calculadas</a></li>
+        </ul>
+        <div class="panel-body">
+            <div class="tab-content">
+                <!--Div Tabla Cotizadas-->
+                <div id="tabCalculadas" class="tab-pane fade in active">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="tbltabCalculadas">
+                            <thead>
+                                <tr>
+                                    <th style="width:auto">N° Orden</th>
+                                    <th style="width:auto">N° Cotización</th>
+                                    <th style="width:auto">N° Corr</th>
+                                    <th style="width:auto">N° Operación</th>
+                                    <th style="width:auto">CUSPP</th>
+                                    <th style="width:auto">Tipo Pensión</th>
+                                    <th style="width:auto">Tipo Renta</th>
+                                    <th style="width:auto">Años Dif./Esc</th>
+                                    <th style="width:auto">Modalidad</th>
+                                    <th style="width:auto">Años Gar.</th>
+                                    <th style="width:auto">Moneda</th>
+                                    <th style="width:auto">TIR</th>
+                                    <th style="width:auto">% Rta Esc.</th>
+                                    <th style="width:auto">Tasa Venta</th>
+                                    <th style="width:auto">Mto. Pensión</th>
+                                    <th style="width:auto">Tasa RT</th>
+                                    <th style="width:auto">Mto. Pensión RT</th>
+                                    <th style="width:auto">Prima Única</th>
+                                    <th style="width:auto">Pérdida Contable</th>
+                                    <th style="width:auto">Intermediario N° Ident.</th>
+                                    <th style="width:auto">% Com</th>
+                                    <th style="width:auto">Ind. Mej.</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div><!--Div Tabla Cotizadas-->
+                <!--Div Tabla No Cotizadas-->
+                <div id="tabNoCalculadas" class="tab-pane fade">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" id="tbltabNoCalculadas">
+                            <thead>
+                                <tr>
+                                    <th>N° Orden</th>
+                                    <th>N° Cotización</th>
+                                    <th>N° Corr</th>
+                                    <th>N° Operación</th>
+                                    <th>CUSPP</th>
+                                    <th>Tipo Pensión</th>
+                                    <th>Tipo Renta</th>
+                                    <th>CIC</th>
+                                    <th>Años Dif./Esc</th>
+                                    <th>Modalidad</th>
+                                    <th>Años Gar.</th>
+                                    <th>Moneda</th>
+                                    <th>% Rta Esc.</th>
+                                    <th>Prima Única</th>
+                                    <th>Intermediario N° Ident.</th>
+                                    <th>Ind. Mej.</th>
+                                    <th>Error</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div><!--Div Tabla No Cotizadas-->
+            </div><!--Tab Content-->
+        </div>
+    </div>
+
+    <div class="btn-group" style="float: right">
+        <button type="button" class="btn btn-default btnDark" onclick="ImprimirNoCalculadas();" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/no calculadas.png" /> No Calculadas</button>
+        <button type="button" class="btn btn-default btnLight" onclick="ImprimirCalculadas();" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/calculadas.png" /> Calculadas</button>
+        <button type="button" id="btnExportar" name="btnExportar" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/exportar.png" /> Exportar</button>
+        <button type="button" id="btnEnviar" name="btnEnviar" class="btn btn-default btnGreen" onclick="enviar();" style="margin-right: 20px;"><img class="btnIcon" src="~/Resources/img/calcular.png" /> Enviar</button>
+    </div>
+
+
+
+
+    @*Parte de seleccionar archivo a cargar*@
+    @*<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+            <div class="container" style="width:auto">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Seleccionar archivo a cargar
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <form id="form-file" method="post" enctype="multipart/form-data">
+                                <div class="col-xs-0 col-sm-0 col-md-10 col-lg-4"></div>
+                                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" style="margin:5px">
+                                    <input type="text" class="form-control" name="txtArchivoCargado" id="txtArchivoCargado" disabled>
+                                </div>
+                                <div class="image-upload col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-1" style="margin:5px">
+                                    <label for="file-input" name="__labelInput">
+                                        <img src="/Resources/img/iconos/vcRecurso 6.png" name="__imagen" style="width:30px; cursor:pointer;" />
+                                    </label>
+                                    <input id="file-input" name="__fileInput" type="file" accept=".xml" style="display:none;" validateRequest="false" onchange="return cambiarFile();" valid />
+                                    <p style="margin-top: 5px;" name="__inputParrafo"><label class="control-label" name="__txtBuscar" style="font-size: 10px;">Buscar</label></p>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+</form>
+
+@*ModalCargar*@
+<div class="modal fade" id="modalcargar" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Procesando validaciones</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="txt-modal">Espere un momento</p>
+                <img src="~/Resources/img/spinner.gif" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@* Begins Hiddens *@
+@Html.Hidden("urlCalculadas", Url.Action("ListaCalculadas", "SolicitudCotizacion"))
+@Html.Hidden("urlNoCalculadas", Url.Action("ListaNoCalculadas", "SolicitudCotizacion"))
+@Html.Hidden("urlRptCalculadas", Url.Action("RptCalculadas", "SolicitudCotizacion"))
+@Html.Hidden("urlRptNoCalculadas", Url.Action("RptNoCalculadas", "SolicitudCotizacion"))
+@Html.Hidden("urlcrearXML", Url.Action("crearXML", "SolicitudCotizacion"))
+@Html.Hidden("urlCrearExcel", Url.Action("ExportarCalculadas", "SolicitudCotizacion"))
+@*@Html.ActionLink("Click here to download", "ExportarCalculadas", new { })*@
+
+@Html.Hidden("urlcrearXMLB", Url.Action("crearXMLB", "SolicitudCotizacion"))
+
+
+
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    <script src="~/Resources/js/jsCalculoCotizacion.js"></script>
+
+}
+
+

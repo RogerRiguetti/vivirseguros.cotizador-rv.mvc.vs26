@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="guardarXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="docXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="guardarXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="guardarXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="obtenerXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="numArch" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="obtenerXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="obtenerXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="guardarXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:guardarXML" />
+  </wsdl:message>
+  <wsdl:message name="guardarXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:guardarXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="obtenerXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:obtenerXML" />
+  </wsdl:message>
+  <wsdl:message name="obtenerXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:obtenerXMLResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebServiceXMLSoap">
+    <wsdl:operation name="guardarXML">
+      <wsdl:input message="tns:guardarXMLSoapIn" />
+      <wsdl:output message="tns:guardarXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="obtenerXML">
+      <wsdl:input message="tns:obtenerXMLSoapIn" />
+      <wsdl:output message="tns:obtenerXMLSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServiceXMLSoap" type="tns:WebServiceXMLSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="guardarXML">
+      <soap:operation soapAction="http://tempuri.org/guardarXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerXML">
+      <soap:operation soapAction="http://tempuri.org/obtenerXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServiceXMLSoap12" type="tns:WebServiceXMLSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="guardarXML">
+      <soap12:operation soapAction="http://tempuri.org/guardarXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="obtenerXML">
+      <soap12:operation soapAction="http://tempuri.org/obtenerXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebServiceXML">
+    <wsdl:port name="WebServiceXMLSoap" binding="tns:WebServiceXMLSoap">
+      <soap:address location="http://localhost:28760/WebServiceXML.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServiceXMLSoap12" binding="tns:WebServiceXMLSoap12">
+      <soap12:address location="http://localhost:28760/WebServiceXML.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

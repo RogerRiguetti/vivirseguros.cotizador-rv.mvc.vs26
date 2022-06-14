@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "EliminarCargas";
+    ViewBag.Header = "Eliminación de cargas de solicitud";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    input[type="radio"] {
+        display: none;
+    }
+
+        input[type="radio"] + label span {
+            display: inline-block;
+            width: 27px;
+            height: 27px;
+            margin: -1px 4px 0 0;
+            vertical-align: middle;
+            background: url(/Resources/img/iconos/check.png) center no-repeat;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + label span {
+            background: url(/Resources/img/iconos/cheked.png) center no-repeat;
+        }
+
+    .modal-content {
+        left: -40% !important;
+        width: 180% !important;
+    }
+    .modalcargar {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: 50% 50% no-repeat rgb(249,249,249);
+        opacity: .8;
+    }
+
+    .ImgModal{
+        margin-left: 40%;
+        margin-top: 15%;
+    }
+
+</style>
+
+<form id="myform">
+    @*Selección de eliminación*@    
+    <div class="panel panel-default">
+        <div class="panel-heading">Opciones de Impresión</div>
+            <div class="panel-body">
+
+                <div class="form-group col-lg-12 col-md-12">
+                    <input type="radio" name="check" id="checkCarga" checked><label class="form-label col-lg-3" for="checkCarga"><span></span>Carga</label>
+                    <input type="radio" name="check" id="checkEnvioMeler"><label class="form-label col-lg-3" for="checkEnvioMeler"><span></span>Envio MELER</label>
+                    <input type="radio" name="check" id="checkResultados"><label class="form-label col-lg-3" for="checkResultados"><span></span>Resultado</label>
+                </div>
+
+                @*Carga*@
+                @*<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top:5px;margin-bottom:5px;">
+                    <input id="checkCarga" name="check" type="radio" checked/>
+                    <label for="checkCarga"><span></span>Carga</label>
+                </div>*@
+                @*Envio meler*@
+                @*<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top:5px;margin-bottom:5px;">
+                    <input id="checkEnvioMeler" name="check" type="radio" />
+                    <label for="checkEnvioMeler"><span></span>Envio MELER</label>
+                </div>*@
+                @*Resultado*@
+                @*<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top:5px;margin-bottom:5px;">
+                    <input id="checkResultados" name="check" type="radio" />
+                    <label for="checkResultados"><span></span>Resultado</label>
+                </div>*@
+            </div>
+        </div><!--DIV QUE CIERRA PANEL-->
+
+                @*Busqueda por carga*@
+                <div class="panel panel-default">
+                    <div class="panel-heading" id="tituloBusqueda">
+                        Selección de archivo de entrada
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-label" for="txtNumArchC">Número de archivo</label>
+                            <input type="text" class="form-control" name="txtNumArchC" id="txtNumArchC" onkeypress='return validaNumericos(event)'>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-label" for="txtNomArchC">Nombre</label>
+                            <input type="text" class="form-control" name="txtNomArchC" id="txtNomArchC">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4" style="margin-top:25px">
+                            <button type="button" class="btn btn-default btnDark" onclick="busqueda('carga','vista');"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                        </div>
+
+                            @*Número del archivo*@
+                            @*<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="control-label col-xs-12 col-sm-12 col-md-12 col-lg-4">Número de archivo</label>
+                                <input type="text" class="form-control col-xs-10 col-sm-5 col-md-5 col-lg-2" name="txtNumArchC" id="txtNumArchC" value="" onkeypress='return validaNumericos(event)'>
+                            </div>*@
+                            @*Nombre del archivo*@
+                            @*<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5" style="margin-top:5px;margin-bottom:5px;">
+                                <label class="control-label col-xs-12 col-sm-12 col-md-3 col-lg-3">Nombre</label>
+                                <input type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-5" name="txtNomArchC" id="txtNomArchC" value="">
+                            </div>*@
+                            @*Boton busqueda*@
+                            @*<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2" style="text-align:  center;">
+                                <img id="btnSalir" src="/Resources/img/iconos/vcRecurso 6.png" style="height: 30px; cursor:pointer;" onclick="busqueda('carga','vista');"><br>
+                                <label for="" class="control-label txtBoton">Buscar</label>
+                            </div>*@
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL-->
+                
+                @*Busqueda por carga Envio al MELER*@
+                <div class="panel panel-default" id="divCarga" style="display:none;">
+                    <div class="panel-heading" id="tituloBusqueda">
+                        Selección de archivo de entrada al MELER
+                    </div>
+                    <div class="panel-body">
+                        @*Número del archivo*@
+                        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-label" for="txtNumArchS">Número de archivo</label>
+                            <input type="text" class="form-control" name="txtNumArchS" id="txtNumArchS" onkeypress='return validaNumericos(event)'>
+                        </div>
+                        @*Nombre del archivo*@
+                        <div class="form-group col-lg-4 col-md-4 col-sm-6">
+                            <label class="form-label" for="txtNomArchS">Nombre</label>
+                            <input type="text" class="form-control" name="txtNomArchS" id="txtNomArchS">
+                        </div>
+                        @*Boton busqueda*@
+                        <div class="form-group col-lg-4 col-md-4" style="margin-top:25px">
+                            <button type="button" class="btn btn-default btnDark" onclick="busqueda('meler','vista');"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                        </div>
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL-->
+
+                @*Antecedentes*@
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Antecedentes Generales
+                    </div>
+                    <div class="panel-body">
+                            @*Carga el nombre del archivo*@
+                        <div class="form-group col-lg-6 col-md-8 col-sm-12">
+                            <label class="form-label" for="txtNomArchB">Nombre del archivo</label>
+                            <input type="text" class="form-control" name="txtNomArchB" id="txtNomArchB" disabled>
+                        </div>
+                        <div class="clearfix"></div>
+                            @*Carga el tipo de archivo*@
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtTipoArchB">Tipo de archivo</label>
+                            <input type="text" class="form-control" name="txtTipoArchB" id="txtTipoArchB" disabled>
+                        </div>
+                            @*Fecha de carga*@
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtFecCargaB">Fecha de carga</label>
+                            <input type="text" class="form-control" name="txtFecCargaB" id="txtFecCargaB" disabled>
+                        </div>
+                            @*Carga el usuario*@
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtUsuarioB">Usuario</label>
+                            <input type="text" class="form-control" name="txtUsuarioB" id="txtUsuarioB" disabled>
+                        </div>
+                            @*Hora de carga*@
+                        <div class="form-group col-lg-3 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtHorCargaB">Hora de carga</label>
+                            <input type="text" class="form-control" name="txtHorCargaB" id="txtHorCargaB" disabled>
+                        </div>
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL-->
+
+                @*Resultados*@
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @*Estado de Carga*@
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtNumero1B">Número total de solicitudes calculadas</label>
+                            <input type="text" class="form-control" name="txtNumero1B" id="txtNumero1B" disabled>
+                        </div>
+                        @*<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top:5px;margin-bottom:5px;">
+                            <label class="control-label col-xs-12 col-sm-12 col-md-12 col-lg-12" id="txtN1" style="padding: initial;">Número total de solicitudes calculadas</label>
+                            <input type="text" class="form-control col-xs-9 col-sm-9 col-md-9 col-lg-9" name="txtNumero1B" id="txtNumero1B" value="" disabled>
+                        </div>*@
+                        @*N° Totales de Solicitudes*@
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtNumero2B">Monto total primas de solicitud calculadas</label>
+                            <input type="text" class="form-control" name="txtNumero2B" id="txtNumero2B" disabled>
+                        </div>
+                        @*<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top:5px;margin-bottom:5px;">
+                            <label class="control-label col-xs-12 col-sm-12 col-md-12 col-lg-12" id="txtN2" style="padding: initial;">Monto total primas de solicitud calculadas</label>
+                            <input type="text" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-12" name="txtNumero2B" id="txtNumero2B" value="" disabled>
+                        </div>*@
+                        @*N° Solicitudes Aceptadas*@
+                        <div class="form-group col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label" for="txtNumero3B">Número total de solicitudes</label>
+                            <input type="text" class="form-control" name="txtNumero3B" id="txtNumero3B" disabled>
+                        </div>
+                        @*<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top:5px;margin-bottom:5px;">
+                            <label class="control-label col-xs-12 col-sm-12 col-md-12 col-lg-12" id="txtN3" style="padding: initial;">Número total de solicitudes</label>
+                            <input type="text" class="form-control col-xs-12 col-sm-12 col-md-12 col-lg-12" name="txtNumero3B" id="txtNumero3B" value="" disabled>
+                        </div>*@
+                    </div>
+                </div><!--DIV QUE CIERRA PANEL-->
+
+                        @*Iconos de opciones*@
+                        @*<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align:  center;">
+                                <img id="btnCargar" src="/Resources/img/iconos/vcRecurso 2.png" style="height: 30px; cursor:pointer;" onclick="eliminar();"><br>
+                                <label for="" class="control-label txtBoton">Eliminar</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align:  center;">
+                                <img id="btnImprimir" src="/Resources/img/iconos/icono-cancelar.png" style="height: 30px; cursor:pointer;" onclick="cancelar();"><br>
+                                <label for="" class="control-label txtBoton">Cancelar</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="text-align:  center;">
+                                <img id="btnSalir" src="/Resources/img/iconos/vcRecurso 7.png" style="height: 30px; cursor:pointer;" onclick="salir();"><br>
+                                <label for="" class="control-label txtBoton">Salir</label>
+                            </div>
+                        </div>*@
+
+    <div class="btn-group" style="float: right">
+        <button type="button" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="eliminar();"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Eliminar</button>
+        <button type="button" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="cancelar();"><i class="fa fa-times fa-lg" aria-hidden="true"></i> Cancelar</button>
+        <button type="button" class="btn btn-default btnDark" style="margin-right: 20px;" onclick="salir();"><img class="btnIcon" src="~/Resources/img/salir.png" /> Salir</button>
+    </div>
+
+
+
+            <!-- Modal -->
+
+</form>
+@*ModalCargar*@
+<div id="modalcargar" class="modalcargar" role="dialog" hidden>
+    <img class="ImgModal" src="../../Resources/img/modal1.gif" />
+</div>
+@Html.Hidden("urlBusqueda", Url.Action("busqueda", "EliminarCargas"))
+@Html.Hidden("urlEliminar", Url.Action("eliminar", "EliminarCargas"))
+@Html.Hidden("urlBuscarNumerosArchivo", Url.Action("busquedaDeNumsArchs", "EliminarCargas"))
+@Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+
+
+@section scriptsFooter
+{
+    <script src="~/Resources/js/jsEliminarCargas.js"></script>
+    <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+    <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Resources/js/dataTables.responsive.js"></script>
+    @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+}

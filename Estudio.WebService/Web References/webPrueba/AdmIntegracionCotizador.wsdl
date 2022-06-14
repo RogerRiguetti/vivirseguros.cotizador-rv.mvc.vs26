@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="CargarCotizacionesOficiales">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contenidoArchivoXML" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="nombreArchivoXML" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CargarCotizacionesOficialesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CargarCotizacionesOficialesResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActualizarProducto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nroOperacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="jsonValores" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ActualizarProductoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ActualizarProductoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CargarCotizacionesOficialesSoapIn">
+    <wsdl:part name="parameters" element="tns:CargarCotizacionesOficiales" />
+  </wsdl:message>
+  <wsdl:message name="CargarCotizacionesOficialesSoapOut">
+    <wsdl:part name="parameters" element="tns:CargarCotizacionesOficialesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ActualizarProductoSoapIn">
+    <wsdl:part name="parameters" element="tns:ActualizarProducto" />
+  </wsdl:message>
+  <wsdl:message name="ActualizarProductoSoapOut">
+    <wsdl:part name="parameters" element="tns:ActualizarProductoResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AdmIntegracionCotizadorSoap">
+    <wsdl:operation name="CargarCotizacionesOficiales">
+      <wsdl:input message="tns:CargarCotizacionesOficialesSoapIn" />
+      <wsdl:output message="tns:CargarCotizacionesOficialesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarProducto">
+      <wsdl:input message="tns:ActualizarProductoSoapIn" />
+      <wsdl:output message="tns:ActualizarProductoSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AdmIntegracionCotizadorSoap" type="tns:AdmIntegracionCotizadorSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CargarCotizacionesOficiales">
+      <soap:operation soapAction="http://tempuri.org/CargarCotizacionesOficiales" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarProducto">
+      <soap:operation soapAction="http://tempuri.org/ActualizarProducto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AdmIntegracionCotizadorSoap12" type="tns:AdmIntegracionCotizadorSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CargarCotizacionesOficiales">
+      <soap12:operation soapAction="http://tempuri.org/CargarCotizacionesOficiales" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarProducto">
+      <soap12:operation soapAction="http://tempuri.org/ActualizarProducto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AdmIntegracionCotizador">
+    <wsdl:port name="AdmIntegracionCotizadorSoap" binding="tns:AdmIntegracionCotizadorSoap">
+      <soap:address location="http://192.168.0.149:82/AdmIntegracionCotizador.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AdmIntegracionCotizadorSoap12" binding="tns:AdmIntegracionCotizadorSoap12">
+      <soap12:address location="http://192.168.0.150:83/AdmIntegracionCotizador.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

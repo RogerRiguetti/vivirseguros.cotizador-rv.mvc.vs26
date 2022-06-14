@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6488FC62-E66D-4B6E-816B-75C2C6AD033B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Estudio.Repository</RootNamespace>
+    <AssemblyName>Estudio.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Domain\ActualizaInfOfi.cs" />
+    <Compile Include="Core\Domain\Afp.cs" />
+    <Compile Include="Core\Domain\Asegurados.cs" />
+    <Compile Include="Core\Domain\AsignacionIntermediario.cs" />
+    <Compile Include="Core\Domain\Authorization.cs" />
+    <Compile Include="Core\Domain\beCPK.cs" />
+    <Compile Include="Core\Domain\beCurvaTasas.cs" />
+    <Compile Include="Core\Domain\beDatosBen.cs" />
+    <Compile Include="Core\Domain\beDatosModalidad.cs" />
+    <Compile Include="Core\Domain\beDatosPol.cs" />
+    <Compile Include="Core\Domain\beDatosTasasPar.cs" />
+    <Compile Include="Core\Domain\beMortalidad.cs" />
+    <Compile Include="Core\Domain\beMortalidadDet.cs" />
+    <Compile Include="Core\Domain\beMortalidadDin.cs" />
+    <Compile Include="Core\Domain\beMortalidadDinDet.cs" />
+    <Compile Include="Core\Domain\beMortalidadDinVal.cs" />
+    <Compile Include="Core\Domain\beMortalVar.cs" />
+    <Compile Include="Core\Domain\Beneficiario.cs" />
+    <Compile Include="Core\Domain\bePorcenLegales.cs" />
+    <Compile Include="Core\Domain\beRentabilidad.cs" />
+    <Compile Include="Core\Domain\beResultados.cs" />
+    <Compile Include="Core\Domain\beResultadosFlujos.cs" />
+    <Compile Include="Core\Domain\beResultadosFlujosTot.cs" />
+    <Compile Include="Core\Domain\beResultadosResBas.cs" />
+    <Compile Include="Core\Domain\beResultadosResBasBen.cs" />
+    <Compile Include="Core\Domain\beTasaAnclaje.cs" />
+    <Compile Include="Core\Domain\beTasaFacVac.cs" />
+    <Compile Include="Core\Domain\beTasaMercado.cs" />
+    <Compile Include="Core\Domain\beTasasPromedio.cs" />
+    <Compile Include="Core\Domain\CalculoCotizaciones.cs" />
+    <Compile Include="Core\Domain\CargaActivos.cs" />
+    <Compile Include="Core\Domain\cmbOficiales.cs" />
+    <Compile Include="Core\Domain\Comision.cs" />
+    <Compile Include="Core\Domain\Cotizacion.cs" />
+    <Compile Include="Core\Domain\CotizacionRpt.cs" />
+    <Compile Include="Core\Domain\Departamento.cs" />
+    <Compile Include="Core\Domain\Descargas.cs" />
+    <Compile Include="Core\Domain\Distrito.cs" />
+    <Compile Include="Core\Domain\EliminarCargas.cs" />
+    <Compile Include="Core\Domain\Exceptiones.cs" />
+    <Compile Include="Core\Domain\FiltrosTotalesReportesGanados.cs" />
+    <Compile Include="Core\Domain\GastoSepelio.cs" />
+    <Compile Include="Core\Domain\GenArMeler.cs" />
+    <Compile Include="Core\Domain\gzModule.cs" />
+    <Compile Include="Core\Domain\gzPage.cs" />
+    <Compile Include="Core\Domain\CheckPerfiles.cs" />
+    <Compile Include="Core\Domain\MantenedorPerfiles.cs" />
+    <Compile Include="Core\Domain\gzPermission.cs" />
+    <Compile Include="Core\Domain\gzRoles.cs" />
+    <Compile Include="Core\Domain\gzSystem.cs" />
+    <Compile Include="Core\Domain\gzUser.cs" />
+    <Compile Include="Core\Domain\LimiteCotizacionExtraOficial.cs" />
+    <Compile Include="Core\Domain\LimiteCotizacionInicial.cs" />
+    <Compile Include="Core\Domain\LimiteCotizacionMejorada.cs" />
+    <Compile Include="Core\Domain\ManCurvaTasas.cs" />
+    <Compile Include="Core\Domain\ManCurvaTasasRes.cs" />
+    <Compile Include="Core\Domain\ManFecAceptacionCotizacion.cs" />
+    <Compile Include="Core\Domain\MantenedorFiltros.cs" />
+    <Compile Include="Core\Domain\MantenedorIPC.cs" />
+    <Compile Include="Core\Domain\Modalidad.cs" />
+    <Compile Include="Core\Domain\ModalidadCat.cs" />
+    <Compile Include="Core\Domain\Moneda.cs" />
+    <Compile Include="Core\Domain\MonedaMensual.cs" />
+    <Compile Include="Core\Domain\PagePermission.cs" />
+    <Compile Include="Core\Domain\Paquete.cs" />
+    <Compile Include="Core\Domain\Parametro.cs" />
+    <Compile Include="Core\Domain\ParametroGasto.cs" />
+    <Compile Include="Core\Domain\Parentesco.cs" />
+    <Compile Include="Core\Domain\Pension.cs" />
+    <Compile Include="Core\Domain\Periodo.cs" />
+    <Compile Include="Core\Domain\Periodos.cs" />
+    <Compile Include="Core\Domain\ProCarArchivo.cs" />
+    <Compile Include="Core\Domain\Provincia.cs" />
+    <Compile Include="Core\Domain\RangosTasaVenta.cs" />
+    <Compile Include="Core\Domain\ReporteGanados.cs" />
+    <Compile Include="Core\Domain\ReportesReservas.cs" />
+    <Compile Include="Core\Domain\Reservas.cs" />
+    <Compile Include="Core\Domain\RolePagePermission.cs" />
+    <Compile Include="Core\Domain\Sexo.cs" />
+    <Compile Include="Core\Domain\SISCO.cs" />
+    <Compile Include="Core\Domain\SituacionInvalidez.cs" />
+    <Compile Include="Core\Domain\SolicitudesCotizacion.cs" />
+    <Compile Include="Core\Domain\TasaAnclaje.cs" />
+    <Compile Include="Core\Domain\TasaDescuentoAnual.cs" />
+    <Compile Include="Core\Domain\TasaMercado.cs" />
+    <Compile Include="Core\Domain\TasaVentaPro.cs" />
+    <Compile Include="Core\Domain\TipoDocumento.cs" />
+    <Compile Include="Core\Domain\TipoRenta.cs" />
+    <Compile Include="Core\Domain\Sistemas.cs" />
+    <Compile Include="Core\Domain\UserProfile.cs" />
+    <Compile Include="Core\Domain\ValoresMoneda.cs" />
+    <Compile Include="Core\Domain\Views\AuthorizationView.cs" />
+    <Compile Include="Core\Domain\Views\ModuleView.cs" />
+    <Compile Include="Core\Domain\Views\PageView.cs" />
+    <Compile Include="Core\Domain\Views\PermissionView.cs" />
+    <Compile Include="Core\Domain\Views\RoleView.cs" />
+    <Compile Include="Core\Domain\Views\SystemView.cs" />
+    <Compile Include="Core\Domain\Views\UserView.cs" />
+    <Compile Include="Core\IUnitOfWork.cs" />
+    <Compile Include="Core\reports\PT_Rpt_PrcRentabilidad.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_PrcRentabilidad.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\reports\PT_Rpt_SolOtrosAFP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_SolOtrosAFP.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\reports\PT_Rpt_SolOtrosCia.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PT_Rpt_SolOtrosCia.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\Repositories\IAuthorizationRepository.cs" />
+    <Compile Include="Core\Repositories\IgzModuleRepository.cs" />
+    <Compile Include="Core\Repositories\IgzPageRepository.cs" />
+    <Compile Include="Core\Repositories\IgzPermissionRepository.cs" />
+    <Compile Include="Core\Repositories\IgzRoleRepository.cs" />
+    <Compile Include="Core\Repositories\IgzSystemRepository.cs" />
+    <Compile Include="Core\Repositories\IgzUserRepository.cs" />
+    <Compile Include="Core\Repositories\IPagesPermissionRepository.cs" />
+    <Compile Include="Core\Repositories\IRepository.cs" />
+    <Compile Include="Core\Repositories\IRolePagePermissionRepository.cs" />
+    <Compile Include="Core\Repositories\IUserProfileRepository.cs" />
+    <Compile Include="Helpers\EnumValues.cs" />
+    <Compile Include="Helpers\Response.cs" />
+    <Compile Include="Persistence\ApplicationContext.cs" />
+    <Compile Include="Persistence\EntityDefinition\AuthorizationConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\gzModuleConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\gzPageConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\gzPermissionConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\gzRoleConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\gzSystemConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\gzUserConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\PagePermissionConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\RolePagePermissionConfiguration.cs" />
+    <Compile Include="Persistence\EntityDefinition\UserProfileConfiguration.cs" />
+    <Compile Include="Persistence\Repositories\ActualizaInfOfiRepository.cs" />
+    <Compile Include="Persistence\Repositories\AuthorizationRepository.cs" />
+    <Compile Include="Persistence\Repositories\BeneficiariosRepository.cs" />
+    <Compile Include="Persistence\Repositories\CalcularAsignacionIntermediarioRepository.cs" />
+    <Compile Include="Persistence\Repositories\CalculoCotizacionRepository.cs" />
+    <Compile Include="Persistence\Repositories\CargaActivosRepository.cs" />
+    <Compile Include="Persistence\Repositories\CotizacionRepository.cs" />
+    <Compile Include="Persistence\Repositories\EliminarCargasRepository.cs" />
+    <Compile Include="Persistence\Repositories\ExcepcionesRepository.cs" />
+    <Compile Include="Persistence\Repositories\ExportarExcelRepository.cs" />
+    <Compile Include="Persistence\Repositories\GastosSepelioRepository.cs" />
+    <Compile Include="Persistence\Repositories\GenArMelerRepository.cs" />
+    <Compile Include="Persistence\Repositories\gzModuleRepository.cs" />
+    <Compile Include="Persistence\Repositories\gzPageRepository.cs" />
+    <Compile Include="Persistence\Repositories\gzPermissionRepository.cs" />
+    <Compile Include="Persistence\Repositories\gzRoleRepository.cs" />
+    <Compile Include="Persistence\Repositories\gzSystemRepository.cs" />
+    <Compile Include="Persistence\Repositories\MantenedorPerfilesRepository.cs" />
+    <Compile Include="Persistence\Repositories\gzUserRepository.cs" />
+    <Compile Include="Persistence\Repositories\CatalogosOficialesRepository.cs" />
+    <Compile Include="Persistence\Repositories\LimiteCotizacionExtraOficialRepository.cs" />
+    <Compile Include="Persistence\Repositories\LimiteCotizacionInicialRepository.cs" />
+    <Compile Include="Persistence\Repositories\LimiteCotizacionMejoradaRepository.cs" />
+    <Compile Include="Persistence\Repositories\ManCurvaTasasRepository.cs" />
+    <Compile Include="Persistence\Repositories\ManCurvaTasasResRepository.cs" />
+    <Compile Include="Persistence\Repositories\ManFecAceptacionCotizacionRepository.cs" />
+    <Compile Include="Persistence\Repositories\MantenedorFiltrosRepository.cs" />
+    <Compile Include="Persistence\Repositories\MantenedorIPCRepository.cs" />
+    <Compile Include="Persistence\Repositories\ModalidadesRepository.cs" />
+    <Compile Include="Persistence\Repositories\PagePermissionRepository.cs" />
+    <Compile Include="Persistence\Repositories\ParametroGastoRepository.cs" />
+    <Compile Include="Persistence\Repositories\ParametrosRepository.cs" />
+    <Compile Include="Persistence\Repositories\PeriodosRepository.cs" />
+    <Compile Include="Persistence\Repositories\ProCarArchivoRepository.cs" />
+    <Compile Include="Persistence\Repositories\ReporteGanadosRepository.cs" />
+    <Compile Include="Persistence\Repositories\ReportesReservasRepository.cs" />
+    <Compile Include="Persistence\Repositories\Repository.cs" />
+    <Compile Include="Persistence\Repositories\ReservasRepository.cs" />
+    <Compile Include="Persistence\Repositories\RolePagePermissionRepository.cs" />
+    <Compile Include="Persistence\Repositories\RutinaOficialesRepository.cs" />
+    <Compile Include="Persistence\Repositories\RutinaRepository.cs" />
+    <Compile Include="Persistence\Repositories\RutinaReservasRepository.cs" />
+    <Compile Include="Persistence\Repositories\SISCORepository.cs" />
+    <Compile Include="Persistence\Repositories\SolicitudCotizacionesRepository.cs" />
+    <Compile Include="Persistence\Repositories\TasaAnclajeRepository.cs" />
+    <Compile Include="Persistence\Repositories\TasaCalceRepository.cs" />
+    <Compile Include="Persistence\Repositories\TasaRentabilidadRepository.cs" />
+    <Compile Include="Persistence\Repositories\TasasMercadoRepository.cs" />
+    <Compile Include="Persistence\Repositories\TasaVentaProRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserProfileRepository.cs" />
+    <Compile Include="Persistence\Repositories\ValoresMonedaMensualRepository.cs" />
+    <Compile Include="Persistence\Repositories\ValoresMonedaRepository.cs" />
+    <Compile Include="Persistence\UnitOfWork.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RowAffected.cs" />
+    <Compile Include="SRVConectionString.cs" />
+    <Compile Include="SRVDBContext.cs" />
+    <Compile Include="StoredProcedures.cs" />
+    <Compile Include="VCEConectionString.cs" />
+    <Compile Include="VCEDBContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Core\reports\PT_Rpt_PrcRentabilidad.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_PrcRentabilidad.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\reports\PT_Rpt_SolOtrosAFP.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolOtrosAFP.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\reports\PT_Rpt_SolOtrosCia.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PT_Rpt_SolOtrosCia.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

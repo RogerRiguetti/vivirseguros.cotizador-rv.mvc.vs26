@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Inicio de Sesión</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Resources/css/style.css" rel="stylesheet" />*@
+    <link href="~/Resources/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Resources/css/schTheme.css" rel="stylesheet" />
+    <link href="~/Content/Estudio.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <script src="~/Resources/js/additional-methods.min.js"></script>
+    <script src="~/Resources/js/metisMenu.min.js"></script>
+    <script src="~/Resources/js/System.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+    <script src="~/Resources/js/jsEstudio.js"></script>
+
+</head>
+<body style="padding:0;">
+        <div class="header-login">
+        <img src="~/Resources/img/logo_login.png" width="150" height="120"/>
+    </div>
+    <div class="container">
+        <form id="myform">
+            <div class="form-login col-lg-offset-4 col-lg-3 col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-offset-1 col-xs-10">
+                <h4 class="titulo-login">Bienvenido</h4>
+                <div class="form-group">
+                    <input type="text" id="txtUser" name="txtUser" class="form-control" placeholder="Usuario" onkeyup="pulsar(event)" />
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="password" id="txtPassword" name="txtPassword" class="form-control" placeholder="Contraseña" onkeyup="pulsar(event)" />
+                </div>
+                <br>
+                <a href="#" id="lnkEnter" class="btn btn-vida btn-md">Ingresar <i class="fa fa-sign-in"></i></a>
+            </div>
+        </form>
+    </div>
+   <!-- <div>
+        <div id="wrapper">
+
+            <div class="logo">
+                <img src="~/Resources/img/Logo vertical.png" />
+            </div>
+            <form id="myform" >
+                <div class="container container-table">
+                    <div class="row">
+                        <div class="col-md-offset-5 col-md-3">
+                            <div class="form-login">
+                                <h4>Bienvenido</h4>
+                                <input type="text" id="txtUser" name="txtUser" class="form-control input-sm chat-input" placeholder="Usuario" onkeyup="pulsar(event)" />
+                                <br />
+                                <input type="password" id="txtPassword" name="txtPassword" class="form-control input-sm chat-input" placeholder="Contraseña" onkeyup="pulsar(event)"/>
+                                <br />
+                                <div class="wrapper">
+                                    <span class="group-btn">
+                                        <a href="#" id="lnkEnter" class="btn btn-vida btn-md">Ingresar <i class="fa fa-sign-in"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>-->
+
+
+    <div id='sch_modal' class='modal fade' tabindex='-1' role='dialog' onkeypress="pulsarmodal(event)">
+        <div class='modal-dialog modal-sm' role='document'>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span id="msg_modal_header"></span>
+                </div>
+                <div class="modal-body">
+                    <span id="msg_modal_body"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class='btn btn-vida' id="btn_modal_aceptar">Ok</button>
+                    <button type="button" class="btn btn-danger" data-dismiss='modal' id="btn_modal_cerrar">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sch_alert" class="sch_alert hidden " role="alert">
+        <button id="sch_alert_close" type="button" class="close"><i class="fa fa-close"></i></button>
+        <div id="sch_alert_message"></div>
+    </div>
+
+    @Html.Hidden("UrlIndex", Url.Action("Index", "Estudio"))
+    @Html.Hidden("UrlValidateLogin", Url.Action("ValidateLogin", "Estudio"))
+
+</body>
+
+</html>
+

@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    ViewBag.Header = "Mantenedor de Parámetros de Gastos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    @@media (max-width: 767px) {
+        .btnBuscarDIV {
+            margin-top: 10px !important;
+        }
+
+        .page-header {
+            font-size: 1.5em !important;
+        }
+    }
+
+    @@media(min-width: 768px) and (max-width: 1010px) {
+        .page-header {
+            font-size: 1.8em !important;
+        }
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <ul class="nav nav-tabs" style="border-bottom:  none;" id="tabulador">
+            <li class="in active"><a data-toggle="tab" href="#tabGastos">Gastos</a></liin>
+            <li><a data-toggle="tab" href="#tabOtrosGastos">Otros Gastos</a></li>
+        </ul>
+        <div class="tab-content" id="tabulador3">
+            <div id="tabGastos" class="tab-pane fade in active">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group col-lg-3 col-md-3">
+                            <label class="form-label" for="cmbxTipoMoneda">Tipo de Moneda</label>
+                            @Html.DropDownList("cmbxTipoMoneda", (IEnumerable<SelectListItem>)ViewBag.TipoMoneda, "-- Seleccione --", new { @class = "form-control", @name = "cmbxTipoMoneda" })
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3">
+                            <label class="form-label" for="cmbxPeriodos">Periodos</label>
+                            @Html.DropDownList("CmbxPeriodos", (IEnumerable<SelectListItem>)ViewBag.Periodos, "-- Seleccione --", new { @class = "form-control", @name = "CmbxPeriodos" })
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <label class="form-label col-lg-12 col-sm-12 col-md-12">Período de Vigencia</label>
+                        <div class="form-group col-lg-2 col-md-4 col-sm-5">
+                            <Input type="date" class="form-control" name="fecIni" id="fecIni" value="@ViewBag.fecha" />
+                        </div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 hidden-xs" style="text-align:center;">
+                            <i class="fa fa-minus form-label" aria-hidden="true"></i>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-4 col-sm-5">
+                            <Input type="date" class="form-control" name="fecFin" id="fecFin" value="@ViewBag.fecha" />
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                            <button type="button" class="btn btn-default btnDark" id="btnBuscar" onclick="Buscar();"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                            <button type="button" class="btn btn-default btnDark" id="btnBuscar2" style="display: none;"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Gastos
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">Gastos de Administración</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtGastosA" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                <span class="input-group-addon"><i aria-hidden="true"><strong>S/.</strong></i></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">Gastos de Emisión</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtGastosE" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                <span class="input-group-addon"><i aria-hidden="true"><strong>S/.</strong></i></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">Gastos de Control Supervivencia</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtGastosCS" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Parámetros
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">Nivel de Endeudamiento</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtNivelE" maxlength="7" onkeyup="this.value = validaDecimales(this.value, 2);">
+                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">Tasa del Mercado</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtTasaM" onkeyup="this.value = validaDecimales(this.value, 2);">
+                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">Impuesto a la Renta</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtImpuestoR" onkeyup="this.value = validaDecimales(this.value, 2);">
+                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="float: right;">
+                    <button type="button" class="btn btn-default btnDark" onclick="Grabar();" style="margin-right: 20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar</button>
+
+                    <button type="button" class="btn btn-default btnDark" onclick="Eliminar();" style="margin-right: 20px;"><i class="fa fa-remove fa-lg" aria-hidden="true"></i>&nbsp;Eliminar</button>
+
+                    <button type="button" onclick="Imprimir();" class="btn btn-default btnDark" style="margin-right: 20px;"><i class="fa fa-print fa-lg" aria-hidden="true"></i>&nbsp;Imprimir</button>
+
+                    <button type="button" class="btn btn-default btnLight" onclick="Limpiar()" style="margin-right: 20px;"><i class="fa fa-file fa-lg" aria-hidden="true"></i>&nbsp;Limpiar</button>
+
+                    <button type="button" onclick="Salir();" class="btn btn-default btnGreen" style="margin-right: 20px;"><img class="btnIcon" src="/Resources/img/salir.png">&nbsp;Salir</button>
+                </div>
+            </div>
+            <div id="tabOtrosGastos" class="tab-pane fade">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">% Comisión Supervisor Inmediatas</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtCOMSUP1" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <label class="form-label">% Comisión Supervisor Diferidas</label>
+                            <div class="form-group input-group">
+                                <input type="text" class="form-control" id="txtCOMSUP2" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <label class="form-label">% Factor Lab Inmediatas</label>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" id="txtPRCFAC1" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                    <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <label class="form-label">% Factor Lab Diferidas</label>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" id="txtPRCFAC2" maxlength="7" onkeypress="return filterFloat(event,this,2);">
+                                    <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
+                                </div>
+                            </div>
+                         </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-default btnDark" onclick="GrabarOtrosGastos();" style="margin-right: 20px; margin-left:20px;"><i class="fa fa-save fa-lg" aria-hidden="true"></i>&nbsp;Grabar Gastos</button>
+
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    @* Begins Hiddens *@
+    @Html.Hidden("urlPeriodo", Url.Action("ListaPeriodos", "ParametroGasto"))
+    @Html.Hidden("urlBuscaVigencia", Url.Action("BuscarVigencia", "ParametroGasto"))
+    @Html.Hidden("urlTasaMercado", Url.Action("TasaMercado", "ParametroGasto"))
+    @Html.Hidden("urlImpuestoRenta", Url.Action("ImpuestoRenta", "ParametroGasto"))
+    @Html.Hidden("urlGrabarVigencia", Url.Action("GrabarParametro", "ParametroGasto"))
+    @Html.Hidden("urlEliminarVigencia", Url.Action("EliminarParametro", "ParametroGasto"))
+    @Html.Hidden("urlReporte", Url.Action("ReportePG", "ParametroGasto"))
+    @Html.Hidden("urlSalir", Url.Action("Index", "Estudio"))
+    @Html.Hidden("urlConsultaOtrosGastos", Url.Action("ConsultarGastos", "ParametroGasto"))
+    @Html.Hidden("urlGuardarOtrosGastos", Url.Action("GuardarOtrosGastos", "ParametroGasto"))    
+    @Html.Hidden("backFecha", (object)ViewBag.fecha)
+    @section scriptsFooter
+{
+        <script src="~/Resources/js/jquery.dataTables.min.js"></script>
+        <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/Resources/js/dataTables.responsive.js"></script>
+        <script src="~/Resources/js/jsParametroGasto.js"></script>
+
+    }
