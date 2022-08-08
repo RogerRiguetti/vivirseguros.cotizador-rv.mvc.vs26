@@ -83,6 +83,7 @@ namespace Estudio.Repository.Core.Domain
         public string gratificacion { get; set; }
         public string motivo { get; set; }
         public int estado { get; set; }
+        public string asesor { get; set; }
 
     }
 }
