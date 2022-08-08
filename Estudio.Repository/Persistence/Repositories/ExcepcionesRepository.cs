@@ -87,7 +87,8 @@ namespace Estudio.Repository.Persistence.Repositories
                     Ind_Cob = x.GetString(26),
                     Ind_SISCO = x.GetInt32(27),
                     cod_tipreajuste = Convert.ToInt32(x.GetString(28)),
-                    mes_esc = x.GetInt32(29)
+                    mes_esc = x.GetInt32(29),
+                    asesor = x.GetInt32(30).ToString()
                 }).ToList();
                 if (_ExceptionList.Count != 0)
                 {
@@ -1013,6 +1014,30 @@ namespace Estudio.Repository.Persistence.Repositories
             }
         }
 
+        public string ConsultaAsesor(string numOperacion)
+        {
+            string res = "";
+            try
+            {
+                Exceptiones _excepciones = new Exceptiones();
+                var parameters = new List<SqlParameter>();
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pClave", SqlDbType.VarChar, "CONSULTA_ASESOR", ParameterDirection.Input));
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@numOperacion", SqlDbType.Decimal, Convert.ToDecimal(numOperacion), ParameterDirection.Input));
 
+                _excepciones = VCEDBContext<Exceptiones>.CallStoreProcedure(StoredProcedures.CO_CatalogosExcepciones, parameters, x => new Exceptiones
+                {
+                    asesor = x.GetString(0)
+                }).FirstOrDefault();
+                if (_excepciones != null)
+                {
+                    res = _excepciones.asesor;
+                }
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return res;
+            }
+        }
     }
 }
