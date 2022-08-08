@@ -958,7 +958,7 @@ namespace Estudio.Logic
         {
             Response res = new Response();
             List<beCurvaTasas> LisPolizas = new List<beCurvaTasas>();
-            FecCal = "20211231";
+            //FecCal = "20211231";
             try
             {
                 FecCal = FecCal.Substring(0, 6) + "01";

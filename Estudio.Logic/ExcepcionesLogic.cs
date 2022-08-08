@@ -210,10 +210,12 @@ namespace Estudio.Logic
                 ListaTasProm = _rutinaOficialesRepository.ConsultaTasasPromedio("");
                 ListaCurvaTasas = _rutinaOficialesRepository.ConsultaCurvaTasas("");
 
+                datos.asesor = _ExcepcionesRepository.ConsultaAsesor(datos.numOperacion.ToString());
+
                 Console.WriteLine("Memory used before collection:       {0:N0}",
                 GC.GetTotalMemory(false));
 
-                rutinaOficiales.Add(await _pruebasRutinaOficiales.RutinaOficiales(datos.numOperacion, datos.numCot, datos.numArchivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, _ExcepcionesRepository, "",0));
+                rutinaOficiales.Add(await _pruebasRutinaOficiales.RutinaOficiales(datos.numOperacion, datos.numCot, datos.numArchivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, _ExcepcionesRepository, "",Convert.ToInt32(datos.asesor)));
 
                 double mtoPen = 0;
                 double primaUni = 0;
@@ -445,11 +447,12 @@ namespace Estudio.Logic
                 ListaRen = _rutinaOficialesRepository.ConsultaRentabilidad("");
                 ListaTasProm = _rutinaOficialesRepository.ConsultaTasasPromedio("");
                 ListaCurvaTasas = _rutinaOficialesRepository.ConsultaCurvaTasas("");
+                datos.asesor = _ExcepcionesRepository.ConsultaAsesor(datos.numOperacion.ToString());
 
                 Console.WriteLine("Memory used before collection:       {0:N0}",
                 GC.GetTotalMemory(false));
 
-                List<beResultados> rutina = await _pruebasRutinaOficiales.RutinaOficiales(datos.numOperacion, datos.numCot, datos.numArchivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, _ExcepcionesRepository, bandera,0);
+                List<beResultados> rutina = await _pruebasRutinaOficiales.RutinaOficiales(datos.numOperacion, datos.numCot, datos.numArchivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, _ExcepcionesRepository, bandera,Convert.ToInt32(datos.asesor));
 
                 string mensaje = (from r in rutina where r.Mensaje != null select r.Mensaje).FirstOrDefault();
                 if (mensaje != null)

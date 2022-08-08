@@ -2549,6 +2549,10 @@ namespace Estudio.Process
                 tirmax_ori = tirmax;
                 TTirMax = tirmax;
                 //CalPer:
+                if((Math.Truncate(PERDI * 1000) / 1000) == 0.000)
+                {
+                    PERDI = 0;
+                }
                 if (PERDI > PERMAX)
                 {
                     goto CalTva;
