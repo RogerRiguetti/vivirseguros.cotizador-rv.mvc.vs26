@@ -92,31 +92,40 @@ namespace Estudio.Logic
                 string hostNotifiacion = _parametroRepository.ConsultaParametro("HOSTNOTIF").Elemento;
                 int portNotificacion = Convert.ToInt32(_parametroRepository.ConsultaParametro("PORTNOTIF").Elemento);
                 string pswNotificacion = _parametroRepository.ConsultaParametro("PSWNOTIF").Elemento;
-                _log.Info("Correo de remitente: " + correoNotificacion);
+
+                _log.Info("Correo de remitente: " + correoNotificacion + " |hostNotifiacion: " + hostNotifiacion + " |portNotificacion: " + Convert.ToString(portNotificacion) + " | pswNotificacion:" + pswNotificacion);
 
                 SmtpClient client = new SmtpClient(hostNotifiacion, portNotificacion);
                 client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
                 client.Credentials = new System.Net.NetworkCredential(correoNotificacion, pswNotificacion);
+
                 MailAddress from = new MailAddress(correoNotificacion, String.Empty, System.Text.Encoding.UTF8);
-                
-                
-                
+
                 MailMessage message = new MailMessage();
                 foreach (var item in destinatarios)
                 {
                     message.To.Add(new MailAddress(item));
                     _log.Info("Destinatarios " + item);
                 }
+
+                _log.Info("Message From ");
                 message.From = from;
                 message.Body = cuerpo;
                 message.BodyEncoding = System.Text.Encoding.UTF8;
                 message.Subject = asunto;
                 message.SubjectEncoding = System.Text.Encoding.UTF8;
-                
-                if (System.IO.File.Exists(archivoAdjuntar))
-                    message.Attachments.Add(new Attachment(archivoAdjuntar));
 
+
+                if (System.IO.File.Exists(archivoAdjuntar))
+                {
+                    _log.Info("Existe Archivo");
+                    message.Attachments.Add(new Attachment(archivoAdjuntar));
+                }
+                _log.Info("Security");
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                _log.Info("Send");
+
                 client.Send(message);
 
                 return true;
