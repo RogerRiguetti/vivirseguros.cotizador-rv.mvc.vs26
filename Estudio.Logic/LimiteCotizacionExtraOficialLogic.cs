@@ -377,6 +377,14 @@ namespace Estudio.Logic
                 {
                     if (datos[i].accion == "I")
                     {
+                        if(i == 0)
+                        {
+                            DateTime fecha = DateTime.Now;
+                            querys += " UPDATE PT_TVAL_MINMAXTIR_EST SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
+                            querys += "\n"+" UPDATE PT_TVAL_MINMAXPER_EST SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
+                            querys += "\n"+" UPDATE PT_TVAL_MINMAXTAS_EST SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
+                            
+                        }
                         querys += "\n" + insertCargaMasiva(datos[i], usuario);
                     }
                     else
