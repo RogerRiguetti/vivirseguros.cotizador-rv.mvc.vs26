@@ -377,6 +377,13 @@ namespace Estudio.Logic
                 {
                     if (datos[i].accion == "I")
                     {
+                        if(i == 0)
+                        {
+                            DateTime fecha = DateTime.Now;
+                            querys += "UPDATE PT_TVAL_MINMAXTIR_INI SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
+                            querys += "\n"+ " UPDATE PT_TVAL_MINMAXPER_INI SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
+                            querys += "\n"+ " UPDATE PT_TVAL_MINMAXTAS_INI SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
+                        }
                         querys += "\n" + insertCargaMasiva(datos[i], usuario, tipoRenta);
                     }
                     else
@@ -413,11 +420,7 @@ namespace Estudio.Logic
                 case "Dólares Ajustados": codMoneda = "US"; codTipReajuste = "2"; break;
                 case "Dólares Nominales": codMoneda = "US"; codTipReajuste = "0"; break;
             }
-
-            string fecfinTir = "UPDATE PT_TVAL_MINMAXTIR_INI SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
-            string fecfinPer = "UPDATE PT_TVAL_MINMAXPER_INI SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
-            string fecfinTas = "UPDATE PT_TVAL_MINMAXTAS_INI SET FEC_TERMINMAX = '" + fecha.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231'";
-
+            
             if (tipoRenta == "1")
             {
                 tir = "INSERT INTO PT_TVAL_MINMAXTIR_INI (COD_REGION,COD_MONEDA,COD_TIPREAJUSTE,FEC_INIMINMAX,FEC_TERMINMAX,PRC_MINIMO_1,PRC_MAXIMO,COD_USUARIOCREA,FEC_CREA,HOR_CREA) " +
@@ -446,7 +449,7 @@ namespace Estudio.Logic
             string jl = "\nINSERT INTO PT_TVAL_MINMAXTAS_INI (COD_REGION,COD_MONEDA,COD_TIPREAJUSTE,COD_TIPPENSION,FEC_INIMINMAX,FEC_TERMINMAX,PRC_MINIMO,PRC_MAXIMO,COD_USUARIOCREA,FEC_CREA,HOR_CREA) " +
                         "VALUES ('" + datos.codRegion + "','" + codMoneda + "','" + codTipReajuste + "','05','" + fecha.ToString("yyyyMMdd") + "','99991231',0.00," + datos.jl + ",'" + usuario + "','" + fecha.ToString("yyyyMMdd") + "','" + fecha.ToString("hhmmss") + "')";
 
-            return fecfinTir + fecfinPer + fecfinTas +tir + prd + it + ip + s + ja + jl;
+            return tir + prd + it + ip + s + ja + jl;
         }
         /// <summary>
         /// Omar Figueroa Flores
