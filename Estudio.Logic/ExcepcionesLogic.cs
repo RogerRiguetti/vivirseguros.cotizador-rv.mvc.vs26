@@ -384,6 +384,7 @@ namespace Estudio.Logic
             }
             catch (Exception ex)
             {
+                _log.Info(ex.Message);
                 res.IsOk = false;
                 res.Message = ex.Message;
                 return res;
