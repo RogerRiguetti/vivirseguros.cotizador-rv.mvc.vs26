@@ -301,7 +301,8 @@ namespace Estudio.Controllers.Controllers.Oficiales
              string documento = _genArMeler.GenerarXML(informacion, null, "W").Message;
              //Envio
              var respuesta = _clXML.cargaCotizacionesOficiales(documento, strNom);
-             return Json(respuesta);
+            _log.Info("XML:" + documento);
+            return Json(respuesta);
         }
         
 
