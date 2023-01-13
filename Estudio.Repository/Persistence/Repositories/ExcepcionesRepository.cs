@@ -8,8 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace Estudio.Repository.Persistence.Repositories
@@ -88,13 +86,21 @@ namespace Estudio.Repository.Persistence.Repositories
                     Ind_SISCO = x.GetInt32(27),
                     cod_tipreajuste = Convert.ToInt32(x.GetString(28)),
                     mes_esc = x.GetInt32(29),
-                    asesor = x.GetInt32(30).ToString()
+                    asesor = x.GetInt32(30).ToString(),
+                    Prestacion = x.GetString(31),
+                    FechaCierre = (x.GetString(32).Substring(6, 2) + "/" + x.GetString(32).Substring(4, 2) + "/" + x.GetString(32).Substring(0, 4)),
+                    DepartamentoMeler = x.GetString(33),
+                    DepartamentoAsignado = x.GetString(34),
+                    Asesor = x.GetString(35),
+                    Supervisor = x.GetString(36)
                 }).ToList();
                 if (_ExceptionList.Count != 0)
                 {
                     List<string[]> datos = new List<string[]>();
                     string[] datosPer = { _ExceptionList[0].numOperacion.ToString(), _ExceptionList[0].dni, _ExceptionList[0].afp, _ExceptionList[0].cic.ToString(),
-                                         _ExceptionList[0].asegurado, _ExceptionList[0].cuspp, _ExceptionList[0].sexo, _ExceptionList[0].fechaNac, _ExceptionList[0].numCot, _ExceptionList[0].numArchivo.ToString()};
+                                         _ExceptionList[0].asegurado, _ExceptionList[0].cuspp, _ExceptionList[0].sexo, _ExceptionList[0].fechaNac, _ExceptionList[0].numCot, _ExceptionList[0].numArchivo.ToString(),
+                                         _ExceptionList[0].Prestacion, _ExceptionList[0].FechaCierre, _ExceptionList[0].DepartamentoMeler, _ExceptionList[0].DepartamentoAsignado, _ExceptionList[0].Asesor, _ExceptionList[0].Supervisor
+                                        };
                     datos.Add(datosPer);
 
                     CalculoCotizacionRepository _calculoCotizacionRepository = new CalculoCotizacionRepository();
@@ -188,7 +194,7 @@ namespace Estudio.Repository.Persistence.Repositories
                                     }
                                     else
                                     {
-                                       // PrimaUnica = _ExceptionList[i].primaUnica;
+                                        // PrimaUnica = _ExceptionList[i].primaUnica;
                                         PrimerTramo = (Convert.ToDouble(sumaPension) * 2);
                                     }
 
@@ -209,7 +215,7 @@ namespace Estudio.Repository.Persistence.Repositories
                                             PrimaUnica = _ExceptionList[i].primaUnica;
                                         }
                                     }
-                                    
+
 
                                     SegundoTramo = Convert.ToDouble(sumaPension);
                                     AniosDif = Convert.ToInt32(_ExceptionList[i].periodoDiferido);
@@ -226,9 +232,9 @@ namespace Estudio.Repository.Persistence.Repositories
                                     //}
                                     //else
                                     //{
-                                        PrimerTramo = Convert.ToDouble(sumaPension);
-                                        // modalidades = _excepcionesRepository.ConsultarModalidadesModificar(idSolicitud.ToString(), _ExcepcionesRepository.numCorrelativo);
-                                        SegundoTramo = ((Convert.ToDouble(sumaPension) * Convert.ToInt32(_ExceptionList[i].rentaEsc)) / 100);
+                                    PrimerTramo = Convert.ToDouble(sumaPension);
+                                    // modalidades = _excepcionesRepository.ConsultarModalidadesModificar(idSolicitud.ToString(), _ExcepcionesRepository.numCorrelativo);
+                                    SegundoTramo = ((Convert.ToDouble(sumaPension) * Convert.ToInt32(_ExceptionList[i].rentaEsc)) / 100);
                                     //}
 
                                     PrimaUnica = _ExceptionList[i].cic;
@@ -410,7 +416,8 @@ namespace Estudio.Repository.Persistence.Repositories
                     {
                         primeraPensionRT = (datos.mtoPensio * 2) * d.codTipCambio;
                     }
-                    else {
+                    else
+                    {
                         primeraPensionRT = (datos.mtoPensio * 2);
                     }
                     if (d.modalidad == "RVE")
@@ -482,7 +489,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 }
                 _log.Info("JSON a enviar por pantalla " + ser.Serialize(datosResult));
                 res.Object = ser.Serialize(datosResult);
-               res.Message = "Registro guardado con exito";
+                res.Message = "Registro guardado con exito";
                 res.IsOk = true;
                 return res;
             }
@@ -684,7 +691,7 @@ namespace Estudio.Repository.Persistence.Repositories
             Exceptiones NA = new Exceptiones();
             string queryNum = "SELECT C.NUM_ARCHIVO, C.COD_TIPPENSION, DC.COD_TIPREN, C.IND_COB, ISNULL(DC.Ind_SISCO, 0) AS Ind_SISCO, C.COD_CUSPP,  CS.MTO_TIPCAMBIO, DC.cod_estcot, DC.PRC_TASAVTA FROM PT_TMAE_COTIZACION C " +
                               " JOIN PT_TMAE_DETCOTIZACION DC ON C.NUM_ARCHIVO = DC.NUM_ARCHIVO AND C.NUM_OPERACION = DC.NUM_OPERACION " +
-                              "JOIN PT_THIS_CARGASOL CS ON CS.NUM_OPERACION = C.NUM_OPERACION "+
+                              "JOIN PT_THIS_CARGASOL CS ON CS.NUM_OPERACION = C.NUM_OPERACION " +
                               "WHERE C.NUM_OPERACION = " + numOperacion + " AND DC.NUM_CORRELATIVO = " + numCor;
 
             try
@@ -768,7 +775,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 _log.Info("Tasa RT " + Convert.ToDouble(d.tasaRT));
                 _log.Info("Modalidad " + d.modalidad);
                 _log.Info("Comisión " + d.comision.ToString());
-              
+
                 double tasaRT = Convert.ToDouble(d.tasaRT);
                 double primeraPensionRT = 0;
                 if (d.anosRT > 0)

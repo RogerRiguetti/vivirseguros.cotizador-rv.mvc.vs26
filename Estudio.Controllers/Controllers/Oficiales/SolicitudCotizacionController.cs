@@ -1,22 +1,17 @@
 ﻿using System;
 using Estudio.Logic;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Estudio.Repository.Core.Domain;
 using CrystalDecisions.CrystalReports.Engine;
 using System.IO;
 using System.Xml;
-using Estudio.Repository.Helpers;
 using System.Threading.Tasks;
-using System.Threading;
 using Estudio.Repository.Core.Domain.Views;
 using log4net;
 using log4net.Config;
 using SpreadsheetLight;
 using System.Reflection;
-using Estudio.Repository;
 
 namespace Estudio.Controllers.Controllers.Oficiales
 {
@@ -28,7 +23,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
         public static int GlobalNumArchivo;
         public static string GlobalNomArchivo;
         public static List<SolicitudesCotizacion> datosDeCarga;
-        
+
         public static object GlobalValue
         {
             get
@@ -298,13 +293,13 @@ namespace Estudio.Controllers.Controllers.Oficiales
         {
             clXML _clXML = new clXML();
             List<GenArMeler> informacion = (List<GenArMeler>)_SolicitudCotizacionLogic.informacionGenerar(strNum, strNom).Object;
-             string documento = _genArMeler.GenerarXML(informacion, null, "W").Message;
-             //Envio
-             var respuesta = _clXML.cargaCotizacionesOficiales(documento, strNom);
+            string documento = _genArMeler.GenerarXML(informacion, null, "W").Message;
+            //Envio
+            var respuesta = _clXML.cargaCotizacionesOficiales(documento, strNom);
             _log.Info("XML:" + documento);
             return Json(respuesta);
         }
-        
+
 
         /// <summary>
         /// Omar Figueroa Flores
@@ -442,6 +437,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                     sl.SetCellValue(2 + i, 23, ListCalculadas[i].Intermediario);
                     sl.SetCellValue(2 + i, 24, ListCalculadas[i].Prc_CorCom);
                     sl.SetCellValue(2 + i, 25, ListCalculadas[i].Ind_Mej);
+                    sl.SetCellValue(2 + i, 26, ListCalculadas[i].Gls_Region);
                 }
 
                 sl.SelectWorksheet("Solicitudes No Calculadas");
@@ -466,7 +462,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                 }
 
                 sl.SaveAs(pathFile);
-                
+
 
                 byte[] fileBytes = System.IO.File.ReadAllBytes(pathFile);
                 System.IO.File.Delete(pathFile);
