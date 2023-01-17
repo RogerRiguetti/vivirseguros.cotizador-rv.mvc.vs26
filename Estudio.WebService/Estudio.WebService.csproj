@@ -147,6 +147,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Requests\CalculoExtraOficialRequest.cs" />
+    <Compile Include="Static\CatalogoErrores.cs" />
+    <Compile Include="Validator\CalculoExtraOficialValidator.cs" />
     <Compile Include="Web References\webPrueba\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -202,7 +205,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>29092</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

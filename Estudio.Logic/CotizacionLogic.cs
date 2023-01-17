@@ -452,8 +452,8 @@ namespace Estudio.Logic
                                     //}
                                     //else
                                     //{
-                                        registroRpt.PrimerTramoStr = (Convert.ToDecimal(registroRpt.MontoPension * (porcentaje / 100))).ToString("N2");
-                                        registroRpt.SegundoTramoStr = signo + ((registroRpt.MontoPension * (porcentaje / 100)) * (Convert.ToDouble(registroRpt.SegundoTramo) / 100)).ToString("N2");
+                                    registroRpt.PrimerTramoStr = (Convert.ToDecimal(registroRpt.MontoPension * (porcentaje / 100))).ToString("N2");
+                                    registroRpt.SegundoTramoStr = signo + ((registroRpt.MontoPension * (porcentaje / 100)) * (Convert.ToDouble(registroRpt.SegundoTramo) / 100)).ToString("N2");
                                     //}
                                     registroRpt.MontoPensionStr = registroRpt.Cic.ToString("N2");
                                     registroRpt.AniosDiferidos = Convert.ToInt32(registroRpt.PrimerTramo);
@@ -857,5 +857,38 @@ namespace Estudio.Logic
         }
 
         #endregion
+
+        public dynamic ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
+        {
+            var response = new Response();
+            try
+            {
+                var result = _cotizacionRepository.ConsultarDataCotizacionExtraOficial(bandera, parametro);
+
+                if (result != null)
+                {
+                    response.IsOk = true;
+                    response.Message = "Operación realizada con éxito.";
+                    response.Object = new { Result = result };
+                }
+                else
+                {
+                    response.IsOk = false;
+                    response.Message = "No se encontraron datos.";
+                }
+
+            }
+            catch (Exception)
+            {
+                Response res = new Response
+                {
+                    IsOk = false,
+                    Message = "Ocurrió un error. Por favor vuelve a intentar o contacta al área de Sistemas."
+                };
+                return res;
+            }
+
+            return response;
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace Estudio.Repository
         public const string VCE_Consulta_TipoPension = "VCE_Consulta_TipoPension";
         public const string VCE_ConsultaSituacionesInvalidez = "VCE_ConsultaSituacionesInvalidez";
 
+
         // SeguroRV
         public const string VCE_ConsultasRutinas = "VCE_ConsultasRutinas";
         public const string VCE_CatalogoClave = "VCE_CatalogoClave";
@@ -48,6 +49,9 @@ namespace Estudio.Repository
         public const string CO_CatalogoParametrosGasto = "CO_CatalogosParametrosGastos";
         public const string CO_ActualizacionDetCotizacion = "CO_ActualizacionDetCotizacion";
         public const string CO_CatalogosTasaVentaProm = "CO_CatalogosTasaVentaProm";
+
+        //ExtraOficial
+        public const string CO_ConsultasCotizacionesExtraOficial = "CO_ConsultasCotizacionesExtraOficial";
 
         //carga de archivo
         public const string CO_CatalogosCalcularAsignacionIntermediario = "CO_CatalogosCalcularAsignacionIntermediario";
