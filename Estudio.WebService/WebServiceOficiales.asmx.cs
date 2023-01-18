@@ -1259,74 +1259,73 @@ namespace Estudio.WebService
 
             try
             {
-                var validationRules = _calculoEOValidator.validator((CalculoExtraOficialRequest)request);
+                var validationRules = _calculoEOValidator.validator(request);
 
                 if (validationRules.Count() > 0)
                 {
                     response.IsOk = false;
                     response.Object = new { Errors = validationRules };
+                    return ser.Serialize(response);
                 }
-                else
+
+                var IdAsesor = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdAsesor", request.Asesor);
+                var IdSexo = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSexo", request.Asegurado.Genero);
+                var IdTipoDocumento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoDocumento", request.Asegurado.NombreDocumento);
+                var IdDepartamento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdDepartamento", request.Asegurado.Departamento);
+                var IdProvincia = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdProvincia", request.Asegurado.Provincia);
+                var IdDistrito = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdDistrito", request.Asegurado.Distrito);
+                var IdAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdAfp", request.Asegurado.TipoAFP);
+                var IdPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdPension", request.Asegurado.TipoPension);
+                var CodigoPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("CodigoPension", request.Asegurado.TipoPension);
+                var PorAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("PorAfp", request.Asegurado.TipoAFP);
+
+                var cotizacion = new Cotizacion
                 {
-                    var IdAsesor = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdAsesor", request.Asesor);
-                    var IdSexo = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSexo", request.Asegurado.Genero);
-                    var IdTipoDocumento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoDocumento", request.Asegurado.NombreDocumento);
-                    var IdDepartamento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdDepartamento", request.Asegurado.Departamento);
-                    var IdProvincia = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdProvincia", request.Asegurado.Provincia);
-                    var IdDistrito = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdDistrito", request.Asegurado.Distrito);
-                    var IdAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdAfp", request.Asegurado.TipoAFP);
-                    var IdPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdPension", request.Asegurado.TipoPension);
-                    var CodigoPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("CodigoPension", request.Asegurado.TipoPension);
-                    var PorAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("PorAfp", request.Asegurado.TipoAFP);
+                    IdCotizacion = request.IdCotizacionJubilare,
+                    Documento = request.Asegurado.NumeroDocumento,
+                    CUSPP = request.Asegurado.CUSPP,
+                    Nombres = request.Asegurado.Nombres,
+                    ApellidoPaterno = request.Asegurado.ApellidoPaterno,
+                    ApellidoMaterno = request.Asegurado.ApellidoMaterno,
+                    FechaNacimiento = request.Asegurado.FechaNacimiento,
+                    FechaNacimientoStr = null,
+                    Cic = request.MontoCIC,
+                    FechaDevengue = request.Asegurado.FechaDevengue,
+                    FechaDevengueStr = null,
+                    FechaEstudio = DateTime.Now,
+                    FechaEstudioStr = null,
+                    GastoSepelio = request.GastoSepelio,
+                    TipoCambio = request.TipoCambio,
+                    FechaCotizacion = DateTime.Now,
+                    FechaCotizacionStr = null,
+                    IdAsesor = int.Parse(IdAsesor),
+                    Asesor = request.Asesor,
+                    IdSexo = int.Parse(IdSexo),
+                    IdTipoDocumento = int.Parse(IdTipoDocumento),
+                    TipoDocumento = request.Asegurado.NombreDocumento,
+                    IdDepartamento = int.Parse(IdDepartamento),
+                    IdProvincia = int.Parse(IdProvincia),
+                    IdDistrito = int.Parse(IdDistrito),
+                    IdAfp = int.Parse(IdAfp),
+                    IdPension = int.Parse(IdPension),
+                    Afp = request.Asegurado.TipoAFP,
+                    CodigoPension = CodigoPension,
+                    ClaveSexo = request.Asegurado.Genero,
+                    PorAfp = PorAfp,
+                    Estado = 1
+                };
 
-                    var cotizacion = new Cotizacion
-                    {
-                        IdCotizacion = request.IdCotizacionJubilare,
-                        Documento = request.Asegurado.NumeroDocumento,
-                        CUSPP = request.Asegurado.CUSPP,
-                        Nombres = request.Asegurado.Nombres,
-                        ApellidoPaterno = request.Asegurado.ApellidoPaterno,
-                        ApellidoMaterno = request.Asegurado.ApellidoMaterno,
-                        FechaNacimiento = request.Asegurado.FechaNacimiento,
-                        FechaNacimientoStr = null,
-                        Cic = request.MontoCIC,
-                        FechaDevengue = request.Asegurado.FechaDevengue,
-                        FechaDevengueStr = null,
-                        FechaEstudio = DateTime.Now,
-                        FechaEstudioStr = null,
-                        GastoSepelio = request.GastoSepelio,
-                        TipoCambio = request.TipoCambio,
-                        FechaCotizacion = DateTime.Now,
-                        FechaCotizacionStr = null,
-                        IdAsesor = IdAsesor,
-                        Asesor = request.Asesor,
-                        IdSexo = IdSexo,
-                        IdTipoDocumento = IdTipoDocumento,
-                        TipoDocumento = request.Asegurado.NombreDocumento,
-                        IdDepartamento = IdDepartamento,
-                        IdProvincia = IdProvincia,
-                        IdDistrito = IdDistrito,
-                        IdAfp = IdAfp,
-                        IdPension = IdPension,
-                        Afp = request.Asegurado.TipoAFP,
-                        CodigoPension = CodigoPension,
-                        ClaveSexo = request.Asegurado.Genero,
-                        PorAfp = PorAfp,
-                        Estado = 1
-                    };
-
-                    foreach (var ids in request.Beneficiario)
-                    {
-                        idsBeneficiarios.Add(ids.IdBeneficiarioJubilare.ToString());
-                    }
-
-                    foreach (var ids in request.Modalidad)
-                    {
-                        idsModalidades.Add(ids.IdModalidadJubilare.ToString());
-                    }
-
-                    response = _cotizacionLogic.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiarios, idsModalidades);
+                foreach (var ids in request.Beneficiario)
+                {
+                    idsBeneficiarios.Add(ids.IdBeneficiarioJubilare.ToString());
                 }
+
+                foreach (var ids in request.Modalidad)
+                {
+                    idsModalidades.Add(ids.IdModalidadJubilare.ToString());
+                }
+
+                response = _cotizacionLogic.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiarios, idsModalidades);
 
                 return ser.Serialize(response);
             }

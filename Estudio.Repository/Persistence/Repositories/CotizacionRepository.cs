@@ -993,6 +993,19 @@ namespace Estudio.Repository.Persistence.Repositories
 
         #endregion
 
+        //public dynamic ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
+        //{
+        //    var parameters = new List<SqlParameter>
+        //    {
+        //        VCEDBContext<RowAffected>.AddParams("@bandera", SqlDbType.VarChar, bandera, ParameterDirection.Input),
+        //        VCEDBContext<RowAffected>.AddParams("@parameter", SqlDbType.VarChar, parametro, ParameterDirection.Input)
+        //    };
+
+        //    var result = VCEDBContext<string>.CallStoreProcedureDt(StoredProcedures.CO_ConsultasCotizacionesExtraOficial, parameters);
+
+        //    return result;
+        //}
+
         public dynamic ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
         {
             var parameters = new List<SqlParameter>
@@ -1001,9 +1014,14 @@ namespace Estudio.Repository.Persistence.Repositories
                 VCEDBContext<RowAffected>.AddParams("@parameter", SqlDbType.VarChar, parametro, ParameterDirection.Input)
             };
 
-            var result = VCEDBContext<dynamic>.CallStoreProcedureDt(StoredProcedures.CO_ConsultasCotizacionesExtraOficial, parameters);
+            var result = VCEDBContext<string>.CallStoreProcedureReturnStr(StoredProcedures.CO_ConsultasCotizacionesExtraOficial, parameters);
 
             return result;
+        }
+
+        public class Resultado
+        {
+            public string Result { get; set; }
         }
     }
 }

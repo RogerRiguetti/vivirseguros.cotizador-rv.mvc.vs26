@@ -858,37 +858,16 @@ namespace Estudio.Logic
 
         #endregion
 
-        public dynamic ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
+        public string ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
         {
-            var response = new Response();
-            try
-            {
-                var result = _cotizacionRepository.ConsultarDataCotizacionExtraOficial(bandera, parametro);
+            var result = _cotizacionRepository.ConsultarDataCotizacionExtraOficial(bandera, parametro);
 
-                if (result != null)
-                {
-                    response.IsOk = true;
-                    response.Message = "Operación realizada con éxito.";
-                    response.Object = new { Result = result };
-                }
-                else
-                {
-                    response.IsOk = false;
-                    response.Message = "No se encontraron datos.";
-                }
-
-            }
-            catch (Exception)
+            if (result != null)
             {
-                Response res = new Response
-                {
-                    IsOk = false,
-                    Message = "Ocurrió un error. Por favor vuelve a intentar o contacta al área de Sistemas."
-                };
-                return res;
+                return result;
             }
 
-            return response;
+            return result;
         }
     }
 }

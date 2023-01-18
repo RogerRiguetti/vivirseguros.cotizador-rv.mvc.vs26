@@ -2,6 +2,7 @@
 {
     public class CatalogoErrores
     {
+        public const string Cotizacion00 = "00 -  Los datos enviados no coinciden con nuestra base de datos.";
         //Asegurado
         public const string Cotizacion01 = "01 - No se puede consumir el método, el Token ha expirado";
         public const string Cotizacion02 = "02 - El campo “Tipo de Documento” no puede estar vacío.";
