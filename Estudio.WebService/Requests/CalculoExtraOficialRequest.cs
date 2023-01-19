@@ -18,7 +18,7 @@ namespace Estudio.WebService.Requests
 
     public class Asegurado
     {
-        public int IdBeneficiarioJubilare { get; set; }
+        public int IdAseguradoJubilare { get; set; }
         public string CUSPP { get; set; }
         public string TipoInvalidez { get; set; }
         public DateTime FechaNacimiento { get; set; }

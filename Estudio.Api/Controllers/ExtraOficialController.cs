@@ -93,7 +93,7 @@ namespace Estudio.Api.Controllers
                     CodigoPension = CodigoPension,
                     ClaveSexo = request.Asegurado.Genero,
                     PorAfp = PorAfp,
-                    Estado = 1
+                    Estado = 0
                 };
 
                 foreach (var ids in request.Beneficiario)

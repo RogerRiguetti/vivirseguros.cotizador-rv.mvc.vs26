@@ -493,7 +493,7 @@ namespace Estudio.Repository.Persistence.Repositories
 
                 VCEDBContext<DataTable>.CallStoreProcedureDt(StoredProcedures.VCE_CatalogoRutina, parameters);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

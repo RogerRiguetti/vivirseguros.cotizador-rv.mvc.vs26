@@ -8,8 +8,8 @@ namespace Estudio.Api.Request
         public int IdCotizacionJubilare { get; set; }
         public string Aplicacion { get; set; }
         public string TipoCambio { get; set; }
-        public int GastoSepelio { get; set; }
-        public int MontoCIC { get; set; }
+        public decimal GastoSepelio { get; set; }
+        public decimal MontoCIC { get; set; }
         public string Asesor { get; set; }
         public Asegurado Asegurado { get; set; }
         public List<Beneficiario> Beneficiario { get; set; }
