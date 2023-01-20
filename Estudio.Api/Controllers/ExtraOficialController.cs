@@ -18,6 +18,7 @@ namespace Estudio.Api.Controllers
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         CalculoExtraOficialValidator _calculoEOValidator = new CalculoExtraOficialValidator();
         CotizacionLogic _cotizacionLogic = new CotizacionLogic();
+        ModalidadesLogic _modalidadesLogic = new ModalidadesLogic();
 
         // POST api/values
         public object Post([FromBody] CalculoExtraOficialRequest request)
@@ -27,6 +28,9 @@ namespace Estudio.Api.Controllers
             var idsBeneficiarios = new List<string>();
             var idsModalidades = new List<string>();
             char bandera = 'C';
+
+            //Modalidades
+            int idModalidad = 0;
 
             try
             {
@@ -50,6 +54,40 @@ namespace Estudio.Api.Controllers
                 var IdPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdPension", request.Asegurado.TipoPension);
                 var CodigoPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("CodigoPension", request.Asegurado.TipoPension);
                 var PorAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("PorAfp", request.Asegurado.TipoAFP);
+
+                foreach (var mod in request.Modalidad)
+                {
+                    var IdMoneda = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdMoneda", mod.Moneda);
+                    var AniosDiferidos = mod.PeriodoDiferido.ToString();
+                    var PeriodoGarantizado = mod.PeriodoGarantizado.ToString();
+                    var Gratificacion = mod.Gratificacion;
+                    var IdModalidadCat = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdModalidadCat", mod.TipoModalidad);
+                    var IdTipoRenta = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoRenta", mod.TipoRenta);
+                    var PorcentajeRentaTemporal = mod.RentaTemp;
+                    var PorcentajeRentabilidadAfp = mod.TasaRentaAFP;
+
+                    if (IdMoneda == "00" || IdModalidadCat == "00" || IdTipoRenta == "00")
+                    {
+                        response.IsOk = false;
+                        response.Message = CatalogoErrores.Cotizacion00;
+                        return response;
+                    }
+
+                    var modalidad = new Repository.Core.Domain.Modalidad
+                    {
+                        AniosDiferidos = int.Parse(AniosDiferidos),
+                        AniosGarantizados = int.Parse(PeriodoGarantizado),
+                        Gratificacion = Gratificacion,
+                        IdComision = 8,
+                        IdModalidadCat = int.Parse(IdModalidadCat),
+                        IdMoneda = int.Parse(IdMoneda),
+                        IdTipoRenta = int.Parse(IdTipoRenta),
+                        PorcentajeRentaTemporal = PorcentajeRentaTemporal,
+                        PorcentajeRentabilidadAfp = PorcentajeRentabilidadAfp
+                    };
+
+                    _modalidadesLogic.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
+                }
 
 
                 if (IdAsesor == "00" || IdSexo == "00" || IdTipoDocumento == "00" || IdDepartamento == "00" || IdProvincia == "00" ||
@@ -106,7 +144,7 @@ namespace Estudio.Api.Controllers
                     idsModalidades.Add(ids.IdModalidadJubilare.ToString());
                 }
 
-                response = _cotizacionLogic.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiarios, idsModalidades);
+                response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, idsBeneficiarios, idsModalidades);
 
                 return Json(response);
             }

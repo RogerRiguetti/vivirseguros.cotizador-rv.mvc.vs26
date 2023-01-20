@@ -57,12 +57,12 @@ namespace Estudio.Api.Request
         public string Moneda { get; set; }
         public string TipoRenta { get; set; }
         public string TipoModalidad { get; set; }
-        public decimal PeriodoDiferido { get; set; }
-        public decimal PeriodoGarantizado { get; set; }
+        public int PeriodoDiferido { get; set; }
+        public int PeriodoGarantizado { get; set; }
         public string Gratificacion { get; set; }
         public decimal PrimerTramo { get; set; }
         public decimal SegundoTramo { get; set; }
         public decimal TasaRentaAFP { get; set; }
-        public decimal RentaTemp { get; set; }
+        public int RentaTemp { get; set; }
     }
 }
