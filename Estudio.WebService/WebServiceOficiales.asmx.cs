@@ -349,6 +349,7 @@ namespace Estudio.WebService
             Exceptiones mod = new Exceptiones();
             JavaScriptSerializer ser = new JavaScriptSerializer();
             Response datos = new Response();
+            webPrueba.AdmIntegracionCotizador wsEnvio = new webPrueba.AdmIntegracionCotizador();
             try
             {
                 ExcepcionesLogic _ExcepcionesLogic = new ExcepcionesLogic();
@@ -425,6 +426,41 @@ namespace Estudio.WebService
                     _log.Info("COMENZARÁ EL CALCULO");
                     mod.moneda = moneda;
                     datos = Task.Run(() => _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "")).Result;
+
+                    string respuestaWSenvioRutina = null;//wsEnvio.CalculoMejoras(datos.Object);
+
+                    //var data = respuestaWSenvioRutina;
+
+                    if (respuestaWSenvioRutina == null)
+                    {
+                        var numArch = 1;
+                        var nombreArchivo = "Prueba Correo";
+                        _log.Info("Comenzara el envio del correo electronico con la notificación");
+
+                        string asunto = "VC Oficiales - Calculo de archivo desde WebService";
+                        string cuerpo = "Se ha calculado correctamente el archivo " + numArch + " - " + nombreArchivo;
+                        List<string> correos = new List<string>();
+
+                        string queryCon = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
+
+                        _log.Info("Comenzara la busqueda del correo electronico");
+
+                        string DatosCon = VCEDBContext<Parametro>.CallSelectStatement(queryCon, x => new Parametro
+                        {
+                            Elemento = x.GetString(0)
+                        }).FirstOrDefault().Elemento;
+                        _log.Info("El correo se enviará a " + DatosCon);
+
+                        string correo = DatosCon;
+                        correos.Add(correo);
+                        //ExportarCalculadas(numArch);
+                        if (!_correoLogic.envioCorreo(cuerpo, asunto, correos, pathFileExcel))
+                        {
+                            _log.Info("Error al enviar el correo electronico");
+                            _log.Info("**************************************************************");
+                            //return;
+                        }
+                    }
                 }
                 //var datos = await _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "");
                 if (datos.IsOk == false)
@@ -1241,98 +1277,6 @@ namespace Estudio.WebService
                 }
                 _log.Info("JSON A RETORNAR: " + ser.Serialize(datosResult));
                 return ser.Serialize(datosResult);
-            }
-        }
-
-        [WebMethod]
-        [XmlInclude(typeof(CalculoExtraOficialRequest))]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public object CalculoExtraOficial(CalculoExtraOficialRequest request)
-        {
-            //XmlConfigurator.Configure();
-            var ser = new JavaScriptSerializer();
-            var response = new Response();
-
-            var idsBeneficiarios = new List<string>();
-            var idsModalidades = new List<string>();
-            char bandera = 'C';
-
-            try
-            {
-                var validationRules = _calculoEOValidator.validator(request);
-
-                if (validationRules.Count() > 0)
-                {
-                    response.IsOk = false;
-                    response.Object = new { Errors = validationRules };
-                    return ser.Serialize(response);
-                }
-
-                var IdAsesor = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdAsesor", request.Asesor);
-                var IdSexo = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSexo", request.Asegurado.Genero);
-                var IdTipoDocumento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoDocumento", request.Asegurado.NombreDocumento);
-                var IdDepartamento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdDepartamento", request.Asegurado.Departamento);
-                var IdProvincia = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdProvincia", request.Asegurado.Provincia);
-                var IdDistrito = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdDistrito", request.Asegurado.Distrito);
-                var IdAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdAfp", request.Asegurado.TipoAFP);
-                var IdPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdPension", request.Asegurado.TipoPension);
-                var CodigoPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("CodigoPension", request.Asegurado.TipoPension);
-                var PorAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("PorAfp", request.Asegurado.TipoAFP);
-
-                var cotizacion = new Cotizacion
-                {
-                    IdCotizacion = request.IdCotizacionJubilare,
-                    Documento = request.Asegurado.NumeroDocumento,
-                    CUSPP = request.Asegurado.CUSPP,
-                    Nombres = request.Asegurado.Nombres,
-                    ApellidoPaterno = request.Asegurado.ApellidoPaterno,
-                    ApellidoMaterno = request.Asegurado.ApellidoMaterno,
-                    FechaNacimiento = request.Asegurado.FechaNacimiento,
-                    FechaNacimientoStr = null,
-                    Cic = request.MontoCIC,
-                    FechaDevengue = request.Asegurado.FechaDevengue,
-                    FechaDevengueStr = null,
-                    FechaEstudio = DateTime.Now,
-                    FechaEstudioStr = null,
-                    GastoSepelio = request.GastoSepelio,
-                    TipoCambio = request.TipoCambio,
-                    FechaCotizacion = DateTime.Now,
-                    FechaCotizacionStr = null,
-                    IdAsesor = int.Parse(IdAsesor),
-                    Asesor = request.Asesor,
-                    IdSexo = int.Parse(IdSexo),
-                    IdTipoDocumento = int.Parse(IdTipoDocumento),
-                    TipoDocumento = request.Asegurado.NombreDocumento,
-                    IdDepartamento = int.Parse(IdDepartamento),
-                    IdProvincia = int.Parse(IdProvincia),
-                    IdDistrito = int.Parse(IdDistrito),
-                    IdAfp = int.Parse(IdAfp),
-                    IdPension = int.Parse(IdPension),
-                    Afp = request.Asegurado.TipoAFP,
-                    CodigoPension = CodigoPension,
-                    ClaveSexo = request.Asegurado.Genero,
-                    PorAfp = PorAfp,
-                    Estado = 1
-                };
-
-                foreach (var ids in request.Beneficiario)
-                {
-                    idsBeneficiarios.Add(ids.IdBeneficiarioJubilare.ToString());
-                }
-
-                foreach (var ids in request.Modalidad)
-                {
-                    idsModalidades.Add(ids.IdModalidadJubilare.ToString());
-                }
-
-                response = _cotizacionLogic.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiarios, idsModalidades);
-
-                return ser.Serialize(response);
-            }
-            catch (Exception ex)
-            {
-                _log.Info("Error en el cálculo extra oficial" + ex.Message);
-                return null;
             }
         }
     }
