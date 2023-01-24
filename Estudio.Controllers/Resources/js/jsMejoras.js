@@ -264,7 +264,7 @@ function calcular() {
                 prestacion: $("#txtPrestacion").val(),
                 fechaCierre: $("#txtFechaCierre").val(),
                 departamentoMeler: $("#txtDepartamentoMeler").val(),
-                departamentoAsignador: $("#txtDepartamentoAsignado").val(),
+                departamentoAsignado: $("#txtDepartamentoAsignado").val(),
                 asesor: $("#txtAsesor").val(),
                 supervisor: $("#txtSupervisor").val()
             }
