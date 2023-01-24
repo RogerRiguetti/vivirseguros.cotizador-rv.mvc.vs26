@@ -87,19 +87,19 @@ namespace Estudio.Repository.Persistence.Repositories
                     cod_tipreajuste = Convert.ToInt32(x.GetString(28)),
                     mes_esc = x.GetInt32(29),
                     asesor = x.GetInt32(30).ToString(),
-                    Prestacion = x.GetString(31),
-                    FechaCierre = (x.GetString(32).Substring(6, 2) + "/" + x.GetString(32).Substring(4, 2) + "/" + x.GetString(32).Substring(0, 4)),
-                    DepartamentoMeler = x.GetString(33),
-                    DepartamentoAsignado = x.GetString(34),
-                    Asesor = x.GetString(35),
-                    Supervisor = x.GetString(36)
+                    prestacion = x.GetString(31),
+                    fechaCierre = (x.GetString(32).Substring(6, 2) + "/" + x.GetString(32).Substring(4, 2) + "/" + x.GetString(32).Substring(0, 4)),
+                    departamentoMeler = x.GetString(33),
+                    departamentoAsignado = x.GetString(34),
+                    asesorDesc = x.GetString(35),
+                    supervisor = x.GetString(36)
                 }).ToList();
                 if (_ExceptionList.Count != 0)
                 {
                     List<string[]> datos = new List<string[]>();
                     string[] datosPer = { _ExceptionList[0].numOperacion.ToString(), _ExceptionList[0].dni, _ExceptionList[0].afp, _ExceptionList[0].cic.ToString(),
                                          _ExceptionList[0].asegurado, _ExceptionList[0].cuspp, _ExceptionList[0].sexo, _ExceptionList[0].fechaNac, _ExceptionList[0].numCot, _ExceptionList[0].numArchivo.ToString(),
-                                         _ExceptionList[0].Prestacion, _ExceptionList[0].FechaCierre, _ExceptionList[0].DepartamentoMeler, _ExceptionList[0].DepartamentoAsignado, _ExceptionList[0].Asesor, _ExceptionList[0].Supervisor
+                                         _ExceptionList[0].prestacion, _ExceptionList[0].fechaCierre, _ExceptionList[0].departamentoMeler, _ExceptionList[0].departamentoAsignado, _ExceptionList[0].asesorDesc, _ExceptionList[0].supervisor
                                         };
                     datos.Add(datosPer);
 

@@ -80,11 +80,11 @@ namespace Estudio.Repository.Core.Domain
         public string motivo { get; set; }
         public int estado { get; set; }
         public string asesor { get; set; }
-        public string Prestacion { get; set; }
-        public string FechaCierre { get; set; }
-        public string DepartamentoMeler { get; set; }
-        public string DepartamentoAsignado { get; set; }
-        public string Asesor { get; set; }
-        public string Supervisor { get; set; }
+        public string prestacion { get; set; }
+        public string fechaCierre { get; set; }
+        public string departamentoMeler { get; set; }
+        public string departamentoAsignado { get; set; }
+        public string asesorDesc { get; set; }
+        public string supervisor { get; set; }
     }
 }
