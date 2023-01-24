@@ -427,40 +427,40 @@ namespace Estudio.WebService
                     mod.moneda = moneda;
                     datos = Task.Run(() => _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "")).Result;
 
-                    string respuestaWSenvioRutina = null;//wsEnvio.CalculoMejoras(datos.Object);
+                    //string respuestaWSenvioRutina = null;//wsEnvio.CalculoMejoras(datos.Object);
 
-                    //var data = respuestaWSenvioRutina;
+                    ////var data = respuestaWSenvioRutina;
 
-                    if (respuestaWSenvioRutina == null)
-                    {
-                        var numArch = 1;
-                        var nombreArchivo = "Prueba Correo";
-                        _log.Info("Comenzara el envio del correo electronico con la notificación");
+                    //if (respuestaWSenvioRutina == null)
+                    //{
+                    //    var numArch = 1;
+                    //    var nombreArchivo = "Prueba Correo";
+                    //    _log.Info("Comenzara el envio del correo electronico con la notificación");
 
-                        string asunto = "VC Oficiales - Calculo de archivo desde WebService";
-                        string cuerpo = "Se ha calculado correctamente el archivo " + numArch + " - " + nombreArchivo;
-                        List<string> correos = new List<string>();
+                    //    string asunto = "VC Oficiales - Calculo de archivo desde WebService";
+                    //    string cuerpo = "Se ha calculado correctamente el archivo " + numArch + " - " + nombreArchivo;
+                    //    List<string> correos = new List<string>();
 
-                        string queryCon = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
+                    //    string queryCon = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
 
-                        _log.Info("Comenzara la busqueda del correo electronico");
+                    //    _log.Info("Comenzara la busqueda del correo electronico");
 
-                        string DatosCon = VCEDBContext<Parametro>.CallSelectStatement(queryCon, x => new Parametro
-                        {
-                            Elemento = x.GetString(0)
-                        }).FirstOrDefault().Elemento;
-                        _log.Info("El correo se enviará a " + DatosCon);
+                    //    string DatosCon = VCEDBContext<Parametro>.CallSelectStatement(queryCon, x => new Parametro
+                    //    {
+                    //        Elemento = x.GetString(0)
+                    //    }).FirstOrDefault().Elemento;
+                    //    _log.Info("El correo se enviará a " + DatosCon);
 
-                        string correo = DatosCon;
-                        correos.Add(correo);
-                        //ExportarCalculadas(numArch);
-                        if (!_correoLogic.envioCorreo(cuerpo, asunto, correos, pathFileExcel))
-                        {
-                            _log.Info("Error al enviar el correo electronico");
-                            _log.Info("**************************************************************");
-                            //return;
-                        }
-                    }
+                    //    string correo = DatosCon;
+                    //    correos.Add(correo);
+                    //    //ExportarCalculadas(numArch);
+                    //    if (!_correoLogic.envioCorreo(cuerpo, asunto, correos, pathFileExcel))
+                    //    {
+                    //        _log.Info("Error al enviar el correo electronico");
+                    //        _log.Info("**************************************************************");
+                    //        //return;
+                    //    }
+                    //}
                 }
                 //var datos = await _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "");
                 if (datos.IsOk == false)
