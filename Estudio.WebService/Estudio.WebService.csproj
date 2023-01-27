@@ -160,9 +160,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Requests\CalculoExtraOficialRequest.cs" />
-    <Compile Include="Static\CatalogoErrores.cs" />
-    <Compile Include="Validator\CalculoExtraOficialValidator.cs" />
     <Compile Include="Web References\webPrueba\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

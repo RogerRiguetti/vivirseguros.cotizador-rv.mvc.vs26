@@ -4,8 +4,6 @@ using Estudio.Repository.Core.Domain;
 using Estudio.Repository.Core.Domain.Views;
 using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
-using Estudio.WebService.Requests;
-using Estudio.WebService.Validator;
 using log4net;
 using log4net.Config;
 using SpreadsheetLight;
@@ -17,10 +15,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Estudio.WebService
 {
@@ -42,8 +38,6 @@ namespace Estudio.WebService
         CorreosLogic _correoLogic = new CorreosLogic();
         public static string pathFileExcel;
         CotizacionLogic _cotizacionLogic = new CotizacionLogic();
-        CalculoExtraOficialValidator _calculoEOValidator = new CalculoExtraOficialValidator();
-
 
         /// <summary>
         /// Omar Figueroa Flores
@@ -427,11 +421,11 @@ namespace Estudio.WebService
                     mod.moneda = moneda;
                     datos = Task.Run(() => _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "")).Result;
 
-                    string respuestaWSenvioRutina = null;//wsEnvio.CalculoMejoras(datos.Object);
+                    string respuestaWSenvioRutina = wsEnvio.CalculoMejoras(datos.Message);
 
-                    //var data = respuestaWSenvioRutina;
+                    var response = respuestaWSenvioRutina.Substring(0, 2);
 
-                    if (respuestaWSenvioRutina == null)
+                    if (response.Equals("KO"))
                     {
                         var numArch = 1;
                         var nombreArchivo = "Prueba Correo";
