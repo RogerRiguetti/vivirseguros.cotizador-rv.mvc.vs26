@@ -6,6 +6,8 @@ using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
 using log4net;
 using log4net.Config;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
@@ -420,42 +422,6 @@ namespace Estudio.WebService
                     _log.Info("COMENZARÁ EL CALCULO");
                     mod.moneda = moneda;
                     datos = Task.Run(() => _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "")).Result;
-
-                    string respuestaWSenvioRutina = wsEnvio.CalculoMejoras(datos.Message);
-
-                    var response = respuestaWSenvioRutina.Substring(0, 2);
-
-                    if (response.Equals("KO"))
-                    {
-                        var numArch = 1;
-                        var nombreArchivo = "Prueba Correo";
-                        var pathFileExcel = "File Test";
-                        _log.Info("Comenzara el envio del correo electronico con la notificación");
-
-                        string asunto = "VC Oficiales - Calculo de archivo desde WebService";
-                        string cuerpo = "Se ha calculado correctamente el archivo " + numArch + " - " + nombreArchivo;
-                        List<string> correos = new List<string>();
-
-                        string queryCon = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
-
-                        _log.Info("Comenzara la busqueda del correo electronico");
-
-                        string DatosCon = VCEDBContext<Parametro>.CallSelectStatement(queryCon, x => new Parametro
-                        {
-                            Elemento = x.GetString(0)
-                        }).FirstOrDefault().Elemento;
-                        _log.Info("El correo se enviará a " + DatosCon);
-
-                        string correo = DatosCon;
-                        correos.Add(correo);
-                        //ExportarCalculadas(numArch);
-                        if (!_correoLogic.envioCorreo(cuerpo, asunto, correos, pathFileExcel))
-                        {
-                            _log.Info("Error al enviar el correo electronico");
-                            _log.Info("**************************************************************");
-                            //return;
-                        }
-                    }
                 }
                 //var datos = await _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "");
                 if (datos.IsOk == false)
@@ -991,6 +957,44 @@ namespace Estudio.WebService
                     datos2.MTO_VALPREPENTMP = info[0][30];
 
                     var resGuardad = _ExcepcionesLogic.Guardar(datos1, "mejoras", datos2);
+
+                    //string respuestaWSenvioRutina = wsEnvio.ActualizarProducto(respuestaWSenvioCarga);
+
+                    var response = "KO";/*respuestaWSenvioCarga.Substring(0, 2);*/
+
+                    if (response.Equals("KO"))
+                    {
+                        //var nombreArchivos = "Prueba Correo";
+                        var pathFileExcel = "File Test";
+                        _log.Info("Comenzara el envio del correo electronico con la notificación");
+
+                        string asuntos = "Error al actualizar producto.";
+                        string cuerpos = "No se pudo actualizar el número de operación: " + 0000 + " - " + JObject.FromObject(datos1);
+                        List<string> correoss = new List<string>();
+
+                        string queryCons = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
+
+                        _log.Info("Comenzara la busqueda del correo electronico");
+
+                        string DatosCons = VCEDBContext<Parametro>.CallSelectStatement(queryCons, x => new Parametro
+                        {
+                            Elemento = x.GetString(0)
+                        }).FirstOrDefault().Elemento;
+                        _log.Info("El correo se enviará a " + DatosCons);
+
+                        string correoe = DatosCons;
+                        correoss.Add(correoe);
+                        //ExportarCalculadas(numArch);
+                        if (!_correoLogic.envioCorreo(cuerpos, asuntos, correoss, pathFileExcel))
+                        {
+                            _log.Info("Error al enviar el correo electronico");
+                            _log.Info("**************************************************************");
+                            //return;
+                        }
+
+                        //Debe actualizar producto
+                    }
+
                     var mensajeMej = "";
 
                     if (resGuardad.IsOk == false && resGuardad.Message.Contains("No puede ser guardado es un caso SISCO, la pensión minima es "))
