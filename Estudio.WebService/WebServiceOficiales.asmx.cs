@@ -4,10 +4,10 @@ using Estudio.Repository.Core.Domain;
 using Estudio.Repository.Core.Domain.Views;
 using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
-using Estudio.WebService.Requests;
-using Estudio.WebService.Validator;
 using log4net;
 using log4net.Config;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
@@ -17,10 +17,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using System.Web.Script.Services;
 using System.Web.Services;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Estudio.WebService
 {
@@ -42,8 +40,6 @@ namespace Estudio.WebService
         CorreosLogic _correoLogic = new CorreosLogic();
         public static string pathFileExcel;
         CotizacionLogic _cotizacionLogic = new CotizacionLogic();
-        CalculoExtraOficialValidator _calculoEOValidator = new CalculoExtraOficialValidator();
-
 
         /// <summary>
         /// Omar Figueroa Flores
@@ -426,41 +422,6 @@ namespace Estudio.WebService
                     _log.Info("COMENZARÁ EL CALCULO");
                     mod.moneda = moneda;
                     datos = Task.Run(() => _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "")).Result;
-
-                    //string respuestaWSenvioRutina = null;//wsEnvio.CalculoMejoras(datos.Object);
-
-                    ////var data = respuestaWSenvioRutina;
-
-                    //if (respuestaWSenvioRutina == null)
-                    //{
-                    //    var numArch = 1;
-                    //    var nombreArchivo = "Prueba Correo";
-                    //    _log.Info("Comenzara el envio del correo electronico con la notificación");
-
-                    //    string asunto = "VC Oficiales - Calculo de archivo desde WebService";
-                    //    string cuerpo = "Se ha calculado correctamente el archivo " + numArch + " - " + nombreArchivo;
-                    //    List<string> correos = new List<string>();
-
-                    //    string queryCon = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
-
-                    //    _log.Info("Comenzara la busqueda del correo electronico");
-
-                    //    string DatosCon = VCEDBContext<Parametro>.CallSelectStatement(queryCon, x => new Parametro
-                    //    {
-                    //        Elemento = x.GetString(0)
-                    //    }).FirstOrDefault().Elemento;
-                    //    _log.Info("El correo se enviará a " + DatosCon);
-
-                    //    string correo = DatosCon;
-                    //    correos.Add(correo);
-                    //    //ExportarCalculadas(numArch);
-                    //    if (!_correoLogic.envioCorreo(cuerpo, asunto, correos, pathFileExcel))
-                    //    {
-                    //        _log.Info("Error al enviar el correo electronico");
-                    //        _log.Info("**************************************************************");
-                    //        //return;
-                    //    }
-                    //}
                 }
                 //var datos = await _ExcepcionesLogic.calculo(strBand, prc_Com.ToString(), mod, "mejoras", "");
                 if (datos.IsOk == false)
@@ -996,6 +957,70 @@ namespace Estudio.WebService
                     datos2.MTO_VALPREPENTMP = info[0][30];
 
                     var resGuardad = _ExcepcionesLogic.Guardar(datos1, "mejoras", datos2);
+
+                    //string respuestaWSenvioRutina = wsEnvio.ActualizarProducto(respuestaWSenvioCarga);
+
+                    //var response = "KO";/*respuestaWSenvioCarga.Substring(0, 2);*/
+
+                    //if (response.Equals("KO"))
+                    //{
+                    //    //var nombreArchivos = "Prueba Correo";
+                    //    var pathFileExcel = "File Test";
+                    //    _log.Info("Comenzara el envio del correo electronico con la notificación");
+
+                    //    string asuntos = "Error al actualizar producto.";
+
+                    //    var primaUnicaAFP = (mod.cic - Convert.ToDouble(info[0][6].Replace(",", ""))).ToString();
+                    //    var primaUnicaES = (mod.cic - Convert.ToDouble(primaUnicaAFP)).ToString();
+                    //    var sendData = JObject.FromObject(new
+                    //    {
+                    //        modalidad = modalidad,
+                    //        moneda = moneda,
+                    //        anosRT = aniosRT.ToString(),
+                    //        porcentajeRVD = porcentajeRVD.ToString(),
+                    //        periodoGarantizado = periodoGarantizado.ToString(),
+                    //        derechoCrecer = derechoCrecer,
+                    //        gratificacion = gratificacion,
+                    //        cotizacionEESS = new
+                    //        {
+                    //            siCotizaNoCotiza = "S",
+                    //            nroCotizacion = mod.numCot,
+                    //            primaUnicaAFPEESS = primaUnicaAFP.ToString(),
+                    //            primaUnicaEESS = primaUnicaES.ToString(),
+                    //            comision = prc_Com.ToString(),
+                    //            tasaInteresRT = mod.tasaRT.ToString(),
+                    //            primeraPensionRV = info[0][8].Replace(",", ""),
+                    //            tasaInteresRV = info[0][9]
+                    //        },
+                    //        error = resGuardad.Message
+                    //    }, new JsonSerializer { NullValueHandling = NullValueHandling.Ignore });
+
+                    //    string cuerpos = "No se pudo actualizar el número de operación: " + 51849 + " - " + sendData;
+                    //    List<string> correoss = new List<string>();
+
+                    //    string queryCons = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
+
+                    //    _log.Info("Comenzara la busqueda del correo electronico");
+
+                    //    string DatosCons = VCEDBContext<Parametro>.CallSelectStatement(queryCons, x => new Parametro
+                    //    {
+                    //        Elemento = x.GetString(0)
+                    //    }).FirstOrDefault().Elemento;
+                    //    _log.Info("El correo se enviará a " + DatosCons);
+
+                    //    string correoe = DatosCons;
+                    //    correoss.Add(correoe);
+                    //    //ExportarCalculadas(numArch);
+                    //    if (!_correoLogic.envioCorreo(cuerpos, asuntos, correoss, pathFileExcel))
+                    //    {
+                    //        _log.Info("Error al enviar el correo electronico");
+                    //        _log.Info("**************************************************************");
+                    //        //return;
+                    //    }
+
+                    //    //Debe actualizar producto
+                    //}
+
                     var mensajeMej = "";
 
                     if (resGuardad.IsOk == false && resGuardad.Message.Contains("No puede ser guardado es un caso SISCO, la pensión minima es "))
