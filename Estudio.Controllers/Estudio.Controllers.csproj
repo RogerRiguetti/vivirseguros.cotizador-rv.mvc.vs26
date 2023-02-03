@@ -305,6 +305,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SendEmailJson.cs" />
     <Compile Include="Models\EstudioModel.cs" />
     <Compile Include="Models\ModuleModel.cs" />
     <Compile Include="Models\PageModel.cs" />

@@ -105,7 +105,7 @@ namespace Estudio.Logic
                 MailMessage message = new MailMessage();
                 foreach (var item in destinatarios)
                 {
-                    message.To.Add(new MailAddress("cesar.mechato@materiagris.pe"/*item*/));
+                    message.To.Add(new MailAddress(item));
                     _log.Info("Destinatarios " + item);
                 }
 
