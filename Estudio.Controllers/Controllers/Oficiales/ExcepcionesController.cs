@@ -1,13 +1,10 @@
-﻿using Estudio.Logic;
-using Estudio.Repository;
+﻿using Estudio.Controllers.Helpers;
+using Estudio.Logic;
 using Estudio.Repository.Core.Domain;
 using Estudio.Repository.Helpers;
 using log4net;
 using log4net.Config;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -21,6 +18,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
 
         ExcepcionesLogic _ExcepcionesLogic = new ExcepcionesLogic();
         CorreosLogic _correoLogic = new CorreosLogic();
+        SendEmailJson _sendEmailJson = new SendEmailJson();
 
         static object _globalValue;
         public static object GlobalValue
@@ -171,72 +169,16 @@ namespace Estudio.Controllers.Controllers.Oficiales
                 }
                 else
                 {
-                    _log.Info("Comenzara el envio del correo electronico con la notificación");
-
-                    string asuntos = "Error al actualizar producto.";
-
-                    JToken response = JToken.FromObject(json);
-
-                    string cuerpos = "No se pudo actualizar el número de operación: " + nroOperacion + " - " + response;
-
-                    List<string> correoss = new List<string>();
-
-                    string queryCons = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
-
-                    _log.Info("Comenzara la busqueda del correo electronico");
-
-                    string DatosCons = VCEDBContext<Parametro>.CallSelectStatement(queryCons, x => new Parametro
-                    {
-                        Elemento = x.GetString(0)
-                    }).FirstOrDefault().Elemento;
-                    _log.Info("El correo se enviará a " + DatosCons);
-
-                    string correoe = DatosCons;
-                    correoss.Add(correoe);
-
-                    if (!_correoLogic.envioCorreo(cuerpos, asuntos, correoss, null))
-                    {
-                        _log.Info("Error al enviar el correo electronico");
-                        _log.Info("**************************************************************");
-                        _log.Info("Datos guardados con exito, pero surgio un error: " + respuestaws.Split('#')[1]);
-                        ((Response)resultado).Message = "Datos guardados con éxito, pero surgió un error: " + respuestaws.Split('#')[1];
-                    }
+                    _sendEmailJson.SendEmailJsonJubilare(json, nroOperacion, respuestaws, resultado);
+                    ((Response)resultado).Message = "Se guardaron los datos con éxito, pero surgió un error al enviar el JSON por web service.";
                 }
                 return Json(resultado);
             }
             catch (Exception ex)
             {
                 _log.Info("Error a enviar: " + ex.Message);
-                _log.Info("Comenzara el envio del correo electronico con la notificación");
-
-                string asuntos = "Error al actualizar producto.";
-
-                JToken response = JToken.FromObject(json);
-
-                string cuerpos = "No se pudo actualizar el número de operación: " + nroOperacion + " - " + response;
-
-                List<string> correoss = new List<string>();
-
-                string queryCons = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
-
-                _log.Info("Comenzara la busqueda del correo electronico");
-
-                string DatosCons = VCEDBContext<Parametro>.CallSelectStatement(queryCons, x => new Parametro
-                {
-                    Elemento = x.GetString(0)
-                }).FirstOrDefault().Elemento;
-                _log.Info("El correo se enviará a " + DatosCons);
-
-                string correoe = DatosCons;
-                correoss.Add(correoe);
-
-                if (!_correoLogic.envioCorreo(cuerpos, asuntos, correoss, null))
-                {
-                    _log.Info("Error al enviar el correo electronico");
-                    _log.Info("**************************************************************");
-                    _log.Info("Datos guardados con exito, pero surgio un error: ");
-                }
-                ((Response)resultado).Message = "Se guardaron los datos con exito, pero surgio un error al enviar el JSON por web service.";
+                _sendEmailJson.SendEmailJsonJubilare(json, nroOperacion, "", resultado);
+                ((Response)resultado).Message = "Se guardaron los datos con éxito, pero surgió un error al enviar el JSON por web service.";
                 return Json(resultado);
             }
         }
