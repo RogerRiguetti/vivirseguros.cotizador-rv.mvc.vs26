@@ -410,6 +410,7 @@ namespace Estudio.Logic
         /// </summary>
         public string insertCargaMasiva(LimiteCotizacionMejorada datos, string usuario, string tipoRenta)
         {
+            DateTime fechaC = DateTime.Now.AddDays(-1);
             DateTime fecha = DateTime.Now;
             string codMoneda = "";
             string codTipReajuste = "";
@@ -422,6 +423,9 @@ namespace Estudio.Logic
                 case "Dólares Nominales": codMoneda = "US"; codTipReajuste = "0"; break;
             }
 
+            string fecfinTir = "UPDATE PT_TVAL_MINMAXTIR_MEJ SET FEC_TERMINMAX = '" + fechaC.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231' AND COD_REGION='" + datos.codRegion + "' AND COD_MONEDA='" + codMoneda + "' AND COD_TIPREAJUSTE='" + codTipReajuste + "'";
+            string fecfinPer = "UPDATE PT_TVAL_MINMAXPER_MEJ SET FEC_TERMINMAX = '" + fechaC.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231' AND COD_REGION='" + datos.codRegion + "' AND COD_MONEDA='" + codMoneda + "' AND COD_TIPREAJUSTE='" + codTipReajuste + "'";
+            string fecfinTas = "UPDATE PT_TVAL_MINMAXTAS_MEJ SET FEC_TERMINMAX = '" + fechaC.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231' AND COD_REGION='" + datos.codRegion + "' AND COD_MONEDA='" + codMoneda + "' AND COD_TIPREAJUSTE='" + codTipReajuste + "'";
 
             if (tipoRenta == "1")
             {

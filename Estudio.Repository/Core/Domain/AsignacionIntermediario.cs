@@ -246,6 +246,7 @@ namespace Estudio.Repository.Core.Domain
         public double Prc_CorCom { get; set; }
         public string Intermediario { get; set; }
         public string Ind_Mej { get; set; }
+        public string Gls_Region { get; set; }
         public double CIC { get; set; }
         public string Cod_Rechazo { get; set; }
         public string Error_Descrip { get; set; }

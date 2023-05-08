@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Estudio.Repository.Persistence.Repositories
 {
-   public class CotizacionRepository
+    public class CotizacionRepository
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         /// <summary>
@@ -66,7 +66,7 @@ namespace Estudio.Repository.Persistence.Repositories
             }
 
         }
-        
+
         /// <summary>
         /// Lizbeth Morales 14/03/2018
         /// Metodo que nos trae la informacion cuando el usuario logeado es un supervisor
@@ -80,7 +80,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 var parameters = new List<SqlParameter>();
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pClaveConsulta", SqlDbType.Char, "CMBXSUPERVISORES", ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pIdTipoDocumento", SqlDbType.Int, 0, ParameterDirection.Input));
-                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pDocumento", SqlDbType.VarChar, "" , ParameterDirection.Input));
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pDocumento", SqlDbType.VarChar, "", ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pNombres", SqlDbType.VarChar, "", ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pApellidos", SqlDbType.VarChar, "", ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pId", SqlDbType.Int, 0, ParameterDirection.Input));
@@ -176,7 +176,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa el id de la cotización involucrada </returns>
 
-        public Cotizacion RegistrarModificarCotizacion (char bandera, Cotizacion cotizacion, DataTable idsBeneficiarios, DataTable idsModalidades)
+        public Cotizacion RegistrarModificarCotizacion(char bandera, Cotizacion cotizacion, DataTable idsBeneficiarios, DataTable idsModalidades)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="idAsegurado"> Id del asesor en caso de que sea este rol el que ingrese al modulo </param>
         /// <returns> Regresa un objeto que contiene la información del asegurado </returns>
 
-        public List<Cotizacion> ConsultarAsegurado (string tipoDocumento, string documento, int idAsegurado, string cuspp)
+        public List<Cotizacion> ConsultarAsegurado(string tipoDocumento, string documento, int idAsegurado, string cuspp)
         {
             try
             {
@@ -493,7 +493,7 @@ namespace Estudio.Repository.Persistence.Repositories
 
                 VCEDBContext<DataTable>.CallStoreProcedureDt(StoredProcedures.VCE_CatalogoRutina, parameters);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -659,7 +659,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 throw;
             }
         }
-     
+
 
         /// <summary>
         /// Antonio Quezada
@@ -992,5 +992,36 @@ namespace Estudio.Repository.Persistence.Repositories
         }
 
         #endregion
+
+        //public dynamic ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
+        //{
+        //    var parameters = new List<SqlParameter>
+        //    {
+        //        VCEDBContext<RowAffected>.AddParams("@bandera", SqlDbType.VarChar, bandera, ParameterDirection.Input),
+        //        VCEDBContext<RowAffected>.AddParams("@parameter", SqlDbType.VarChar, parametro, ParameterDirection.Input)
+        //    };
+
+        //    var result = VCEDBContext<string>.CallStoreProcedureDt(StoredProcedures.CO_ConsultasCotizacionesExtraOficial, parameters);
+
+        //    return result;
+        //}
+
+        public dynamic ConsultarDataCotizacionExtraOficial(string bandera, string parametro)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                VCEDBContext<RowAffected>.AddParams("@bandera", SqlDbType.VarChar, bandera, ParameterDirection.Input),
+                VCEDBContext<RowAffected>.AddParams("@parameter", SqlDbType.VarChar, parametro, ParameterDirection.Input)
+            };
+
+            var result = VCEDBContext<string>.CallStoreProcedureReturnStr(StoredProcedures.CO_ConsultasCotizacionesExtraOficial, parameters);
+
+            return result;
+        }
+
+        public class Resultado
+        {
+            public string Result { get; set; }
+        }
     }
 }

@@ -186,6 +186,12 @@ function doSuccessBusqueda(result) {
     $("#txtFecNac").val(array[7]);
     numCot = array[8];
     numArchivo = array[9];
+    $("#txtPrestacion").val(array[10]);
+    $("#txtFechaCierre").val(array[11]);
+    $("#txtDepartamentoMeler").val(array[12]);
+    $("#txtDepartamentoAsignado").val(array[13]);
+    $("#txtAsesor").val(array[14]);
+    $("#txtSupervisor").val(array[15]);
     cargaDetabla(result.Object, "busqueda");
     banCheck = false;
     if (clic == 1) {
@@ -254,7 +260,13 @@ function calcular() {
                 numArchivo: numArchivo,
                 numCot: numCot,
                 numCorrelativo: strNumCorrelativo[checkVal].innerHTML,
-                cod_tipreajuste: strCodTipReajuste[checkVal].innerHTML
+                cod_tipreajuste: strCodTipReajuste[checkVal].innerHTML,
+                prestacion: $("#txtPrestacion").val(),
+                fechaCierre: $("#txtFechaCierre").val(),
+                departamentoMeler: $("#txtDepartamentoMeler").val(),
+                departamentoAsignado: $("#txtDepartamentoAsignado").val(),
+                asesor: $("#txtAsesor").val(),
+                supervisor: $("#txtSupervisor").val()
             }
         
         var url = $("#urlCalcular").val();
@@ -309,6 +321,12 @@ function limpiar(caso) {
             $("#txtFecNac").val("");
             $('#txtNuevaTV').val("");
             $('#txtNuevaCO').val("");
+            $('#txtPrestacion').val("");
+            $("#txtFechaCierre").val("");
+            $("#txtDepartamentoMeler").val("");
+            $("#txtDepartamentoAsignado").val("");
+            $("#txtAsesor").val("");
+            $("#txtSupervisor").val("");
             document.getElementById("datosDiv").style.display = "none";
             clic = 1;
             break;

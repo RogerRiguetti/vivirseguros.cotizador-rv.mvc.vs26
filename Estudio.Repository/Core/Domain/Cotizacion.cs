@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Estudio.Repository.Core.Domain
 {
-   public class Cotizacion
+    public class Cotizacion
     {
         public int IdCotizacion { get; set; }
         public string Documento { get; set; }

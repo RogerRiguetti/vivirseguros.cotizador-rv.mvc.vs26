@@ -109,7 +109,7 @@ function busqueda() {
 
 function doSuccessBusqueda(result) {
     $('#modalcargar').modal('hide');
-    var datos = result.Object[0].toString();
+    var datos = result.Object[0].toString(); 
     var array = (datos).split(",");
     $("#txtNumOperacion2").val(array[0]);
     $("#txtDNI").val(array[1]);
@@ -121,6 +121,12 @@ function doSuccessBusqueda(result) {
     $("#txtFecNac").val(array[7]);
     numCot = array[8];
     numArchivo = array[9];
+    $("#txtPrestacion").val(array[10]);
+    $("#txtFechaCierre").val(array[11]);
+    $("#txtDepartamentoMeler").val(array[12]);
+    $("#txtDepartamentoAsignado").val(array[13]);
+    $("#txtAsesor").val(array[14]);
+    $("#txtSupervisor").val(array[15]);
     cargaDetabla(result.Object, "busqueda");
     banCheck = false;
     if (clic == 1) {
@@ -182,7 +188,13 @@ function calcular() {
             numArchivo: numArchivo,
             numCot: numCot,
             numCorrelativo: strNumCorrelativo[checkVal].innerHTML,
-            cod_tipreajuste: strCodTipReajuste[checkVal].innerHTML
+            cod_tipreajuste: strCodTipReajuste[checkVal].innerHTML,
+            prestacion: $("#txtPrestacion").val(),
+            fechaCierre: $("#txtFechaCierre").val(),
+            departamentoMeler: $("#txtDepartamentoMeler").val(),
+            departamentoAsignador: $("#txtDepartamentoAsignado").val(),
+            asesor: $("#txtAsesor").val(),
+            supervisor: $("#txtSupervisor").val()
         }
         var url = $("#urlCalcular").val();
         var fields = {
@@ -240,6 +252,12 @@ function limpiar(caso) {
             $("#txtFecNac").val("");
             $('#txtNuevaTV').val("");
             $('#txtNuevaCO').val("");
+            $('#txtPrestacion').val("");
+            $("#txtFechaCierre").val("");
+            $("#txtDepartamentoMeler").val("");
+            $("#txtDepartamentoAsignado").val("");
+            $("#txtAsesor").val("");
+            $("#txtSupervisor").val("");
             document.getElementById("datosDiv").style.display = "none";
             clic = 1;
             obtenerAlto("ventana", $(document).height());

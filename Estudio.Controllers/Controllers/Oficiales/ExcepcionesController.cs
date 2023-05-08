@@ -1,24 +1,25 @@
-﻿using Estudio.Logic;
-using System;
-using System.Collections.Generic;
+﻿using Estudio.Controllers.Helpers;
+using Estudio.Logic;
 using Estudio.Repository.Core.Domain;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Threading.Tasks;
 using Estudio.Repository.Helpers;
 using log4net;
-using System.Reflection;
 using log4net.Config;
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Estudio.Controllers.Controllers.Oficiales
 {
-    
+
     public class ExcepcionesController : Controller
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-       
+
         ExcepcionesLogic _ExcepcionesLogic = new ExcepcionesLogic();
+        CorreosLogic _correoLogic = new CorreosLogic();
+        SendEmailJson _sendEmailJson = new SendEmailJson();
+
         static object _globalValue;
         public static object GlobalValue
         {
@@ -117,7 +118,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                 _log.Info("Se obtuvieron los datos");
                 wsXML.AdmIntegracionCotizador wsActualizaP = new wsXML.AdmIntegracionCotizador();
                 _log.Info("Datos a enviar: ");
-                _log.Info("numOperacion: "+ numOperacion);
+                _log.Info("numOperacion: " + numOperacion);
                 string json = (((Response)resultado).Object).ToString();
                 _log.Info("JSON: " + json);
                 string respuestaws = wsActualizaP.ActualizarProducto(numOperacion.ToString(), json);
@@ -135,7 +136,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
             }
             catch (Exception ex)
             {
-                _log.Info("Error a enviar: "+ex.Message);
+                _log.Info("Error a enviar: " + ex.Message);
                 ((Response)resultado).Message = "Surgio un error al enviar el JSON por web service";
                 return Json(resultado);
             }
@@ -143,37 +144,41 @@ namespace Estudio.Controllers.Controllers.Oficiales
         public ActionResult Guardar(Exceptiones informacion, string caso, Exceptiones infoRut)
         {
             object resultado = new object();
+            string nroOperacion = "";
+            string json = "";
+
             try
             {
                 XmlConfigurator.Configure();
                 _log.Info("*****************GUARDAR INFORMACIÓN DE EX - EXTERNAS***********************");
                 var usuario = Convert.ToString(this.Session["Account"]);
-                    resultado = _ExcepcionesLogic.Guardar(informacion, caso, infoRut);
-                    _log.Info("Se obtuvieron los datos");
-                    _log.Info("numCor: " + informacion.numCorrelativo);
-                    wsXML.AdmIntegracionCotizador wsActualizaP = new wsXML.AdmIntegracionCotizador();
-                    string nroOperacion = informacion.numOperacion.ToString();
-                    string json = (((Response)resultado).Object).ToString();
-                    _log.Info("Datos a enviar: ");
-                    _log.Info("numOperacion: " + nroOperacion);
-                    _log.Info("JSON: " + json);
-                    string respuestaws = wsActualizaP.ActualizarProducto(nroOperacion, json);
-                    if (respuestaws == "OK")
-                    {
-                        _log.Info("Datos guardados y enviados con exito");
-                        ((Response)resultado).Message = "Datos guardados y enviados con exito";
-                    }
-                    else
-                    {
-                        _log.Info("Datos guardados con exito, pero surgio un error: " + respuestaws.Split('#')[1]);
-                        ((Response)resultado).Message = "Datos guardados con exito, pero surgio un error: " + respuestaws.Split('#')[1];
-                    }
+                resultado = _ExcepcionesLogic.Guardar(informacion, caso, infoRut);
+                _log.Info("Se obtuvieron los datos");
+                _log.Info("numCor: " + informacion.numCorrelativo);
+                wsXML.AdmIntegracionCotizador wsActualizaP = new wsXML.AdmIntegracionCotizador();
+                nroOperacion = informacion.numOperacion.ToString();
+                json = (((Response)resultado).Object).ToString();
+                _log.Info("Datos a enviar: ");
+                _log.Info("numOperacion: " + nroOperacion);
+                _log.Info("JSON: " + json);
+                string respuestaws = wsActualizaP.ActualizarProducto(nroOperacion, json);
+                if (respuestaws == "OK")
+                {
+                    _log.Info("Datos guardados y enviados con exito");
+                    ((Response)resultado).Message = "Datos guardados y enviados con exito";
+                }
+                else
+                {
+                    _sendEmailJson.SendEmailJsonJubilare(json, nroOperacion, respuestaws, resultado);
+                    ((Response)resultado).Message = "Se guardaron los datos con éxito, pero surgió un error al enviar el JSON por web service.";
+                }
                 return Json(resultado);
             }
             catch (Exception ex)
             {
                 _log.Info("Error a enviar: " + ex.Message);
-                ((Response)resultado).Message = "Se guardaron los datos con exito, pero surgio un error al enviar el JSON por web service";
+                _sendEmailJson.SendEmailJsonJubilare(json, nroOperacion, "", resultado);
+                ((Response)resultado).Message = "Se guardaron los datos con éxito, pero surgió un error al enviar el JSON por web service.";
                 return Json(resultado);
             }
         }
