@@ -85,7 +85,17 @@ namespace Estudio.WebService.webPrueba {
                         nombreArchivoXML});
             return ((string)(results[0]));
         }
-        
+
+        /// <remarks/>
+        //[System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/calculoMejoras", RequestNamespace = "http://tempuri.org/", ResponseNamespace = "http://tempuri.org/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        //public string CalculoMejoras(object contenidoArchivoXML/*, string nombreArchivoXML*/)
+        //{
+        //    object[] results = this.Invoke("CalculoMejoras", new object[] {
+        //                contenidoArchivoXML
+        //                /*nombreArchivoXML*/});
+        //    return ((string)(results[0]));
+        //}
+
         /// <remarks/>
         public void CargarCotizacionesOficialesAsync(string contenidoArchivoXML, string nombreArchivoXML) {
             this.CargarCotizacionesOficialesAsync(contenidoArchivoXML, nombreArchivoXML, null);

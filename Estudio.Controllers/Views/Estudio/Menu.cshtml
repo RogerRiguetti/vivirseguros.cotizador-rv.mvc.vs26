@@ -22,170 +22,208 @@
     <div class="menu-list" id="main-navbar">
 
         <ul id="menu-content" class="menu-content collapse out">
-            <li id="CotizadorNav" data-toggle="collapse" data-target="#Cotizador" class="collapsed PesPriUl">
-                <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Cotizador</a><span class="arrow"></span>
+
+            <li id="RentaVitaliciaNav" data-toggle="collapse" data-target="#RentaVitalicia" class="collapsed PesPriUl">
+                <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Renta Vitalicia</a><span class="arrow"></span>
             </li>
 
-            <ul class="sub-menu collapse" id="Cotizador">
+            <ul class="sub-menu collapse" id="RentaVitalicia">
 
-                @if (identity.CotizacionIndex)
-                {
-                    <li id="ExtraOficialesNav" data-toggle="collapse" data-target="#ExtraOficiales" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Extra Oficiales</a><span class="arrow"></span></li>
-                    <ul class="sub-menu collapse prop" id="ExtraOficiales">
+                <li id="CotizadorNav" data-toggle="collapse" data-target="#Cotizador" class="collapsed PesPriUl">
+                    <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Cotizador</a><span class="arrow"></span>
+                </li>
 
-                        <li id="Cotizacion" class=""><a href="@Url.Action("Index", "Cotizacion")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Estudio</a></li>
+                <ul class="sub-menu collapse" id="Cotizador">
 
-                    </ul>
-                }
+                    @if (identity.CotizacionIndex)
+                    {
+                        <li id="ExtraOficialesNav" data-toggle="collapse" data-target="#ExtraOficiales" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Extra Oficiales</a><span class="arrow"></span></li>
 
-                @if (identity.OficialesIndex)
-                {
-                    <li id="OficialesNav" data-toggle="collapse" data-target="#Oficiales" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Oficiales</a><span class="arrow"></span></li>
-                    <ul class="sub-menu collapse" id="Oficiales">
+                        <ul class="sub-menu collapse prop" id="ExtraOficiales">
 
-                        @if (identity.MantenimientosIndex)
-                        {
-                            <li id="MantenimientoNav" data-toggle="collapse" data-target="#Mantenimiento" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mantenimiento</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="Mantenimiento">
-                                @if (identity.TasaCalceIndex)
-                                {
-                                    <li id="TasaCalce" class=""><a href="@Url.Action("Index", "TasaCalce")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa de Calce</a></li>
-                                }
-                                @if (identity.TasaRentabilidadIndex)
-                                {
-                                    <li id="TasaRentabilidad" class=""><a href="@Url.Action("Index", "TasaRentabilidad")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa de Rentabilidad</a></li>
-                                }
-                                @if (identity.LimiteCotIniIndex)
-                                {
-                                    <li id="LimiteCotizacionInicial" class=""><a href="@Url.Action("Index", "LimiteCotizacionInicial")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Limites de Cotización Inicial</a></li>
-                                }
-                                @if (identity.LimiteCotExtraOIndex)
-                                {
-                                    <li id="LimiteCotizacionExtraOficial" class=""><a href="@Url.Action("Index", "LimiteCotizacionExtraOficial")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Limites de Cotización ExtraOficial</a></li>
-                                }
-                                @if (identity.ParametroGastoIndex)
-                                {
-                                    <li id="ParametroGasto" class=""><a href="@Url.Action("Index", "ParametroGasto")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Parámetros de Gastos</a></li>
-                                }
-                                @if (identity.LimiteCotMejIndex)
-                                {
-                                    <li id="LimiteCotizacionMejorada" class=""><a href="@Url.Action("Index", "LimiteCotizacionMejorada")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Limítes de Cotización Mejorada</a></li>
-                                }
-                                @if (identity.MantenedorIpcIndex)
-                                {
-                                    <li id="MantenedorIPC" class=""><a href="@Url.Action("Index", "MantenedorIPC")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> IPC Mensual</a></li>
-                                }
-                                @if (identity.ValoresMonedaIndex)
-                                {
-                                <li id="ValoresMoneda" class=""><a href="@Url.Action("Index", "ValoresMoneda")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> TC Diario</a></li>
-                                }
-                                @if (identity.ValoresMmIndex)
-                                {
-                                <li id="ValoresMM" class=""><a href="@Url.Action("Index", "ValoresMM")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> TC Mensual</a></li>
-                                }
-                                @if (identity.GastosSepelioIndex)
-                                {
-                                    <li id="GastosSepelio" class=""><a href="@Url.Action("Index", "GastosSepelio")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Gasto de Sepelio</a></li>
-                                }
-                                @if (identity.TasaMercadoIndex)
-                                {
-                                    <li id="TasasMercado" class=""><a href="@Url.Action("Index", "TasasMercado")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasas de Mercado</a></li>
-                                }
-                                @if (identity.TasaAnclajeIndex)
-                                {
-                                    <li id="TasaAnclaje" class=""><a href="@Url.Action("Index", "TasaAnclaje")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa de Anclaje</a></li>
-                                }
-                                @if (identity.TasaVtaPromIndex)
-                                {
-                                    <li id="TasaVentaPro" class=""><a href="@Url.Action("Index", "TasaVentaPro")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa Venta Promedio</a></li>
-                                }
-                                @if (identity.MantenedorFiltrosIndex)
-                                {
-                                    <li id="Filtros" class=""><a href="@Url.Action("Index", "MantenedorFiltros")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mantenedor de Filtros</a></li>
-                                }
-                                @if (identity.MantenedorCurvasIndex)
-                                {
-                                    <li id="ManCT" class=""><a href="@Url.Action("Index", "ManCurvaTasas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mantenimiento Curva de Tasas</a></li>
-                                }
-                                @if (identity.ActualizaInfOfiIndex)
-                                {
-                                    <li id="ActualizaInfOfi" class=""><a href="@Url.Action("Index", "ActualizarInfOfi")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Actualiza Información</a></li>
-                                }
-                                @*</ul>*@
-                            </ul>
-                        }
-                        @*@if (identity.TCDiarioIndex)
+                            <li id="Cotizacion" class=""><a href="@Url.Action("Index", "Cotizacion")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Estudio</a></li>
+
+                        </ul>
+                    }
+
+                    @if (identity.OficialesIndex)
+                    {
+                        <li id="OficialesNav" data-toggle="collapse" data-target="#Oficiales" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Oficiales</a><span class="arrow"></span></li>
+                        <ul class="sub-menu collapse" id="Oficiales">
+
+                            @if (identity.MantenimientosIndex)
                             {
-                                <li id="MantenimientoNav" data-toggle="collapse" data-target="#Mantenimiento" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png"/> Mantenimiento</a><span class="arrow"></span></li>
+                                <li id="MantenimientoNav" data-toggle="collapse" data-target="#Mantenimiento" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mantenimiento</a><span class="arrow"></span></li>
                                 <ul class="sub-menu collapse prop" id="Mantenimiento">
-                                    <li id="ValoresMoneda" class=""><a href="@Url.Action("Index", "ValoresMoneda")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png"/> TC Diario</a></li>
+                                    @if (identity.TasaCalceIndex)
+                                    {
+                                        <li id="TasaCalce" class=""><a href="@Url.Action("Index", "TasaCalce")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa de Calce</a></li>
+                                    }
+                                    @if (identity.TasaRentabilidadIndex)
+                                    {
+                                        <li id="TasaRentabilidad" class=""><a href="@Url.Action("Index", "TasaRentabilidad")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa de Rentabilidad</a></li>
+                                    }
+                                    @if (identity.LimiteCotIniIndex)
+                                    {
+                                        <li id="LimiteCotizacionInicial" class=""><a href="@Url.Action("Index", "LimiteCotizacionInicial")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Limites de Cotización Inicial</a></li>
+                                    }
+                                    @if (identity.LimiteCotExtraOIndex)
+                                    {
+                                        <li id="LimiteCotizacionExtraOficial" class=""><a href="@Url.Action("Index", "LimiteCotizacionExtraOficial")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Limites de Cotización ExtraOficial</a></li>
+                                    }
+                                    @if (identity.ParametroGastoIndex)
+                                    {
+                                        <li id="ParametroGasto" class=""><a href="@Url.Action("Index", "ParametroGasto")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Parámetros de Gastos</a></li>
+                                    }
+                                    @if (identity.LimiteCotMejIndex)
+                                    {
+                                        <li id="LimiteCotizacionMejorada" class=""><a href="@Url.Action("Index", "LimiteCotizacionMejorada")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Limítes de Cotización Mejorada</a></li>
+                                    }
+                                    @if (identity.MantenedorIpcIndex)
+                                    {
+                                        <li id="MantenedorIPC" class=""><a href="@Url.Action("Index", "MantenedorIPC")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> IPC Mensual</a></li>
+                                    }
+                                    @if (identity.ValoresMonedaIndex)
+                                    {
+                                        <li id="ValoresMoneda" class=""><a href="@Url.Action("Index", "ValoresMoneda")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> TC Diario</a></li>
+                                    }
+                                    @if (identity.ValoresMmIndex)
+                                    {
+                                        <li id="ValoresMM" class=""><a href="@Url.Action("Index", "ValoresMM")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> TC Mensual</a></li>
+                                    }
+                                    @if (identity.GastosSepelioIndex)
+                                    {
+                                        <li id="GastosSepelio" class=""><a href="@Url.Action("Index", "GastosSepelio")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Gasto de Sepelio</a></li>
+                                    }
+                                    @if (identity.TasaMercadoIndex)
+                                    {
+                                        <li id="TasasMercado" class=""><a href="@Url.Action("Index", "TasasMercado")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasas de Mercado</a></li>
+                                    }
+                                    @if (identity.TasaAnclajeIndex)
+                                    {
+                                        <li id="TasaAnclaje" class=""><a href="@Url.Action("Index", "TasaAnclaje")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa de Anclaje</a></li>
+                                    }
+                                    @if (identity.TasaVtaPromIndex)
+                                    {
+                                        <li id="TasaVentaPro" class=""><a href="@Url.Action("Index", "TasaVentaPro")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Tasa Venta Promedio</a></li>
+                                    }
+                                    @if (identity.MantenedorFiltrosIndex)
+                                    {
+                                        <li id="Filtros" class=""><a href="@Url.Action("Index", "MantenedorFiltros")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mantenedor de Filtros</a></li>
+                                    }
+                                    @if (identity.MantenedorCurvasIndex)
+                                    {
+                                        <li id="ManCT" class=""><a href="@Url.Action("Index", "ManCurvaTasas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mantenimiento Curva de Tasas</a></li>
+                                    }
+                                    @if (identity.ActualizaInfOfiIndex)
+                                    {
+                                        <li id="ActualizaInfOfi" class=""><a href="@Url.Action("Index", "ActualizarInfOfi")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Actualiza Información</a></li>
+                                    }
+                                    @*</ul>*@
                                 </ul>
-                            }*@
-                        @if (identity.SolicitudCotIndex)
-                        {
-                            <li id="ReportesNav" data-toggle="collapse" data-target="#Reportes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="Reportes">
-                                <li id="ReportesLi" class=""><a href="@Url.Action("Index","Reportes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Reporte Casos Ganados</a></li>
-                            </ul>
-                        }
-                        @if (identity.SolicitudCotIndex)
-                        {
-                            <li id="ProcesoCargaNav" data-toggle="collapse" data-target="#ProcesoCarga" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Proceso de Carga</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="ProcesoCarga">
-                                <li id="SolicitudCotizacion" class=""><a href="@Url.Action("Index","SolicitudCotizacion")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Solicitud de Cotización</a></li>
-                            </ul>
-                        }
+                            }
+                            @*@if (identity.TCDiarioIndex)
+                    {
+                        <li id="MantenimientoNav" data-toggle="collapse" data-target="#Mantenimiento" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png"/> Mantenimiento</a><span class="arrow"></span></li>
+                        <ul class="sub-menu collapse prop" id="Mantenimiento">
+                            <li id="ValoresMoneda" class=""><a href="@Url.Action("Index", "ValoresMoneda")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png"/> TC Diario</a></li>
+                        </ul>
+                    }*@
+                            @if (identity.SolicitudCotIndex)
+                            {
+                                <li id="ReportesNav" data-toggle="collapse" data-target="#Reportes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="Reportes">
+                                    <li id="ReportesLi" class=""><a href="@Url.Action("Index","Reportes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Reporte Casos Ganados</a></li>
+                                </ul>
+                            }
+                            @if (identity.SolicitudCotIndex)
+                            {
+                                <li id="ProcesoCargaNav" data-toggle="collapse" data-target="#ProcesoCarga" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Proceso de Carga</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="ProcesoCarga">
+                                    <li id="SolicitudCotizacion" class=""><a href="@Url.Action("Index","SolicitudCotizacion")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Solicitud de Cotización</a></li>
+                                </ul>
+                            }
 
-                        @if (identity.MejorasIndex)
-                        {
-                            <li id="MejorasNav" data-toggle="collapse" data-target="#Mejoras" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mejoras</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="Mejoras">
-                                <li id="MejorasLi" class=""><a href="@Url.Action("Index", "Mejoras")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mejoras</a></li>
-                            </ul>
-                        }
+                            @if (identity.MejorasIndex)
+                            {
+                                <li id="MejorasNav" data-toggle="collapse" data-target="#Mejoras" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mejoras</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="Mejoras">
+                                    <li id="MejorasLi" class=""><a href="@Url.Action("Index", "Mejoras")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mejoras</a></li>
+                                </ul>
+                            }
 
-                        @if (identity.ExcepcionIndex)
-                        {
-                            <li id="ExcepcionesNav" data-toggle="collapse" data-target="#Excepciones" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Excepciones</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="Excepciones">
-                                <li id="ExcepcionesLi" class=""><a href="@Url.Action("Index", "Excepciones")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Excepciones</a></li>
-                                <li id="ExcepcionesEx" class=""><a href="@Url.Action("ExcepcionesExternas", "Excepciones")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Excepciones Externas</a></li>
-                            </ul>
-                        }
+                            @if (identity.ExcepcionIndex)
+                            {
+                                <li id="ExcepcionesNav" data-toggle="collapse" data-target="#Excepciones" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Excepciones</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="Excepciones">
+                                    <li id="ExcepcionesLi" class=""><a href="@Url.Action("Index", "Excepciones")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Excepciones</a></li>
+                                    <li id="ExcepcionesEx" class=""><a href="@Url.Action("ExcepcionesExternas", "Excepciones")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Excepciones Externas</a></li>
+                                </ul>
+                            }
 
-                        @if (identity.GenArMelerIndex)
-                        {
-                            <li id="DescargaResNav" data-toggle="collapse" data-target="#DescargaRes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Descarga de Resultados</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="DescargaRes">
-                                <li id="GenArMeler" class=""><a href="@Url.Action("Index", "GenArMeler")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Generación de Archivo</a></li>
-                            </ul>
+                            @if (identity.GenArMelerIndex)
+                            {
+                                <li id="DescargaResNav" data-toggle="collapse" data-target="#DescargaRes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Descarga de Resultados</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="DescargaRes">
+                                    <li id="GenArMeler" class=""><a href="@Url.Action("Index", "GenArMeler")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Generación de Archivo</a></li>
+                                </ul>
 
-                            @*<li id="MantenedorNav" data-toggle="collapse" data-target="#Mantenedor" class="collapsed"><a href="#">Mantenedor</a><span class="caret"></span></li>
-                                <ul class="sub-menu collapse prop" id="Mantenedor">
-                                    <li id="ManFecAceptacionCotizacion" class=""><a href="@Url.Action("Index", "ManFecAceptacionCotizacion")">Mantenedor de Fechas de Aceptacion de Cotización</a></li>
-                                </ul>*@
-                        }
+                                @*<li id="MantenedorNav" data-toggle="collapse" data-target="#Mantenedor" class="collapsed"><a href="#">Mantenedor</a><span class="caret"></span></li>
+                        <ul class="sub-menu collapse prop" id="Mantenedor">
+                            <li id="ManFecAceptacionCotizacion" class=""><a href="@Url.Action("Index", "ManFecAceptacionCotizacion")">Mantenedor de Fechas de Aceptacion de Cotización</a></li>
+                        </ul>*@
+                            }
 
-                        @if (identity.ProCarArchivoIndex)
-                        {
-                            <li id="RecepcionResNav" data-toggle="collapse" data-target="#RecepcionRes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Recepción de Respuestas</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="RecepcionRes">
-                                <li id="ProCarArchivo" class=""><a href="@Url.Action("Index","ProCarArchivo")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Proceso Carga Archivo</a></li>
-                                <li id="ManFecAceptacionCotizacion" class=""><a href="@Url.Action("Index","ManFecAceptacionCotizacion")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mantenedor de Fechas de Aceptacion de Cotización</a></li>
-                                <li id="ManFecAceptacionCotizacion" class=""><a href="@Url.Action("Index","ReporteGanados")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Reporte Ganados</a></li>
-                            </ul>
-                        }
-                        @if (identity.EliminarCargasIndex)
-                        {
-                            <li id="EliminacionCargasNav" data-toggle="collapse" data-target="#EliminacionCargas" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Eliminación de cargas</a><span class="arrow"></span></li>
-                            <ul class="sub-menu collapse prop" id="EliminacionCargas">
-                                <li id="EliminarCargas" class=""><a href="@Url.Action("Index","EliminarCargas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Cargas de solicitud</a></li>
-                            </ul>
-                        }
-                    </ul>
+                            @if (identity.ProCarArchivoIndex)
+                            {
+                                <li id="RecepcionResNav" data-toggle="collapse" data-target="#RecepcionRes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Recepción de Respuestas</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="RecepcionRes">
+                                    <li id="ProCarArchivo" class=""><a href="@Url.Action("Index","ProCarArchivo")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Proceso Carga Archivo</a></li>
+                                    <li id="ManFecAceptacionCotizacion" class=""><a href="@Url.Action("Index","ManFecAceptacionCotizacion")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Mantenedor de Fechas de Aceptacion de Cotización</a></li>
+                                    <li id="ManFecAceptacionCotizacion" class=""><a href="@Url.Action("Index","ReporteGanados")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Reporte Ganados</a></li>
+                                </ul>
+                            }
+                            @if (identity.EliminarCargasIndex)
+                            {
+                                <li id="EliminacionCargasNav" data-toggle="collapse" data-target="#EliminacionCargas" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Eliminación de cargas</a><span class="arrow"></span></li>
+                                <ul class="sub-menu collapse prop" id="EliminacionCargas">
+                                    <li id="EliminarCargas" class=""><a href="@Url.Action("Index","EliminarCargas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Cargas de solicitud</a></li>
+                                </ul>
+                            }
+                        </ul>
+                    }
+
+                </ul>
+
+                @if (identity.EmisionPPMenu)
+                {
+                    <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#EmisionPP" class="collapsed PesPriUl">
+                        <a href=@urlEmision><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Emisión y Pago de Pensiones</a>
+                    </li>
                 }
 
+                <li id="ReservasNav" data-toggle="collapse" data-target="#Reservas" class="collapsed PesPriUl">
+                    <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Reservas</a><span class="arrow"></span>
+                </li>
+                <ul class="sub-menu collapse" id="Reservas">
+                    @if (identity.ReservasIndex)
+                    {
+                        <li id="ParametrosResNav" data-toggle="collapse" data-target="#ParametrosRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Parametros</a><span class="arrow"></span></li>
+                        <ul class="sub-menu collapse prop" id="ParametrosRes">
+                            <li id="CargaActivos" class=""><a href="@Url.Action("Index", "CargaActivos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Carga de Activos</a></li>
+                            <li id="ManCTRes" class=""><a href="@Url.Action("Index", "ManCurvaTasasRes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mantenimiento Curva de Tasas</a></li>
+                        </ul>
+
+                        <li id="CalculoResNav" data-toggle="collapse" data-target="#CalculoRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Cálculo</a><span class="arrow"></span></li>
+                        <ul class="sub-menu collapse prop" id="CalculoRes">
+                            <li id="Reservas" class=""><a href="@Url.Action("Index", "Reservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reservas</a></li>
+                            <li id="Periodos" class=""><a href="@Url.Action("Index", "Periodos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Periodos</a></li>
+                            <li id="ReportesReservas" class=""><a href="@Url.Action("Index", "ReportesReservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a></li>
+                        </ul>
+                    }
+                </ul>
             </ul>
+
             <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#RentaInversion" class="collapsed PesPriUl">
                 <a href=@urlFondosMax><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Fondos Max</a>
             </li>
@@ -193,37 +231,9 @@
             @if (identity.RPMenu)
             {
                 <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#RentaPrivada" class="collapsed PesPriUl">
-                    <a href=@urlRentaPrivada><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Renta Privada</a>
+                    <a href=@urlRentaPrivada><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Renta Max</a>
                 </li>
             }
-
-            @if (identity.EmisionPPMenu)
-            {
-                <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#EmisionPP" class="collapsed PesPriUl">
-                    <a href=@urlEmision><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Emisión y Pago de Pensiones</a>
-                </li>
-            }
-
-            <li id="ReservasNav" data-toggle="collapse" data-target="#Reservas" class="collapsed PesPriUl">
-                <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Reservas</a><span class="arrow"></span>
-            </li>
-            <ul class="sub-menu collapse" id="Reservas">
-                @if (identity.ReservasIndex)
-                {
-                    <li id="ParametrosResNav" data-toggle="collapse" data-target="#ParametrosRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Parametros</a><span class="arrow"></span></li>
-                    <ul class="sub-menu collapse prop" id="ParametrosRes">
-                        <li id="CargaActivos" class=""><a href="@Url.Action("Index", "CargaActivos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Carga de Activos</a></li>
-                        <li id="ManCTRes" class=""><a href="@Url.Action("Index", "ManCurvaTasasRes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mantenimiento Curva de Tasas</a></li>
-                    </ul>
-
-                    <li id="CalculoResNav" data-toggle="collapse" data-target="#CalculoRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Cálculo</a><span class="arrow"></span></li>
-                    <ul class="sub-menu collapse prop" id="CalculoRes">
-                        <li id="Reservas" class=""><a href="@Url.Action("Index", "Reservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reservas</a></li>
-                        <li id="Periodos" class=""><a href="@Url.Action("Index", "Periodos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Periodos</a></li>
-                        <li id="ReportesReservas" class=""><a href="@Url.Action("Index", "ReportesReservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a></li>
-                    </ul>
-                }
-            </ul>
 
 
             <li id="CuentaNav" data-toggle="collapse" data-target="#Cuenta" class="collapsed PesPriUl">

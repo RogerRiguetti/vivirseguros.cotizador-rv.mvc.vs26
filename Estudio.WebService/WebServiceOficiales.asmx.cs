@@ -1,22 +1,24 @@
-﻿using Estudio.Repository;
+﻿using Estudio.Logic;
+using Estudio.Repository;
+using Estudio.Repository.Core.Domain;
+using Estudio.Repository.Core.Domain.Views;
+using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
-using Estudio.Logic;
+using log4net;
+using log4net.Config;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SpreadsheetLight;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web.Services;
-using Estudio.Repository.Core.Domain;
-using System.Xml;
-using Estudio.Repository.Helpers;
-using Estudio.Repository.Core.Domain.Views;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using log4net;
-using System.Reflection;
-using log4net.Config;
-using SpreadsheetLight;
+using System.Web.Services;
+using System.Xml;
 
 namespace Estudio.WebService
 {
@@ -37,7 +39,7 @@ namespace Estudio.WebService
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         CorreosLogic _correoLogic = new CorreosLogic();
         public static string pathFileExcel;
-        
+        CotizacionLogic _cotizacionLogic = new CotizacionLogic();
 
         /// <summary>
         /// Omar Figueroa Flores
@@ -55,11 +57,11 @@ namespace Estudio.WebService
             {
                 XmlConfigurator.Configure();
                 DateTime fecha = new DateTime();
-                _log.Info("****************** NUEVA CARGA: " +fecha.Day + "/"+ fecha.Month+ "/" + fecha.Year +" - "+fecha.Hour+":"+fecha.Minute+ " *******************");
+                _log.Info("****************** NUEVA CARGA: " + fecha.Day + "/" + fecha.Month + "/" + fecha.Year + " - " + fecha.Hour + ":" + fecha.Minute + " *******************");
                 _log.Info("YA LLEGÓ EL ARCHIVO, CON LOS PARAMETROS: ");
-                _log.Info("__DOCXML: "+__docXML);
-                _log.Info("NOMBREARCHIVO: "+nombreArchivo);
-                _log.Info("USUARIO: "+usuario);
+                _log.Info("__DOCXML: " + __docXML);
+                _log.Info("NOMBREARCHIVO: " + nombreArchivo);
+                _log.Info("USUARIO: " + usuario);
                 _log.Info("SE MANDARA AL HILO...");
                 Task.Run(() => calculoAsyn(__docXML, nombreArchivo, usuario));
                 return "0";
@@ -343,6 +345,7 @@ namespace Estudio.WebService
             Exceptiones mod = new Exceptiones();
             JavaScriptSerializer ser = new JavaScriptSerializer();
             Response datos = new Response();
+            webPrueba.AdmIntegracionCotizador wsEnvio = new webPrueba.AdmIntegracionCotizador();
             try
             {
                 ExcepcionesLogic _ExcepcionesLogic = new ExcepcionesLogic();
@@ -501,93 +504,93 @@ namespace Estudio.WebService
                 else
                 {
                     _log.Info("CALCULO FINALIZADO CON EXITO");
-                    
+
                     var info = (List<string[]>)datos.Object;
 
-                       double primeraPensionRT = 0;
+                    double primeraPensionRT = 0;
 
-                        _log.Info("Años Dif" + Convert.ToInt32(info[0][2]));
-                        _log.Info("Moneda" + moneda);
-                        if (aniosRT > 0)
+                    _log.Info("Años Dif" + Convert.ToInt32(info[0][2]));
+                    _log.Info("Moneda" + moneda);
+                    if (aniosRT > 0)
+                    {
+                        if (moneda == "S/." || moneda == "S/.Aj.")
                         {
-                            if (moneda == "S/." || moneda == "S/.Aj.")
-                            {
-                                _log.Info("Segundo Tramo " + Convert.ToDouble(info[0][8].Replace(",", "")));
-                                primeraPensionRT = (Convert.ToDouble(info[0][8].Replace(",", "")) * 2);
-                            }
-                            else
-                            {
-                                primeraPensionRT = ((Convert.ToDouble(info[0][8].Replace(",", "")) * 2) * mod.codTipCambio);
-                            }
-                            if (modalidad == "RVE")
-                            {
-                                mod.tasaRT = 0;
-                            }
+                            _log.Info("Segundo Tramo " + Convert.ToDouble(info[0][8].Replace(",", "")));
+                            primeraPensionRT = (Convert.ToDouble(info[0][8].Replace(",", "")) * 2);
                         }
                         else
+                        {
+                            primeraPensionRT = ((Convert.ToDouble(info[0][8].Replace(",", "")) * 2) * mod.codTipCambio);
+                        }
+                        if (modalidad == "RVE")
                         {
                             mod.tasaRT = 0;
                         }
+                    }
+                    else
+                    {
+                        mod.tasaRT = 0;
+                    }
                     _log.Info("Prima Unica " + Convert.ToDouble(info[0][6].Replace(",", "")));
-                        _log.Info("CIC " + mod.cic);
-                        var primaUnicaAFP = (mod.cic - Convert.ToDouble(info[0][6].Replace(",", ""))).ToString();
-                        var primaUnicaES = (mod.cic - Convert.ToDouble(primaUnicaAFP)).ToString();
+                    _log.Info("CIC " + mod.cic);
+                    var primaUnicaAFP = (mod.cic - Convert.ToDouble(info[0][6].Replace(",", ""))).ToString();
+                    var primaUnicaES = (mod.cic - Convert.ToDouble(primaUnicaAFP)).ToString();
 
-                        object datosResult;
-                        if (modalidad != "RTVD")
+                    object datosResult;
+                    if (modalidad != "RTVD")
+                    {
+                        datosResult = new
                         {
-                            datosResult = new
+                            modalidad = modalidad,
+                            moneda = moneda,
+                            anosRT = aniosRT.ToString(),
+                            porcentajeRVD = porcentajeRVD.ToString(),
+                            periodoGarantizado = periodoGarantizado.ToString(),
+                            derechoCrecer = derechoCrecer,
+                            gratificacion = gratificacion,
+                            cotizacionEESS = new
                             {
-                                modalidad = modalidad,
-                                moneda = moneda,
-                                anosRT = aniosRT.ToString(),
-                                porcentajeRVD = porcentajeRVD.ToString(),
-                                periodoGarantizado = periodoGarantizado.ToString(),
-                                derechoCrecer = derechoCrecer,
-                                gratificacion = gratificacion,
-                                cotizacionEESS = new
-                                {
-                                    siCotizaNoCotiza = "S",
-                                    nroCotizacion = mod.numCot,
-                                    primaUnicaAFPEESS = primaUnicaAFP.ToString(),//(Convert.ToDouble(info[0][6]) - Convert.ToDouble(info[0][2]) * Convert.ToDouble(info[0][7].Replace(",",""))).ToString(),
-                                    primaUnicaEESS = primaUnicaES.ToString(),//info[0][6].Replace(",", ""),
-                                    comision = prc_Com.ToString(),
-                                    primeraPensionRT = primeraPensionRT.ToString(),
-                                    tasaInteresRT = mod.tasaRT.ToString(),
-                                    primeraPensionRV = info[0][8].Replace(",", ""),
-                                    tasaInteresRV = info[0][9]
-                                }
+                                siCotizaNoCotiza = "S",
+                                nroCotizacion = mod.numCot,
+                                primaUnicaAFPEESS = primaUnicaAFP.ToString(),//(Convert.ToDouble(info[0][6]) - Convert.ToDouble(info[0][2]) * Convert.ToDouble(info[0][7].Replace(",",""))).ToString(),
+                                primaUnicaEESS = primaUnicaES.ToString(),//info[0][6].Replace(",", ""),
+                                comision = prc_Com.ToString(),
+                                primeraPensionRT = primeraPensionRT.ToString(),
+                                tasaInteresRT = mod.tasaRT.ToString(),
+                                primeraPensionRV = info[0][8].Replace(",", ""),
+                                tasaInteresRV = info[0][9]
+                            }
 
-                            };
-                        }
-                        else
+                        };
+                    }
+                    else
+                    {
+                        datosResult = new
                         {
-                            datosResult = new
+                            modalidad = modalidad,
+                            moneda = moneda,
+                            anosRT = aniosRT.ToString(),
+                            porcentajeRVD = porcentajeRVD.ToString(),
+                            periodoGarantizado = periodoGarantizado.ToString(),
+                            derechoCrecer = derechoCrecer,
+                            gratificacion = gratificacion,
+                            cotizacionEESS = new
                             {
-                                modalidad = modalidad,
-                                moneda = moneda,
-                                anosRT = aniosRT.ToString(),
-                                porcentajeRVD = porcentajeRVD.ToString(),
-                                periodoGarantizado = periodoGarantizado.ToString(),
-                                derechoCrecer = derechoCrecer,
-                                gratificacion = gratificacion,
-                                cotizacionEESS = new
-                                {
-                                    siCotizaNoCotiza = "S",
-                                    nroCotizacion = mod.numCot,
-                                    primaUnicaAFPEESS = primaUnicaAFP.ToString(),//(Convert.ToDouble(info[0][6]) - Convert.ToDouble(info[0][2]) * Convert.ToDouble(info[0][7].Replace(",",""))).ToString(),
-                                    primaUnicaEESS = primaUnicaES.ToString(),//info[0][6].Replace(",", ""),
-                                    comision = prc_Com.ToString(),
-                                    primeraPensionRT = primeraPensionRT.ToString(),
-                                    tasaInteresRT = mod.tasaRT.ToString(),
-                                    primeraPensionRVD = info[0][8].Replace(",", ""),
-                                    tasaInteresRVD = info[0][9]
-                                }
+                                siCotizaNoCotiza = "S",
+                                nroCotizacion = mod.numCot,
+                                primaUnicaAFPEESS = primaUnicaAFP.ToString(),//(Convert.ToDouble(info[0][6]) - Convert.ToDouble(info[0][2]) * Convert.ToDouble(info[0][7].Replace(",",""))).ToString(),
+                                primaUnicaEESS = primaUnicaES.ToString(),//info[0][6].Replace(",", ""),
+                                comision = prc_Com.ToString(),
+                                primeraPensionRT = primeraPensionRT.ToString(),
+                                tasaInteresRT = mod.tasaRT.ToString(),
+                                primeraPensionRVD = info[0][8].Replace(",", ""),
+                                tasaInteresRVD = info[0][9]
+                            }
 
-                            };
-                        }
-                        _log.Info("JSON A RETORNAR: " + ser.Serialize(datosResult));
-                        return ser.Serialize(datosResult);
+                        };
+                    }
+                    _log.Info("JSON A RETORNAR: " + ser.Serialize(datosResult));
+                    return ser.Serialize(datosResult);
                 }
             }
             catch (Exception ex)
@@ -679,7 +682,7 @@ namespace Estudio.WebService
             _log.Info("periodoGarantizado: " + periodoGarantizado);
             _log.Info("derechoCrecer: " + derechoCrecer);
             _log.Info("gratificacion: " + gratificacion);
-           
+
             try
             {
                 string band = "";
@@ -954,13 +957,77 @@ namespace Estudio.WebService
                     datos2.MTO_VALPREPENTMP = info[0][30];
 
                     var resGuardad = _ExcepcionesLogic.Guardar(datos1, "mejoras", datos2);
+
+                    //string respuestaWSenvioRutina = wsEnvio.ActualizarProducto(respuestaWSenvioCarga);
+
+                    //var response = "KO";/*respuestaWSenvioCarga.Substring(0, 2);*/
+
+                    //if (response.Equals("KO"))
+                    //{
+                    //    //var nombreArchivos = "Prueba Correo";
+                    //    var pathFileExcel = "File Test";
+                    //    _log.Info("Comenzara el envio del correo electronico con la notificación");
+
+                    //    string asuntos = "Error al actualizar producto.";
+
+                    //    var primaUnicaAFP = (mod.cic - Convert.ToDouble(info[0][6].Replace(",", ""))).ToString();
+                    //    var primaUnicaES = (mod.cic - Convert.ToDouble(primaUnicaAFP)).ToString();
+                    //    var sendData = JObject.FromObject(new
+                    //    {
+                    //        modalidad = modalidad,
+                    //        moneda = moneda,
+                    //        anosRT = aniosRT.ToString(),
+                    //        porcentajeRVD = porcentajeRVD.ToString(),
+                    //        periodoGarantizado = periodoGarantizado.ToString(),
+                    //        derechoCrecer = derechoCrecer,
+                    //        gratificacion = gratificacion,
+                    //        cotizacionEESS = new
+                    //        {
+                    //            siCotizaNoCotiza = "S",
+                    //            nroCotizacion = mod.numCot,
+                    //            primaUnicaAFPEESS = primaUnicaAFP.ToString(),
+                    //            primaUnicaEESS = primaUnicaES.ToString(),
+                    //            comision = prc_Com.ToString(),
+                    //            tasaInteresRT = mod.tasaRT.ToString(),
+                    //            primeraPensionRV = info[0][8].Replace(",", ""),
+                    //            tasaInteresRV = info[0][9]
+                    //        },
+                    //        error = resGuardad.Message
+                    //    }, new JsonSerializer { NullValueHandling = NullValueHandling.Ignore });
+
+                    //    string cuerpos = "No se pudo actualizar el número de operación: " + 51849 + " - " + sendData;
+                    //    List<string> correoss = new List<string>();
+
+                    //    string queryCons = "SELECT Parametro FROM Parametros where ClaveParametro = 'CORREOWS'";
+
+                    //    _log.Info("Comenzara la busqueda del correo electronico");
+
+                    //    string DatosCons = VCEDBContext<Parametro>.CallSelectStatement(queryCons, x => new Parametro
+                    //    {
+                    //        Elemento = x.GetString(0)
+                    //    }).FirstOrDefault().Elemento;
+                    //    _log.Info("El correo se enviará a " + DatosCons);
+
+                    //    string correoe = DatosCons;
+                    //    correoss.Add(correoe);
+                    //    //ExportarCalculadas(numArch);
+                    //    if (!_correoLogic.envioCorreo(cuerpos, asuntos, correoss, pathFileExcel))
+                    //    {
+                    //        _log.Info("Error al enviar el correo electronico");
+                    //        _log.Info("**************************************************************");
+                    //        //return;
+                    //    }
+
+                    //    //Debe actualizar producto
+                    //}
+
                     var mensajeMej = "";
 
                     if (resGuardad.IsOk == false && resGuardad.Message.Contains("No puede ser guardado es un caso SISCO, la pensión minima es "))
                     {
                         mensajeMej = resGuardad.Message;
                         resGuardad.Message = "";
-                        
+
                         if (modalidad == "RVE")
                         {
                             mod.tasaRT = 0;
@@ -1239,5 +1306,3 @@ namespace Estudio.WebService
         }
     }
 }
-
-

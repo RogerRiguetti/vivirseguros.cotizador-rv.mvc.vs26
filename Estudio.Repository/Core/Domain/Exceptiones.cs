@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Estudio.Repository.Core.Domain
 {
@@ -84,6 +80,11 @@ namespace Estudio.Repository.Core.Domain
         public string motivo { get; set; }
         public int estado { get; set; }
         public string asesor { get; set; }
-
+        public string prestacion { get; set; }
+        public string fechaCierre { get; set; }
+        public string departamentoMeler { get; set; }
+        public string departamentoAsignado { get; set; }
+        public string asesorDesc { get; set; }
+        public string supervisor { get; set; }
     }
 }

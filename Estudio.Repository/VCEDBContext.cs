@@ -19,7 +19,7 @@ namespace Estudio.Repository
         /// <param name="parameters"> Parámetros requeridos por el procedimiento </param>
         /// <param name="copyRow"> Registros que regresa el procedimiento </param>
         /// <returns> Regresa los registros de base de datos </returns>
-        
+
         public static IEnumerable<T> CallStoreProcedure(string storedProcedure, List<SqlParameter> parameters, Func<IDataRecord, T> copyRow)
         {
             using (SqlConnection Conexion = new SqlConnection(VCEConectionString.Connection()))
@@ -42,6 +42,26 @@ namespace Estudio.Repository
                     }
                 }
             }
+        }
+
+        public static string CallStoreProcedureReturnStr(string storedProcedure, List<SqlParameter> parameters)
+        {
+            string Result = "";
+            using (SqlConnection Conexion = new SqlConnection(VCEConectionString.Connection()))
+            {
+                using (SqlCommand cmd = new SqlCommand(storedProcedure, Conexion))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 0;
+
+                    parameters.ForEach(x => cmd.Parameters.Add(x));
+
+                    Conexion.Open();
+                    Result = (string)cmd.ExecuteScalar();
+                }
+            }
+
+            return Result;
         }
 
         /// <summary>

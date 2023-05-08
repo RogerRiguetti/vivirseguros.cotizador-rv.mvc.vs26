@@ -261,7 +261,8 @@ namespace Estudio.Repository.Persistence.Repositories
                 Prc_PerCon = (double)x.GetDecimal(21),
                 Intermediario = x.GetString(22),
                 Prc_CorCom = (double)x.GetDecimal(23),
-                Ind_Mej = x.GetString(24)
+                Ind_Mej = x.GetString(24),
+                Gls_Region = x.GetString(25)
             }).ToList();
         }
 

@@ -92,6 +92,7 @@ namespace Estudio.Logic
                 string hostNotifiacion = _parametroRepository.ConsultaParametro("HOSTNOTIF").Elemento;
                 int portNotificacion = Convert.ToInt32(_parametroRepository.ConsultaParametro("PORTNOTIF").Elemento);
                 string pswNotificacion = _parametroRepository.ConsultaParametro("PSWNOTIF").Elemento;
+
                 _log.Info("Correo de remitente: " + correoNotificacion + " |hostNotifiacion: " + hostNotifiacion + " |portNotificacion: " + Convert.ToString(portNotificacion) + " | pswNotificacion:" + pswNotificacion);
 
                 SmtpClient client = new SmtpClient(hostNotifiacion, portNotificacion);
@@ -107,12 +108,14 @@ namespace Estudio.Logic
                     message.To.Add(new MailAddress(item));
                     _log.Info("Destinatarios " + item);
                 }
+
                 _log.Info("Message From ");
                 message.From = from;
                 message.Body = cuerpo;
                 message.BodyEncoding = System.Text.Encoding.UTF8;
                 message.Subject = asunto;
                 message.SubjectEncoding = System.Text.Encoding.UTF8;
+
 
                 if (System.IO.File.Exists(archivoAdjuntar))
                 {
@@ -122,6 +125,7 @@ namespace Estudio.Logic
                 _log.Info("Security");
                 //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 _log.Info("Send");
+
                 client.Send(message);
 
                 return true;
