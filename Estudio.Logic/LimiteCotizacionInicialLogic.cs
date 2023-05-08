@@ -422,11 +422,9 @@ namespace Estudio.Logic
                 case "Dólares Nominales": codMoneda = "US"; codTipReajuste = "0"; break;
             }
 
-
             string fecfinTir = "UPDATE PT_TVAL_MINMAXTIR_INI SET FEC_TERMINMAX = '" + fechaC.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231' AND COD_REGION='" + datos.codRegion + "' AND COD_MONEDA='" + codMoneda + "' AND COD_TIPREAJUSTE='" + codTipReajuste + "'";
             string fecfinPer = "UPDATE PT_TVAL_MINMAXPER_INI SET FEC_TERMINMAX = '" + fechaC.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231' AND COD_REGION='" + datos.codRegion + "' AND COD_MONEDA='" + codMoneda + "' AND COD_TIPREAJUSTE='" + codTipReajuste + "'";
             string fecfinTas = "UPDATE PT_TVAL_MINMAXTAS_INI SET FEC_TERMINMAX = '" + fechaC.ToString("yyyyMMdd") + "' WHERE FEC_TERMINMAX = '99991231' AND COD_REGION='" + datos.codRegion + "' AND COD_MONEDA='" + codMoneda + "' AND COD_TIPREAJUSTE='" + codTipReajuste + "'";
-
 
             if (tipoRenta == "1")
             {
