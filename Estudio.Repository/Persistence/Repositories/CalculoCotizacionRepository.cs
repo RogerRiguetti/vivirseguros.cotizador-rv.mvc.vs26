@@ -262,7 +262,11 @@ namespace Estudio.Repository.Persistence.Repositories
                 Intermediario = x.GetString(22),
                 Prc_CorCom = (double)x.GetDecimal(23),
                 Ind_Mej = x.GetString(24),
-                Gls_Region = x.GetString(25)
+                Gls_Region = x.GetString(25),
+                CIC = (double)x.GetDecimal(26),
+                DepartamentoAsignado = x.GetString(27),
+                Asesor = x.GetString(28),
+                Supervisor = x.GetString(29),
             }).ToList();
         }
 
@@ -296,7 +300,11 @@ namespace Estudio.Repository.Persistence.Repositories
                 Prima_Unica = (double)x.GetDecimal(12),
                 Intermediario = x.GetString(13),
                 Cod_Rechazo = x.GetString(14),
-                Error_Descrip = x.GetString(15)
+                Error_Descrip = x.GetString(15),
+                Gls_Region = x.GetString(16),
+                DepartamentoAsignado = x.GetString(17),
+                Asesor = x.GetString(18),
+                Supervisor = x.GetString(19),
             }).ToList();
         }
         #endregion
