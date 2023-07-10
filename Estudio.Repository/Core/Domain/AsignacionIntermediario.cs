@@ -250,6 +250,9 @@ namespace Estudio.Repository.Core.Domain
         public double CIC { get; set; }
         public string Cod_Rechazo { get; set; }
         public string Error_Descrip { get; set; }
+        public string DepartamentoAsignado { get; set; }
+        public string Asesor { get; set; }
+        public string Supervisor { get; set; }
         #endregion
 
     }
