@@ -285,6 +285,7 @@ namespace Estudio.WebService
                     sl.SetCellValue(2 + i, 28, ListCalculadas[i].Asesor);
                     sl.SetCellValue(2 + i, 29, ListCalculadas[i].Supervisor);
                     sl.SetCellValue(2 + i, 30, ListCalculadas[i].DepartamentoAsignado);
+                    sl.SetCellValue(2 + i, 31, ListCalculadas[i].Calificacion);
                 }
 
                 sl.SelectWorksheet("Solicitudes No Calculadas");
@@ -310,6 +311,7 @@ namespace Estudio.WebService
                     sl.SetCellValue(2 + i, 18, ListNoCalculadas[i].Asesor);
                     sl.SetCellValue(2 + i, 19, ListNoCalculadas[i].Supervisor);
                     sl.SetCellValue(2 + i, 20, ListNoCalculadas[i].DepartamentoAsignado);
+                    sl.SetCellValue(2 + i, 21, ListNoCalculadas[i].Calificacion);
                 }
 
                 sl.SaveAs(pathFile);
