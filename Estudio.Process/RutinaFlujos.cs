@@ -10,6 +10,9 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
+using System.Text; 
+using Newtonsoft.Json;
 
 namespace Estudio.Process
 {
@@ -69,11 +72,11 @@ namespace Estudio.Process
                 ModelFluTot1.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluTot1.Columns.Add("PRC_TASTCE", typeof(decimal));
                 ModelFluTot1.Columns.Add("PRC_TLR", typeof(decimal));
-                ModelFluTot1.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluTot1.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluTot1.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluTot1.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluTot1.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
+                //ModelFluTot1.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluTot1.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluTot1.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluTot1.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluTot1.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
                 ModelFluTot1.Columns.Add("FEC_FLU", typeof(string));
 
                 ModelFluBen1.Columns.Add("NUM_POLIZA", typeof(string));
@@ -86,12 +89,12 @@ namespace Estudio.Process
                 ModelFluBen1.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluBen1.Columns.Add("MTO_TPX", typeof(decimal));
                 ModelFluBen1.Columns.Add("MTO_QXT", typeof(decimal));
-                ModelFluBen1.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluBen1.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluBen1.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluBen1.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluBen1.Columns.Add("MTO_TPX_METAN", typeof(decimal));
-                ModelFluBen1.Columns.Add("MTO_QXT_METAN", typeof(decimal));
+                //ModelFluBen1.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluBen1.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluBen1.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluBen1.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluBen1.Columns.Add("MTO_TPX_METAN", typeof(decimal));
+                //ModelFluBen1.Columns.Add("MTO_QXT_METAN", typeof(decimal));
                 ModelFluBen1.Columns.Add("FEC_FLU", typeof(string));
 
                 ModelFluTot2.Columns.Add("NUM_POLIZA", typeof(string));
@@ -102,11 +105,11 @@ namespace Estudio.Process
                 ModelFluTot2.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluTot2.Columns.Add("PRC_TASTCE", typeof(decimal));
                 ModelFluTot2.Columns.Add("PRC_TLR", typeof(decimal));
-                ModelFluTot2.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluTot2.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluTot2.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluTot2.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluTot2.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
+                //ModelFluTot2.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluTot2.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluTot2.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluTot2.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluTot2.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
                 ModelFluTot2.Columns.Add("FEC_FLU", typeof(string));
 
                 ModelFluBen2.Columns.Add("NUM_POLIZA", typeof(string));
@@ -119,12 +122,12 @@ namespace Estudio.Process
                 ModelFluBen2.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluBen2.Columns.Add("MTO_TPX", typeof(decimal));
                 ModelFluBen2.Columns.Add("MTO_QXT", typeof(decimal));
-                ModelFluBen2.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluBen2.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluBen2.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluBen2.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluBen2.Columns.Add("MTO_TPX_METAN", typeof(decimal));
-                ModelFluBen2.Columns.Add("MTO_QXT_METAN", typeof(decimal));
+                //ModelFluBen2.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluBen2.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluBen2.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluBen2.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluBen2.Columns.Add("MTO_TPX_METAN", typeof(decimal));
+                //ModelFluBen2.Columns.Add("MTO_QXT_METAN", typeof(decimal));
                 ModelFluBen2.Columns.Add("FEC_FLU", typeof(string));
                 #endregion
 
@@ -221,12 +224,7 @@ namespace Estudio.Process
                             row["MTO_FLUTOT"] = item[5];
                             row["PRC_TASTCE"] = item[6];
                             row["PRC_TLR"] = item[7];
-                            row["MTO_PENSION_METAN"] = item[8];
-                            row["MTO_FLUPEN_METAN"] = item[9];
-                            row["MTO_FLUSEP_METAN"] = item[10];
-                            row["MTO_FLUTOT_METAN"] = item[11];
-                            row["PRC_TASTCE_METAN"] = item[12];
-                            row["FEC_FLU"] = item[13];
+                            row["FEC_FLU"] = item[8];
 
                             ModelFluTot1.Rows.Add(row);
                         }
@@ -246,12 +244,7 @@ namespace Estudio.Process
                             row["MTO_FLUTOT"] = item[5];
                             row["PRC_TASTCE"] = item[6];
                             row["PRC_TLR"] = item[7];
-                            row["MTO_PENSION_METAN"] = item[8];
-                            row["MTO_FLUPEN_METAN"] = item[9];
-                            row["MTO_FLUSEP_METAN"] = item[10];
-                            row["MTO_FLUTOT_METAN"] = item[11];
-                            row["PRC_TASTCE_METAN"] = item[12];
-                            row["FEC_FLU"] = item[13];
+                            row["FEC_FLU"] = item[8];
 
                             ModelFluTot2.Rows.Add(row);
                         }
@@ -273,13 +266,7 @@ namespace Estudio.Process
                             row["MTO_FLUTOT"] = item[7];
                             row["MTO_TPX"] = item[8];
                             row["MTO_QXT"] = item[9];
-                            row["MTO_PENSION_METAN"] = item[10];
-                            row["MTO_FLUPEN_METAN"] = item[11];
-                            row["MTO_FLUSEP_METAN"] = item[12];
-                            row["MTO_FLUTOT_METAN"] = item[13];
-                            row["MTO_TPX_METAN"] = item[14];
-                            row["MTO_QXT_METAN"] = item[15];
-                            row["FEC_FLU"] = item[16];
+                            row["FEC_FLU"] = item[10];
 
                             ModelFluBen1.Rows.Add(row);
                         }
@@ -301,13 +288,7 @@ namespace Estudio.Process
                             row["MTO_FLUTOT"] = item[7];
                             row["MTO_TPX"] = item[8];
                             row["MTO_QXT"] = item[9];
-                            row["MTO_PENSION_METAN"] = item[10];
-                            row["MTO_FLUPEN_METAN"] = item[11];
-                            row["MTO_FLUSEP_METAN"] = item[12];
-                            row["MTO_FLUTOT_METAN"] = item[13];
-                            row["MTO_TPX_METAN"] = item[14];
-                            row["MTO_QXT_METAN"] = item[15];
-                            row["FEC_FLU"] = item[16];
+                            row["FEC_FLU"] = item[10];
 
                             ModelFluBen2.Rows.Add(row);
                         }
@@ -321,10 +302,18 @@ namespace Estudio.Process
 
                 try
                 {
-                    if (ModelFluTot1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluTot1, "PR_TTMP_FLUPOL1", conexion); }
-                    if (ModelFluTot2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluTot2, "PR_TTMP_FLUPOL2", conexion); }
-                    if (ModelFluBen1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluBen1, "PR_TTMP_FLUBEN1", conexion); }
-                    if (ModelFluBen2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluBen2, "PR_TTMP_FLUBEN2", conexion); }
+                    //if (ModelFluTot1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluTot1, "PR_TTMP_FLUPOL1", conexion); }
+                    //if (ModelFluTot2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluTot2, "PR_TTMP_FLUPOL2", conexion); }
+                    //if (ModelFluBen1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluBen1, "PR_TTMP_FLUBEN1", conexion); }
+                    //if (ModelFluBen2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluBen2, "PR_TTMP_FLUBEN2", conexion); }
+
+                    
+                    if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FluPol1", FecCal); }
+                    if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FluPol2", FecCal); }
+                    if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FluBen1", FecCal); }
+                    if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FluBen2", FecCal); }
+
+
                 } 
                 catch (Exception ex)
                 {
@@ -370,11 +359,11 @@ namespace Estudio.Process
                 ModelFluTot1Local.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluTot1Local.Columns.Add("PRC_TASTCE", typeof(decimal));
                 ModelFluTot1Local.Columns.Add("PRC_TLR", typeof(decimal));
-                ModelFluTot1Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluTot1Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluTot1Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluTot1Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluTot1Local.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
+                //ModelFluTot1Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluTot1Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluTot1Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluTot1Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluTot1Local.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
                 ModelFluTot1Local.Columns.Add("FEC_FLU", typeof(string));
 
                 ModelFluBen1Local.Columns.Add("NUM_POLIZA", typeof(string));
@@ -387,12 +376,12 @@ namespace Estudio.Process
                 ModelFluBen1Local.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluBen1Local.Columns.Add("MTO_TPX", typeof(decimal));
                 ModelFluBen1Local.Columns.Add("MTO_QXT", typeof(decimal));
-                ModelFluBen1Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluBen1Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluBen1Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluBen1Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluBen1Local.Columns.Add("MTO_TPX_METAN", typeof(decimal));
-                ModelFluBen1Local.Columns.Add("MTO_QXT_METAN", typeof(decimal));
+                //ModelFluBen1Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluBen1Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluBen1Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluBen1Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluBen1Local.Columns.Add("MTO_TPX_METAN", typeof(decimal));
+                //ModelFluBen1Local.Columns.Add("MTO_QXT_METAN", typeof(decimal));
                 ModelFluBen1Local.Columns.Add("FEC_FLU", typeof(string));
 
                 ModelFluTot2Local.Columns.Add("NUM_POLIZA", typeof(string));
@@ -403,11 +392,11 @@ namespace Estudio.Process
                 ModelFluTot2Local.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluTot2Local.Columns.Add("PRC_TASTCE", typeof(decimal));
                 ModelFluTot2Local.Columns.Add("PRC_TLR", typeof(decimal));
-                ModelFluTot2Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluTot2Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluTot2Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluTot2Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluTot2Local.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
+                //ModelFluTot2Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluTot2Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluTot2Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluTot2Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluTot2Local.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
                 ModelFluTot2Local.Columns.Add("FEC_FLU", typeof(string));
 
                 ModelFluBen2Local.Columns.Add("NUM_POLIZA", typeof(string));
@@ -420,12 +409,12 @@ namespace Estudio.Process
                 ModelFluBen2Local.Columns.Add("MTO_FLUTOT", typeof(decimal));
                 ModelFluBen2Local.Columns.Add("MTO_TPX", typeof(decimal));
                 ModelFluBen2Local.Columns.Add("MTO_QXT", typeof(decimal));
-                ModelFluBen2Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ModelFluBen2Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ModelFluBen2Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ModelFluBen2Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ModelFluBen2Local.Columns.Add("MTO_TPX_METAN", typeof(decimal));
-                ModelFluBen2Local.Columns.Add("MTO_QXT_METAN", typeof(decimal));
+                //ModelFluBen2Local.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
+                //ModelFluBen2Local.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
+                //ModelFluBen2Local.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
+                //ModelFluBen2Local.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
+                //ModelFluBen2Local.Columns.Add("MTO_TPX_METAN", typeof(decimal));
+                //ModelFluBen2Local.Columns.Add("MTO_QXT_METAN", typeof(decimal));
                 ModelFluBen2Local.Columns.Add("FEC_FLU", typeof(string));
                 #endregion
 
@@ -840,18 +829,18 @@ namespace Estudio.Process
                                     row["MTO_FLUTOT"] = Convert.ToDecimal(String.Format("{0:0.00000000}", (MtoPen * Flupen[i]) + Flucm[i]));
                                     row["PRC_TASTCE"] = Convert.ToDecimal(String.Format("{0:0.00000000}", tce));
                                     row["PRC_TLR"] = Convert.ToDecimal(String.Format("{0:0.00000000}", tci));
-                                    row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
-                                    row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                    row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                    row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                    row["PRC_TASTCE_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
+                                    //row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
+                                    //row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                    //row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                    //row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                    //row["PRC_TASTCE_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
                                     row["FEC_FLU"] = vlFechaDev.AddMonths(i - 1).ToString("yyyyMM");
 
                                     ModelFluTot1Local.Rows.Add(row);
                                 }
                                 ListModelFluTot1.Add(ModelFluTot1Local);
 
-                                if (Stock == "N") { queryTas += "UPDATE PP_TMAE_POLIZA SET PRC_TASARES = " + tce + " WHERE NUM_POLIZA = '" + NumPol + "' \n"; }
+                                //if (Stock == "N") { queryTas += "UPDATE PP_TMAE_POLIZA SET PRC_TASARES = " + tce + " WHERE NUM_POLIZA = '" + NumPol + "' \n"; }
 
                                 GC.Collect();
                                 Console.WriteLine("Memory used after full collection:   {0:N0}",
@@ -878,18 +867,18 @@ namespace Estudio.Process
                                     row["MTO_FLUTOT"] = Convert.ToDecimal(String.Format("{0:0.00000000}", (MtoPen * Flupen[i]) + Flucm[i]));
                                     row["PRC_TASTCE"] = Convert.ToDecimal(String.Format("{0:0.00000000}", tce));
                                     row["PRC_TLR"] = Convert.ToDecimal(String.Format("{0:0.00000000}", tci));
-                                    row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
-                                    row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                    row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                    row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                    row["PRC_TASTCE_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
+                                    //row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
+                                    //row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                    //row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                    //row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                    //row["PRC_TASTCE_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
                                     row["FEC_FLU"] = vlFechaDev.AddMonths(i - 1).ToString("yyyyMM");
 
                                     ModelFluTot2Local.Rows.Add(row);
                                 }
                                 ListModelFluTot2.Add(ModelFluTot2Local);
 
-                                if (Stock == "N") { queryTas += "UPDATE PP_TMAE_POLIZA SET PRC_TASARES = " + tce + " WHERE NUM_POLIZA = '" + NumPol + "' \n"; }
+                                //if (Stock == "N") { queryTas += "UPDATE PP_TMAE_POLIZA SET PRC_TASARES = " + tce + " WHERE NUM_POLIZA = '" + NumPol + "' \n"; }
 
                                 GC.Collect();
                                 Console.WriteLine("Memory used after full collection:   {0:N0}",
@@ -927,12 +916,12 @@ namespace Estudio.Process
                                         }
                                         row["MTO_TPX"] = Convert.ToDecimal(String.Format("{0:0.00000000}", fpy[i]));
                                         row["MTO_QXT"] = Convert.ToDecimal(String.Format("{0:0.00000000}", fqxy[i]));
-                                        row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
-                                        row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_TPX_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_QXT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00}", 0));
+                                        //row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_TPX_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_QXT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
                                         row["FEC_FLU"] = vlFechaDev.AddMonths(i - 1).ToString("yyyyMM");
 
                                         ModelFluBen1Local.Rows.Add(row);
@@ -974,12 +963,12 @@ namespace Estudio.Process
                                         }
                                         row["MTO_TPX"] = Convert.ToDecimal(String.Format("{0:0.00000000}", fpy[i]));
                                         row["MTO_QXT"] = Convert.ToDecimal(String.Format("{0:0.00000000}", fqxy[i]));
-                                        row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_TPX_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
-                                        row["MTO_QXT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_PENSION_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_FLUPEN_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_FLUSEP_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_FLUTOT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_TPX_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
+                                        //row["MTO_QXT_METAN"] = Convert.ToDecimal(String.Format("{0:0.00000000}", 0));
                                         row["FEC_FLU"] = vlFechaDev.AddMonths(i - 1).ToString("yyyyMM");
 
                                         ModelFluBen2Local.Rows.Add(row);
@@ -1019,11 +1008,11 @@ namespace Estudio.Process
                                 row["MTO_FLUTOT"] = 0.00000000;
                                 row["PRC_TASTCE"] = 0.00000000;
                                 row["PRC_TLR"] = 0.00000000;
-                                row["MTO_PENSION_METAN"] = 0.00;
-                                row["MTO_FLUPEN_METAN"] = 0.00000000;
-                                row["MTO_FLUSEP_METAN"] = 0.00000000;
-                                row["MTO_FLUTOT_METAN"] = 0.00000000;
-                                row["PRC_TASTCE_METAN"] = 0.00;
+                                //row["MTO_PENSION_METAN"] = 0.00;
+                                //row["MTO_FLUPEN_METAN"] = 0.00000000;
+                                //row["MTO_FLUSEP_METAN"] = 0.00000000;
+                                //row["MTO_FLUTOT_METAN"] = 0.00000000;
+                                //row["PRC_TASTCE_METAN"] = 0.00;
                                 row["FEC_FLU"] = "";
 
                                 ModelFluTot1Local.Rows.Add(row);
@@ -1042,12 +1031,12 @@ namespace Estudio.Process
                                     row2["MTO_FLUTOT"] = 0.00000000;
                                     row2["MTO_TPX"] = 0.00000000;
                                     row2["MTO_QXT"] = 0.00000000;
-                                    row2["MTO_PENSION_METAN"] = 0.00;
-                                    row2["MTO_FLUPEN_METAN"] = 0.00000000;
-                                    row2["MTO_FLUSEP_METAN"] = 0.00000000;
-                                    row2["MTO_FLUTOT_METAN"] = 0.00000000;
-                                    row2["MTO_TPX_METAN"] = 0.00000000;
-                                    row2["MTO_QXT_METAN"] = 0.00000000;
+                                    //row2["MTO_PENSION_METAN"] = 0.00;
+                                    //row2["MTO_FLUPEN_METAN"] = 0.00000000;
+                                    //row2["MTO_FLUSEP_METAN"] = 0.00000000;
+                                    //row2["MTO_FLUTOT_METAN"] = 0.00000000;
+                                    //row2["MTO_TPX_METAN"] = 0.00000000;
+                                    //row2["MTO_QXT_METAN"] = 0.00000000;
                                     row2["FEC_FLU"] = "";
 
                                     ModelFluBen1Local.Rows.Add(row2);
@@ -1071,11 +1060,11 @@ namespace Estudio.Process
                                 row["MTO_FLUTOT"] = 0.00000000;
                                 row["PRC_TASTCE"] = 0.00000000;
                                 row["PRC_TLR"] = 0.00000000;
-                                row["MTO_PENSION_METAN"] = 0.00;
-                                row["MTO_FLUPEN_METAN"] = 0.00000000;
-                                row["MTO_FLUSEP_METAN"] = 0.00000000;
-                                row["MTO_FLUTOT_METAN"] = 0.00000000;
-                                row["PRC_TASTCE_METAN"] = 0.00;
+                                //row["MTO_PENSION_METAN"] = 0.00;
+                                //row["MTO_FLUPEN_METAN"] = 0.00000000;
+                                //row["MTO_FLUSEP_METAN"] = 0.00000000;
+                                //row["MTO_FLUTOT_METAN"] = 0.00000000;
+                                //row["PRC_TASTCE_METAN"] = 0.00;
                                 row["FEC_FLU"] = "";
 
                                 ModelFluTot2Local.Rows.Add(row);
@@ -1094,12 +1083,12 @@ namespace Estudio.Process
                                     row2["MTO_FLUTOT"] = 0.00000000;
                                     row2["MTO_TPX"] = 0.00000000;
                                     row2["MTO_QXT"] = 0.00000000;
-                                    row2["MTO_PENSION_METAN"] = 0.00;
-                                    row2["MTO_FLUPEN_METAN"] = 0.00000000;
-                                    row2["MTO_FLUSEP_METAN"] = 0.00000000;
-                                    row2["MTO_FLUTOT_METAN"] = 0.00000000;
-                                    row2["MTO_TPX_METAN"] = 0.00000000;
-                                    row2["MTO_QXT_METAN"] = 0.00000000;
+                                    //row2["MTO_PENSION_METAN"] = 0.00;
+                                    //row2["MTO_FLUPEN_METAN"] = 0.00000000;
+                                    //row2["MTO_FLUSEP_METAN"] = 0.00000000;
+                                    //row2["MTO_FLUTOT_METAN"] = 0.00000000;
+                                    //row2["MTO_TPX_METAN"] = 0.00000000;
+                                    //row2["MTO_QXT_METAN"] = 0.00000000;
                                     row2["FEC_FLU"] = "";
 
                                     ModelFluBen2Local.Rows.Add(row2);
@@ -2364,78 +2353,128 @@ namespace Estudio.Process
             double Tasa;
             int i, cr;
             bool res = true;
-        #endregion
+            double[] ArrTci = new double[1400];
 
-        CalTce:
-            //EMPIEZA LA RUTINA DEL CALCULO DE TCE 
-            //if (numPol == "0000000859")
-            //{
-            //    string mensajePoliza = "hola";
-            //}
-            Tasa = (tir / 100);
-            cr = 1;
-            for (i = 0; i <= nmax; i++)
-            {
-                if (i >= mescosto)
-                {
-                    fpagosRes[cr] = (Flupen[i + 1] * PenBase + Flucm[i + 1]) / Math.Pow((1 + Tasa), cr);
-                    vpte = vpte + ((Flupen[i + 1] * PenBase + Flucm[i + 1]) / Math.Pow((1 + Tasa), cr));
-                    vpte2 = vpte2 + (((Flupen[i + 1] * PenBase) + Flucm[i + 1]) / factual[cr]);
-                    cr = cr + 1;
-                }
-            }
-            //for (i = 0; i <= nmax; i++)
-            //    for (i = 0; i <= nmax; i++)
-            //    {
-            //        if (i < mescosto)
-            //        {
-            //            //
-            //        }
-            //        else
-            //        {
-            //            fpagosRes[cr] = (Flupen[i + 1] * PenBase + Flucm[i + 1]) / Math.Pow((1 + Tasa), cr);
-            //            vpte = vpte + ((Flupen[i + 1] * PenBase + Flucm[i + 1]) / Math.Pow((1 + Tasa), cr));
-            //            vpte2 = vpte2 + (((Flupen[i + 1] * PenBase) + Flucm[i + 1]) / factual[cr]);
-            //            cr = cr + 1;
-            //        }
-            //    }
-
-            difres = vpte - vpte2;
-            if (difres >= 0)
-            {
-                //if (numPol == "0000000859")
-                //{
-                //    string mensajePoliza = "hola";
-                //}
-                tir = tir + tinc;
-                if (tir > 100)
-                {
-                    msj = "Tasa TIR mayor o igual a 100%. ";
-                    res = false;
-                    return res;
-                }
-                vpte = 0;
-                vpte2 = 0;
-                goto CalTce;
-            }
-
-            tvmax = ((Math.Pow((1 + (tvmax / 100)), (double)Exp)) - 1);
-            //if (numPol == "0000000859")
-            //{
-            //    string mensajePoliza = "hola";
-            //}
-            tci = (tir / 100);
-            ptci = tci; //Se agregó esta línea para retornar en el parámetro este valor que se ha estado insertando en BD.
-            tce = amin1(tvmax, tci, tpr);
-            tce = ((Math.Pow((1 + tce), 12)) - 1) * 100;
+            #endregion
 
             if (Stock == "S")
             {
                 tce = prcTce;
             }
+            else
+            {
+                //CalTce:
+                //EMPIEZA LA RUTINA DEL CALCULO DE TCE 
+
+                Tasa = (tir / 100);
+                cr = 1;
+                for (i = 0; i <= nmax; i++)
+                {
+                    if (i >= mescosto)
+                    {
+                        fpagosRes[cr] = (Flupen[i + 1] * PenBase + Flucm[i + 1]) / Math.Pow((1 + Tasa), cr);
+                        vpte2 = vpte2 + (((Flupen[i + 1] * PenBase) + Flucm[i + 1]) / factual[cr]);
+                        cr = cr + 1;
+                    }
+                }
+                ArrTci[0] = vpte2;
+
+                cr = 0;
+                for (i = 0; i <= nmax; i++)
+                {
+                    if (i >= mescosto)
+                    {
+                        vpte = (Flupen[i + 1] * PenBase + Flucm[i + 1]); //((Flupen[i + 1] * PenBase + Flucm[i + 1]) / Math.Pow((1 + Tasa), cr));
+                        if (cr == 0)
+                        {
+                            ArrTci[cr] = vpte - vpte2;
+                        }
+                        else
+                        {
+                            ArrTci[cr] = vpte;
+                        }
+                        cr = cr + 1;
+                    }
+                }
+
+                //vpte es columna DS 
+                //vpte2 es columna DR7
+
+                double guess = 0.0025;
+                tci = Financial.IRR(ref ArrTci, guess);
+                //tci = Math.Pow(1 + tci, (double)Exp) - 1;
+                ptci = tci; //Se agregó esta línea para retornar en el parámetro este valor que se ha estado insertando en BD.
+                tvmax = ((Math.Pow((1 + (tvmax / 100)), (double)Exp)) - 1);
+                tce = amin1(tvmax, tci, tpr);
+                tce = ((Math.Pow((1 + tce), 12)) - 1) * 100;
+            }
             return res;
         }
 
+        public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string calfec)
+        {
+            var JSONString = new StringBuilder();
+            if (table.Rows.Count > 0)
+            {
+                JSONString.Append("[");
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    JSONString.Append("{");
+                    for (int j = 0; j < table.Columns.Count; j++)
+                    {
+                        if (j < table.Columns.Count - 1)
+                        {
+                            JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\",");
+                        }
+                        else if (j == table.Columns.Count - 1)
+                        {
+                            JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\"");
+                        }
+                    }
+                    if (i == table.Rows.Count - 1)
+                    {
+                        JSONString.Append("}");
+                    }
+                    else
+                    {
+                        JSONString.Append("},\n");
+                    }
+                }
+                JSONString.Append("]");
+            }
 
+            string path = @"D:\" + nombre +  "_" + calfec + ".json";
+            System.IO.File.WriteAllText(path, JSONString.ToString());
+
+            string time = DateTime.Now.ToString("h:mm:ss tt");
+
+            _log.Info("Se creo el Json:_" + nombre + "_fin:" +  time);
+
+            return "Se creo el Json";//JSONString.ToString();
+        }
+
+        //public string DataTableToJSONWithJavaScriptSerializer(DataTable table, string nombre, string calfec)
+        //{
+        //    JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+        //    List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
+        //    Dictionary<string, object> childRow;
+        //    foreach (DataRow row in table.Rows)
+        //    {
+        //        childRow = new Dictionary<string, object>();
+        //        foreach (DataColumn col in table.Columns)
+        //        {
+        //            childRow.Add(col.ColumnName, row[col]);
+        //        }
+        //        parentRow.Add(childRow);
+        //    }
+        //    return jsSerializer.Serialize(parentRow);
+        //}
+
+        //public string DataTableToJSONWithJSONNet(DataTable table)
+        //{
+        //    string JSONString = string.Empty;
+        //    JSONString = JSONConvert.SerializeObject(table);
+        //    return JSONString;
+        //}
     }
 }

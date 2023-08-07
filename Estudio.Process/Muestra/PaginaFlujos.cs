@@ -278,12 +278,12 @@ namespace Estudio.Process.Muestra
             try
             {
 
-                querysDelete += "DELETE PR_TTMP_FLUPOL1 \n" +
-                                "DELETE PR_TTMP_FLUPOL2 \n" +
-                                "DELETE PR_TTMP_FLUBEN1 \n" +
-                                "DELETE PR_TTMP_FLUBEN2 \n";
+                //querysDelete += "DELETE PR_TTMP_FLUPOL1 \n" +
+                //                "DELETE PR_TTMP_FLUPOL2 \n" +
+                //                "DELETE PR_TTMP_FLUBEN1 \n" +
+                //                "DELETE PR_TTMP_FLUBEN2 \n";
 
-                _ReservasRepository.EjecutaScripts_CalculoFlujos(querysDelete);
+                //_ReservasRepository.EjecutaScripts_CalculoFlujos(querysDelete);
                 _log.Info("Se realizo la eliminacion de tablas temporales " + querysDelete);
                 var resNueva = RActuarial.RutinaActFlujos(LisTabPolPar, LisTabBenPar, ListaMorDin, ListaVac, ListaTasPromPar, ListaCurvaTasas, FecCal, TicCam, conexion);
                 await Task.WhenAll(resNueva);
