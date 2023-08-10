@@ -18,6 +18,8 @@ using System.Text;
 using System.IO;
 using OfficeOpenXml.Style;
 using System.Drawing;
+using Newtonsoft.Json;
+using System.Web;
 
 namespace Estudio.Logic
 {
@@ -1110,11 +1112,8 @@ namespace Estudio.Logic
                 }
                 else
                 {
-                    fecha = DateTime.ParseExact(FecCal, "yyyyMMdd", CultureInfo.InvariantCulture);
-                    strFecha = fecha.AddDays(1).ToString("yyyyMMdd");
-                    //strFecha = fecha.ToString("yyyyMMdd");
-                    
-                    ListaFlu = _rutinaReservasRepository.ConsultaCargaFlujosPensiones("", FecCal.Substring(0, 4), Convert.ToInt32(FecCal.Substring(4, 2)), strFecha);
+
+                    ListaFlu = CargaREsultadosFlujos(FecCal); //_rutinaReservasRepository.ConsultaCargaFlujosPensiones("", FecCal.Substring(0, 4), Convert.ToInt32(FecCal.Substring(4, 2)), strFecha);
                     ListaFluAnt = _rutinaReservasRepository.ConsultaCargaFlujosPenAnt("");
                     LisTabPol = _rutinaReservasRepository.ConsultaPolizas("");
                     LisTabBen = _rutinaReservasRepository.ConsultaBen("");
@@ -1152,5 +1151,87 @@ namespace Estudio.Logic
         }
         #endregion
 
+        public static DataTable UseNewtonsoftJson(string sampleJson)
+        {
+            DataTable dataTable = new DataTable();
+            if (string.IsNullOrWhiteSpace(sampleJson))
+            {
+                return dataTable;
+            }
+
+            dataTable = JsonConvert.DeserializeObject<DataTable>(sampleJson);
+
+            return dataTable;
+        }
+
+        public static List<beResultadosFlujos> CargaREsultadosFlujos(string FecCal)
+        {
+            List<beResultadosFlujos> fluRes = new List<beResultadosFlujos>();
+            DateTime fecha = DateTime.ParseExact(FecCal, "yyyyMMdd", CultureInfo.InvariantCulture);
+            string strFecha = fecha.AddDays(-1).ToString("yyyyMM");
+            string path = "";
+            List<beFluPol_Soles> ListFluPol_s = new List<beFluPol_Soles>();
+            List<beFluPol_dolares> ListFluPol_d = new List<beFluPol_dolares>();
+            List<beFluBen_soles> ListFluBen_s = new List<beFluBen_soles>();
+            List<beFluBen_dolares> ListFluBen_d = new List<beFluBen_dolares>();
+
+
+            //carga los Json de la carpeta FluPol Soles
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "FlujoPolizaSol.json");
+            using (StreamReader jsonStream = File.OpenText(path))
+            {
+                var json = jsonStream.ReadToEnd();
+                ListFluPol_s = JsonConvert.DeserializeObject<List<beFluPol_Soles>>(json);
+            }
+            //carga los Json de la carpeta FluPol Dolares
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "FlujoPolizaDol.json");
+            using (StreamReader jsonStream = File.OpenText(path))
+            {
+                var json = jsonStream.ReadToEnd();
+                ListFluPol_d = JsonConvert.DeserializeObject<List<beFluPol_dolares>>(json);
+            }
+
+            //carga los Json de la carpeta FluBen Soles
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "FlujoBenefiSol.json");
+            using (StreamReader jsonStream = File.OpenText(path))
+            {
+                var json = jsonStream.ReadToEnd();
+                ListFluBen_s = JsonConvert.DeserializeObject<List<beFluBen_soles>>(json);
+            }
+
+            //carga los Json de la carpeta FluBen Dolares
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "FlujoBenefiDol.json");
+            using (StreamReader jsonStream = File.OpenText(path))
+            {
+                var json = jsonStream.ReadToEnd();
+                ListFluBen_d = JsonConvert.DeserializeObject<List<beFluBen_dolares>>(json);
+            }
+
+
+            double tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
+
+            //     public string numPol { get; set; }
+            //public int numOrd { get; set; }
+            //public long numEdad { get; set; }
+            //public int numMes { get; set; }
+            //public double mtoPen { get; set; }
+            //public double prcFac { get; set; }
+            //public double GtoSep { get; set; }
+            //public double fluPen { get; set; }
+            //public double tasTce { get; set; }
+
+            //public string Tip { get; set; } //Variable para definir la tabla (Cartera)
+
+
+            //var joined = from Item1 in ListFluBen_s
+            //                                  select Item1;
+
+            //foreach (beResultadosFlujos cust in joined)
+            //{
+            //    cust.CreditLimit = 1000;
+            //}
+
+            return fluRes;
+        }
     }
 }

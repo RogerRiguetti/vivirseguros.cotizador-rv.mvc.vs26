@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Microsoft.VisualBasic;
 using System.Text; 
 using Newtonsoft.Json;
+using System.Web;
+using System.IO;
 
 namespace Estudio.Process
 {
@@ -50,10 +52,10 @@ namespace Estudio.Process
         public List<DataTable> ListModelFluTot2 = new List<DataTable>();
 
         //Querys para eliminar meses 0 en las tablas
-        string eliminaCeros = "DELETE FROM PR_TTMP_FLUPOL1 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0  \n " + 
-                              "DELETE FROM PR_TTMP_FLUPOL2 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0  \n" + 
-                              "DELETE FROM PR_TTMP_FLUBEN1 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0  \n" + 
-                              "DELETE FROM PR_TTMP_FLUBEN2 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0 ";
+        //string eliminaCeros = "DELETE FROM PR_TTMP_FLUPOL1 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0  \n " + 
+        //                      "DELETE FROM PR_TTMP_FLUPOL2 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0  \n" + 
+        //                      "DELETE FROM PR_TTMP_FLUBEN1 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0  \n" + 
+        //                      "DELETE FROM PR_TTMP_FLUBEN2 WHERE MTO_FLUTOT_METAN IS NULL AND MTO_FLUTOT = 0 AND NUM_MESFLU = 0 ";
         #endregion
 
         public async Task RutinaActFlujos(List<beDatosPol> ModelPol, List<beDatosBen> Modelben, List<beMortalidadDinVal> ModelMor, List<beTasaFacVac> ModelFacVac,
@@ -302,16 +304,19 @@ namespace Estudio.Process
 
                 try
                 {
-                    //if (ModelFluTot1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluTot1, "PR_TTMP_FLUPOL1", conexion); }
-                    //if (ModelFluTot2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluTot2, "PR_TTMP_FLUPOL2", conexion); }
-                    //if (ModelFluBen1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluBen1, "PR_TTMP_FLUBEN1", conexion); }
-                    //if (ModelFluBen2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(ModelFluBen2, "PR_TTMP_FLUBEN2", conexion); }
+                    DateTime fecha = DateTime.ParseExact(FecCal, "yyyyMMdd", CultureInfo.InvariantCulture);
+                    string strFecha = fecha.AddDays(-1).ToString("yyyyMM");
+                    string path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha);
+                    _log.Info("Elimina los archivos temporales");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
 
-                    
-                    if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FluPol1", FecCal); }
-                    if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FluPol2", FecCal); }
-                    if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FluBen1", FecCal); }
-                    if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FluBen2", FecCal); }
+                    if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", path); }
+                    if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", path); }
+                    if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", path); }
+                    if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", path); }
 
 
                 } 
@@ -320,7 +325,7 @@ namespace Estudio.Process
                     _log.Info("ERROR AL INSERTAR RESULTADOS DE FLUJOS DE RUTINA NUEVA: " + ex.Message);
                 }
 
-                _ReservasRepository.Ejecuta_Query_Conn(eliminaCeros, conexion);
+                //_ReservasRepository.Ejecuta_Query_Conn(eliminaCeros, conexion);
                 
 
             }
@@ -2411,7 +2416,7 @@ namespace Estudio.Process
             return res;
         }
 
-        public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string calfec)
+        public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
         {
             var JSONString = new StringBuilder();
             if (table.Rows.Count > 0)
@@ -2442,12 +2447,11 @@ namespace Estudio.Process
                 }
                 JSONString.Append("]");
             }
+            
+            string pathfile = ruta + "/" + nombre + ".json";
+            System.IO.File.WriteAllText(pathfile, JSONString.ToString());
 
-            string path = @"D:\" + nombre +  "_" + calfec + ".json";
-            System.IO.File.WriteAllText(path, JSONString.ToString());
-
-            string time = DateTime.Now.ToString("h:mm:ss tt");
-
+            string time = DateTime.Now.ToString("hmmss");
             _log.Info("Se creo el Json:_" + nombre + "_fin:" +  time);
 
             return "Se creo el Json";//JSONString.ToString();

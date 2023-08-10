@@ -297,163 +297,163 @@ namespace Estudio.Process.Muestra
                 _ReservasRepository.Ejecuta_Query_Conn(strDeleteTablas, strConexionSeguroRV);
                 #endregion
 
-                //Se limpian los DataTables para utilizarlos con el cálculo antigüo 
-                PR_TMAE_CALPOL1.Clear();
-                PR_TMAE_CALPOL2.Clear();
-                PR_TMAE_CALBEN1.Clear();
-                PR_TMAE_CALBEN2.Clear();
+                ////Se limpian los DataTables para utilizarlos con el cálculo antigüo 
+                //PR_TMAE_CALPOL1.Clear();
+                //PR_TMAE_CALPOL2.Clear();
+                //PR_TMAE_CALBEN1.Clear();
+                //PR_TMAE_CALBEN2.Clear();
 
-                //Se limpian las listas de DataTables para utilizarlos con el cálculo antigüo 
-                lstTablaCALPOL1.Clear();
-                lstTablaCALPOL2.Clear();
-                lstTablaCALBEN1.Clear();
-                lstTablaCALBEN2.Clear();
+                ////Se limpian las listas de DataTables para utilizarlos con el cálculo antigüo 
+                //lstTablaCALPOL1.Clear();
+                //lstTablaCALPOL2.Clear();
+                //lstTablaCALBEN1.Clear();
+                //lstTablaCALBEN2.Clear();
 
-                //_ReservasRepository.EjecutaScripts_CalculoFlujos(querysTot);
-                _log.Info("Se han actualizado los datos del cálculo nuevo correctamente.");
+                ////_ReservasRepository.EjecutaScripts_CalculoFlujos(querysTot);
+                //_log.Info("Se han actualizado los datos del cálculo nuevo correctamente.");
 
-                //await Task.WhenAll(tareasCalRes);
-                //INICIA CÁLCULO DE RESERVA PARA FLUJOS ANTIGÜOS
-                int limitPol = ListaPolPar.Count > 287 ? 287 : ListaPolPar.Count();
-                for (var i = 0; i < limitPol; i++)
-                {
-                    Tip = "";
+                ////await Task.WhenAll(tareasCalRes);
+                ////INICIA CÁLCULO DE RESERVA PARA FLUJOS ANTIGÜOS
+                //int limitPol = ListaPolPar.Count > 287 ? 287 : ListaPolPar.Count();
+                //for (var i = 0; i < limitPol; i++)
+                //{
+                //    Tip = "";
 
-                    LisTabPolMatPar = (from pol in ListaPolPar where Convert.ToInt32(pol.NumPol) == Convert.ToInt32(ListaPolPar[i].NumPol) select pol).ToList();
-                    if (LisTabPolMatPar.Count == 1)
-                    {
-                        LisTabBenMatPar = (from ben in ListaBenPar where ListaPolPar[i].NumPol == ben.NumPol select ben).ToList();
-                        LisFlujosPenPar = (from flu in ListaFluParAnt where Convert.ToInt32(ListaPolPar[i].NumPol) == Convert.ToInt32(flu.numPol) select flu).ToList();
+                //    LisTabPolMatPar = (from pol in ListaPolPar where Convert.ToInt32(pol.NumPol) == Convert.ToInt32(ListaPolPar[i].NumPol) select pol).ToList();
+                //    if (LisTabPolMatPar.Count == 1)
+                //    {
+                //        LisTabBenMatPar = (from ben in ListaBenPar where ListaPolPar[i].NumPol == ben.NumPol select ben).ToList();
+                //        LisFlujosPenPar = (from flu in ListaFluParAnt where Convert.ToInt32(ListaPolPar[i].NumPol) == Convert.ToInt32(flu.numPol) select flu).ToList();
 
-                        switch (LisTabPolMatPar[0].Tip)
-                        {
-                            case "1":
-                                Tip = "1";
-                                break;
+                //        switch (LisTabPolMatPar[0].Tip)
+                //        {
+                //            case "1":
+                //                Tip = "1";
+                //                break;
 
-                            case "2":
-                                Tip = "2";
-                                break;
-                        }
+                //            case "2":
+                //                Tip = "2";
+                //                break;
+                //        }
 
-                        Console.WriteLine("Memory used before collection:       {0:N0}",
-                        GC.GetTotalMemory(false));
-                        if ((LisTabPolMatPar.Count != 0) && (LisTabBenMatPar.Count != 0))
-                        {
-                            var task = EjecutarCalculoReservas(LisFlujosPenPar, LisTabPolMatPar, LisTabBenMatPar, FecCal, TipCam, ValGS, Tip, "A");
-                            //querysTot += RActuarial.RutinaActResMat(LisFlujosPenPar, LisTabPolMatPar, LisTabBenMatPar, FecCal, TipCam, ValGS, Tip, "A");
-                            //_log.Info("Se procesó la Póliza: " + LisTabPolMatPar[0].NumPol);
-                            lstTareasCalculoReservas.Add(task);
-                        }
-                    }
-                }
+                //        Console.WriteLine("Memory used before collection:       {0:N0}",
+                //        GC.GetTotalMemory(false));
+                //        if ((LisTabPolMatPar.Count != 0) && (LisTabBenMatPar.Count != 0))
+                //        {
+                //            var task = EjecutarCalculoReservas(LisFlujosPenPar, LisTabPolMatPar, LisTabBenMatPar, FecCal, TipCam, ValGS, Tip, "A");
+                //            //querysTot += RActuarial.RutinaActResMat(LisFlujosPenPar, LisTabPolMatPar, LisTabBenMatPar, FecCal, TipCam, ValGS, Tip, "A");
+                //            //_log.Info("Se procesó la Póliza: " + LisTabPolMatPar[0].NumPol);
+                //            lstTareasCalculoReservas.Add(task);
+                //        }
+                //    }
+                //}
 
-                while (lstTareasCalculoReservas.Count > 0)
-                {
-                    Task firstFinishedTask = await Task.WhenAny(lstTareasCalculoReservas);
-                    lstTareasCalculoReservas.Remove(firstFinishedTask);
-                }
+                //while (lstTareasCalculoReservas.Count > 0)
+                //{
+                //    Task firstFinishedTask = await Task.WhenAny(lstTareasCalculoReservas);
+                //    lstTareasCalculoReservas.Remove(firstFinishedTask);
+                //}
                 
 
-                GC.Collect();
-                Console.WriteLine("Memory used after full collection:   {0:N0}",
-                                  GC.GetTotalMemory(true));
-                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-                GC.Collect(2, GCCollectionMode.Forced, true, true);
+                //GC.Collect();
+                //Console.WriteLine("Memory used after full collection:   {0:N0}",
+                //                  GC.GetTotalMemory(true));
+                //GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+                //GC.Collect(2, GCCollectionMode.Forced, true, true);
 
-                #region Llenado de tablas para actualización
-                foreach (var dt in lstTablaCALPOL1)
-                {
-                    foreach (DataRow item in dt.Rows)
-                    {
-                        DataRow row = PR_TMAE_CALPOL1.NewRow();
+                //#region Llenado de tablas para actualización
+                //foreach (var dt in lstTablaCALPOL1)
+                //{
+                //    foreach (DataRow item in dt.Rows)
+                //    {
+                //        DataRow row = PR_TMAE_CALPOL1.NewRow();
 
-                        row["NUM_POLIZA"] = item[0];
-                        row["COD_BASE"] = item[1];
-                        row["MTO_RESBAS"] = item[2];
-                        row["MTO_RESBASRET"] = item[3];
+                //        row["NUM_POLIZA"] = item[0];
+                //        row["COD_BASE"] = item[1];
+                //        row["MTO_RESBAS"] = item[2];
+                //        row["MTO_RESBASRET"] = item[3];
 
-                        PR_TMAE_CALPOL1.Rows.Add(row);
-                    }
-                }
+                //        PR_TMAE_CALPOL1.Rows.Add(row);
+                //    }
+                //}
 
-                foreach (var dt in lstTablaCALPOL2)
-                {
-                    foreach (DataRow item in dt.Rows)
-                    {
-                        DataRow row = PR_TMAE_CALPOL2.NewRow();
+                //foreach (var dt in lstTablaCALPOL2)
+                //{
+                //    foreach (DataRow item in dt.Rows)
+                //    {
+                //        DataRow row = PR_TMAE_CALPOL2.NewRow();
 
-                        row["NUM_POLIZA"] = item[0];
-                        row["COD_BASE"] = item[1];
-                        row["MTO_RESBAS"] = item[2];
-                        row["MTO_RESBASRET"] = item[3];
+                //        row["NUM_POLIZA"] = item[0];
+                //        row["COD_BASE"] = item[1];
+                //        row["MTO_RESBAS"] = item[2];
+                //        row["MTO_RESBASRET"] = item[3];
 
-                        PR_TMAE_CALPOL2.Rows.Add(row);
-                    }
-                }
+                //        PR_TMAE_CALPOL2.Rows.Add(row);
+                //    }
+                //}
 
-                foreach (var dt in lstTablaCALBEN1)
-                {
-                    foreach (DataRow item in dt.Rows)
-                    {
-                        DataRow row = PR_TMAE_CALBEN1.NewRow();
+                //foreach (var dt in lstTablaCALBEN1)
+                //{
+                //    foreach (DataRow item in dt.Rows)
+                //    {
+                //        DataRow row = PR_TMAE_CALBEN1.NewRow();
 
-                        row["NUM_POLIZA"] = item[0];
-                        row["COD_BASE"] = item[1];
-                        row["NUM_ORDEN"] = item[2];
-                        row["NUM_EDAD"] = item[3];
-                        row["MTO_CNUBAS"] = item[4];
-                        row["MTO_CNABAS"] = item[5];
-                        row["MTO_CNGBAS"] = item[6];
-                        row["MTO_CNTBAS"] = item[7];
+                //        row["NUM_POLIZA"] = item[0];
+                //        row["COD_BASE"] = item[1];
+                //        row["NUM_ORDEN"] = item[2];
+                //        row["NUM_EDAD"] = item[3];
+                //        row["MTO_CNUBAS"] = item[4];
+                //        row["MTO_CNABAS"] = item[5];
+                //        row["MTO_CNGBAS"] = item[6];
+                //        row["MTO_CNTBAS"] = item[7];
 
-                        PR_TMAE_CALBEN1.Rows.Add(row);
-                    }
-                }
+                //        PR_TMAE_CALBEN1.Rows.Add(row);
+                //    }
+                //}
 
-                foreach (var dt in lstTablaCALBEN2)
-                {
-                    foreach (DataRow item in dt.Rows)
-                    {
-                        DataRow row = PR_TMAE_CALBEN2.NewRow();
+                //foreach (var dt in lstTablaCALBEN2)
+                //{
+                //    foreach (DataRow item in dt.Rows)
+                //    {
+                //        DataRow row = PR_TMAE_CALBEN2.NewRow();
 
-                        row["NUM_POLIZA"] = item[0];
-                        row["COD_BASE"] = item[1];
-                        row["NUM_ORDEN"] = item[2];
-                        row["NUM_EDAD"] = item[3];
-                        row["MTO_CNUBAS"] = item[4];
-                        row["MTO_CNABAS"] = item[5];
-                        row["MTO_CNGBAS"] = item[6];
-                        row["MTO_CNTBAS"] = item[7];
+                //        row["NUM_POLIZA"] = item[0];
+                //        row["COD_BASE"] = item[1];
+                //        row["NUM_ORDEN"] = item[2];
+                //        row["NUM_EDAD"] = item[3];
+                //        row["MTO_CNUBAS"] = item[4];
+                //        row["MTO_CNABAS"] = item[5];
+                //        row["MTO_CNGBAS"] = item[6];
+                //        row["MTO_CNTBAS"] = item[7];
 
-                        PR_TMAE_CALBEN2.Rows.Add(row);
-                    }
-                }
-                #endregion
+                //        PR_TMAE_CALBEN2.Rows.Add(row);
+                //    }
+                //}
+                //#endregion
 
-                _log.Info("Se actualizarán los datos en BD. Por favor espere...");
-                #region Creación e inserción en temporales y actualización de datos en tablas de flujos.
-                //Lineas para crear las tablas en las cuales se guardará la información temporalmente.
-                _ReservasRepository.Ejecuta_Query_Conn(strTablasTemporales, strConexionSeguroRV);
+                //_log.Info("Se actualizarán los datos en BD. Por favor espere...");
+                //#region Creación e inserción en temporales y actualización de datos en tablas de flujos.
+                ////Lineas para crear las tablas en las cuales se guardará la información temporalmente.
+                //_ReservasRepository.Ejecuta_Query_Conn(strTablasTemporales, strConexionSeguroRV);
 
-                //Lineas para insertar la información en las tablas.
-                if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL1, "TBL_TEMP_CALPOL1", strConexionSeguroRV); }
-                if (PR_TMAE_CALPOL2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL2, "TBL_TEMP_CALPOL2", strConexionSeguroRV); }
-                if (PR_TMAE_CALBEN1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN1, "TBL_TEMP_CALBEN1", strConexionSeguroRV); }
-                if (PR_TMAE_CALBEN2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN2, "TBL_TEMP_CALBEN2", strConexionSeguroRV); }
+                ////Lineas para insertar la información en las tablas.
+                //if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL1, "TBL_TEMP_CALPOL1", strConexionSeguroRV); }
+                //if (PR_TMAE_CALPOL2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL2, "TBL_TEMP_CALPOL2", strConexionSeguroRV); }
+                //if (PR_TMAE_CALBEN1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN1, "TBL_TEMP_CALBEN1", strConexionSeguroRV); }
+                //if (PR_TMAE_CALBEN2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN2, "TBL_TEMP_CALBEN2", strConexionSeguroRV); }
 
-                //Lineas para realizar la actualización de los registros en cada tabla directamente en SeguroRV.
-                if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALPOL1Antigua, strConexionSeguroRV); }
-                if (PR_TMAE_CALPOL2.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALPOL2Antigua, strConexionSeguroRV); }
-                if (PR_TMAE_CALBEN1.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALBEN1Antigua, strConexionSeguroRV); }
-                if (PR_TMAE_CALBEN2.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALBEN2Antigua, strConexionSeguroRV); }
+                ////Lineas para realizar la actualización de los registros en cada tabla directamente en SeguroRV.
+                //if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALPOL1Antigua, strConexionSeguroRV); }
+                //if (PR_TMAE_CALPOL2.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALPOL2Antigua, strConexionSeguroRV); }
+                //if (PR_TMAE_CALBEN1.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALBEN1Antigua, strConexionSeguroRV); }
+                //if (PR_TMAE_CALBEN2.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALBEN2Antigua, strConexionSeguroRV); }
 
-                //Lineas para borrar las tablas temporales.
-                _ReservasRepository.Ejecuta_Query_Conn(strDeleteTablas, strConexionSeguroRV);
-                #endregion
+                ////Lineas para borrar las tablas temporales.
+                //_ReservasRepository.Ejecuta_Query_Conn(strDeleteTablas, strConexionSeguroRV);
+                //#endregion
 
-                //_ReservasRepository.EjecutaScripts_CalculoFlujos(querysTot);
-                _log.Info("Se han actualizado los datos correctamente.");
+                ////_ReservasRepository.EjecutaScripts_CalculoFlujos(querysTot);
+                //_log.Info("Se han actualizado los datos correctamente.");
 
 
                 return "Reserva Base Matemática con éxito.";

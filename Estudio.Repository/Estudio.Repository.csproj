@@ -75,6 +75,10 @@
     <Compile Include="Core\Domain\beDatosModalidad.cs" />
     <Compile Include="Core\Domain\beDatosPol.cs" />
     <Compile Include="Core\Domain\beDatosTasasPar.cs" />
+    <Compile Include="Core\Domain\beFluBen_dolares.cs" />
+    <Compile Include="Core\Domain\beFluBen_soles.cs" />
+    <Compile Include="Core\Domain\beFluPol_dolares.cs" />
+    <Compile Include="Core\Domain\beFluPol_Soles.cs" />
     <Compile Include="Core\Domain\beMortalidad.cs" />
     <Compile Include="Core\Domain\beMortalidadDet.cs" />
     <Compile Include="Core\Domain\beMortalidadDin.cs" />
