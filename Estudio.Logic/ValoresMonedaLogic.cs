@@ -84,14 +84,14 @@ namespace Estudio.Logic
         }
 
         
-        public Response GrabarValorVM(string vlMoneda, string fecVM, decimal valorM, bool bandera)
+        public Response GrabarValorVM(string vlMoneda, string fecVM, decimal valorM, bool bandera, string usuario)
         {
             try
             {
                 Response res = new Response();
                 if (bandera)
                 {
-                    res.Object = _ValoresMonedaRepository.InsertValorVM(vlMoneda, fecVM, valorM);
+                    res.Object = _ValoresMonedaRepository.InsertValorVM(vlMoneda, fecVM, valorM, usuario);
                     if (res.Object == null)
                     {
                         List<ValoresMoneda> lista = new List<ValoresMoneda>();
@@ -110,7 +110,7 @@ namespace Estudio.Logic
                 }
                 else
                 {
-                    res.Object = _ValoresMonedaRepository.SaveValorVM(vlMoneda, fecVM, valorM);
+                    res.Object = _ValoresMonedaRepository.SaveValorVM(vlMoneda, fecVM, valorM, usuario);
                     if (res.Object == null)
                     {
                         List<ValoresMoneda> lista = new List<ValoresMoneda>();

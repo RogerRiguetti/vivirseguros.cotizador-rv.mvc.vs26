@@ -64,7 +64,8 @@ namespace Estudio.Controllers.Controllers.Oficiales
         {
             try
             {
-                var resultado = _ValoresMonedaLogic.GrabarValorVM(vlMoneda, fechaVM.ToString("yyyyMMdd"), valorM, bandera);
+                string usuario = Convert.ToString(this.Session["Account"]);
+                var resultado = _ValoresMonedaLogic.GrabarValorVM(vlMoneda, fechaVM.ToString("yyyyMMdd"), valorM, bandera, usuario);
 
                 return Json(resultado, JsonRequestBehavior.AllowGet);
             }

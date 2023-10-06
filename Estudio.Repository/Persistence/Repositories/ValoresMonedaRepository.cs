@@ -80,7 +80,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="fecVM">Fecha del registro a modificar</param>
         /// <param name="valorM">Valor de la moneda a modificar</param>
         /// <returns></returns>
-        public ValoresMoneda SaveValorVM(string vlMoneda, string fecVM, decimal valorM)
+        public ValoresMoneda SaveValorVM(string vlMoneda, string fecVM, decimal valorM, string usuario)
         {
             try
             {
@@ -89,6 +89,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pTipoMoneda", SqlDbType.VarChar, vlMoneda, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pValorVM", SqlDbType.Decimal, valorM, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pFechaVM", SqlDbType.VarChar, fecVM, ParameterDirection.Input));
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pUsuario", SqlDbType.VarChar, usuario, ParameterDirection.Input));
 
                 return VCEDBContext<ValoresMoneda>.CallStoreProcedure(StoredProcedures.CO_ValoresMoneda, parameters, x => new ValoresMoneda
                 {
@@ -113,7 +114,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="fecVM">Fecha del registro seleccionado</param>
         /// <param name="valorM">Valor de moneda</param>
         /// <returns></returns>
-        public ValoresMoneda InsertValorVM(string vlMoneda, string fecVM, decimal valorM)
+        public ValoresMoneda InsertValorVM(string vlMoneda, string fecVM, decimal valorM, string usuario)
         {
             try
             {
@@ -122,6 +123,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pTipoMoneda", SqlDbType.VarChar, vlMoneda, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pValorVM", SqlDbType.Decimal, valorM, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pFechaVM", SqlDbType.VarChar, fecVM, ParameterDirection.Input));
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pUsuario", SqlDbType.VarChar, usuario, ParameterDirection.Input));
 
                 return VCEDBContext<ValoresMoneda>.CallStoreProcedure(StoredProcedures.CO_ValoresMoneda, parameters, x => new ValoresMoneda
                 {
