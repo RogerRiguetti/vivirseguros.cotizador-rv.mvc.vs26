@@ -85,7 +85,8 @@ namespace Estudio.Controllers.Controllers.Oficiales
         {
             try
             {
-                var resultado = _ValoresMonedaMensualLogic.GrabarValoresMoneda(vlMoneda, cod_tipmon, fec_moneda, valor, bandera);
+                string usuario = Convert.ToString(this.Session["Account"]);
+                var resultado = _ValoresMonedaMensualLogic.GrabarValoresMoneda(vlMoneda, cod_tipmon, fec_moneda, valor, bandera, usuario);
 
                 return Json(resultado, JsonRequestBehavior.AllowGet);
             }

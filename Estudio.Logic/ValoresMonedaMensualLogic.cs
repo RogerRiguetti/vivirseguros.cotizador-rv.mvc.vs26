@@ -165,7 +165,7 @@ namespace Estudio.Logic
         /// <param name="valor">valore del periodo</param>
         /// <param name="bandera">bandera para actualizar o guardar</param>
         /// <returns>retorna el resultado de guardar o actualizar</returns>
-        public Response GrabarValoresMoneda(string vlMoneda, string cod_tipmon, DateTime fec_moneda, decimal valor, bool bandera)
+        public Response GrabarValoresMoneda(string vlMoneda, string cod_tipmon, DateTime fec_moneda, decimal valor, bool bandera, string usuario)
         {
             try
             {
@@ -174,7 +174,7 @@ namespace Estudio.Logic
                 if (bandera)
                 {
 
-                    res.Object = _ValoresMonedaMensualRepository.GrabarValoresMoneda(vlMoneda, cod_tipmon, fec_moneda.ToString("yyyyMM"), valor, "GRABAR");
+                    res.Object = _ValoresMonedaMensualRepository.GrabarValoresMoneda(vlMoneda, cod_tipmon, fec_moneda.ToString("yyyyMM"), valor, "GRABAR", usuario);
                     if (res.Object == null)
                     {
                         info = new MonedaMensual();
@@ -190,7 +190,7 @@ namespace Estudio.Logic
                     }
                 }
                 else {
-                    res.Object = _ValoresMonedaMensualRepository.GrabarValoresMoneda(vlMoneda, cod_tipmon, fec_moneda.ToString("yyyyMM"), valor, "MODIFICAR");
+                    res.Object = _ValoresMonedaMensualRepository.GrabarValoresMoneda(vlMoneda, cod_tipmon, fec_moneda.ToString("yyyyMM"), valor, "MODIFICAR", usuario);
                     if (res.Object == null)
                     {
                         info = new MonedaMensual();
