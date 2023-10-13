@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Estudio.Process;
+using Estudio.Process.Muestra;
 using Estudio.Repository.Core.Domain;
 using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
-using Estudio.Process.Muestra;
 using log4net;
-using System.Reflection;
 using log4net.Config;
-using System.Data;
-using Estudio.Process;
-using System.Globalization;
-using OfficeOpenXml;
-using System.Threading;
-using System.Text;
-using System.IO;
-using OfficeOpenXml.Style;
-using System.Drawing;
 using Newtonsoft.Json;
-using System.Web;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Estudio.Logic
 {
@@ -266,10 +267,10 @@ namespace Estudio.Logic
                 {
                     GeneracionExcelReservas_FlujosTotCarteraHoja1(row[3].ToString(), "Flupol " + contador.ToString());
                     File.Delete(row[0].ToString());
-                    RutasArchivosDescarga.Add(row[3].ToString()+".xlsx");
+                    RutasArchivosDescarga.Add(row[3].ToString() + ".xlsx");
                     contador++;
                 }
-                
+
                 if (_logicFlujosTot != null) { _log.Info("Se consultó la información correctamente."); };
                 return RutasArchivosDescarga;
             }
@@ -885,7 +886,7 @@ namespace Estudio.Logic
                 return false;
             }
         }
-        
+
         #endregion
         #endregion
 
@@ -1185,87 +1186,192 @@ namespace Estudio.Logic
             //****************************************************************
             //carga los Json de la carpeta FluPol Soles
             path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoPolizaSol.json");
-            using (StreamReader jsonStream = File.OpenText(path))
+            if (File.Exists(path))
             {
-                var json = jsonStream.ReadToEnd();
-                ListFluPol_s = JsonConvert.DeserializeObject<List<beFluPol_Soles>>(json);
+                using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
+                {
+                    var serializer = new JsonSerializer();
+
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonToken.StartObject)
+                        {
+                            JObject obj = JObject.Load(reader);
+                            beFluPol_Soles fluPolSol = obj.ToObject<beFluPol_Soles>();
+                            ListFluPol_s.Add(fluPolSol);
+                        }
+                    }
+                }
             }
             //carga los Json de la carpeta FluPol Dolares
             path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoPolizaDol.json");
-            using (StreamReader jsonStream = File.OpenText(path))
+            if (File.Exists(path))
             {
-                var json = jsonStream.ReadToEnd();
-                ListFluPol_d = JsonConvert.DeserializeObject<List<beFluPol_dolares>>(json);
+                using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
+                {
+                    var serializer = new JsonSerializer();
+
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonToken.StartObject)
+                        {
+                            JObject obj = JObject.Load(reader);
+                            beFluPol_dolares fluPolDol = obj.ToObject<beFluPol_dolares>();
+                            ListFluPol_d.Add(fluPolDol);
+                        }
+                    }
+                }
             }
 
             //carga los Json de la carpeta FluBen Soles
             path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoBenefiSol.json");
-            using (StreamReader jsonStream = File.OpenText(path))
+            if (File.Exists(path))
             {
-                var json = jsonStream.ReadToEnd();
-                ListFluBen_s = JsonConvert.DeserializeObject<List<beFluBen_soles>>(json);
+                using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
+                {
+                    var serializer = new JsonSerializer();
+
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonToken.StartObject)
+                        {
+                            JObject obj = JObject.Load(reader);
+                            beFluBen_soles fluBenSol = obj.ToObject<beFluBen_soles>();
+                            ListFluBen_s.Add(fluBenSol);
+                        }
+                    }
+                }
             }
 
             //carga los Json de la carpeta FluBen Dolares
             path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoBenefiDol.json");
-            using (StreamReader jsonStream = File.OpenText(path))
+            if (File.Exists(path))
             {
-                var json = jsonStream.ReadToEnd();
-                ListFluBen_d = JsonConvert.DeserializeObject<List<beFluBen_dolares>>(json);
+                using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
+                {
+                    var serializer = new JsonSerializer();
+
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonToken.StartObject)
+                        {
+                            JObject obj = JObject.Load(reader);
+                            beFluBen_dolares fluBenDol = obj.ToObject<beFluBen_dolares>();
+                            ListFluBen_d.Add(fluBenDol);
+                        }
+                    }
+                }
             }
             #endregion
             #region Proceso Flujos en Soles
             //****************************************************************
             //******************FLUJOS SOLES************************
             //****************************************************************
-            var joined = from Item1 in ListFluBen_s
-                         select Item1;
+            //var joined = from Item1 in ListFluBen_s
+            //             select Item1;
 
-            foreach (beFluBen_soles atrib in joined)
+            //foreach (beFluBen_soles atrib in joined)
+            //{
+            //    numpol = atrib.numPol;
+            //    tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
+
+            //    beResultadosFlujos filaRS = new beResultadosFlujos
+            //    {
+            //        numPol = atrib.numPol,
+            //        numOrd = atrib.numOrd,
+            //        numEdad = atrib.numEda,
+            //        numMes = atrib.mesFlu,
+            //        mtoPen = atrib.mtoPen,
+            //        prcFac = atrib.fluPen,
+            //        GtoSep = atrib.fluSep,
+            //        fluPen = atrib.fluTot,
+            //        tasTce = tce
+            //    };
+            //    fluRes.Add(filaRS);
+            //}
+
+
+            // Crear un Lookup para indexar ListFluPol_s por numPol
+            var fluPolLookup = ListFluPol_s.ToLookup(x => x.numPol, x => x.tasTce);
+
+            //var joined = from Item1 in ListFluBen_s
+            //             select Item1;
+
+
+            foreach (beFluBen_soles atrib in ListFluBen_s)
             {
                 numpol = atrib.numPol;
-                tce = ListFluPol_s.Where(x=>x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
 
-                beResultadosFlujos filaRS = new beResultadosFlujos
+                if (fluPolLookup.Contains(numpol))
                 {
-                    numPol = atrib.numPol,
-                    numOrd = atrib.numOrd,
-                    numEdad = atrib.numEda,
-                    numMes = atrib.mesFlu,
-                    mtoPen = atrib.mtoPen,
-                    prcFac = atrib.fluPen,
-                    GtoSep = atrib.fluSep,
-                    fluPen = atrib.fluTot,
-                    tasTce = tce
-                };
-                fluRes.Add(filaRS);
+                    tce = fluPolLookup[numpol].FirstOrDefault();
+
+                    beResultadosFlujos filaRS = new beResultadosFlujos
+                    {
+                        numPol = atrib.numPol,
+                        numOrd = atrib.numOrd,
+                        numEdad = atrib.numEda,
+                        numMes = atrib.mesFlu,
+                        mtoPen = atrib.mtoPen,
+                        prcFac = atrib.fluPen,
+                        GtoSep = atrib.fluSep,
+                        fluPen = atrib.fluTot,
+                        tasTce = tce
+                    };
+                    fluRes.Add(filaRS);
+                }
             }
+
             #endregion
             #region Procesa Flujos en Dolares
             //****************************************************************
             //******************FLUJOS SOLES************************
             //****************************************************************
-            tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
-            var joined2 = from Item1 in ListFluBen_d
-                          select Item1;
+            //tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
+            //var joined2 = from Item1 in ListFluBen_d
+            //              select Item1;
 
-            foreach (beFluBen_dolares atrib in joined2)
+            //foreach (beFluBen_dolares atrib in joined2)
+            //{
+            //    numpol = atrib.numPol;
+            //    tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
+            //    beResultadosFlujos filaRD = new beResultadosFlujos
+            //    {
+            //        numPol = atrib.numPol,
+            //        numOrd = atrib.numOrd,
+            //        numEdad = atrib.numEda,
+            //        numMes = atrib.mesFlu,
+            //        mtoPen = atrib.mtoPen,
+            //        prcFac = atrib.fluPen,
+            //        GtoSep = atrib.fluSep,
+            //        fluPen = atrib.fluTot,
+            //        tasTce = tce
+            //    };
+            //    fluRes.Add(filaRD);
+            //}
+
+            foreach (beFluBen_dolares atrib in ListFluBen_d)
             {
                 numpol = atrib.numPol;
-                tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
-                beResultadosFlujos filaRD = new beResultadosFlujos
+
+                if (fluPolLookup.Contains(numpol))
                 {
-                    numPol = atrib.numPol,
-                    numOrd = atrib.numOrd,
-                    numEdad = atrib.numEda,
-                    numMes = atrib.mesFlu,
-                    mtoPen = atrib.mtoPen,
-                    prcFac = atrib.fluPen,
-                    GtoSep = atrib.fluSep,
-                    fluPen = atrib.fluTot,
-                    tasTce = tce
-                };
-                fluRes.Add(filaRD);
+                    tce = fluPolLookup[numpol].FirstOrDefault();
+
+                    beResultadosFlujos filaRD = new beResultadosFlujos
+                    {
+                        numPol = atrib.numPol,
+                        numOrd = atrib.numOrd,
+                        numEdad = atrib.numEda,
+                        numMes = atrib.mesFlu,
+                        mtoPen = atrib.mtoPen,
+                        prcFac = atrib.fluPen,
+                        GtoSep = atrib.fluSep,
+                        fluPen = atrib.fluTot,
+                        tasTce = tce
+                    };
+                    fluRes.Add(filaRD);
+                }
             }
             #endregion
 
