@@ -294,10 +294,10 @@ namespace Estudio.Process.Muestra
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
                 GC.Collect(2, GCCollectionMode.Forced, true, true);
                 
-                var resAnt = await RAactuarialNoSbs.RutinaActFlujosNoSbs(LisTabPolPar, LisTabBenPar, ListaMor, ListaVac, FecCal, TicCam, conexion);
+                //var resAnt = await RAactuarialNoSbs.RutinaActFlujosNoSbs(LisTabPolPar, LisTabBenPar, ListaMor, ListaVac, FecCal, TicCam, conexion);
                 
 
-                return resAnt;
+                return "";
 
             }
             catch (Exception ex)
