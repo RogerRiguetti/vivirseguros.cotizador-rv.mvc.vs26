@@ -15,6 +15,10 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Web;
 using System.IO;
+using System.Data;
+using System.IO;
+using Newtonsoft.Json;
+
 
 namespace Estudio.Process
 {
@@ -2468,45 +2472,78 @@ namespace Estudio.Process
             return res;
         }
 
-        public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
-        {
-            var JSONString = new StringBuilder();
-            if (table.Rows.Count > 0)
-            {
-                JSONString.Append("[");
-                for (int i = 0; i < table.Rows.Count; i++)
-                {
-                    JSONString.Append("{");
-                    for (int j = 0; j < table.Columns.Count; j++)
-                    {
-                        if (j < table.Columns.Count - 1)
-                        {
-                            JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\",");
-                        }
-                        else if (j == table.Columns.Count - 1)
-                        {
-                            JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\"");
-                        }
-                    }
-                    if (i == table.Rows.Count - 1)
-                    {
-                        JSONString.Append("}");
-                    }
-                    else
-                    {
-                        JSONString.Append("},\n");
-                    }
-                }
-                JSONString.Append("]");
-            }
+        //public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
+        //{
+        //    var JSONString = new StringBuilder();
+        //    if (table.Rows.Count > 0)
+        //    {
+        //        JSONString.Append("[");
+        //        for (int i = 0; i < table.Rows.Count; i++)
+        //        {
+        //            JSONString.Append("{");
+        //            for (int j = 0; j < table.Columns.Count; j++)
+        //            {
+        //                if (j < table.Columns.Count - 1)
+        //                {
+        //                    JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\",");
+        //                }
+        //                else if (j == table.Columns.Count - 1)
+        //                {
+        //                    JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + "\":" + "\"" + table.Rows[i][j].ToString() + "\"");
+        //                }
+        //            }
+        //            if (i == table.Rows.Count - 1)
+        //            {
+        //                JSONString.Append("}");
+        //            }
+        //            else
+        //            {
+        //                JSONString.Append("},\n");
+        //            }
+        //        }
+        //        JSONString.Append("]");
+        //    }
             
-            string pathfile = ruta + "/" + nombre + ".json";
-            System.IO.File.WriteAllText(pathfile, JSONString.ToString());
+        //    string pathfile = ruta + "/" + nombre + ".json";
+        //    System.IO.File.WriteAllText(pathfile, JSONString.ToString());
+
+        //    string time = DateTime.Now.ToString("hmmss");
+        //    _log.Info("Se creo el Json:_" + nombre + "_fin:" +  time);
+
+        //    return "Se creo el Json";//JSONString.ToString();
+        //}
+
+
+
+        public void DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
+        {
+            string pathfile = Path.Combine(ruta, $"{nombre}.json");
+
+            using (StreamWriter streamWriter = new StreamWriter(pathfile))
+            using (JsonTextWriter jsonWriter = new JsonTextWriter(streamWriter))
+            {
+                jsonWriter.Formatting = Formatting.Indented;
+
+                jsonWriter.WriteStartArray();
+
+                foreach (DataRow row in table.Rows)
+                {
+                    jsonWriter.WriteStartObject();
+
+                    foreach (DataColumn column in table.Columns)
+                    {
+                        jsonWriter.WritePropertyName(column.ColumnName);
+                        jsonWriter.WriteValue(row[column].ToString());
+                    }
+
+                    jsonWriter.WriteEndObject();
+                }
+
+                jsonWriter.WriteEndArray();
+            }
 
             string time = DateTime.Now.ToString("hmmss");
-            _log.Info("Se creo el Json:_" + nombre + "_fin:" +  time);
-
-            return "Se creo el Json";//JSONString.ToString();
+            _log.Info($"Se creó el archivo JSON: {nombre}_fin:{time}");
         }
 
         //public string DataTableToJSONWithJavaScriptSerializer(DataTable table, string nombre, string calfec)
