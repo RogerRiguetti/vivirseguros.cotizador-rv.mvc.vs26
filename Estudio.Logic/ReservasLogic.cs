@@ -1267,114 +1267,113 @@ namespace Estudio.Logic
             //****************************************************************
             //******************FLUJOS SOLES************************
             //****************************************************************
-            //var joined = from Item1 in ListFluBen_s
-            //             select Item1;
+            var joined = from Item1 in ListFluBen_s
+                         select Item1;
 
-            //foreach (beFluBen_soles atrib in joined)
-            //{
-            //    numpol = atrib.numPol;
-            //    tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
+            foreach (beFluBen_soles atrib in joined)
+            {
+                numpol = atrib.numPol;
+                tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
 
-            //    beResultadosFlujos filaRS = new beResultadosFlujos
-            //    {
-            //        numPol = atrib.numPol,
-            //        numOrd = atrib.numOrd,
-            //        numEdad = atrib.numEda,
-            //        numMes = atrib.mesFlu,
-            //        mtoPen = atrib.mtoPen,
-            //        prcFac = atrib.fluPen,
-            //        GtoSep = atrib.fluSep,
-            //        fluPen = atrib.fluTot,
-            //        tasTce = tce
-            //    };
-            //    fluRes.Add(filaRS);
-            //}
+                beResultadosFlujos filaRS = new beResultadosFlujos
+                {
+                    numPol = atrib.numPol,
+                    numOrd = atrib.numOrd,
+                    numEdad = atrib.numEda,
+                    numMes = atrib.mesFlu,
+                    mtoPen = atrib.mtoPen,
+                    prcFac = atrib.fluPen,
+                    GtoSep = atrib.fluSep,
+                    fluPen = atrib.fluTot,
+                    tasTce = tce
+                };
+                fluRes.Add(filaRS);
+            }
 
 
             // Crear un Lookup para indexar ListFluPol_s por numPol
-            var fluPolLookup = ListFluPol_s.ToLookup(x => x.numPol, x => x.tasTce);
+            //var fluPolLookup = ListFluPol_s.ToLookup(x => x.numPol, x => x.tasTce);
 
-            //var joined = from Item1 in ListFluBen_s
-            //             select Item1;
+            ////var joined = from Item1 in ListFluBen_s
+            ////             select Item1;
 
 
-            foreach (beFluBen_soles atrib in ListFluBen_s)
-            {
-                numpol = atrib.numPol;
+            //foreach (beFluBen_soles atrib in ListFluBen_s)
+            //{
+            //    numpol = atrib.numPol;
 
-                if (fluPolLookup.Contains(numpol))
-                {
-                    tce = fluPolLookup[numpol].FirstOrDefault();
+            //    if (fluPolLookup.Contains(numpol))
+            //    {
+            //        tce = fluPolLookup[numpol].FirstOrDefault();
 
-                    beResultadosFlujos filaRS = new beResultadosFlujos
-                    {
-                        numPol = atrib.numPol,
-                        numOrd = atrib.numOrd,
-                        numEdad = atrib.numEda,
-                        numMes = atrib.mesFlu,
-                        mtoPen = atrib.mtoPen,
-                        prcFac = atrib.fluPen,
-                        GtoSep = atrib.fluSep,
-                        fluPen = atrib.fluTot,
-                        tasTce = tce
-                    };
-                    fluRes.Add(filaRS);
-                }
-            }
+            //        beResultadosFlujos filaRS = new beResultadosFlujos
+            //        {
+            //            numPol = atrib.numPol,
+            //            numOrd = atrib.numOrd,
+            //            numEdad = atrib.numEda,
+            //            numMes = atrib.mesFlu,
+            //            mtoPen = atrib.mtoPen,
+            //            prcFac = atrib.fluPen,
+            //            GtoSep = atrib.fluSep,
+            //            fluPen = atrib.fluTot,
+            //            tasTce = tce
+            //        };
+            //        fluRes.Add(filaRS);
+            //    }
+            //}
 
             #endregion
             #region Procesa Flujos en Dolares
             //****************************************************************
             //******************FLUJOS SOLES************************
             //****************************************************************
-            //tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
-            //var joined2 = from Item1 in ListFluBen_d
-            //              select Item1;
+            tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
+            var joined2 = from Item1 in ListFluBen_d
+                          select Item1;
 
-            //foreach (beFluBen_dolares atrib in joined2)
-            //{
-            //    numpol = atrib.numPol;
-            //    tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
-            //    beResultadosFlujos filaRD = new beResultadosFlujos
-            //    {
-            //        numPol = atrib.numPol,
-            //        numOrd = atrib.numOrd,
-            //        numEdad = atrib.numEda,
-            //        numMes = atrib.mesFlu,
-            //        mtoPen = atrib.mtoPen,
-            //        prcFac = atrib.fluPen,
-            //        GtoSep = atrib.fluSep,
-            //        fluPen = atrib.fluTot,
-            //        tasTce = tce
-            //    };
-            //    fluRes.Add(filaRD);
-            //}
-
-            foreach (beFluBen_dolares atrib in ListFluBen_d)
+            foreach (beFluBen_dolares atrib in joined2)
             {
                 numpol = atrib.numPol;
-
-                if (fluPolLookup.Contains(numpol))
+                tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
+                beResultadosFlujos filaRD = new beResultadosFlujos
                 {
-                    tce = fluPolLookup[numpol].FirstOrDefault();
-
-                    beResultadosFlujos filaRD = new beResultadosFlujos
-                    {
-                        numPol = atrib.numPol,
-                        numOrd = atrib.numOrd,
-                        numEdad = atrib.numEda,
-                        numMes = atrib.mesFlu,
-                        mtoPen = atrib.mtoPen,
-                        prcFac = atrib.fluPen,
-                        GtoSep = atrib.fluSep,
-                        fluPen = atrib.fluTot,
-                        tasTce = tce
-                    };
-                    fluRes.Add(filaRD);
-                }
+                    numPol = atrib.numPol,
+                    numOrd = atrib.numOrd,
+                    numEdad = atrib.numEda,
+                    numMes = atrib.mesFlu,
+                    mtoPen = atrib.mtoPen,
+                    prcFac = atrib.fluPen,
+                    GtoSep = atrib.fluSep,
+                    fluPen = atrib.fluTot,
+                    tasTce = tce
+                };
+                fluRes.Add(filaRD);
             }
-            #endregion
 
+            //foreach (beFluBen_dolares atrib in ListFluBen_d)
+            //{
+            //    numpol = atrib.numPol;
+
+            //    if (fluPolLookup.Contains(numpol))
+            //    {
+            //        tce = fluPolLookup[numpol].FirstOrDefault();
+
+            //        beResultadosFlujos filaRD = new beResultadosFlujos
+            //        {
+            //            numPol = atrib.numPol,
+            //            numOrd = atrib.numOrd,
+            //            numEdad = atrib.numEda,
+            //            numMes = atrib.mesFlu,
+            //            mtoPen = atrib.mtoPen,
+            //            prcFac = atrib.fluPen,
+            //            GtoSep = atrib.fluSep,
+            //            fluPen = atrib.fluTot,
+            //            tasTce = tce
+            //        };
+            //        fluRes.Add(filaRD);
+            //    }
+            //}
+            #endregion
             return fluRes;
         }
     }
