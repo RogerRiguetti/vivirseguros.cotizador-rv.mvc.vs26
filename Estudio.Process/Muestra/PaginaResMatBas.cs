@@ -32,7 +32,8 @@ namespace Estudio.Process.Muestra
         public List<DataTable> lstTablaCALBEN2 = new List<DataTable>();
 
         #region Querys para actualización de datos
-        string strTablasTemporales = "CREATE TABLE TBL_TEMP_CALPOL1 (NUM_POLIZA VARCHAR(10) NULL, COD_BASE VARCHAR(1) NULL, MTO_RESBAS NUMERIC(18, 2) NULL, MTO_RESBASRET NUMERIC(18, 8) NULL) \n\n" +
+        string strTablasTemporales = 
+                                     "CREATE TABLE TBL_TEMP_CALPOL1 (NUM_POLIZA VARCHAR(10) NULL, COD_BASE VARCHAR(1) NULL, MTO_RESBAS NUMERIC(18, 2) NULL, MTO_RESBASRET NUMERIC(18, 8) NULL) \n\n" +
                                      "CREATE TABLE TBL_TEMP_CALPOL2 (NUM_POLIZA VARCHAR(10) NULL, COD_BASE VARCHAR(1) NULL, MTO_RESBAS NUMERIC(18, 2) NULL, MTO_RESBASRET NUMERIC(18, 8) NULL) \n\n" +
                                      "CREATE TABLE TBL_TEMP_CALBEN1 (NUM_POLIZA VARCHAR(10) NULL, COD_BASE VARCHAR(1) NULL, NUM_ORDEN INT NULL, NUM_EDAD INT NULL, MTO_CNUBAS NUMERIC(18, 2) NULL, MTO_CNABAS NUMERIC(18, 8) NULL, " +
                                      "MTO_CNGBAS NUMERIC(18, 8) NULL, MTO_CNTBAS NUMERIC(18, 8) NULL) \n\n" +
@@ -282,10 +283,10 @@ namespace Estudio.Process.Muestra
                 _ReservasRepository.Ejecuta_Query_Conn(strTablasTemporales, strConexionSeguroRV);
 
                 //Lineas para insertar la información en las tablas.
-                if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL1, "TBL_TEMP_CALPOL1", strConexionSeguroRV); }
-                if (PR_TMAE_CALPOL2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL2, "TBL_TEMP_CALPOL2", strConexionSeguroRV); }
-                if (PR_TMAE_CALBEN1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN1, "TBL_TEMP_CALBEN1", strConexionSeguroRV); }
-                if (PR_TMAE_CALBEN2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN2, "TBL_TEMP_CALBEN2", strConexionSeguroRV); }
+             if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL1, "TBL_TEMP_CALPOL1", strConexionSeguroRV); }
+              if (PR_TMAE_CALPOL2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALPOL2, "TBL_TEMP_CALPOL2", strConexionSeguroRV); }
+              if (PR_TMAE_CALBEN1.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN1, "TBL_TEMP_CALBEN1", strConexionSeguroRV); }
+              if (PR_TMAE_CALBEN2.Rows.Count != 0) { _ReservasRepository.BulkInsertFlujos(PR_TMAE_CALBEN2, "TBL_TEMP_CALBEN2", strConexionSeguroRV); }
 
                 //Lineas para realizar la actualización de los registros en cada tabla directamente en SeguroRV.
                 if (PR_TMAE_CALPOL1.Rows.Count != 0) { _ReservasRepository.Ejecuta_Query_Conn(strUpdateCALPOL1, strConexionSeguroRV); }
