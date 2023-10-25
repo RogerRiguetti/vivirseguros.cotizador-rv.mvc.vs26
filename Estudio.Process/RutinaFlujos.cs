@@ -20,6 +20,7 @@ using System.IO;
 using Newtonsoft.Json;
 
 
+
 namespace Estudio.Process
 {
     public class RutinaFlujos
@@ -364,13 +365,38 @@ namespace Estudio.Process
                         Directory.CreateDirectory(path);
                     }
 
-                    if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", path); }
-                    if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", path); }
-                    if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", path); }
-                    if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", path); }
+                    //if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", path); }
+                    //if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", path); }
+                    //if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", path); }
+                    //if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", path); }
+
+                    if (ModelFluTot1.Rows.Count != 0)
+                    {
+                        string jsonFlujoPolizaSol = DataTableToJSON(ModelFluTot1);
+                        File.WriteAllText(Path.Combine(path, "FlujoPolizaSol.json"), jsonFlujoPolizaSol);
+                    }
+
+                    if (ModelFluTot2.Rows.Count != 0)
+                    {
+                        string jsonFlujoPolizaDol = DataTableToJSON(ModelFluTot2);
+                        File.WriteAllText(Path.Combine(path, "FlujoPolizaDol.json"), jsonFlujoPolizaDol);
+                    }
+
+                    if (ModelFluBen1.Rows.Count != 0)
+                    {
+                        string jsonFlujoBenefiSol = DataTableToJSON(ModelFluBen1);
+                        File.WriteAllText(Path.Combine(path, "FlujoBenefiSol.json"), jsonFlujoBenefiSol);
+                    }
+
+                    if (ModelFluBen2.Rows.Count != 0)
+                    {
+                        string jsonFlujoBenefiDol = DataTableToJSON(ModelFluBen2);
+                        File.WriteAllText(Path.Combine(path, "FlujoBenefiDol.json"), jsonFlujoBenefiDol);
+                    }
 
 
-                } 
+
+                }
                 catch (Exception ex)
                 {
                     _log.Info("ERROR AL INSERTAR RESULTADOS DE FLUJOS DE RUTINA NUEVA: " + ex.Message);
@@ -2503,7 +2529,7 @@ namespace Estudio.Process
         //        }
         //        JSONString.Append("]");
         //    }
-            
+
         //    string pathfile = ruta + "/" + nombre + ".json";
         //    System.IO.File.WriteAllText(pathfile, JSONString.ToString());
 
@@ -2515,15 +2541,12 @@ namespace Estudio.Process
 
 
 
-        public void DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
+        public static string DataTableToJSON(DataTable table)
         {
-            string pathfile = Path.Combine(ruta, $"{nombre}.json");
-
-            using (StreamWriter streamWriter = new StreamWriter(pathfile))
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(streamWriter))
+            StringWriter stringWriter = new StringWriter();
+            using (JsonTextWriter jsonWriter = new JsonTextWriter(stringWriter))
             {
-                jsonWriter.Formatting = Formatting.Indented;
-
+                jsonWriter.Formatting = Formatting.None; // Opcional: puedes cambiar el formato según tus necesidades
                 jsonWriter.WriteStartArray();
 
                 foreach (DataRow row in table.Rows)
@@ -2533,7 +2556,7 @@ namespace Estudio.Process
                     foreach (DataColumn column in table.Columns)
                     {
                         jsonWriter.WritePropertyName(column.ColumnName);
-                        jsonWriter.WriteValue(row[column].ToString());
+                        jsonWriter.WriteValue(row[column]);
                     }
 
                     jsonWriter.WriteEndObject();
@@ -2542,32 +2565,8 @@ namespace Estudio.Process
                 jsonWriter.WriteEndArray();
             }
 
-            string time = DateTime.Now.ToString("hmmss");
-            _log.Info($"Se creó el archivo JSON: {nombre}_fin:{time}");
+            return stringWriter.ToString();
         }
-
-        //public string DataTableToJSONWithJavaScriptSerializer(DataTable table, string nombre, string calfec)
-        //{
-        //    JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-        //    List<Dictionary<string, object>> parentRow = new List<Dictionary<string, object>>();
-        //    Dictionary<string, object> childRow;
-        //    foreach (DataRow row in table.Rows)
-        //    {
-        //        childRow = new Dictionary<string, object>();
-        //        foreach (DataColumn col in table.Columns)
-        //        {
-        //            childRow.Add(col.ColumnName, row[col]);
-        //        }
-        //        parentRow.Add(childRow);
-        //    }
-        //    return jsSerializer.Serialize(parentRow);
-        //}
-
-        //public string DataTableToJSONWithJSONNet(DataTable table)
-        //{
-        //    string JSONString = string.Empty;
-        //    JSONString = JSONConvert.SerializeObject(table);
-        //    return JSONString;
-        //}
     }
+    
 }
