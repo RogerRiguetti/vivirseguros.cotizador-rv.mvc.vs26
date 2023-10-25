@@ -365,35 +365,10 @@ namespace Estudio.Process
                         Directory.CreateDirectory(path);
                     }
 
-                    //if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", path); }
-                    //if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", path); }
-                    //if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", path); }
-                    //if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", path); }
-
-                    if (ModelFluTot1.Rows.Count != 0)
-                    {
-                        string jsonFlujoPolizaSol = DataTableToJSON(ModelFluTot1);
-                        File.WriteAllText(Path.Combine(path, "FlujoPolizaSol.json"), jsonFlujoPolizaSol);
-                    }
-
-                    if (ModelFluTot2.Rows.Count != 0)
-                    {
-                        string jsonFlujoPolizaDol = DataTableToJSON(ModelFluTot2);
-                        File.WriteAllText(Path.Combine(path, "FlujoPolizaDol.json"), jsonFlujoPolizaDol);
-                    }
-
-                    if (ModelFluBen1.Rows.Count != 0)
-                    {
-                        string jsonFlujoBenefiSol = DataTableToJSON(ModelFluBen1);
-                        File.WriteAllText(Path.Combine(path, "FlujoBenefiSol.json"), jsonFlujoBenefiSol);
-                    }
-
-                    if (ModelFluBen2.Rows.Count != 0)
-                    {
-                        string jsonFlujoBenefiDol = DataTableToJSON(ModelFluBen2);
-                        File.WriteAllText(Path.Combine(path, "FlujoBenefiDol.json"), jsonFlujoBenefiDol);
-                    }
-
+                    if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", path); }
+                    if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", path); }
+                    if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", path); }
+                    if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", path); }
 
 
                 }
@@ -2534,39 +2509,31 @@ namespace Estudio.Process
         //    System.IO.File.WriteAllText(pathfile, JSONString.ToString());
 
         //    string time = DateTime.Now.ToString("hmmss");
-        //    _log.Info("Se creo el Json:_" + nombre + "_fin:" +  time);
+        //    _log.Info("Se creo el Json:_" + nombre + "_fin:" + time);
 
         //    return "Se creo el Json";//JSONString.ToString();
         //}
 
 
-
-        public static string DataTableToJSON(DataTable table)
+        public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
         {
-            StringWriter stringWriter = new StringWriter();
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(stringWriter))
+            try
             {
-                jsonWriter.Formatting = Formatting.None; // Opcional: puedes cambiar el formato según tus necesidades
-                jsonWriter.WriteStartArray();
+                string pathfile = Path.Combine(ruta, $"{nombre}.json");
+                File.WriteAllText(pathfile, JsonConvert.SerializeObject(table, Formatting.Indented));
 
-                foreach (DataRow row in table.Rows)
-                {
-                    jsonWriter.WriteStartObject();
+                string time = DateTime.Now.ToString("hmmss");
+                _log.Info($"Se creó el JSON: {nombre}_fin:{time}");
 
-                    foreach (DataColumn column in table.Columns)
-                    {
-                        jsonWriter.WritePropertyName(column.ColumnName);
-                        jsonWriter.WriteValue(row[column]);
-                    }
-
-                    jsonWriter.WriteEndObject();
-                }
-
-                jsonWriter.WriteEndArray();
+                return "Se creó el JSON";
             }
-
-            return stringWriter.ToString();
+            catch (Exception ex)
+            {
+                _log.Error($"Error al crear el JSON - {ex.Message}");
+                return $"Error al crear el JSON - {ex.Message}";
+            }
         }
+
     }
-    
+
 }
