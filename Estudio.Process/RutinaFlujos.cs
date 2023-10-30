@@ -18,8 +18,7 @@ using System.IO;
 using System.Data;
 using System.IO;
 using Newtonsoft.Json;
-
-
+using System.Threading;
 
 namespace Estudio.Process
 {
@@ -69,75 +68,7 @@ namespace Estudio.Process
             try
             {
                 XmlConfigurator.Configure();
-
                 #region Creación de DataTables para inserción.
-                //ModelFluTot1.Columns.Add("NUM_POLIZA", typeof(string));
-                //ModelFluTot1.Columns.Add("NUM_MESFLU", typeof(int));
-                //ModelFluTot1.Columns.Add("MTO_PENSION", typeof(decimal));
-                //ModelFluTot1.Columns.Add("MTO_FLUPEN", typeof(decimal));
-                //ModelFluTot1.Columns.Add("MTO_FLUSEP", typeof(decimal));
-                //ModelFluTot1.Columns.Add("MTO_FLUTOT", typeof(decimal));
-                //ModelFluTot1.Columns.Add("PRC_TASTCE", typeof(decimal));
-                //ModelFluTot1.Columns.Add("PRC_TLR", typeof(decimal));
-                ////ModelFluTot1.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ////ModelFluTot1.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ////ModelFluTot1.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ////ModelFluTot1.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ////ModelFluTot1.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
-                //ModelFluTot1.Columns.Add("FEC_FLU", typeof(string));
-
-                //ModelFluBen1.Columns.Add("NUM_POLIZA", typeof(string));
-                //ModelFluBen1.Columns.Add("NUM_ORDEN", typeof(int));
-                //ModelFluBen1.Columns.Add("NUM_EDAD", typeof(int));
-                //ModelFluBen1.Columns.Add("NUM_MESFLU", typeof(int));
-                //ModelFluBen1.Columns.Add("MTO_PENSION", typeof(decimal));
-                //ModelFluBen1.Columns.Add("MTO_FLUPEN", typeof(decimal));
-                //ModelFluBen1.Columns.Add("MTO_FLUSEP", typeof(decimal));
-                //ModelFluBen1.Columns.Add("MTO_FLUTOT", typeof(decimal));
-                //ModelFluBen1.Columns.Add("MTO_TPX", typeof(decimal));
-                //ModelFluBen1.Columns.Add("MTO_QXT", typeof(decimal));
-                ////ModelFluBen1.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ////ModelFluBen1.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ////ModelFluBen1.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ////ModelFluBen1.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ////ModelFluBen1.Columns.Add("MTO_TPX_METAN", typeof(decimal));
-                ////ModelFluBen1.Columns.Add("MTO_QXT_METAN", typeof(decimal));
-                //ModelFluBen1.Columns.Add("FEC_FLU", typeof(string));
-
-                //ModelFluTot2.Columns.Add("NUM_POLIZA", typeof(string));
-                //ModelFluTot2.Columns.Add("NUM_MESFLU", typeof(int));
-                //ModelFluTot2.Columns.Add("MTO_PENSION", typeof(decimal));
-                //ModelFluTot2.Columns.Add("MTO_FLUPEN", typeof(decimal));
-                //ModelFluTot2.Columns.Add("MTO_FLUSEP", typeof(decimal));
-                //ModelFluTot2.Columns.Add("MTO_FLUTOT", typeof(decimal));
-                //ModelFluTot2.Columns.Add("PRC_TASTCE", typeof(decimal));
-                //ModelFluTot2.Columns.Add("PRC_TLR", typeof(decimal));
-                ////ModelFluTot2.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ////ModelFluTot2.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ////ModelFluTot2.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ////ModelFluTot2.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ////ModelFluTot2.Columns.Add("PRC_TASTCE_METAN", typeof(decimal));
-                //ModelFluTot2.Columns.Add("FEC_FLU", typeof(string));
-
-                //ModelFluBen2.Columns.Add("NUM_POLIZA", typeof(string));
-                //ModelFluBen2.Columns.Add("NUM_ORDEN", typeof(int));
-                //ModelFluBen2.Columns.Add("NUM_EDAD", typeof(int));
-                //ModelFluBen2.Columns.Add("NUM_MESFLU", typeof(int));
-                //ModelFluBen2.Columns.Add("MTO_PENSION", typeof(decimal));
-                //ModelFluBen2.Columns.Add("MTO_FLUPEN", typeof(decimal));
-                //ModelFluBen2.Columns.Add("MTO_FLUSEP", typeof(decimal));
-                //ModelFluBen2.Columns.Add("MTO_FLUTOT", typeof(decimal));
-                //ModelFluBen2.Columns.Add("MTO_TPX", typeof(decimal));
-                //ModelFluBen2.Columns.Add("MTO_QXT", typeof(decimal));
-                ////ModelFluBen2.Columns.Add("MTO_PENSION_METAN", typeof(decimal));
-                ////ModelFluBen2.Columns.Add("MTO_FLUPEN_METAN", typeof(decimal));
-                ////ModelFluBen2.Columns.Add("MTO_FLUSEP_METAN", typeof(decimal));
-                ////ModelFluBen2.Columns.Add("MTO_FLUTOT_METAN", typeof(decimal));
-                ////ModelFluBen2.Columns.Add("MTO_TPX_METAN", typeof(decimal));
-                ////ModelFluBen2.Columns.Add("MTO_QXT_METAN", typeof(decimal));
-                //ModelFluBen2.Columns.Add("FEC_FLU", typeof(string));
-
-
                 //nuevas tablas para la optimizacion de las reservas
                 ModelFluTot1.Columns.Add("numPol", typeof(string));
                 ModelFluTot1.Columns.Add("mesFlu", typeof(int));
@@ -185,13 +116,69 @@ namespace Estudio.Process
 
                 #endregion
 
+
                 #region Tareas
                 //Ciclo que recorre lista de pólizas llamando método que contiene la rutina y crea las tareas.
+
+                /* for (int i = 0; i < ModelPol.Count; i++)
+                 {
+                     Console.WriteLine("Memory used before collection:       {0:N0}",
+                     GC.GetTotalMemory(false));
+                     try
+                     {
+                         LisTabPolPar = (from pol in ModelPol where Convert.ToInt32(pol.NumPol) == Convert.ToInt32(ModelPol[i].NumPol) select pol).ToList();
+                         if (LisTabPolPar.Count == 1)
+                         {
+                             LisTabBenPar = (from ben in Modelben where LisTabPolPar[0].NumPol == ben.NumPol select ben).ToList();
+
+                             TipPen = "";
+                             TipPen = LisTabPolPar[0].TipPen;
+
+                             #region Tasas Promedio
+                             ListaTasProm = (from tasprom in ModelTasPro where tasprom.COD_TIPPENSION == TipPen select tasprom).ToList();
+                             #endregion
+
+                             switch (LisTabPolPar[0].Tip)
+                             {
+                                 case "1":
+                                     Tip = "1";
+                                     break;
+
+                                 case "2":
+                                     Tip = "2";
+                                     break;
+                             }
+                         }
+
+                         if ((LisTabPolPar.Count != 0) && (LisTabBenPar.Count != 0))
+                         {
+                             var task = ResFlujoTodo(LisTabPolPar, LisTabBenPar, ModelMor, ModelFacVac, ListaTasProm, ModelTasCurva, FecCal, ValTc, Tip, LisTabPolPar[0].IndStock, LisTabPolPar[0].FecDev);
+                             tareasFlujos.Add(task);
+                             numPol++;
+                         }
+                     }
+                     catch (Exception ex)
+                     {
+                         _log.Info("ERROR EN PÓLIZA No. " + LisTabPolPar[0].NumPol + " AL CREAR LA TAREA.");
+                         _log.Info("ERROR: " + ex.Message);
+                     }
+
+                 }
+
+                */
+
+                /*JORGE TERRONES -JT MODIFICACION DEL METODO DE ARRIBA*/
+
+                // Lista para almacenar los números de pólizas
+                List<string> numerosPoliza = new List<string>();
+
+
+                SemaphoreSlim semaphore = new SemaphoreSlim(Environment.ProcessorCount);
 
                 for (int i = 0; i < ModelPol.Count; i++)
                 {
                     Console.WriteLine("Memory used before collection:       {0:N0}",
-                    GC.GetTotalMemory(false));
+                                      GC.GetTotalMemory(false));
                     try
                     {
                         LisTabPolPar = (from pol in ModelPol where Convert.ToInt32(pol.NumPol) == Convert.ToInt32(ModelPol[i].NumPol) select pol).ToList();
@@ -220,7 +207,9 @@ namespace Estudio.Process
 
                         if ((LisTabPolPar.Count != 0) && (LisTabBenPar.Count != 0))
                         {
-                            var task = ResFlujoTodo(LisTabPolPar, LisTabBenPar, ModelMor, ModelFacVac, ListaTasProm, ModelTasCurva, FecCal, ValTc, Tip, LisTabPolPar[0].IndStock, LisTabPolPar[0].FecDev);
+                            await semaphore.WaitAsync(); // Espera hasta que haya un núcleo del procesador disponible
+                            var task = ResFlujoTodo(LisTabPolPar, LisTabBenPar, ModelMor, ModelFacVac, ListaTasProm, ModelTasCurva, FecCal, ValTc, Tip, LisTabPolPar[0].IndStock, LisTabPolPar[0].FecDev)
+                                           .ContinueWith(t => semaphore.Release()); // Libera el semáforo cuando la tarea esté completa
                             tareasFlujos.Add(task);
                             numPol++;
                         }
@@ -230,8 +219,13 @@ namespace Estudio.Process
                         _log.Info("ERROR EN PÓLIZA No. " + LisTabPolPar[0].NumPol + " AL CREAR LA TAREA.");
                         _log.Info("ERROR: " + ex.Message);
                     }
-
+                    finally
+                    {
+                        semaphore.Release();
+                    }
                 }
+
+
                 GC.Collect();
                 Console.WriteLine("Memory used after full collection:   {0:N0}",
                                     GC.GetTotalMemory(true));
@@ -240,11 +234,13 @@ namespace Estudio.Process
 
                 #endregion
 
-                while (tareasFlujos.Count > 0)
-                {
-                    Task firstFinishedTask = await Task.WhenAny(tareasFlujos);
-                    tareasFlujos.Remove(firstFinishedTask);
-                }
+                await Task.WhenAll(tareasFlujos);
+
+                //while (tareasFlujos.Count > 0)
+                //{
+                //    Task firstFinishedTask = await Task.WhenAny(tareasFlujos);
+                //    tareasFlujos.Remove(firstFinishedTask);
+                //}
 
                 GC.Collect();
                 Console.WriteLine("Memory used after full collection:   {0:N0}",
@@ -253,7 +249,7 @@ namespace Estudio.Process
                 GC.Collect(2, GCCollectionMode.Forced, true, true);
                 //await Task.WhenAll(tareasFlujos);
                 
-
+            
                 try { if (queryTas != "") { _ReservasRepository.EjecutaScripts_CalculoFlujos(queryTas); } }
                 catch (Exception ex)
                 {
@@ -365,13 +361,53 @@ namespace Estudio.Process
                         Directory.CreateDirectory(path);
                     }
 
+                    /*
                     if (ModelFluTot1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", path); }
                     if (ModelFluTot2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", path); }
                     if (ModelFluBen1.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", path); }
                     if (ModelFluBen2.Rows.Count != 0) { DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", path); }
+                    */
 
 
+                    //ModelFluTot1
+                    numerosPoliza.AddRange(ModelFluTot1.AsEnumerable().Select(row => row.Field<string>("numPol")));
+
+                    // ModelFluTot2
+                    numerosPoliza.AddRange(ModelFluTot2.AsEnumerable().Select(row => row.Field<string>("numPol")));
+
+                    // ModelFluBen1
+                    numerosPoliza.AddRange(ModelFluBen1.AsEnumerable().Select(row => row.Field<string>("numPol")));
+
+                    // ModelFluBen2
+                    numerosPoliza.AddRange(ModelFluBen2.AsEnumerable().Select(row => row.Field<string>("numPol")));
+
+
+                    numerosPoliza = numerosPoliza.Distinct().ToList();
+
+                    // Tamaño del lote para dividir las pólizas en archivos JSON
+                    int batchSize = 500;
+                    // Dividir y generar archivos JSON para ModelFluTot1
+                    if (ModelFluTot1.Rows.Count != 0)
+                    {
+                        DataTableToJSONWithStringBuilder(ModelFluTot1, "FlujoPolizaSol", batchSize, numerosPoliza, path);
+                    }
+                    // Dividir y generar archivos JSON para ModelFluTot2
+                    if (ModelFluTot2.Rows.Count != 0)
+                    {
+                        DataTableToJSONWithStringBuilder(ModelFluTot2, "FlujoPolizaDol", batchSize, numerosPoliza, path);
+                    }
+                    // Dividir y generar archivos JSON para ModelFluBen1
+                    if (ModelFluBen1.Rows.Count != 0)
+                    {
+                        DataTableToJSONWithStringBuilder(ModelFluBen1, "FlujoBenefiSol", batchSize, numerosPoliza, path);
+                    }
+                    // Dividir y generar archivos JSON para ModelFluBen2
+                    if (ModelFluBen2.Rows.Count != 0)
+                    {
+                        DataTableToJSONWithStringBuilder(ModelFluBen2, "FlujoBenefiDol", batchSize, numerosPoliza, path);
+                    }
                 }
+
                 catch (Exception ex)
                 {
                     _log.Info("ERROR AL INSERTAR RESULTADOS DE FLUJOS DE RUTINA NUEVA: " + ex.Message);
@@ -2515,24 +2551,137 @@ namespace Estudio.Process
         //}
 
 
-        public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
+        //public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
+        //{
+        //    try
+        //    {
+        //        string pathfile = Path.Combine(ruta, $"{nombre}.json");
+        //        File.WriteAllText(pathfile, JsonConvert.SerializeObject(table, Formatting.Indented));
+
+        //        string time = DateTime.Now.ToString("hmmss");
+        //        _log.Info($"Se creó el JSON: {nombre}_fin:{time}");
+
+        //        return "Se creó el JSON";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _log.Error($"Error al crear el JSON - {ex.Message}");
+        //        return $"Error al crear el JSON - {ex.Message}";
+        //    }
+        //}
+
+        /*  public string DataTableToJSONWithStringBuilder(DataTable table, string nombre, string ruta)
+          {
+              try
+              {
+                  string pathfile = Path.Combine(ruta, $"{nombre}.json");
+
+                  // Serializar el DataTable a JSON sin formato
+                  string jsonContent = JsonConvert.SerializeObject(table, Formatting.Indented);
+
+                  // Minificar el JSON
+                  string minifiedJson = MinifyJsonString(jsonContent);
+
+                  // Guardar el JSON minificado en el mismo archivo
+                  File.WriteAllText(pathfile, minifiedJson);
+
+                  string time = DateTime.Now.ToString("hmmss");
+                  _log.Info($"Se creó y reemplazó el JSON: {nombre}_fin:{time}");
+
+                  return "Se creó y reemplazó el JSON";
+              }
+              catch (Exception ex)
+              {
+                  _log.Error($"Error al crear/reemplazar el JSON - {ex.Message}");
+                  return $"Error al crear/reemplazar el JSON - {ex.Message}";
+              }
+          }
+        */
+
+        /*
+        public static void DataTableToJSONWithStringBuilder(DataTable dataTable, string prefix, int batchSize, List<string> numerosPoliza, string path)
         {
-            try
+
+            try 
             {
-                string pathfile = Path.Combine(ruta, $"{nombre}.json");
-                File.WriteAllText(pathfile, JsonConvert.SerializeObject(table, Formatting.Indented));
 
-                string time = DateTime.Now.ToString("hmmss");
-                _log.Info($"Se creó el JSON: {nombre}_fin:{time}");
+                // Dividir las pólizas en lotes de tamaño batchSize
+                var lotes = numerosPoliza.Select((x, index) => new { Index = index, Value = x })
+                                         .GroupBy(x => x.Index / batchSize)
+                                         .Select(group => group.Select(x => x.Value).ToList())
+                                         .ToList();
 
-                return "Se creó el JSON";
+                // Generar archivos JSON para cada lote
+                for (int i = 0; i < lotes.Count; i++)
+                {
+                    var polizasEnLote = dataTable.AsEnumerable()
+                                                 .Where(row => lotes[i].Contains(row.Field<string>("numPol")))
+                                                 .CopyToDataTable();
+
+                    string jsonContent = JsonConvert.SerializeObject(polizasEnLote, Formatting.None);
+                    string nombreArchivo = $"{prefix}_{i + 1}.json";
+                    string pathArchivo = Path.Combine(path, nombreArchivo);
+
+                    File.WriteAllText(pathArchivo, jsonContent);
+                    Console.WriteLine($"Archivo {nombreArchivo} creado con éxito.");
+                }
             }
             catch (Exception ex)
             {
-                _log.Error($"Error al crear el JSON - {ex.Message}");
-                return $"Error al crear el JSON - {ex.Message}";
+                throw new Exception($"Error al generar archivos JSON: {ex.Message}");
+            }
+
+
+        }*/
+        public static void DataTableToJSONWithStringBuilder(DataTable dataTable, string prefix, int batchSize, List<string> numerosPoliza, string path)
+        {
+            int valorn = 0;
+            try
+            {
+                var lotes = numerosPoliza.Select((x, index) => new { Index = index, Value = x })
+                                          .GroupBy(x => x.Index / batchSize)
+                                          .Select(group => group.Select(x => x.Value).ToList())
+                                          .ToList();
+
+                for (int i = 0; i < lotes.Count; i++)
+                {
+                    // Filtrar las filas que corresponden a los números de póliza en el lote actual
+                    var polizasEnLote = dataTable.AsEnumerable()
+                                                 .Where(row => lotes[i].Contains(row.Field<string>("numPol")))
+                                                 .ToList();
+
+                    // Verificar si hay filas para evitar InvalidOperationException
+
+                    if (polizasEnLote.Any())
+                    {
+                     
+                        // Crear el DataTable solo si hay filas en el lote
+                        DataTable dataTableEnLote = polizasEnLote.CopyToDataTable();
+
+                        string jsonContent = JsonConvert.SerializeObject(dataTableEnLote, Formatting.None);
+                        string nombreArchivo = $"{prefix}_{valorn + 1}.json";
+                        string pathArchivo = Path.Combine(path, nombreArchivo);
+
+                        using (StreamWriter sw = new StreamWriter(pathArchivo))
+                        {
+                            sw.Write(jsonContent);
+                        }
+
+                        Console.WriteLine($"Archivo {nombreArchivo} creado con éxito.");
+                        valorn++;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No hay filas para el lote {i + 1}. Saltando este lote.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al generar archivos JSON: {ex.Message}");
             }
         }
+
 
     }
 

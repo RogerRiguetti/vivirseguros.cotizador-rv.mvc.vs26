@@ -1195,217 +1195,188 @@ namespace Estudio.Logic
             //******************CARGA LOS FLUJOS DEL REPOSITORIO DE TEXTO************************
             //****************************************************************
             //carga los Json de la carpeta FluPol Soles
-
-            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoPolizaSol.json");
-            if (File.Exists(path))
+            /*JORGE TERRONES*/
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/");
+            for (int i = 1; i <= 50; i++)
             {
-                try
-                {
-                    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-                    {
-                        var serializer = new JsonSerializer();
+                string filePath = Path.Combine(path, $"FlujoPolizaSol_{i}.json");
 
-                        while (reader.Read())
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        using (JsonTextReader reader = new JsonTextReader(File.OpenText(filePath)))
                         {
-                            if (reader.TokenType == JsonToken.StartObject)
+                            var serializer = new JsonSerializer();
+
+                            while (reader.Read())
                             {
-                                JObject obj = JObject.Load(reader);
-                                beFluPol_Soles fluPolSol = obj.ToObject<beFluPol_Soles>();
-                                ListFluPol_s.Add(fluPolSol);
+                                if (reader.TokenType == JsonToken.StartObject)
+                                {
+                                    JObject obj = JObject.Load(reader);
+                                    beFluPol_Soles fluPolSol = obj.ToObject<beFluPol_Soles>();
+                                    ListFluPol_s.Add(fluPolSol);
+                                }
                             }
                         }
+
+                        Logger.RegistrarLog($"Archivo JSON {Path.GetFileName(filePath)} cargado correctamente desde la ruta: {filePath}");
                     }
-                    
-                    Logger.RegistrarLog($"Archivo JSON de FlujoPolizaSol cargado correctamente desde la ruta: {path}");
+                    catch (Exception ex)
+                    {
+                        Logger.RegistrarLog($"Error al cargar el archivo JSON {Path.GetFileName(filePath)}: {ex.Message}");
+                        throw;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Logger.RegistrarLog($"Error al cargar el archivo JSON de FlujoPolizaSol: {ex.Message}");
-                    throw; 
+                    Logger.RegistrarLog($"El archivo JSON {Path.GetFileName(filePath)} no fue encontrado en la ruta: {filePath}");
+                    break;
                 }
             }
-
-
-            //path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoPolizaSol.json");
-            //if (File.Exists(path))
-            //{
-            //    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-            //    {
-            //        var serializer = new JsonSerializer();
-
-            //        while (reader.Read())
-            //        {
-            //            if (reader.TokenType == JsonToken.StartObject)
-            //            {
-            //                JObject obj = JObject.Load(reader);
-            //                beFluPol_Soles fluPolSol = obj.ToObject<beFluPol_Soles>();
-            //                ListFluPol_s.Add(fluPolSol);
-            //            }
-            //        }
-            //    }
-            //}
 
             //##################################################
             //carga los Json de la carpeta FluPol Dolares
 
-            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoPolizaDol.json");
-            if (File.Exists(path))
+            /*JORGE TERRONES*/
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/");
+            for (int i = 1; i <= 50; i++)
             {
-                try
-                {
-                    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-                    {
-                        var serializer = new JsonSerializer();
+                string filePath = Path.Combine(path, $"FlujoPolizaDol_{i}.json");
 
-                        while (reader.Read())
+                if (File.Exists(filePath))
+                {
+
+                    try
+                    {
+                        using (JsonTextReader reader = new JsonTextReader(File.OpenText(filePath)))
                         {
-                            if (reader.TokenType == JsonToken.StartObject)
+                            var serializer = new JsonSerializer();
+
+                            while (reader.Read())
                             {
-                                JObject obj = JObject.Load(reader);
-                                beFluPol_dolares fluPolDol = obj.ToObject<beFluPol_dolares>();
-                                ListFluPol_d.Add(fluPolDol);
+                                if (reader.TokenType == JsonToken.StartObject)
+                                {
+                                    JObject obj = JObject.Load(reader);
+                                    beFluPol_dolares fluPolDol = obj.ToObject<beFluPol_dolares>();
+                                    ListFluPol_d.Add(fluPolDol);
+                                }
                             }
                         }
-                    }
 
-                    Logger.RegistrarLog($"Archivo JSON de FlujoPolizaDol cargado correctamente desde la ruta: {path}");
+                        Logger.RegistrarLog($"Archivo JSON {Path.GetFileName(filePath)} cargado correctamente desde la ruta: {filePath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.RegistrarLog($"Error al cargar el archivo JSON {Path.GetFileName(filePath)}: {ex.Message}");
+                        throw;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Logger.RegistrarLog($"Error al cargar el archivo JSON de FlujoPolizaDol: {ex.Message}");
-                    throw;
+                    Logger.RegistrarLog($"El archivo JSON {Path.GetFileName(filePath)} no fue encontrado en la ruta: {filePath}");
+                    break;
                 }
             }
-            //path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoPolizaDol.json");
-            //if (File.Exists(path))
-            //{
-            //    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-            //    {
-            //        var serializer = new JsonSerializer();
-
-            //        while (reader.Read())
-            //        {
-            //            if (reader.TokenType == JsonToken.StartObject)
-            //            {
-            //                JObject obj = JObject.Load(reader);
-            //                beFluPol_dolares fluPolDol = obj.ToObject<beFluPol_dolares>();
-            //                ListFluPol_d.Add(fluPolDol);
-            //            }
-            //        }
-            //    }
-            //}
-
 
             //##################################################
             //carga los Json de la carpeta FluBen Soles
 
-            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoBenefiSol.json");
-            if (File.Exists(path))
+            /*JORGE TERRONES*/
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/");
+            for (int i = 1; i <= 50; i++)
             {
-                try
-                {
-                    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-                    {
-                        var serializer = new JsonSerializer();
+                string filePath = Path.Combine(path, $"FlujoBenefiSol_{i}.json");
 
-                        while (reader.Read())
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        using (JsonTextReader reader = new JsonTextReader(File.OpenText(filePath)))
                         {
-                            if (reader.TokenType == JsonToken.StartObject)
+                            var serializer = new JsonSerializer();
+
+                            while (reader.Read())
                             {
-                                JObject obj = JObject.Load(reader);
-                                beFluBen_soles fluBenSol = obj.ToObject<beFluBen_soles>();
-                                ListFluBen_s.Add(fluBenSol);
+                                if (reader.TokenType == JsonToken.StartObject)
+                                {
+                                    JObject obj = JObject.Load(reader);
+                                    beFluBen_soles fluBenSol = obj.ToObject<beFluBen_soles>();
+                                    ListFluBen_s.Add(fluBenSol);
+                                }
                             }
                         }
-                    }
 
-                    Logger.RegistrarLog($"Archivo JSON de FlujoBenefiSol cargado correctamente desde la ruta: {path}");
+                        Logger.RegistrarLog($"Archivo JSON {Path.GetFileName(filePath)} cargado correctamente desde la ruta: {filePath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.RegistrarLog($"Error al cargar el archivo JSON {Path.GetFileName(filePath)}: {ex.Message}");
+                        throw;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Logger.RegistrarLog($"Error al cargar el archivo JSON de FlujoBenefiSol: {ex.Message}");
-                    throw;
+                    Logger.RegistrarLog($"El archivo JSON {Path.GetFileName(filePath)} no fue encontrado en la ruta: {filePath}");
+                    break;
                 }
             }
-
-            //path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoBenefiSol.json");
-            //if (File.Exists(path))
-            //{
-            //    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-            //    {
-            //        var serializer = new JsonSerializer();
-
-            //        while (reader.Read())
-            //        {
-            //            if (reader.TokenType == JsonToken.StartObject)
-            //            {
-            //                JObject obj = JObject.Load(reader);
-            //                beFluBen_soles fluBenSol = obj.ToObject<beFluBen_soles>();
-            //                ListFluBen_s.Add(fluBenSol);
-            //            }
-            //        }
-            //    }
-            //}
 
             //##################################################
             //carga los Json de la carpeta FluBen Dolares
 
-            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoBenefiDol.json");
-            if (File.Exists(path))
+            /*JORGE TERRONES*/
+            path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/");
+            for (int i = 1; i <= 50; i++)
             {
-                try
-                {
-                    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-                    {
-                        var serializer = new JsonSerializer();
+                string filePath = Path.Combine(path, $"FlujoBenefiDol_{i}.json");
 
-                        while (reader.Read())
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        using (JsonTextReader reader = new JsonTextReader(File.OpenText(filePath)))
                         {
-                            if (reader.TokenType == JsonToken.StartObject)
+                            var serializer = new JsonSerializer();
+
+                            while (reader.Read())
                             {
-                                JObject obj = JObject.Load(reader);
-                                beFluBen_dolares fluBenDol = obj.ToObject<beFluBen_dolares>();
-                                ListFluBen_d.Add(fluBenDol);
+                                if (reader.TokenType == JsonToken.StartObject)
+                                {
+                                    JObject obj = JObject.Load(reader);
+                                    beFluBen_dolares fluBenDol = obj.ToObject<beFluBen_dolares>();
+                                    ListFluBen_d.Add(fluBenDol);
+                                }
                             }
                         }
-                    }
 
-                    Logger.RegistrarLog($"Archivo JSON de FlujoBenefiDol cargado correctamente desde la ruta: {path}");
+                        Logger.RegistrarLog($"Archivo JSON {Path.GetFileName(filePath)} cargado correctamente desde la ruta: {filePath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.RegistrarLog($"Error al cargar el archivo JSON {Path.GetFileName(filePath)}: {ex.Message}");
+                        throw;
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Logger.RegistrarLog($"Error al cargar el archivo JSON de FlujoBenefiDol: {ex.Message}");
-                    throw;
+                    Logger.RegistrarLog($"El archivo JSON {Path.GetFileName(filePath)} no fue encontrado en la ruta: {filePath}");
+                    break;
                 }
             }
-            
-            //path = System.Web.Hosting.HostingEnvironment.MapPath("~/BD_Reservas/" + strFecha + "/FlujoBenefiDol.json");
-            //if (File.Exists(path))
-            //{
-            //    using (JsonTextReader reader = new JsonTextReader(File.OpenText(path)))
-            //    {
-            //        var serializer = new JsonSerializer();
 
-            //        while (reader.Read())
-            //        {
-            //            if (reader.TokenType == JsonToken.StartObject)
-            //            {
-            //                JObject obj = JObject.Load(reader);
-            //                beFluBen_dolares fluBenDol = obj.ToObject<beFluBen_dolares>();
-            //                ListFluBen_d.Add(fluBenDol);
-            //            }
-            //        }
-            //    }
-            //}
-            
+
             #endregion
             #region Proceso Flujos en Soles
             //****************************************************************
             //******************FLUJOS SOLES************************
             //****************************************************************
-            var joined = from Item1 in ListFluBen_s
-                         select Item1;
 
+            /*
+
+              var joined = from Item1 in ListFluBen_s
+                         select Item1;
+          
             foreach (beFluBen_soles atrib in joined)
             {
                 try
@@ -1433,7 +1404,8 @@ namespace Estudio.Logic
                     throw;
                 }
             }
-
+           
+            */
 
             //foreach (beFluBen_soles atrib in joined)
             //{
@@ -1456,55 +1428,22 @@ namespace Estudio.Logic
             //}
 
 
-            // Crear un Lookup para indexar ListFluPol_s por numPol
-            //var fluPolLookup = ListFluPol_s.ToLookup(x => x.numPol, x => x.tasTce);
+            //Crear un Lookup para indexar ListFluPol_s por numPol
+            var fluPolLookup = ListFluPol_s.ToLookup(x => x.numPol, x => x.tasTce);
 
-            ////var joined = from Item1 in ListFluBen_s
-            ////             select Item1;
+            //var joined = from Item1 in ListFluBen_s
+            //             select Item1;
 
 
-            //foreach (beFluBen_soles atrib in ListFluBen_s)
-            //{
-            //    numpol = atrib.numPol;
-
-            //    if (fluPolLookup.Contains(numpol))
-            //    {
-            //        tce = fluPolLookup[numpol].FirstOrDefault();
-
-            //        beResultadosFlujos filaRS = new beResultadosFlujos
-            //        {
-            //            numPol = atrib.numPol,
-            //            numOrd = atrib.numOrd,
-            //            numEdad = atrib.numEda,
-            //            numMes = atrib.mesFlu,
-            //            mtoPen = atrib.mtoPen,
-            //            prcFac = atrib.fluPen,
-            //            GtoSep = atrib.fluSep,
-            //            fluPen = atrib.fluTot,
-            //            tasTce = tce
-            //        };
-            //        fluRes.Add(filaRS);
-            //    }
-            //}
-
-            #endregion
-            #region Procesa Flujos en Dolares
-            //****************************************************************
-            //******************FLUJOS SOLES************************
-            //****************************************************************
-            tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
-
-            var joined2 = from Item1 in ListFluBen_d
-                          select Item1;
-
-            foreach (beFluBen_dolares atrib in joined2)
+            foreach (beFluBen_soles atrib in ListFluBen_s)
             {
-                try
-                {
-                    numpol = atrib.numPol;
-                    tce = ListFluPol_s.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
+                numpol = atrib.numPol;
 
-                    beResultadosFlujos filaRD = new beResultadosFlujos
+                if (fluPolLookup.Contains(numpol))
+                {
+                    tce = fluPolLookup[numpol].FirstOrDefault();
+
+                    beResultadosFlujos filaRS = new beResultadosFlujos
                     {
                         numPol = atrib.numPol,
                         numOrd = atrib.numOrd,
@@ -1516,15 +1455,48 @@ namespace Estudio.Logic
                         fluPen = atrib.fluTot,
                         tasTce = tce
                     };
-                    fluRes.Add(filaRD);
-                }
-                catch (Exception ex)
-                {
-                    Logger.RegistrarLog($"Error en el bucle foreach (dólares): {ex.Message}");
-                    throw;
+                    fluRes.Add(filaRS);
                 }
             }
-            
+
+            #endregion
+            #region Procesa Flujos en Dolares
+            //****************************************************************
+            //******************FLUJOS SOLES************************
+            //****************************************************************
+            //tce = ListFluPol_d.Select(x => x.tasTce).FirstOrDefault();
+
+            //var joined2 = from Item1 in ListFluBen_d
+            //              select Item1;
+
+            //foreach (beFluBen_dolares atrib in joined2)
+            //{
+            //    try
+            //    {
+            //        numpol = atrib.numPol;
+            //        tce = ListFluPol_d.Where(x => x.numPol.Contains(numpol)).Select(x => x.tasTce).FirstOrDefault();
+
+            //        beResultadosFlujos filaRD = new beResultadosFlujos
+            //        {
+            //            numPol = atrib.numPol,
+            //            numOrd = atrib.numOrd,
+            //            numEdad = atrib.numEda,
+            //            numMes = atrib.mesFlu,
+            //            mtoPen = atrib.mtoPen,
+            //            prcFac = atrib.fluPen,
+            //            GtoSep = atrib.fluSep,
+            //            fluPen = atrib.fluTot,
+            //            tasTce = tce
+            //        };
+            //        fluRes.Add(filaRD);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Logger.RegistrarLog($"Error en el bucle foreach (dólares): {ex.Message}");
+            //        throw;
+            //    }
+            //}
+
 
             //tce = ListFluPol_s.Select(x => x.tasTce).FirstOrDefault();
             //var joined2 = from Item1 in ListFluBen_d
@@ -1572,8 +1544,35 @@ namespace Estudio.Logic
             //        fluRes.Add(filaRD);
             //    }
             //}
-            #endregion
-            return fluRes;
+            var fluPolLookup_d = ListFluPol_d.ToLookup(x => x.numPol, x => x.tasTce);
+
+            foreach (beFluBen_dolares atrib in ListFluBen_d)
+            {
+                numpol = atrib.numPol;
+
+                if (fluPolLookup_d.Contains(numpol))
+                {
+                    tce = fluPolLookup_d[numpol].FirstOrDefault();
+
+                    beResultadosFlujos filaRS = new beResultadosFlujos
+                    {
+                        numPol = atrib.numPol,
+                        numOrd = atrib.numOrd,
+                        numEdad = atrib.numEda,
+                        numMes = atrib.mesFlu,
+                        mtoPen = atrib.mtoPen,
+                        prcFac = atrib.fluPen,
+                        GtoSep = atrib.fluSep,
+                        fluPen = atrib.fluTot,
+                        tasTce = tce
+                    };
+                    fluRes.Add(filaRS);
+
+                }
+            }
+                #endregion
+                return fluRes;
+            
         }
     }
 }
