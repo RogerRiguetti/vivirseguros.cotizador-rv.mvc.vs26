@@ -200,6 +200,13 @@
 			<xs:documentation>02 - CARNET DE IDENTIFICACION MILITAR/POLICIAL</xs:documentation>
 			<xs:documentation>03 - CARNET DE AUTORIZACION DEL MINISTERIO DE TRABAJO</xs:documentation>
 			<xs:documentation>04 - PASAPORTE</xs:documentation>
+			<xs:documentation>05 - INEXISTENCIA DEL AFILIADO - NEA</xs:documentation>
+			<xs:documentation>06 - CARNET DEL PERMISO TEMPORAL DE PERMANENCIA - PTP</xs:documentation>
+			<xs:documentation>07 - CARNE DE IDENTIDAD DE RELACIONES EXTERIORES - CIRREE</xs:documentation>
+			<xs:documentation>08 - CEDULA  DE IDENTIDAD DE EXTRANJERO - CIE</xs:documentation>
+			<xs:documentation>09 - CARNE DE SOLICITANTE DE REFUGIO - CSREF</xs:documentation>
+			<xs:documentation>10 - CARNET DE PERMISO TEMPORAL DE PERMANENCIA - CPP</xs:documentation>
+			<xs:documentation>20 - RUC</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="Char2">
 			<xs:enumeration value="00"/>
@@ -207,6 +214,13 @@
 			<xs:enumeration value="02"/>
 			<xs:enumeration value="03"/>
 			<xs:enumeration value="04"/>
+			<xs:enumeration value="05"/>
+			<xs:enumeration value="06"/>
+			<xs:enumeration value="07"/>
+			<xs:enumeration value="08"/>
+			<xs:enumeration value="09"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="20"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!-- TIPO SIMPLE: ESTADO DEL AFILIADO - PENSION POR SOBREVIVENCIA -->
