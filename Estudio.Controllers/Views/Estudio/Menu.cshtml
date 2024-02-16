@@ -202,38 +202,43 @@
                     </li>
                 }
 
-                <li id="ReservasNav" data-toggle="collapse" data-target="#Reservas" class="collapsed PesPriUl">
-                    <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Reservas</a><span class="arrow"></span>
-                </li>
-                <ul class="sub-menu collapse" id="Reservas">
-                    @if (identity.ReservasIndex)
-                    {
-                        <li id="ParametrosResNav" data-toggle="collapse" data-target="#ParametrosRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Parametros</a><span class="arrow"></span></li>
-                        <ul class="sub-menu collapse prop" id="ParametrosRes">
-                            <li id="CargaActivos" class=""><a href="@Url.Action("Index", "CargaActivos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Carga de Activos</a></li>
-                            <li id="ManCTRes" class=""><a href="@Url.Action("Index", "ManCurvaTasasRes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mantenimiento Curva de Tasas</a></li>
-                        </ul>
+                @if (identity.ReservasIndex)
+                {
+                    <li id="ReservasNav" data-toggle="collapse" data-target="#Reservas" class="collapsed PesPriUl">
+                        <a href="#"><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Reservas</a><span class="arrow"></span>
+                    </li>
+                }
+                    <ul class="sub-menu collapse" id="Reservas">
+                        @if (identity.ReservasIndex)
+                        {
+                            <li id="ParametrosResNav" data-toggle="collapse" data-target="#ParametrosRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Parametros</a><span class="arrow"></span></li>
+                            <ul class="sub-menu collapse prop" id="ParametrosRes">
+                                <li id="CargaActivos" class=""><a href="@Url.Action("Index", "CargaActivos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Carga de Activos</a></li>
+                                <li id="ManCTRes" class=""><a href="@Url.Action("Index", "ManCurvaTasasRes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Mantenimiento Curva de Tasas</a></li>
+                            </ul>
 
-                        <li id="CalculoResNav" data-toggle="collapse" data-target="#CalculoRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Cálculo</a><span class="arrow"></span></li>
-                        <ul class="sub-menu collapse prop" id="CalculoRes">
-                            <li id="Reservas" class=""><a href="@Url.Action("Index", "Reservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reservas</a></li>
-                            <li id="Periodos" class=""><a href="@Url.Action("Index", "Periodos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Periodos</a></li>
-                            <li id="ReportesReservas" class=""><a href="@Url.Action("Index", "ReportesReservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a></li>
-                        </ul>
-                    }
+                            <li id="CalculoResNav" data-toggle="collapse" data-target="#CalculoRes" class="collapsed PesSecUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo3.png" /> Cálculo</a><span class="arrow"></span></li>
+                            <ul class="sub-menu collapse prop" id="CalculoRes">
+                                <li id="Reservas" class=""><a href="@Url.Action("Index", "Reservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reservas</a></li>
+                                <li id="Periodos" class=""><a href="@Url.Action("Index", "Periodos")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Periodos</a></li>
+                                <li id="ReportesReservas" class=""><a href="@Url.Action("Index", "ReportesReservas")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a></li>
+                            </ul>
+                        }
+                    </ul>
                 </ul>
-            </ul>
 
-            <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#RentaInversion" class="collapsed PesPriUl">
-                <a href=@urlFondosMax><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Fondos Max</a>
-            </li>
-
+             @if (identity.FMMenu)
+                {
+                <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#RentaInversion" class="collapsed PesPriUl">
+                    <a href=@urlFondosMax><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Fondos Max</a>
+                </li>
+                }
             @if (identity.RPMenu)
-            {
+                {
                 <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#RentaPrivada" class="collapsed PesPriUl">
                     <a href=@urlRentaPrivada><i class="fa fa-folder fa-lg icono-menu" aria-hidden="true"></i> Renta Max</a>
                 </li>
-            }
+                }
 
 
             <li id="CuentaNav" data-toggle="collapse" data-target="#Cuenta" class="collapsed PesPriUl">

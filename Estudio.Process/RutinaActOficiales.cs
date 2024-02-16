@@ -258,7 +258,7 @@ namespace Estudio.Process
                     //if ((item.BanderaComision == "" || item.BanderaComision == null) && banderaWS != "WS")
                     if ((item.BanderaComision == "" || item.BanderaComision == null))
                     {
-                        if (asesor == 0 && item.MtoPri < 50000)
+                        if (asesor == 0 && item.MtoPri < 100000)
                         {
                             //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
@@ -279,8 +279,9 @@ namespace Estudio.Process
                     }
                     else
                     {
-                        if (asesor == 0 && item.MtoPri < 50000)
+                        if (asesor == 0 && item.MtoPri < 100000)
                         {
+                            //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
                         }
                         if (item.TipRen == "2")

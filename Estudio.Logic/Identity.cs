@@ -101,8 +101,9 @@ namespace Estudio.Logic
         public bool MantenedorFiltrosIndex { get; set; }
         public bool MantenedorCurvasIndex { get; set; }
         public bool ActualizaInfOfiIndex { get; set; }
-        
 
+        //FondosMAX 
+        public bool FMMenu { get; set; }
 
         #endregion
     }
