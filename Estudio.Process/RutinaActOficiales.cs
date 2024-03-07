@@ -265,15 +265,31 @@ namespace Estudio.Process
                         }
                         else
                         {
-                            if (item.TipRen == "2")
+                            if (asesor != 0 && item.MtoPri < 100000)
                             {
-                                //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
-                                PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
                             }
                             else
                             {
-                                //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
-                                PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
                             }
                         }
                     }
@@ -284,15 +300,34 @@ namespace Estudio.Process
                             //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
                         }
-                        if (item.TipRen == "2")
-                        {
-                            //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
-                            PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
-                        }
                         else
                         {
-                            //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
-                            PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                            if (asesor != 0 && item.MtoPri < 100000)
+                            {
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
+                            }
+                            else
+                            {
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
+                            }
                         }
                     }
                 }

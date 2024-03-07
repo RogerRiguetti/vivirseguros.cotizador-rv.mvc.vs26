@@ -123,7 +123,7 @@ namespace Estudio.Logic
                     message.Attachments.Add(new Attachment(archivoAdjuntar));
                 }
                 _log.Info("Security");
-                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 _log.Info("Send");
 
                 client.Send(message);
