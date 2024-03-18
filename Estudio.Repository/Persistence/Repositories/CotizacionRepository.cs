@@ -176,7 +176,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa el id de la cotización involucrada </returns>
 
-        public Cotizacion RegistrarModificarCotizacion(char bandera, Cotizacion cotizacion, DataTable idsBeneficiarios, DataTable idsModalidades)
+        public Cotizacion RegistrarModificarCotizacion(string bandera, Cotizacion cotizacion, DataTable idsBeneficiarios, DataTable idsModalidades)
         {
             try
             {

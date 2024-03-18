@@ -27,7 +27,10 @@ namespace Estudio.Api.Controllers
 
             var idsBeneficiarios = new List<string>();
             var idsModalidades = new List<string>();
-            char bandera = 'C';
+            string bandera = "C";
+
+
+
 
             //Modalidades
             int idModalidad = 0;
@@ -87,7 +90,38 @@ namespace Estudio.Api.Controllers
                     };
 
                     _modalidadesLogic.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
+
+                    idsModalidades.Add(idModalidad.ToString());
                 }
+
+                // aqui hay que guardar los benefciarios 
+                //bandera="C" creada , "U" actuliza
+                // var beneficiario que es la estructura
+                //traer ID de PARENTESCO
+                //var idParentesco=traer el ID del parentescto que llega en el request.beneficiario.Parentesco Crear la bandera Parentesto
+                //var IdTipoDocumento = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoDocumento", request.beneficiario.NombreDocumento);
+                //var IdSexo = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSexo", request.beneficiario.Genero);
+
+                //crear la bandera en el SP "CO_ConsultasCotizacionesExtraOficial"  IdInvalidez usar la tabla SituacionesInvalidez
+                //var idInvalidez = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdInvalidez", request.beneficiario.TipoInvalidez);
+
+                //el array
+                //beneficiario:
+
+                /*  
+                  public string Nombres { get; set; }
+                  public string Apellidos { get; set; }
+                  public string Documento { get; set; }
+                  public DateTime FechaNacimiento { get; set; }
+                  public string Sexo { get; set; }
+                  public int IdParentesco { get; set; }
+                  public int IdTipoDocumento { get; set; }
+                  public int IdSituacionInvalidez { get; set; }
+                  public DateTime FechaFallecimiento { get; set; }
+                  public string PorcentajeBen { get; set; }*/
+                //IdBeneficiarioJubilare
+
+                //_modalidadesLogic.RegistrarModificarBeneficiarios(bandera, beneficiario); el procediminto Almacenado es VCE_CatalogoBeneficiarios
 
 
                 if (IdAsesor == "00" || IdSexo == "00" || IdTipoDocumento == "00" || IdDepartamento == "00" || IdProvincia == "00" ||
@@ -134,15 +168,20 @@ namespace Estudio.Api.Controllers
                     Estado = 0
                 };
 
-                foreach (var ids in request.Beneficiario)
-                {
-                    idsBeneficiarios.Add(ids.IdBeneficiarioJubilare.ToString());
-                }
+                //hacer la consulta para traer todos los ID de beneficiario y guardarlo en el array  idsBeneficiarios SP VCE_CatalogoBeneficiarios buscare en la bandera @pBandera = 'B' campo idBeneficiario
+                //foreach (var ids in request.Beneficiario)
+                //{
+                //    idsBeneficiarios.Add(ids.IdBeneficiarioJubilare.ToString());
+                //}
 
-                foreach (var ids in request.Modalidad)
-                {
-                    idsModalidades.Add(ids.IdModalidadJubilare.ToString());
-                }
+                //hacer una consulta de los ID de modalidades y guardarlo en el Array idsModalidades SP VCE_CatalogoModalidades la bandera @pBandera = 'M' campo IdModalidad
+                //foreach (var ids in request.Modalidad)
+                //{
+                //    idsModalidades.Add(ids.IdModalidadJubilare.ToString());
+                //}
+                // esto debe cambiar 
+
+
 
                 response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, idsBeneficiarios, idsModalidades);
 

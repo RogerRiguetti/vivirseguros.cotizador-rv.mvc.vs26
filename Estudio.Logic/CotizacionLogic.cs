@@ -102,7 +102,7 @@ namespace Estudio.Logic
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public Response RegistrarModificarCotizacion(char bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
+        public Response RegistrarModificarCotizacion(string bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
         {
             try
             {
@@ -142,7 +142,7 @@ namespace Estudio.Logic
                 cotizacionRpt = _cotizacionRepository.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiariosDT, idsModalidadesDT);
                 res.Object = cotizacionRpt;
                 _log.Info("Registro de cotizacion");
-                if (bandera == 'C')
+                if (bandera == "C")
                     res.Message = "Cotización creada con éxito.";
                 else
                 {
@@ -881,7 +881,7 @@ namespace Estudio.Logic
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto representante al detalle de una cotización </returns>
 
-        public Response RegistrarModificarCotizacionDetalle(char bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
+        public Response RegistrarModificarCotizacionDetalle(string bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
         {
             try
             {
@@ -921,7 +921,7 @@ namespace Estudio.Logic
                 cotizacionRpt = _cotizacionRepository.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiariosDT, idsModalidadesDT);
                 res.Object = cotizacionRpt;
                 _log.Info("Registro de cotizacion");
-                if (bandera == 'C')
+                if (bandera == "C")
                     res.Message = "Cotización creada con éxito.";
                 else
                 {

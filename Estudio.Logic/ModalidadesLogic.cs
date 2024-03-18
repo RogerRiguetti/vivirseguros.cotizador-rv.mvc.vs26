@@ -33,7 +33,7 @@ namespace Estudio.Logic
         /// <param name="segundoTramo"> Porcentaje del primer tramo </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public Response RegistrarModificarModalidad(char bandera, int idModalidad, Modalidad modalidad)
+        public Response RegistrarModificarModalidad(string bandera, int idModalidad, Modalidad modalidad)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace Estudio.Logic
                         modalidad.IdModalidad = idModalidad;
                         modalidad.PorcentajeRentabilidadAfp = Convert.ToDecimal(codafp);
 
-                        _modalidadesRepository.RegistrarModificarModalidad('U', idModalidad, modalidad);
+                        _modalidadesRepository.RegistrarModificarModalidad("U", idModalidad, modalidad);
                     }
                 }
 

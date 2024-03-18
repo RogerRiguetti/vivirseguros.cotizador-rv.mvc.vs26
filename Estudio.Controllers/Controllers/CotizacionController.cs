@@ -293,7 +293,7 @@ namespace Estudio.Controllers.Controllers
         /// <param name="segundoTramo"> Porcentaje del primer tramo </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public ActionResult RegistrarModificarModalidad(char bandera, int idModalidad, decimal primerTramo, Modalidad modalidad)
+        public ActionResult RegistrarModificarModalidad(string bandera, int idModalidad, decimal primerTramo, Modalidad modalidad)
         {
             try
             {
@@ -487,7 +487,7 @@ namespace Estudio.Controllers.Controllers
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public ActionResult RegistrarModificarCotizacion(char bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
+        public ActionResult RegistrarModificarCotizacion(string bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
         {
             try
             {

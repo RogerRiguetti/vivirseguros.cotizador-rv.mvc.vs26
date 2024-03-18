@@ -31,12 +31,12 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="segundoTramo"> Porcentaje del primer tramo </param>
         /// <returns> Regresa la modalidad afectada en la operación </returns>
 
-        public Modalidad RegistrarModificarModalidad(char bandera, int idModalidad, Modalidad modalidad)
+        public Modalidad RegistrarModificarModalidad(string bandera, int idModalidad, Modalidad modalidad)
         {
             try
             {
                 var parameters = new List<SqlParameter>();
-                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pBandera", SqlDbType.Char, bandera, ParameterDirection.Input));
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pBandera", SqlDbType.VarChar, bandera, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pIdModalidad", SqlDbType.Int, idModalidad, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pAniosDiferidos", SqlDbType.Int, modalidad.AniosDiferidos, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@pPorcentajeRentabilidadAfp", SqlDbType.Decimal, modalidad.PorcentajeRentabilidadAfp, ParameterDirection.Input));
