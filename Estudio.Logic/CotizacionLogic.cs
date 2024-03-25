@@ -4,6 +4,7 @@ using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
 using log4net;
 using log4net.Config;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -979,6 +980,14 @@ namespace Estudio.Logic
                         break;
                     }
                 }
+
+                // Serializar la tabla de datos a JSON
+                string jsonRutina = JsonConvert.SerializeObject(rutinaDt, Formatting.Indented);
+
+                // Imprimir el JSON resultante
+                Console.WriteLine(jsonRutina);
+
+
 
                 if (mensaje == "" || mensaje == null)
                 {

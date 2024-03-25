@@ -300,6 +300,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Estudio.Controllers\Estudio.Controllers.csproj">
+      <Project>{b5039039-7b68-478b-ba08-862ae6f7d655}</Project>
+      <Name>Estudio.Controllers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Estudio.Logic\Estudio.Logic.csproj">
       <Project>{126B47D6-D44F-4276-854C-C2FDC190308B}</Project>
       <Name>Estudio.Logic</Name>

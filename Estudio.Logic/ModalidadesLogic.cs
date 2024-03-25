@@ -41,16 +41,18 @@ namespace Estudio.Logic
                 res.IsOk = true;
                 res.Object = _modalidadesRepository.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
                 res.Message = "Operación exitosa";
-                return res;
+                return res; // Devolver el objeto Response completo en lugar de res.Object
             }
             catch (Exception ex)
             {
                 Response res = new Response();
                 res.IsOk = false;
-                res.Message = "Ocurrió un error. Por favor vuelve a intentar o contacta al área de Sistemas ";
+                res.Message = "Ocurrió un error. Por favor vuelve a intentar o contacta al área de Sistemas";
                 return res;
             }
         }
+
+
 
         /// <summary>
         /// Antonio Quezada

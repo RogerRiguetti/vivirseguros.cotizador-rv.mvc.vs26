@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using System.Linq;
 using Estudio.Logic;
 using Estudio.Repository.Core.Domain;
-
 using CrystalDecisions.CrystalReports.Engine;
 using Estudio.Repository;
 using Estudio.Repository.Helpers;

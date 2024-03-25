@@ -25,6 +25,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudio.WebService", "Estudio.WebService\Estudio.WebService.csproj", "{2699DCE8-EA19-4141-97C5-A54FEAB2CF25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estudio.Api", "Estudio.Api\Estudio.Api.csproj", "{B2F24501-F052-4836-8B88-62CA2B062EF2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B5039039-7B68-478B-BA08-862AE6F7D655} = {B5039039-7B68-478B-BA08-862AE6F7D655}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
