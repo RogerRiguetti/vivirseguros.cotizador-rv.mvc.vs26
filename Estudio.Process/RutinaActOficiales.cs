@@ -256,17 +256,22 @@ namespace Estudio.Process
                     //PrcCom = (item.PrcCom + 0.2) * 1.42;
                     //PrcCom = (item.PrcCom + 0.46) * 1.47;
                     //if ((item.BanderaComision == "" || item.BanderaComision == null) && banderaWS != "WS")
+
+                    _log.Info("Inicia el log para revisar los asesores asignados con cic < 100k. Numerocotizacion=" + vlNumCot);
+
                     if ((item.BanderaComision == "" || item.BanderaComision == null))
                     {
+                        _log.Info("es nulo o vacio BanderaComision=" + item.BanderaComision);
                         if (asesor == 0 && item.MtoPri < 100000)
                         {
                             //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
+                            _log.Info("no tiene asesor Asignado:" + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                         }
                         else
                         {
                             if (asesor != 0 && item.MtoPri < 100000)
-                            {
+                            {   
                                 if (item.TipRen == "2")
                                 {
                                     //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
@@ -277,6 +282,7 @@ namespace Estudio.Process
                                     //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
                                     PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
                                 }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                             }
                             else
                             {
@@ -290,15 +296,18 @@ namespace Estudio.Process
                                     //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
                                     PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
                                 }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " mayores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                             }
                         }
                     }
                     else
                     {
+                        _log.Info("si viene con dato BanderaComision=" + item.BanderaComision);
                         if (asesor == 0 && item.MtoPri < 100000)
                         {
                             //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
+                            _log.Info("no tiene asesor Asignado:" + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                         }
                         else
                         {
@@ -314,6 +323,7 @@ namespace Estudio.Process
                                     //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
                                     PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
                                 }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                             }
                             else
                             {
@@ -327,6 +337,7 @@ namespace Estudio.Process
                                     //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
                                     PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
                                 }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " mayores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                             }
                         }
                     }
