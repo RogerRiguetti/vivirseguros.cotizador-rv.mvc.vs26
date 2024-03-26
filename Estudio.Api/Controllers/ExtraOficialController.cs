@@ -217,6 +217,7 @@ namespace Estudio.Api.Controllers
 
                 var cotizacion = new Cotizacion
                 {
+
                     IdCotizacion = request.IdCotizacionJubilare,
                     Documento = request.Asegurado.NumeroDocumento,
                     CUSPP = request.Asegurado.CUSPP,
@@ -248,7 +249,9 @@ namespace Estudio.Api.Controllers
                     CodigoPension = CodigoPension,
                     ClaveSexo = request.Asegurado.Genero,
                     PorAfp = PorAfp,
-                    Estado = 0
+                    Estado = 0,
+                    IdCotizacionjubilare = new int[] { request.IdCotizacionJubilare },
+                    IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray()
                 };
 
                 response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, BenficiariosIDs, ModalidadIDs);
