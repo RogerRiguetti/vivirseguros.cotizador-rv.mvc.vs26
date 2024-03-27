@@ -676,7 +676,7 @@ namespace Estudio.Logic
                         Console.WriteLine("Memory used before collection:       {0:N0}",
                         GC.GetTotalMemory(false));
 
-                        rutinaOficiales.Add(await _pruebasRutinaOficiales.RutinaOficiales(informacion[i].intNumOpe, informacion[i].strNumCot, Num_Archivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, null, "WS", informacion[i].idAsignado));
+                        rutinaOficiales.Add(await _pruebasRutinaOficiales.RutinaOficiales(informacion[i].intNumOpe, informacion[i].strNumCot, Num_Archivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, null, "WS", informacion[i].numAgente));
 
                         // Collect all generations of memory.
                         GC.Collect();
