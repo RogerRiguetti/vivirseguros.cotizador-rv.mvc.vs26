@@ -1049,8 +1049,35 @@ namespace Estudio.Logic
                     res.IsOk = false;
                 }
                 //res.Object = rutinaDt;
+
                 res.Object = rutinaDtAdd;
+
+
+
+                List<object> additionalObjects = new List<object>();
+                int contadormm = 0;
+                // Recorrer la lista combinada y realizar el cálculo
+                foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
+                {
+                    var id = tuple.id;
+                    var prcPension = double.Parse(tuple.prcPension); 
+
+                    var mtoPension = rutina[contadormm].MTO_PENSION;
+                    var multiplicado = mtoPension * prcPension;
+
+                    additionalObjects.Add(new
+                    {
+                        idsolicitudbeneficiario = id,
+                        prc_pension = prcPension,
+                        mto_pension = Math.Round(multiplicado, 2)
+                    });
+
+                    contadormm++;
+                }
+
+                res.AddAdditionalObject(additionalObjects);
                 return res;
+
             }
             catch (Exception ex)
             {

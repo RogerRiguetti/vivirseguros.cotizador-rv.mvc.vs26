@@ -205,6 +205,26 @@ namespace Estudio.Api.Controllers
                 }
 
                 var BenfeDatos = _CotizacionController.PorcentajesBeneficiarios(BenficiariosIDs, int.Parse(IdPensionAsegurado), fechaFallecimiento, FechaDevengueAsegurado.ToString("dd/MM/yyyy"));
+                
+       
+                List<string> Benf_prc_pension = new List<string>();
+
+                if (BenfeDatos is JsonResult jsonResult && jsonResult.Data != null)
+                {
+                    dynamic datos = jsonResult.Data;
+                    var ObjectData = datos.Object;
+
+                    if (ObjectData != null && ObjectData is IEnumerable<object>)
+                    {
+                        foreach (var elemento in ObjectData)
+                        {
+                            if (elemento.PorcentajeBenDbl != null && elemento.PorcentajeBenDbl is double)
+                            {
+                                Benf_prc_pension.Add(elemento.PorcentajeBenDbl.ToString());
+                            }
+                        }
+                    }
+                }
 
 
                 if (IdAsesor == "00" || IdSexo == "00" || IdTipoDocumento == "00" || IdDepartamento == "00" || IdProvincia == "00" ||
@@ -214,6 +234,17 @@ namespace Estudio.Api.Controllers
                     response.Message = CatalogoErrores.Cotizacion00;
                     return response;
                 }
+
+
+                // Crear una lista para guardar todos los IdBeneficiarioJubilare
+                List<int> idBeneficiariosJubilare = new List<int>();
+
+                // Agregar el IdBeneficiarioJubilare del asegurado
+                idBeneficiariosJubilare.Add(request.Asegurado.IdBeneficiarioJubilare);
+
+                // Agregar los IdBeneficiarioJubilare de los beneficiarios
+                idBeneficiariosJubilare.AddRange(request.Beneficiario.Select(b => b.IdBeneficiarioJubilare));
+
 
                 var cotizacion = new Cotizacion
                 {
@@ -251,7 +282,9 @@ namespace Estudio.Api.Controllers
                     PorAfp = PorAfp,
                     Estado = 0,
                     IdCotizacionjubilare = new int[] { request.IdCotizacionJubilare },
-                    IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray()
+                    IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray(),
+                    IdBeneficiariojubilare = idBeneficiariosJubilare.ToArray(),
+                    Benf_prc_pension = Benf_prc_pension.ToArray(),
                 };
 
                 response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, BenficiariosIDs, ModalidadIDs);
