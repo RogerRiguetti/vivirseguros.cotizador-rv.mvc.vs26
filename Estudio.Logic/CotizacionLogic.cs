@@ -998,6 +998,7 @@ namespace Estudio.Logic
                 rutinaDtAdd.Columns.Add("PensionAFP", typeof(double));
                 rutinaDtAdd.Columns.Add("IdCotizacionjubilare", typeof(int));
                 rutinaDtAdd.Columns.Add("IdModalidadjubilare", typeof(int));
+                rutinaDtAdd.Columns.Add("PorAfp", typeof(string));
 
                 int index = 0;
                 foreach (var item in rutina)
@@ -1021,6 +1022,7 @@ namespace Estudio.Logic
                         row["PensionAFP"] = item.MTO_RENTATMPAFP;
                         row["IdCotizacionjubilare"] = cotizacion.IdCotizacionjubilare[0];
                         row["IdModalidadjubilare"] = cotizacion.IdModalidadjubilare[index];
+                        row["PorAfp"] = cotizacion.PorAfp;
 
                         rutinaDtAdd.Rows.Add(row);
                         index++;
