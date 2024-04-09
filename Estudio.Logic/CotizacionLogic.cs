@@ -1065,13 +1065,13 @@ namespace Estudio.Logic
                     var prcPension = double.Parse(tuple.prcPension); 
 
                     var mtoPension = rutina[contadormm].MTO_PENSION;
-                    var multiplicado = mtoPension * prcPension;
+                    var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
 
                     additionalObjects.Add(new
                     {
                         idsolicitudbeneficiario = id,
                         prc_pension = prcPension,
-                        mto_pension = Math.Round(multiplicado, 2)
+                        mto_pension = multiplicado
                     });
 
                     contadormm++;
