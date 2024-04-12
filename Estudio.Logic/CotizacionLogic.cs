@@ -1070,7 +1070,7 @@ namespace Estudio.Logic
                             {
                                 IdSolicitudBeneficiario = id,
                                 PrcPension = prcPension,
-                                PensionAFP = Convert.ToDouble(cotizacion.PorAfp),
+                                PensionAFP = item.MTO_RENTATMPAFP,
                                 MtoPension = multiplicado
                             });
 
