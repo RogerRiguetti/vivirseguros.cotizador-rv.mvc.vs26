@@ -980,7 +980,33 @@ namespace Estudio.Logic
                     }
                 }
 
-                /*RUTINA DT ADD*/
+                /*RUTINA DT ADD*/  // DATOS DE ENVIO DE JSON 
+
+
+
+                //List<object> additionalObjects = new List<object>();
+                //int contadormm = 0;
+                //// Recorrer la lista combinada y realizar el cálculo
+                //foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
+                //{
+                //    var id = tuple.id;
+                //    var prcPension = double.Parse(tuple.prcPension);
+
+                //    var mtoPension = rutina[contadormm].MTO_PENSION;
+                //    var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
+
+                //    additionalObjects.Add(new
+                //    {
+                //        idsolicitudbeneficiario = id,
+                //        prc_pension = prcPension,
+                //        mto_pension = multiplicado
+                //    });
+
+                //    contadormm++;
+                //}
+
+               
+
                 DataTable rutinaDtAdd = new DataTable();
                 rutinaDtAdd.Columns.Add("Marcasob", typeof(string));
                 rutinaDtAdd.Columns.Add("MtoAjusteipc", typeof(double));
@@ -999,10 +1025,15 @@ namespace Estudio.Logic
                 rutinaDtAdd.Columns.Add("IdCotizacionjubilare", typeof(int));
                 rutinaDtAdd.Columns.Add("IdModalidadjubilare", typeof(int));
                 rutinaDtAdd.Columns.Add("PorAfp", typeof(string));
+                rutinaDtAdd.Columns.Add("Beneficiarios", typeof(List<beSolicitudBeneficiario>));
+
+
+
 
                 int index = 0;
                 foreach (var item in rutina)
                 {
+                    
                     if (item.Mensaje == null)
                     {
                         DataRow row = rutinaDtAdd.NewRow();
@@ -1024,18 +1055,38 @@ namespace Estudio.Logic
                         row["IdModalidadjubilare"] = cotizacion.IdModalidadjubilare[index];
                         row["PorAfp"] = cotizacion.PorAfp;
 
+                        List<beSolicitudBeneficiario> beneficiarios = new List<beSolicitudBeneficiario>();
+
+                        foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
+                        {
+                            var id = tuple.id;
+                            var prcPension = double.Parse(tuple.prcPension);
+                            var mtoPension = item.MTO_PENSION;
+                            var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
+
+
+                            // Agregar los beneficiarios a la lista
+                            beneficiarios.Add(new beSolicitudBeneficiario
+                            {
+                                IdSolicitudBeneficiario = id,
+                                PrcPension = prcPension,
+                                PensionAFP = Convert.ToDouble(cotizacion.PorAfp),
+                                MtoPension = multiplicado
+                            });
+
+
+                        }
+                        row["Beneficiarios"] = beneficiarios;
                         rutinaDtAdd.Rows.Add(row);
                         index++;
                     }
+
                     else
                     {
                         mensaje = item.Mensaje;
                         break;
                     }
                 }
-
-                // Serializar la tabla de datos a JSON
-                string jsonRutina = JsonConvert.SerializeObject(rutinaDt, Formatting.Indented);
 
 
                 if (mensaje == "" || mensaje == null)
@@ -1054,30 +1105,6 @@ namespace Estudio.Logic
 
                 res.Object = rutinaDtAdd;
 
-
-
-                List<object> additionalObjects = new List<object>();
-                int contadormm = 0;
-                // Recorrer la lista combinada y realizar el cálculo
-                foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
-                {
-                    var id = tuple.id;
-                    var prcPension = double.Parse(tuple.prcPension); 
-
-                    var mtoPension = rutina[contadormm].MTO_PENSION;
-                    var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
-
-                    additionalObjects.Add(new
-                    {
-                        idsolicitudbeneficiario = id,
-                        prc_pension = prcPension,
-                        mto_pension = multiplicado
-                    });
-
-                    contadormm++;
-                }
-
-                res.AddAdditionalObject(additionalObjects);
                 return res;
 
             }

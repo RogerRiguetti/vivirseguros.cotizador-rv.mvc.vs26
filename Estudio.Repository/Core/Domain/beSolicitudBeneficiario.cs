@@ -9,7 +9,8 @@ namespace Estudio.Repository.Core.Domain
     public class beSolicitudBeneficiario
     {
         public int IdSolicitudBeneficiario { get; set; }
-        public int PrcPension { get; set; }
-        public decimal MtoPension { get; set; }
+        public double PrcPension { get; set; }
+        public double PensionAFP { get; set; }
+        public double MtoPension { get; set; }
     }
 }

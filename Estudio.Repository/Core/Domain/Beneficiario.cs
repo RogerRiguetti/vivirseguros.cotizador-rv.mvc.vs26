@@ -8,6 +8,7 @@ namespace Estudio.Repository.Core.Domain
 {
     public class Beneficiario
     {
+  
         public int IdBeneficiario { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
@@ -36,6 +37,5 @@ namespace Estudio.Repository.Core.Domain
         public double PorcentajeBenDbl { get; set; }
         public string Cuspp { get; set; }
         public string FecDev { get; set; }
-
     }
 }
