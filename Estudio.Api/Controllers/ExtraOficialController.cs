@@ -285,6 +285,7 @@ namespace Estudio.Api.Controllers
                     IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray(),
                     IdBeneficiariojubilare = idBeneficiariosJubilare.ToArray(),
                     Benf_prc_pension = Benf_prc_pension.ToArray(),
+                    Tipo_Pension = request.Asegurado.TipoPension,
                 };
 
                 response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, BenficiariosIDs, ModalidadIDs);

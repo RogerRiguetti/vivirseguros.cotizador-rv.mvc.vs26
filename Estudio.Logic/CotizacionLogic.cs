@@ -983,30 +983,6 @@ namespace Estudio.Logic
                 /*RUTINA DT ADD*/  // DATOS DE ENVIO DE JSON 
 
 
-
-                //List<object> additionalObjects = new List<object>();
-                //int contadormm = 0;
-                //// Recorrer la lista combinada y realizar el cálculo
-                //foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
-                //{
-                //    var id = tuple.id;
-                //    var prcPension = double.Parse(tuple.prcPension);
-
-                //    var mtoPension = rutina[contadormm].MTO_PENSION;
-                //    var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
-
-                //    additionalObjects.Add(new
-                //    {
-                //        idsolicitudbeneficiario = id,
-                //        prc_pension = prcPension,
-                //        mto_pension = multiplicado
-                //    });
-
-                //    contadormm++;
-                //}
-
-               
-
                 DataTable rutinaDtAdd = new DataTable();
                 rutinaDtAdd.Columns.Add("Marcasob", typeof(string));
                 rutinaDtAdd.Columns.Add("MtoAjusteipc", typeof(double));
@@ -1064,18 +1040,35 @@ namespace Estudio.Logic
                             var mtoPension = item.MTO_PENSION;
                             var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
 
-
-                            // Agregar los beneficiarios a la lista
-                            beneficiarios.Add(new beSolicitudBeneficiario
-                            {
-                                IdSolicitudBeneficiario = id,
-                                PrcPension = prcPension,
-                                PensionAFP = item.MTO_RENTATMPAFP,
-                                MtoPension = multiplicado
-                            });
-
-
+                            beneficiarios.Add(new beSolicitudBeneficiario(id, prcPension, item.MTO_RENTATMPAFP, multiplicado));
                         }
+
+                        if(cotizacion.Tipo_Pension != "SOBREVIVENCIA")
+                        {
+                            // Crear el primer elemento especial de la lista de beneficiarios final
+                            var primerElementoEspecial = new beSolicitudBeneficiario(0, beneficiarios.FirstOrDefault()?.PrcPension ?? 0.0, beneficiarios.FirstOrDefault()?.PensionAFP ?? 0.0, beneficiarios.FirstOrDefault()?.MtoPension ?? 0.0);
+
+                            // Agregar el primer elemento especial a la lista final
+                            beneficiarios.Insert(0, primerElementoEspecial);
+                        }
+                        else
+                        {
+                            double sumaPrcPension = 0.0;
+                            double sumaMtoPension = 0.0;
+
+                            // Sumar los elementos a partir del segundo elemento
+                            foreach (var beneficiario in beneficiarios.Skip(1))
+                            {
+                                sumaPrcPension += beneficiario.PrcPension;
+                                sumaMtoPension += beneficiario.MtoPension;
+                            }
+
+                            // Insertar el elemento especial con la suma en la posición 0
+                            beneficiarios.Insert(0, new beSolicitudBeneficiario(0, sumaPrcPension, item.MTO_RENTATMPAFP, sumaMtoPension));
+                        }
+
+
+
                         row["Beneficiarios"] = beneficiarios;
                         rutinaDtAdd.Rows.Add(row);
                         index++;

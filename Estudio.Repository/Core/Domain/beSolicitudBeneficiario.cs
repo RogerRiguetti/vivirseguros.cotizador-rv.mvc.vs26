@@ -12,5 +12,13 @@ namespace Estudio.Repository.Core.Domain
         public double PrcPension { get; set; }
         public double PensionAFP { get; set; }
         public double MtoPension { get; set; }
+
+        public beSolicitudBeneficiario(int id, double prcPension, double pensionAFP, double mtoPension)
+        {
+            IdSolicitudBeneficiario = id;
+            PrcPension = prcPension;
+            PensionAFP = pensionAFP;
+            MtoPension = mtoPension;
+        }
     }
 }
