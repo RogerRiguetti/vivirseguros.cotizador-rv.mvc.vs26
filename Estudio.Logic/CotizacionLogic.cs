@@ -1043,7 +1043,7 @@ namespace Estudio.Logic
                             beneficiarios.Add(new beSolicitudBeneficiario(id, prcPension, item.MTO_RENTATMPAFP, multiplicado));
                         }
 
-                        if(cotizacion.Tipo_Pension != "SOBREVIVENCIA")
+                        if (!cotizacion.Tipo_Pension.Equals("SOBREVIVENCIA"))
                         {
                             // Crear el primer elemento especial de la lista de beneficiarios final
                             var primerElementoEspecial = new beSolicitudBeneficiario(0, beneficiarios.FirstOrDefault()?.PrcPension ?? 0.0, beneficiarios.FirstOrDefault()?.PensionAFP ?? 0.0, beneficiarios.FirstOrDefault()?.MtoPension ?? 0.0);
