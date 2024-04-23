@@ -188,7 +188,7 @@ namespace Estudio.Api.Controllers
                         Documento = Documento,
                         IdSexo = int.Parse(IdSexoBeneficiario),
                         IdSituacionInvalidez = int.Parse(IdSituacionInvalidezBeneficiario),
-                        FechaFallecimientoStr = fechaFallecimiento,
+                        FechaFallecimientoStr = "",
                         PorcentajeBen = "0",
                     };
 

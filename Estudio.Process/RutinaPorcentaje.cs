@@ -141,7 +141,7 @@ namespace Estudio.Process
                     sexo_cau = Sexobe[i];
                 };
                 Inv[i] = item.TipInv;
-                if (Ncorbe[i] == 99 && pen == "08")
+                if (Ncorbe[i] == 99 && pen == "S")
                 {
                     Derpen[i] = 10;
                 }
@@ -168,13 +168,12 @@ namespace Estudio.Process
 
                 vlFechaFallecimiento = item.FacFal;
                 Fec_Fall[i] = vlFechaFallecimiento;
-                vlFechaFallCau = "";
                 if (Codrel[i] == 99) { vlFechaFallCau = vlFechaFallecimiento; };
 
                 if (Codrel[i] >= 30 && Codrel[i] < 40)
                 {
                     L18 = eda;
-                    if (vlFechaFallCau != "")
+                    if (vlFechaFallecimiento != "")
                     {
                         Derpen[i] = 10;
                         if (item.DerPen != "10")
@@ -202,7 +201,7 @@ namespace Estudio.Process
                 }
                 else
                 {
-                    if (vlFechaFallCau != "")
+                    if (vlFechaFallecimiento != "")
                     {
                         Derpen[i] = 10;
                     }
