@@ -235,8 +235,9 @@ namespace Estudio.Logic
                                             "MTO_RMGTOSEPRV = " + producto.MTO_RMGTOSEPRV + ", \n	" +
                                             "MTO_VALREAJUSTEMEN = (CASE WHEN(cod_tipreajuste = 2) THEN 0.16515813 ELSE 0 END), \n" +
                                             "MTO_VALREAJUSTETRI = (CASE WHEN(cod_tipreajuste = 2) THEN 0.49629316 ELSE 0 END), \n" +
+                                            //"MTO_VALPREPENTMP =" + producto.MTO_RENTATMPAFP + ",  \n" +
                                             "MTO_VALPREPENTMP = CASE WHEN(" + producto.MTO_RENTATMPAFP + " = 0) THEN 0  \n" +
-                                            "ELSE ROUND((" + producto.MTO_CTAINDAFP + " / " + producto.MTO_RENTATMPAFP + "), 2) END \n" +
+                                            "ELSE ROUND(" + producto.MTO_VALPREPENTMP + ", 2) END \n" +
                                             "WHERE NUM_CORRELATIVO = " + producto.NUM_CORRELATIVO + " AND NUM_OPERACION = '" + producto.NUM_COTESTUDIO + "';";
                             }
                             else

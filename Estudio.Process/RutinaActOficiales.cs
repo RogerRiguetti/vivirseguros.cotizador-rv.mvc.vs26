@@ -3145,10 +3145,10 @@ namespace Estudio.Process
                             Resultados.MARCASOB = "S";
                         }
 
-                        Resultados.MTO_VALPREPENTMP = 0;
+                        Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / (sumapenben * Valmon), 2);
                         Resultados.MTO_PENSION = Math.Round(penanu, 2);
-                        Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva, 2);
-                        Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo, 2);
+                        Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva * Valmon, 2);
+                        Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo * Valmon, 2);
                         Resultados.MTO_RENTATMPAFP = Math.Round(sumapenben, 2);
                         Resultados.MTO_PRIUNISIM = 0;
                         Resultados.MTO_PENSIONGAR = Math.Round(vlPenGar, 2);
@@ -3177,9 +3177,9 @@ namespace Estudio.Process
                         Resultados.MTO_RESMAT = Math.Round(reserva, 2);
                         Resultados.NUM_CORRELATIVO = NumCor;
                         Resultados.NUM_COTESTUDIO = vlNumCot;
-                        Resultados.MTO_PENANUAL = vld_PensionAnual; //falta calcular
-                        Resultados.MTO_RMGTOSEP = vld_ReservaSepelio; //falta Reserva Gastos de Sepelio
-                        Resultados.MTO_RMPENSION = vld_ReservaPensiones;
+                        Resultados.MTO_PENANUAL = Math.Round(vld_PensionAnual, 2); //falta calcular
+                        Resultados.MTO_RMGTOSEP = Math.Round(vld_ReservaSepelio, 2); //falta Reserva Gastos de Sepelio
+                        Resultados.MTO_RMPENSION = Math.Round(vld_ReservaPensiones, 2);
                         Resultados.PRC_PERCON = tprc_per;
                         Resultados.MTO_VALREAJUSTETRI = vl_FactorTrimestral;
                         Resultados.MTO_VALREAJUSTEMEN = vl_FactorMensual;
@@ -3189,15 +3189,15 @@ namespace Estudio.Process
                             Resultados.MARCASOB = "S";
                         }
 
-                        Resultados.MTO_VALPREPENTMP = 0;
-                        Resultados.MTO_PENSION = penanu;
-                        Resultados.MTO_PRIUNIDIF = salcta_eva;
-                        Resultados.MTO_CTAINDAFP = vld_saldo;
-                        Resultados.MTO_RENTATMPAFP = sumapenben;
+                        Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / (sumapenben * Valmon), 2);
+                        Resultados.MTO_PENSION = Math.Round(penanu, 2);
+                        Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva * Valmon, 2);
+                        Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo * Valmon, 2);
+                        Resultados.MTO_RENTATMPAFP = Math.Round(sumapenben, 2);
                         Resultados.MTO_PRIUNISIM = 0;
-                        Resultados.MTO_PENSIONGAR = vlPenGar;
+                        Resultados.MTO_PENSIONGAR = Math.Round(vlPenGar, 2);
                         Resultados.MTO_RMGTOSEPRV = 0;
-                        Resultados.MTO_SUMPENSION = vlSumPension;
+                        Resultados.MTO_SUMPENSION = Math.Round(vlSumPension, 2);
                         if (Mone == "N" && TipRen == "D")
                         {
                             Resultados.MTO_AJUSTEIPC = vgFactorAjusteIPC;
@@ -3218,10 +3218,10 @@ namespace Estudio.Process
                         Resultados.MTO_RESMAT = Math.Round(reserva, 2);
                         Resultados.NUM_CORRELATIVO = NumCor;
                         Resultados.NUM_COTESTUDIO = vlNumCot;
-                        Resultados.MTO_PENANUAL = vld_PensionAnual; //falta calcular
-                        Resultados.MTO_RMGTOSEP = vld_ReservaSepelio; //falta Reserva Gastos de Sepelio
-                        Resultados.MTO_RMPENSION = vld_ReservaPensiones;
-                        Resultados.PRC_PERCON = tprc_per;
+                        Resultados.MTO_PENANUAL = Math.Round(vld_PensionAnual, 2); //falta calcular
+                        Resultados.MTO_RMGTOSEP = Math.Round(vld_ReservaSepelio, 2); //falta Reserva Gastos de Sepelio
+                        Resultados.MTO_RMPENSION = Math.Round(vld_ReservaPensiones, 2);
+                        Resultados.PRC_PERCON = Math.Round(tprc_per, 2);
                         Resultados.MTO_VALREAJUSTETRI = vl_FactorTrimestral;
                         Resultados.MTO_VALREAJUSTEMEN = vl_FactorMensual;
                         Resultados.MARCASOB = "N";
@@ -3230,15 +3230,15 @@ namespace Estudio.Process
                             Resultados.MARCASOB = "S";
                         }
 
-                        Resultados.MTO_VALPREPENTMP = 0;
+                        Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / (sumapenben * Valmon), 2);
                         Resultados.MTO_PENSION = penanu;
-                        Resultados.MTO_PRIUNIDIF = salcta_eva;
-                        Resultados.MTO_CTAINDAFP = vld_saldo;
-                        Resultados.MTO_RENTATMPAFP = sumapenben;
+                        Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva * Valmon, 2);
+                        Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo * Valmon, 2); //vld_saldo;
+                        Resultados.MTO_RENTATMPAFP = Math.Round(sumapenben, 2);
                         Resultados.MTO_PRIUNISIM = 0;
-                        Resultados.MTO_PENSIONGAR = vlPenGar;
+                        Resultados.MTO_PENSIONGAR = Math.Round(vlPenGar, 2);
                         Resultados.MTO_RMGTOSEPRV = 0;
-                        Resultados.MTO_SUMPENSION = vlSumPension;
+                        Resultados.MTO_SUMPENSION = Math.Round(vlSumPension, 2);
                         if (Mone == "N" && TipRen == "D")
                         {
                             Resultados.MTO_AJUSTEIPC = vgFactorAjusteIPC;
