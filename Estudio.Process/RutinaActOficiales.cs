@@ -3076,9 +3076,10 @@ namespace Estudio.Process
                 #region Carga Tabla de Resultados
                 Resultados = new beResultados();
 
-                //vlSumPension = vlSumaPension; //formatea
+                vlSumPension = vlSumaPension; //formatea
                 if (TipRen == "M") { MinRC = MinRC / Valmon; }
-                if (TipPen != "S") { penanuFinal = penanu; } else { penanuFinal = vlSumPension; }
+                //if (TipPen != "S" ) { penanuFinal = penanu; } else { penanuFinal = vlSumPension; }
+                if (TipPen == "V") { penanuFinal = penanu; } else { penanuFinal = vlSumPension; }
                 //NoCotiza:
                 if (TipPen == "C" || TipPen == "M")
                 {
@@ -3144,8 +3145,14 @@ namespace Estudio.Process
                         {
                             Resultados.MARCASOB = "S";
                         }
-
-                        Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / (sumapenben * Valmon), 2);
+                        if (TipRen == "D")
+                        {
+                            Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / ((penanuFinal * Valmon) / PrcTaf), 2);
+                        }
+                        else
+                        {
+                            Resultados.MTO_VALPREPENTMP = 0;
+                        }
                         Resultados.MTO_PENSION = Math.Round(penanu, 2);
                         Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva * Valmon, 2);
                         Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo * Valmon, 2);
@@ -3153,7 +3160,7 @@ namespace Estudio.Process
                         Resultados.MTO_PRIUNISIM = 0;
                         Resultados.MTO_PENSIONGAR = Math.Round(vlPenGar, 2);
                         Resultados.MTO_RMGTOSEPRV = 0;
-                        Resultados.MTO_SUMPENSION = Math.Round(vlSumPension, 2);
+                        Resultados.MTO_SUMPENSION = Math.Round(penanuFinal, 2);
                         if (Mone == "N" && TipRen == "D")
                         {
                             Resultados.MTO_AJUSTEIPC = vgFactorAjusteIPC;
@@ -3189,7 +3196,14 @@ namespace Estudio.Process
                             Resultados.MARCASOB = "S";
                         }
 
-                        Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / (sumapenben * Valmon), 2);
+                        if (TipRen == "D")
+                        {
+                            Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / ((penanuFinal * Valmon) / PrcTaf), 2);
+                        }
+                        else
+                        {
+                            Resultados.MTO_VALPREPENTMP = 0;
+                        }
                         Resultados.MTO_PENSION = Math.Round(penanu, 2);
                         Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva * Valmon, 2);
                         Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo * Valmon, 2);
@@ -3197,7 +3211,7 @@ namespace Estudio.Process
                         Resultados.MTO_PRIUNISIM = 0;
                         Resultados.MTO_PENSIONGAR = Math.Round(vlPenGar, 2);
                         Resultados.MTO_RMGTOSEPRV = 0;
-                        Resultados.MTO_SUMPENSION = Math.Round(vlSumPension, 2);
+                        Resultados.MTO_SUMPENSION = Math.Round(penanuFinal, 2);
                         if (Mone == "N" && TipRen == "D")
                         {
                             Resultados.MTO_AJUSTEIPC = vgFactorAjusteIPC;
@@ -3230,7 +3244,14 @@ namespace Estudio.Process
                             Resultados.MARCASOB = "S";
                         }
 
-                        Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / (sumapenben * Valmon), 2);
+                         if (TipRen == "D")
+                        {
+                            Resultados.MTO_VALPREPENTMP = Math.Round((vld_saldo * Valmon) / ((penanuFinal * Valmon) / PrcTaf), 2);
+                        }
+                        else
+                        {
+                            Resultados.MTO_VALPREPENTMP = 0;
+                        }
                         Resultados.MTO_PENSION = penanu;
                         Resultados.MTO_PRIUNIDIF = Math.Round(salcta_eva * Valmon, 2);
                         Resultados.MTO_CTAINDAFP = Math.Round(vld_saldo * Valmon, 2); //vld_saldo;
@@ -3238,7 +3259,7 @@ namespace Estudio.Process
                         Resultados.MTO_PRIUNISIM = 0;
                         Resultados.MTO_PENSIONGAR = Math.Round(vlPenGar, 2);
                         Resultados.MTO_RMGTOSEPRV = 0;
-                        Resultados.MTO_SUMPENSION = Math.Round(vlSumPension, 2);
+                        Resultados.MTO_SUMPENSION = Math.Round(penanuFinal, 2);
                         if (Mone == "N" && TipRen == "D")
                         {
                             Resultados.MTO_AJUSTEIPC = vgFactorAjusteIPC;
