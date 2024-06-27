@@ -1696,7 +1696,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="numArch">Numero de archivo con el que se esta trabajando</param>
         /// <param name="usuario">Usuario que esta ejecutando el sistema</param>
         /// <returns> regresa vacio o error dependiendo de el exito de las operaciones</returns>
-        public string aceptaCotizacion(string CodCia, int numArch, string usuario)
+        public string aceptaCotizacion(string CodCia, int numArch, string usuario, string FecCar)
         {
             try
             {
@@ -1736,7 +1736,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 {
                     for (int i = 0; i < _ProCarArchivoList.Count; i++)
                     {
-                        aceptaCotizacion2(_ProCarArchivoList[i], "E", usuario);
+                        aceptaCotizacion2(_ProCarArchivoList[i], "E", usuario, FecCar);
                     }
                 }
                 return "";
@@ -1755,7 +1755,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="vgEstEnv">Codigo del estado de la cotizacion</param>
         /// <param name="usuario">Usuario que esta ejecutando el sistema</param>
         /// <returns>  </returns>
-        public void aceptaCotizacion2(ProCarArchivo datos, string vgEstEnv, string usuario)
+        public void aceptaCotizacion2(ProCarArchivo datos, string vgEstEnv, string usuario, string FecCar)
         {
             try
             {
@@ -1779,7 +1779,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 _log.Info("Informacion de la consulta realizada" + query );
                 if (_ProCarArchivo != null)
                 {
-                    _ProCarArchivo.fecCierre = busca_FechaServidor();
+                    _ProCarArchivo.fecCierre = FecCar;
                     modSolicitud(_ProCarArchivo, vgEstEnv, usuario);
                 }
             }
@@ -2407,7 +2407,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// Obtiene la fecha actual del servidor
         /// </summary>
         /// <returns> retorna la fecha actual del servidor</returns>
-        public string busca_FechaServidor()
+        public string busca_FechaServidor() 
         {
             try
             {
@@ -2426,6 +2426,8 @@ namespace Estudio.Repository.Persistence.Repositories
                 throw;
             }
         }
+
+
         /// <summary>
         ///  Omar Figueroa Flores
         /// 23-10-2018
