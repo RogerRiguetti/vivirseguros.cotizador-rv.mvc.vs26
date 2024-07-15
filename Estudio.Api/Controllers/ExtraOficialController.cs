@@ -72,8 +72,8 @@ namespace Estudio.Api.Controllers
                     var Gratificacion = mod.Gratificacion;
                     var IdModalidadCat = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdModalidadCat", mod.TipoModalidad);
                     var IdTipoRenta = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoRenta", mod.TipoRenta);
-                    var PorcentajeRentaTemporal = mod.RentaTemp;
-                    var PorcentajeRentabilidadAfp = mod.TasaRentaAFP;
+                    var PorcentajeRentaTemporal = 50;//mod.RentaTemp;
+                    var PorcentajeRentabilidadAfp = decimal.Parse(PorAfp);//mod.TasaRentaAFP;
 
                     if (IdMoneda == "00" || IdModalidadCat == "00" || IdTipoRenta == "00")
                     {

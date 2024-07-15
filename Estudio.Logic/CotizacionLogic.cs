@@ -1001,6 +1001,8 @@ namespace Estudio.Logic
                 rutinaDtAdd.Columns.Add("IdCotizacionjubilare", typeof(int));
                 rutinaDtAdd.Columns.Add("IdModalidadjubilare", typeof(int));
                 rutinaDtAdd.Columns.Add("PorAfp", typeof(string));
+                rutinaDtAdd.Columns.Add("TipoCambio", typeof(double));
+                rutinaDtAdd.Columns.Add("RentaEsc", typeof(int));
                 rutinaDtAdd.Columns.Add("Beneficiarios", typeof(List<beSolicitudBeneficiario>));
 
 
@@ -1030,6 +1032,8 @@ namespace Estudio.Logic
                         row["IdCotizacionjubilare"] = cotizacion.IdCotizacionjubilare[0];
                         row["IdModalidadjubilare"] = cotizacion.IdModalidadjubilare[index];
                         row["PorAfp"] = cotizacion.PorAfp;
+                        row["TipoCambio"] = 0;
+                        row["RentaEsc"] = 0;
 
                         List<beSolicitudBeneficiario> beneficiarios = new List<beSolicitudBeneficiario>();
 
