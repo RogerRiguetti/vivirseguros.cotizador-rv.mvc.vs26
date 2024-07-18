@@ -74,6 +74,8 @@ namespace Estudio.Api.Controllers
                     var IdTipoRenta = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoRenta", mod.TipoRenta);
                     var PorcentajeRentaTemporal = 50;//mod.RentaTemp;
                     var PorcentajeRentabilidadAfp = decimal.Parse(PorAfp);//mod.TasaRentaAFP;
+                    var SegundoTramo = mod.SegundoTramo;
+                    var PrimerTramo = mod.PrimerTramo;
 
                     if (IdMoneda == "00" || IdModalidadCat == "00" || IdTipoRenta == "00")
                     {
@@ -92,7 +94,9 @@ namespace Estudio.Api.Controllers
                         IdMoneda = int.Parse(IdMoneda),
                         IdTipoRenta = int.Parse(IdTipoRenta),
                         PorcentajeRentaTemporal = PorcentajeRentaTemporal,
-                        PorcentajeRentabilidadAfp = PorcentajeRentabilidadAfp
+                        PorcentajeRentabilidadAfp = PorcentajeRentabilidadAfp,
+                        PrimerTramo = PrimerTramo,
+                        SegundoTramo = SegundoTramo,
                     };
 
                     var ObjetoModalidad = _modalidadesLogic.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
@@ -262,8 +266,8 @@ namespace Estudio.Api.Controllers
                     FechaDevengueStr = null,
                     FechaEstudio = DateTime.Now,
                     FechaEstudioStr = null,
-                    GastoSepelio = request.GastoSepelio,
-                    TipoCambio = request.TipoCambio,
+                    GastoSepelio = decimal.Parse(_cotizacionLogic.ConsultaGastoSepelio()),//request.GastoSepelio,
+                    TipoCambio = _cotizacionLogic.ConsultaTipoCambio(),//request.TipoCambio,
                     FechaCotizacion = DateTime.Now,
                     FechaCotizacionStr = null,
                     IdAsesor = int.Parse(IdAsesor),

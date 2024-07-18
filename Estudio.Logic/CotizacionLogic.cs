@@ -931,6 +931,9 @@ namespace Estudio.Logic
                     res.Message = "Cotización modificada con éxito.";
                 }
 
+                // Obtiene el tipo de cambio
+
+
                 // Cálculo de la rutina
                 int idCotizacion = cotizacionRpt.IdCotizacion;
                 string mensaje = "";
@@ -1032,7 +1035,7 @@ namespace Estudio.Logic
                         row["IdCotizacionjubilare"] = cotizacion.IdCotizacionjubilare[0];
                         row["IdModalidadjubilare"] = cotizacion.IdModalidadjubilare[index];
                         row["PorAfp"] = cotizacion.PorAfp;
-                        row["TipoCambio"] = 0;
+                        row["TipoCambio"] = cotizacion.TipoCambio;
                         row["RentaEsc"] = 0;
 
                         List<beSolicitudBeneficiario> beneficiarios = new List<beSolicitudBeneficiario>();
