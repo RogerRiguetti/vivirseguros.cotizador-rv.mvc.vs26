@@ -1012,6 +1012,7 @@ namespace Estudio.Logic
 
 
                 int index = 0;
+                double sumPrcPen = 0;
                 foreach (var item in rutina)
                 {
                     
@@ -1040,14 +1041,32 @@ namespace Estudio.Logic
 
                         List<beSolicitudBeneficiario> beneficiarios = new List<beSolicitudBeneficiario>();
 
+                        sumPrcPen = 0;
+                        foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
+                        {                            
+                            var prcPension = double.Parse(tuple.prcPension);
+                            sumPrcPen = sumPrcPen + prcPension;
+                        }
+
                         foreach (var tuple in cotizacion.IdBeneficiariojubilare.Zip(cotizacion.Benf_prc_pension, (id, prcPension) => (id, prcPension)))
                         {
+                            double prcPensionDis = 0;
                             var id = tuple.id;
                             var prcPension = double.Parse(tuple.prcPension);
+                            if (!cotizacion.Tipo_Pension.Equals("SOBREVIVENCIA"))
+                            {
+                                prcPensionDis = prcPension;
+                            }
+                            else
+                            {
+                                prcPensionDis = prcPension / (sumPrcPen / 100);
+                            }
                             var mtoPension = item.MTO_PENSION;
-                            var multiplicado = Math.Round(mtoPension * (prcPension / 100), 2);
+                            var mtoPensionAFP = item.MTO_RENTATMPAFP;
+                            var pensionDis = Math.Round(mtoPension * (prcPensionDis / 100), 2);
+                            var pensionAfpDis = Math.Round(mtoPensionAFP * (prcPensionDis / 100), 2);
 
-                            beneficiarios.Add(new beSolicitudBeneficiario(id, prcPension, item.MTO_RENTATMPAFP, multiplicado));
+                            beneficiarios.Add(new beSolicitudBeneficiario(id, prcPension, pensionAfpDis, pensionDis));
                         }
 
                         if (!cotizacion.Tipo_Pension.Equals("SOBREVIVENCIA"))
@@ -1062,16 +1081,18 @@ namespace Estudio.Logic
                         {
                             double sumaPrcPension = 0.0;
                             double sumaMtoPension = 0.0;
+                            double sumaMtoPensAFP = 0.0;
 
                             // Sumar los elementos a partir del segundo elemento
                             foreach (var beneficiario in beneficiarios.Skip(1))
                             {
                                 sumaPrcPension += beneficiario.PrcPension;
                                 sumaMtoPension += beneficiario.MtoPension;
+                                sumaMtoPensAFP += beneficiario.PensionAFP;
                             }
 
                             // Insertar el elemento especial con la suma en la posición 0
-                            beneficiarios.Insert(0, new beSolicitudBeneficiario(0, sumaPrcPension, item.MTO_RENTATMPAFP, sumaMtoPension));
+                            beneficiarios.Insert(0, new beSolicitudBeneficiario(0, sumaPrcPension, Math.Round(sumaMtoPensAFP,2), Math.Round(sumaMtoPension,2)));
                         }
 
 
