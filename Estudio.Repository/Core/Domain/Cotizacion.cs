@@ -41,5 +41,6 @@ namespace Estudio.Repository.Core.Domain
         public int[] IdBeneficiariojubilare { get; set; }
         public string[] Benf_prc_pension { get; set; }
         public object Tipo_Pension { get; set; }
+        public string[] Mod_mon { get; set; }
     }
 }
