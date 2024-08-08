@@ -42,5 +42,7 @@ namespace Estudio.Repository.Core.Domain
         public string[] Benf_prc_pension { get; set; }
         public object Tipo_Pension { get; set; }
         public string[] Mod_mon { get; set; }
+        public string[] Mod_tre { get; set; }
+        public decimal[] Mod_pes { get; set; }
     }
 }

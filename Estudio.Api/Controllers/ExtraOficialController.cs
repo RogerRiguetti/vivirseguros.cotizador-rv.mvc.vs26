@@ -123,6 +123,8 @@ namespace Estudio.Api.Controllers
                 // Declarar una lista para almacenar los ObjetoModalidad
                 List<string> ModalidadIDs = new List<string>();
                 List<string> Mod_moneda = new List<string>();
+                List<string> Mod_tipren = new List<string>();
+                List<decimal> Mod_tippes = new List<decimal>();
 
                 foreach (var mod in request.Modalidad)
                 {
@@ -190,6 +192,8 @@ namespace Estudio.Api.Controllers
                         ModalidadIDs.Add(idModalidadDevuelto.ToString());
                     }
                     Mod_moneda.Add(IdMoneda);
+                    Mod_tipren.Add(IdTipoRenta);
+                    Mod_tippes.Add(SegundoTramo);
                 }
 
 
@@ -445,6 +449,8 @@ namespace Estudio.Api.Controllers
                     Benf_prc_pension = Benf_prc_pension.ToArray(),
                     Tipo_Pension = request.Asegurado.TipoPension,
                     Mod_mon = Mod_moneda.ToArray(),
+                    Mod_tre = Mod_tipren.ToArray(),
+                    Mod_pes = Mod_tippes.ToArray(),
                 };
 
                 response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, BenficiariosIDs, ModalidadIDs);

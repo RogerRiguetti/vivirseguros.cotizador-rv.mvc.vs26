@@ -1012,13 +1012,15 @@ namespace Estudio.Logic
 
 
                 int index = 0;
+                string idmon, idtre = "";
                 double sumPrcPen = 0;
                 double mtoPensionPen = 0;
                 double mtoPensionPenAfp = 0;
-                string idmon = "";
+                decimal porSeg = 0;
+
                 foreach (var item in rutina)
                 {
-                    
+
                     if (item.Mensaje == null)
                     {
                         DataRow row = rutinaDtAdd.NewRow();
@@ -1043,7 +1045,9 @@ namespace Estudio.Logic
                         //row["RentaEsc"] = 0;
 
                         idmon = cotizacion.Mod_mon[index];
-                        
+                        idtre = cotizacion.Mod_tre[index];
+                        porSeg = cotizacion.Mod_pes[index];
+
                         List<beSolicitudBeneficiario> beneficiarios = new List<beSolicitudBeneficiario>();
 
                         sumPrcPen = 0;
@@ -1060,9 +1064,18 @@ namespace Estudio.Logic
                             var prcPension = double.Parse(tuple.prcPension);
                             if (!cotizacion.Tipo_Pension.Equals("SOBREVIVENCIA"))
                             {
-                                mtoPensionPen = item.MTO_PENSION;
-                                mtoPensionPenAfp = item.MTO_RENTATMPAFP;
-                                prcPensionDis = prcPension;
+                                if (cotizacion.Tipo_Pension.Equals("JUBILACIÓN LEGAL") || cotizacion.Tipo_Pension.Equals("JUBILACIÓN ANTICIPADA"))
+                                {
+                                    mtoPensionPen = Math.Round(item.MTO_PENSION * ((double)porSeg / 100),2);
+                                    mtoPensionPenAfp = item.MTO_PENSION;
+                                    prcPensionDis = prcPension;
+                                }
+                                else
+                                {
+                                    mtoPensionPen = item.MTO_PENSION;
+                                    mtoPensionPenAfp = item.MTO_RENTATMPAFP;
+                                    prcPensionDis = prcPension;
+                                }
                             }
                             else
                             {
