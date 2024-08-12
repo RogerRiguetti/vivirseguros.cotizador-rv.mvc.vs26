@@ -264,6 +264,7 @@
     <Compile Include="Assets\Identity.cs" />
     <Compile Include="Assets\Utils.cs" />
     <Compile Include="clXML.cs" />
+    <Compile Include="Controllers\JubilareController.cs" />
     <Compile Include="Controllers\MantenedorPerfilesController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\EstudioController.cs" />
@@ -1006,7 +1007,9 @@
       <CachedSettingsPropName>Estudio_Controllers_prueba_WebServiceOficiales</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Jubilare\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

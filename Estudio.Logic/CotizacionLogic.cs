@@ -216,7 +216,7 @@ namespace Estudio.Logic
                     res.Object = new { idCotizacion = idCotizacion, bandera = bandera };
                     res.IsOk = false;
                 }
-                
+
                 return res;
             }
             catch (Exception ex)
@@ -953,7 +953,7 @@ namespace Estudio.Logic
                 _log.Info("Comenzara a ejecutar la rutina");
                 rutina = _pruebaRutinaProcess.Rutina(idCotizacion);
                 _log.Info("Termino ejecucion de rutina");
-                
+
                 foreach (var item in rutina)
                 {
                     if (item.Mensaje == null)
