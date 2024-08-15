@@ -1023,11 +1023,15 @@ namespace Estudio.Logic
 
                     if (item.Mensaje == null)
                     {
+                        idmon = cotizacion.Mod_mon[index];
+                        idtre = cotizacion.Mod_tre[index];
+                        porSeg = cotizacion.Mod_pes[index];
+
                         DataRow row = rutinaDtAdd.NewRow();
                         row["Marcasob"] = item.MARCASOB;
                         row["MtoAjusteipc"] = item.MTO_AJUSTEIPC;
                         row["MtoPension"] = item.MTO_PENSION;
-                        row["MtoPriunidif"] = item.MTO_PRIUNIDIF;
+                        row["MtoPriunidif"] = (idmon=="4")?item.MTO_PRIUNIDIF * double.Parse(cotizacion.TipoCambio) : item.MTO_PRIUNIDIF;
                         row["MtoResmat"] = item.MTO_RESMAT;
                         row["NumCorrelativo"] = item.NUM_CORRELATIVO;
                         row["NumCotestudio"] = item.NUM_COTESTUDIO;
@@ -1035,18 +1039,14 @@ namespace Estudio.Logic
                         row["PrcTasatce"] = item.PRC_TASATCE;
                         row["PrcTasatir"] = item.PRC_TASATIR;
                         row["PrcTasavta"] = item.PRC_TASAVTA;
-                        row["PrimaUnica"] = item.PRIMA_UNICA;
-                        row["PrimaAFP"] = item.MTO_CTAINDAFP;
-                        row["PensionAFP"] = item.MTO_RENTATMPAFP;
+                        row["PrimaUnica"] = (idmon == "4") ? item.PRIMA_UNICA * double.Parse(cotizacion.TipoCambio) : item.PRIMA_UNICA;
+                        row["PrimaAFP"] = (idmon == "4") ? item.MTO_CTAINDAFP * double.Parse(cotizacion.TipoCambio) : item.MTO_CTAINDAFP;
+                        row["PensionAFP"] = (idmon == "4") ? item.MTO_RENTATMPAFP * double.Parse(cotizacion.TipoCambio) : item.MTO_RENTATMPAFP;
                         row["IdCotizacionjubilare"] = cotizacion.IdCotizacionjubilare[0];
                         row["IdModalidadjubilare"] = cotizacion.IdModalidadjubilare[index];
                         row["PorAfp"] = cotizacion.PorAfp;
                         row["TipoCambio"] = cotizacion.TipoCambio;
                         //row["RentaEsc"] = 0;
-
-                        idmon = cotizacion.Mod_mon[index];
-                        idtre = cotizacion.Mod_tre[index];
-                        porSeg = cotizacion.Mod_pes[index];
 
                         List<beSolicitudBeneficiario> beneficiarios = new List<beSolicitudBeneficiario>();
 
@@ -1066,9 +1066,18 @@ namespace Estudio.Logic
                             {
                                 if (cotizacion.Tipo_Pension.Equals("JUBILACIÓN LEGAL") || cotizacion.Tipo_Pension.Equals("JUBILACIÓN ANTICIPADA"))
                                 {
-                                    mtoPensionPen = Math.Round(item.MTO_PENSION * ((double)porSeg / 100),2);
-                                    mtoPensionPenAfp = item.MTO_PENSION;
-                                    prcPensionDis = prcPension;
+                                    if (idtre == "6")
+                                    {
+                                        mtoPensionPen = Math.Round(item.MTO_PENSION * ((double)porSeg / 100), 2);
+                                        mtoPensionPenAfp = item.MTO_PENSION;
+                                        prcPensionDis = prcPension;
+                                    }
+                                    else
+                                    {
+                                        mtoPensionPen = item.MTO_PENSION;
+                                        mtoPensionPenAfp = item.MTO_RENTATMPAFP;
+                                        prcPensionDis = prcPension;
+                                    }
                                 }
                                 else
                                 {
