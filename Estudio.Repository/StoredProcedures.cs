@@ -101,6 +101,10 @@ namespace Estudio.Repository
         //MANTENEDOR PERFILES
         public const string VCE_CatalogoMantenedorPerfiles = "VCE_CatalogoMantenedorPerfiles";
         public const string ReporteGanados = "ReporteGanados";
-        
+
+
+        // JUBILARE
+        public const string usp_Jub_Sel_CarteraCompleta = "usp_Jub_Sel_CarteraCompleta";
+        public const string usp_Jub_Sel_CarteraCompleta_Paginado = "usp_Jub_Sel_CarteraCompleta_Paginado";
     }
 }
