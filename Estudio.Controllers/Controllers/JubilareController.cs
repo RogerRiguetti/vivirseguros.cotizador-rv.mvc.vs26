@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using Estudio.Repository;
 using Newtonsoft.Json;
 using System.IO;
+using log4net;
+using System.Reflection;
 using Estudio.Logic;
 
 /// <summary>
@@ -31,7 +33,8 @@ namespace Estudio.Controllers.Controllers
         //    return View();
         //}
 
-        public string GetNameFile()
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private string GetNameFile()
         {
             string fileName = "CarteraJubilare";
             DateTime now = DateTime.Now;
@@ -41,19 +44,26 @@ namespace Estudio.Controllers.Controllers
             return $"{fileName}_{formattedDate}_{formattedTime}.xlsx";
         }
 
+        [HttpGet]
         public ActionResult GetCarteraCompleta()
         {
+            _log.Info("Inicia solicitud de GetCartera Completa");
             string folderPath = @"D:\ExportacionesJubilare";
 
+            _log.Info("Verificando la existencia del directorio ExportacionesJubilare en disco D");
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
+                _log.Info("Se crea el directorio ExportacionesJubilare en disco D");
             }
 
             string fileName = GetNameFile();
             string filePath = Path.Combine(folderPath, fileName);
+            _log.Info("Se genera el filePath");
             JubilareExportData jubilareExportData = new JubilareExportData();
+            _log.Info("Se hace llamado del service de jubilareExportData");
             jubilareExportData.ExportToExcelPagination(filePath);
+            _log.Info("Fin de Solicitud de GetCartera Completa");
             return File(filePath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
