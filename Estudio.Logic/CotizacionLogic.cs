@@ -1095,7 +1095,7 @@ namespace Estudio.Logic
                             var mtoPension = mtoPensionPen; //item.MTO_PENSION;
 
                             var mtoPensionAFP = mtoPensionPenAfp;
-                            if (idmon == "4")
+                            if (idmon == "4" && idtre != "6")
                             {
                                 mtoPensionAFP = Math.Round(mtoPensionPenAfp * double.Parse(cotizacion.TipoCambio), 2); ;
                             }
