@@ -1008,6 +1008,7 @@
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Default\" />
     <Folder Include="Views\Jubilare\" />
   </ItemGroup>
   <PropertyGroup>
