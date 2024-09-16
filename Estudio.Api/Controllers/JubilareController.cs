@@ -1,30 +1,18 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using Estudio.Logic;
+using System;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web.Http;
 using log4net;
 using System.Reflection;
-using Estudio.Logic;
 
-/// <summary>
-/// Controlador para acciones de Jubilare
-/// </summary>
-/// 
-/// <remarks>
-/// Este controlador proporciona acciones para exportar datos en diferentes formatos.
-///
-/// Creado por: @wcdz
-/// Fecha de creación: 2024-08-12
-/// </remarks>
-namespace Estudio.Controllers.Controllers
+namespace Estudio.Api.Controllers
 {
-    public class JubilareController : Controller
+    [RoutePrefix("api/Jubilare")]
+    public class JubilareController : ApiController
     {
-        //// GET: Jubilare
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private string GetNameFile()
         {
@@ -37,34 +25,52 @@ namespace Estudio.Controllers.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCarteraCompleta()
+        [Route("GetCarteraCompleta")]
+        public IHttpActionResult GetCarteraCompleta()
         {
             _log.Info("Inicia solicitud de GetCartera Completa");
+
             string folderPath = @"D:\ExportacionesJubilare";
 
-            _log.Info("Verificando la existencia del directorio ExportacionesJubilare en disco D");
+            // Verificar si el directorio existe, si no, crearlo
             if (!Directory.Exists(folderPath))
             {
                 Directory.CreateDirectory(folderPath);
                 _log.Info("Se crea el directorio ExportacionesJubilare en disco D");
             }
 
+            // Obtener el nombre del archivo
             string fileName = GetNameFile();
             string filePath = Path.Combine(folderPath, fileName);
-            _log.Info("Se genera el filePath");
+
+            // Llamar a la función para exportar datos paginados a Excel
             JubilareExportData jubilareExportData = new JubilareExportData();
-            _log.Info("Se hace llamado del service de jubilareExportData");
             jubilareExportData.ExportToExcelPagination(filePath);
-            _log.Info("Fin de Solicitud de GetCartera Completa");
-            return File(filePath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+
+            // Retornar el archivo como descarga
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
+                {
+                    Headers =
+                {
+                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = fileName
+                    },
+                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                }
+                }
+            });
         }
 
-        /*
-           Test
-         */
-        public ActionResult Test()
+
+        [HttpGet]
+        [Route("Test")]
+        public IHttpActionResult Test()
         {
-            return Json("test", JsonRequestBehavior.AllowGet);
+            return Ok("tessat");
         }
     }
+
 }

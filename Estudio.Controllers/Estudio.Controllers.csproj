@@ -264,7 +264,6 @@
     <Compile Include="Assets\Identity.cs" />
     <Compile Include="Assets\Utils.cs" />
     <Compile Include="clXML.cs" />
-    <Compile Include="Controllers\JubilareController.cs" />
     <Compile Include="Controllers\MantenedorPerfilesController.cs" />
     <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\EstudioController.cs" />
