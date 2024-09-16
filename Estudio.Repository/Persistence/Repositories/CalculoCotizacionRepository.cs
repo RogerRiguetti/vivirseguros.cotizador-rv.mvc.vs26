@@ -267,6 +267,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 DepartamentoAsignado = x.GetString(27),
                 Asesor = x.GetString(28),
                 Supervisor = x.GetString(29),
+                Calificacion = x.GetString(30)
             }).ToList();
         }
 
@@ -305,6 +306,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 DepartamentoAsignado = x.GetString(17),
                 Asesor = x.GetString(18),
                 Supervisor = x.GetString(19),
+                Calificacion = x.GetString(20),
             }).ToList();
         }
         #endregion

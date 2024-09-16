@@ -652,5 +652,23 @@ namespace Estudio.Logic
                 return res;
             }
         }
+
+        public object RegistrarInsertBeneficiario(string bandera, Beneficiario beneficiario)
+        {
+            try
+            {
+                char charDeBandera = bandera[0];
+                Response res = new Response();
+                res.IsOk = true;
+                res.Object = _beneficiariosRepository.RegistrarModificarBeneficiario(charDeBandera, beneficiario);
+                res.Message = "Operación exitosa";
+                return res.Object; // Devuelve solo el objeto contenido en la respuesta
+            }
+            catch (Exception ex)
+            {
+                // Manejar el error si es necesario
+                return null; // O devuelve otro valor predeterminado si se produce un error
+            }
+        }
     }
 }

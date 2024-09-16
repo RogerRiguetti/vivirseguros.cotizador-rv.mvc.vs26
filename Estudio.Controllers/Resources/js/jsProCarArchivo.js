@@ -509,6 +509,9 @@ function doSuccessCarga(result) {
     $('#txtNumSolCadu').val(array[6].toString());
     $("#btnImprimir").attr("onclick", "imprimir();");
     aviso("AVISO", result.Message);
+    //
+    $('#txtFechaCarga').prop('disabled', true);
+    //
     msjListoImprimir = result.Message;
     if ($('#txtEstadoCarga').val() != "") {
         $("#btnCargar").attr("onclick", "");

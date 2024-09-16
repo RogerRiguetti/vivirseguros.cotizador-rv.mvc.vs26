@@ -253,6 +253,7 @@ namespace Estudio.Repository.Core.Domain
         public string DepartamentoAsignado { get; set; }
         public string Asesor { get; set; }
         public string Supervisor { get; set; }
+        public string Calificacion { get; set; }
         #endregion
 
     }

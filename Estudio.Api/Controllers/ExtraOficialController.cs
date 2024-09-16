@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Mvc;
+using Estudio.Controllers.Controllers;
+using System.Globalization;
 
 namespace Estudio.Api.Controllers
 {
@@ -19,6 +22,9 @@ namespace Estudio.Api.Controllers
         CalculoExtraOficialValidator _calculoEOValidator = new CalculoExtraOficialValidator();
         CotizacionLogic _cotizacionLogic = new CotizacionLogic();
         ModalidadesLogic _modalidadesLogic = new ModalidadesLogic();
+        BeneficiariosLogic _beneficiariosLogic = new BeneficiariosLogic();
+        CotizacionController _CotizacionController = new CotizacionController();
+
 
         // POST api/values
         public object Post([FromBody] CalculoExtraOficialRequest request)
@@ -27,7 +33,7 @@ namespace Estudio.Api.Controllers
 
             var idsBeneficiarios = new List<string>();
             var idsModalidades = new List<string>();
-            char bandera = 'C';
+            string bandera = "C";
 
             //Modalidades
             int idModalidad = 0;
@@ -54,6 +60,9 @@ namespace Estudio.Api.Controllers
                 var IdPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdPension", request.Asegurado.TipoPension);
                 var CodigoPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("CodigoPension", request.Asegurado.TipoPension);
                 var PorAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("PorAfp", request.Asegurado.TipoAFP);
+
+                // Declarar una lista para almacenar los ObjetoModalidad
+                List<string> ModalidadIDs = new List<string>();
 
                 foreach (var mod in request.Modalidad)
                 {
@@ -86,8 +95,116 @@ namespace Estudio.Api.Controllers
                         PorcentajeRentabilidadAfp = PorcentajeRentabilidadAfp
                     };
 
-                    _modalidadesLogic.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
+                    var ObjetoModalidad = _modalidadesLogic.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
+
+                    if (ObjetoModalidad.IsOk)
+                    {
+                        // Suponiendo que IdModalidad es una propiedad del objeto devuelto
+                        int idModalidadDevuelto = (int)ObjetoModalidad.Object.GetType().GetProperty("IdModalidad").GetValue(ObjetoModalidad.Object);
+                        ModalidadIDs.Add(idModalidadDevuelto.ToString());
+                    }
+
                 }
+
+
+                //Beneficiarios
+                //necesito guardar primero el asegurado
+
+                // PASO 1  - GUARDAR ASEGURADO EN LA TABLA DE BENEFICIARIO
+
+                // Crear una lista para almacenar los IdBeneficiario
+                List<string> BenficiariosIDs = new List<string>();
+
+                var Aseg = request.Asegurado;
+
+                var NombresAseg = Aseg.Nombres;
+                var ApellidoPaternoAseg = Aseg.ApellidoPaterno;
+                var ApellidoMaternoAseg = Aseg.ApellidoMaterno;
+                var idParentescoAseg = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdParentescoAsegurado", "99");
+                var IdPensionAsegurado = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdPension", Aseg.TipoPension); //lo quiero para la funcion de abajo !!
+                var FechaNacimientoAseg = Aseg.FechaNacimiento;
+                var IdTipoDocumentoBeneficiarioAseg = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoDocumento", Aseg.NombreDocumento);
+                var DocumentoAseg = Aseg.NumeroDocumento;
+                var IdSexoBeneficiarioAseg = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSexo", Aseg.Genero);
+                var IdSituacionInvalidezBeneficiarioAseg = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSituacionInvalidez", Aseg.TipoInvalidez);
+                string fechaFallecimiento = null;
+                var FechaDevengueAsegurado = request.Asegurado.FechaDevengue;
+
+
+                if (request.Asegurado.TipoPension == "SOBREVIVENCIA")
+                {
+                    fechaFallecimiento = FechaDevengueAsegurado.ToString("dd/MM/yyyy");
+                }
+
+
+                // Crear un objeto que contenga todos los datos del asegurado
+                var asegurado = new Repository.Core.Domain.Beneficiario
+                {
+                    Nombres = Aseg.Nombres,
+                    Apellidos = $"{ApellidoPaternoAseg} {ApellidoMaternoAseg}",
+                    IdParentesco = int.Parse(idParentescoAseg),
+                    FechaNacimiento = FechaNacimientoAseg,
+                    IdTipoDocumento = int.Parse(IdTipoDocumentoBeneficiarioAseg),
+                    Documento = DocumentoAseg,
+                    IdSexo = int.Parse(IdSexoBeneficiarioAseg),
+                    IdSituacionInvalidez = int.Parse(IdSituacionInvalidezBeneficiarioAseg),
+                    FechaFallecimientoStr = fechaFallecimiento
+                };
+
+
+               var ObjetoAsegurado = _beneficiariosLogic.RegistrarInsertBeneficiario(bandera, asegurado);
+
+                if (ObjetoAsegurado is Repository.Core.Domain.Beneficiario beneficiarioResult)
+                {
+
+                   var AseguradoID = beneficiarioResult.IdBeneficiario;
+
+                   BenficiariosIDs.Add(Convert.ToString(AseguradoID));
+                }
+
+                // PASO 2 - OBTENER LOS BENEFICIARIOS 
+                var beneficiarioList = new List<Repository.Core.Domain.Beneficiario>();
+
+                foreach (var benf in request.Beneficiario)
+                {
+                    // var beneficiario que es la estructura
+                    var Nombres = benf.Nombres;
+                    var ApellidoPaterno = benf.ApellidoPaterno;
+                    var ApellidoMaterno = benf.ApellidoMaterno;
+                    var idParentesco = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdParentescoBeneficiario", benf.Parentesco);
+                    var FechaNacimiento = benf.FechaNacimiento;
+                    var IdTipoDocumentoBeneficiario = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoDocumento", benf.NombreDocumento);
+                    var Documento = benf.NumeroDocumento;
+                    var IdSexoBeneficiario = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSexo", benf.Genero);
+                    var IdSituacionInvalidezBeneficiario = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdSituacionInvalidez", benf.TipoInvalidez);
+
+                    var beneficiario = new Repository.Core.Domain.Beneficiario
+                    {
+                        Nombres = Nombres,
+                        Apellidos = $"{ApellidoPaterno} {ApellidoMaterno}",
+                        IdParentesco = int.Parse(idParentesco),
+                        FechaNacimiento = FechaNacimiento,
+                        IdTipoDocumento = int.Parse(IdTipoDocumentoBeneficiario),
+                        Documento = Documento,
+                        IdSexo = int.Parse(IdSexoBeneficiario),
+                        IdSituacionInvalidez = int.Parse(IdSituacionInvalidezBeneficiario),
+                        FechaFallecimientoStr = fechaFallecimiento,
+                        PorcentajeBen = "0",
+                    };
+
+                    ObjetoAsegurado = _beneficiariosLogic.RegistrarInsertBeneficiario(bandera, beneficiario);
+
+                    if (ObjetoAsegurado is Repository.Core.Domain.Beneficiario beneficiarioResulta)
+                    {
+
+                        var AseguradoID = beneficiarioResulta.IdBeneficiario;
+
+                        BenficiariosIDs.Add(Convert.ToString(AseguradoID));
+                    }
+                
+                }
+
+                var BenfeDatos = _CotizacionController.PorcentajesBeneficiarios(BenficiariosIDs, int.Parse(IdPensionAsegurado), fechaFallecimiento, FechaDevengueAsegurado.ToString("dd/MM/yyyy"));
 
 
                 if (IdAsesor == "00" || IdSexo == "00" || IdTipoDocumento == "00" || IdDepartamento == "00" || IdProvincia == "00" ||
@@ -100,6 +217,7 @@ namespace Estudio.Api.Controllers
 
                 var cotizacion = new Cotizacion
                 {
+
                     IdCotizacion = request.IdCotizacionJubilare,
                     Documento = request.Asegurado.NumeroDocumento,
                     CUSPP = request.Asegurado.CUSPP,
@@ -131,20 +249,12 @@ namespace Estudio.Api.Controllers
                     CodigoPension = CodigoPension,
                     ClaveSexo = request.Asegurado.Genero,
                     PorAfp = PorAfp,
-                    Estado = 0
+                    Estado = 0,
+                    IdCotizacionjubilare = new int[] { request.IdCotizacionJubilare },
+                    IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray()
                 };
 
-                foreach (var ids in request.Beneficiario)
-                {
-                    idsBeneficiarios.Add(ids.IdBeneficiarioJubilare.ToString());
-                }
-
-                foreach (var ids in request.Modalidad)
-                {
-                    idsModalidades.Add(ids.IdModalidadJubilare.ToString());
-                }
-
-                response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, idsBeneficiarios, idsModalidades);
+                response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, BenficiariosIDs, ModalidadIDs);
 
                 return Json(response);
             }
@@ -154,5 +264,8 @@ namespace Estudio.Api.Controllers
                 return null;
             }
         }
+
     }
+
 }
+

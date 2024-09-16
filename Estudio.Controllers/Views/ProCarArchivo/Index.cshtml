@@ -105,7 +105,7 @@
             @*Fecha de carga*@
             <div class="form-group col-lg-3 col-md-4 col-sm-6">
                 <label for="txtFechaCarga" class="form-label">Fecha de Carga</label>
-                <input type="text" class="form-control" name="txtFechaCarga" id="txtFechaCarga" disabled>
+                <input type="text" class="form-control" name="txtFechaCarga" id="txtFechaCarga">
             </div>
 
             @*Hora de carga*@
@@ -212,7 +212,7 @@
             <div class="form-group col-lg-3 col-md-6 col-sm-6">
                 <input type="radio" name="check" id="checkGanOtrasCia"><label class="form-label" for="checkGanOtrasCia"><span></span>Ganadas Otras Cia./AFP</label>
             </div>
-            
+
         </div>
     </div><!--DIV QUE CIERRA PANEL-->
 
@@ -297,12 +297,122 @@
 @Html.Hidden("urlBuscarNumerosArchivo", Url.Action("BuscarNumerosArchivo", "ProCarArchivo"))
 @section scriptsFooter
 {
-    
+
     <script src="~/Resources/js/jquery.dataTables.min.js"></script>
     <script src="~/Resources/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Resources/js/dataTables.responsive.js"></script>
     @*<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script src="~/Resources/js/jsProCarArchivo.js"></script>
+    <!-- Incluye Bootstrap Datepicker JS -->
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Incluye Bootstrap Datepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
+    <style>
+        .dias-laborables {
+            color: #0090b2 !important; /* Azul */
+            font-weight: 600;
+        }
+
+        .dias-no-laborables {
+            color: #cfcfcf !important; /* Rojo */
+        }
+    </style>
+
+    <script>
+        function obtenerFeriadosPeru() {
+            const fechaActual = new Date();
+            const añoActual = fechaActual.getFullYear();
+            const feriadosPeru = [
+                `01/01/${añoActual}`, // Año Nuevo
+                `28/03/${añoActual}`, // Jueves Santo
+                `29/03/${añoActual}`, // Viernes Santo
+                `01/05/${añoActual}`, // Día del Trabajo
+                `07/06/${añoActual}`, // Batalla de Arica y Día de la Bandera
+                `29/06/${añoActual}`, // San Pedro y San Pablo
+                `23/07/${añoActual}`, // Día de la Fuerza Aérea del Perú
+                `28/07/${añoActual}`, // Fiestas Patrias
+                `29/07/${añoActual}`, // Fiestas Patrias
+                `06/08/${añoActual}`, // Batalla de Junín
+                `30/08/${añoActual}`, // Santa Rosa de Lima
+                `08/10/${añoActual}`, // Combate de Angamos
+                `01/11/${añoActual}`, // Día de todos los Santos
+                `08/12/${añoActual}`, // Inmaculada Concepción
+                `09/12/${añoActual}`, // Batalla de Ayacucho
+                `25/12/${añoActual}`  // Navidad
+            ];
+            return feriadosPeru;
+        }
+
+        const feriadosPeru = obtenerFeriadosPeru();
+        //console.log(feriadosPeru);
+
+        $(document).ready(function () {
+            var diasFeriados = feriadosPeru.map(function (fecha) {
+                return moment(fecha, 'DD/MM/YYYY', true).toDate().getTime();
+            });
+
+            $('#txtFechaCarga').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+                showMeridian: true,
+                language: 'es-PE',
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    var timestamp = date.getTime();
+                    // Deshabilitar sábado (6) y domingo (0)
+                    if (day === 0 || day === 6) {
+                        return {
+                            classes: 'dias-no-laborables',
+                            enabled: false // Deshabilitar selección
+                        };
+                    }
+                    // Deshabilitar días feriados
+                    if (diasFeriados.includes(timestamp)) {
+                        return {
+                            classes: 'dias-no-laborables',
+                            enabled: false // Deshabilitar selección
+                        };
+                    }
+                    return {
+                        classes: 'dias-laborables',
+                        enabled: true // Habilitar selección
+                    };
+                }
+            });
+
+            $('#txtFechaCarga').on('change', function () {
+                var inputDate = $(this).val();
+                var selectedDate = moment(inputDate, 'DD/MM/YYYY', true); // Convertir la fecha al formato esperado
+
+                //console.log("inputDate", inputDate);
+                //console.log("selectedDate", selectedDate);
+
+                if (selectedDate.isValid()) {
+                    var day = selectedDate.day();
+                    //console.log('Fecha seleccionada:', selectedDate.format('DD/MM/YYYY'));
+                    //console.log('Día:', day);
+
+                    if (day === 0 || day === 6) {
+                        $(this).val(''); // Limpiar el valor del input si es sábado o domingo
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Selecciona una fecha válida',
+                            timer: 3000, // Mostrar la notificación por 2 segundos
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            });
+
+
+        });
+    </script>
 }

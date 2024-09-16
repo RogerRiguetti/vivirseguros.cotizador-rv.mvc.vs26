@@ -152,7 +152,7 @@ namespace Estudio.Logic
                 }
                 _log.Info("Actualizando cotizaciones Aceptadas (Resultados)");
                 //Genera la Aceptación - Actualizando la Cotizacion a Aceptadas (TMAE)
-                string aceptCot = _ProCarArchivoRepository.aceptaCotizacion(CodCia, numArch, usuario);
+                string aceptCot = _ProCarArchivoRepository.aceptaCotizacion(CodCia, numArch, usuario, FecCar);
                 if (aceptCot != "")
                 {
                     Response res2 = new Response();

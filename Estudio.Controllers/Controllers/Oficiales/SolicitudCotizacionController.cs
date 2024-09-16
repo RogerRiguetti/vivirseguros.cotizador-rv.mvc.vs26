@@ -442,6 +442,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                     sl.SetCellValue(2 + i, 28, ListCalculadas[i].Asesor);
                     sl.SetCellValue(2 + i, 29, ListCalculadas[i].Supervisor);
                     sl.SetCellValue(2 + i, 30, ListCalculadas[i].DepartamentoAsignado);
+                    sl.SetCellValue(2 + i, 31, ListCalculadas[i].Calificacion);
                 }
 
                 sl.SelectWorksheet("Solicitudes No Calculadas");
@@ -463,10 +464,11 @@ namespace Estudio.Controllers.Controllers.Oficiales
                     sl.SetCellValue(2 + i, 14, ListNoCalculadas[i].Intermediario);
                     sl.SetCellValue(2 + i, 15, Convert.ToInt32(ListNoCalculadas[i].Cod_Rechazo));
                     sl.SetCellValue(2 + i, 16, ListNoCalculadas[i].Error_Descrip);
-                    sl.SetCellValue(2 + i, 17, ListCalculadas[i].Gls_Region);
-                    sl.SetCellValue(2 + i, 18, ListCalculadas[i].Asesor);
-                    sl.SetCellValue(2 + i, 19, ListCalculadas[i].Supervisor);
-                    sl.SetCellValue(2 + i, 20, ListCalculadas[i].DepartamentoAsignado);
+                    sl.SetCellValue(2 + i, 17, ListNoCalculadas[i].Gls_Region);
+                    sl.SetCellValue(2 + i, 18, ListNoCalculadas[i].Asesor);
+                    sl.SetCellValue(2 + i, 19, ListNoCalculadas[i].Supervisor);
+                    sl.SetCellValue(2 + i, 20, ListNoCalculadas[i].DepartamentoAsignado);
+                    sl.SetCellValue(2 + i, 21, ListNoCalculadas[i].Calificacion);
                 }
 
                 sl.SaveAs(pathFile);

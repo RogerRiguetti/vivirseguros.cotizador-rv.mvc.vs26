@@ -361,7 +361,9 @@ namespace Estudio.Logic
                     if (item.Authorize == "MantenedorCurvasIndex") permissions.MantenedorCurvasIndex = true;
                     if (item.Authorize == "ActualizaInfOfiIndex") permissions.ActualizaInfOfiIndex = true;
 
-                    
+                    //FondosMAX
+                    if (item.Authorize == "FMMenu") permissions.FMMenu = true;
+
                 }
 
                 res.Object = permissions;

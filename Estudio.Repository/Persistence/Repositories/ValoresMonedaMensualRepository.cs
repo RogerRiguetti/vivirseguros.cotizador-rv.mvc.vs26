@@ -144,7 +144,7 @@ namespace Estudio.Repository.Persistence.Repositories
         /// <param name="valor">valore del periodo</param>
         /// <param name="clave">clave para actualizar o guardar</param>
         /// <returns>retorna el resultado de guardar o actualizar</returns>
-        public MonedaMensual GrabarValoresMoneda(string vlMoneda, string cod_tipmon, string fec_moneda, decimal valor, string clave)
+        public MonedaMensual GrabarValoresMoneda(string vlMoneda, string cod_tipmon, string fec_moneda, decimal valor, string clave, string usuario)
         {
             try
             {
@@ -154,6 +154,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@vcod_tipmon", SqlDbType.VarChar, cod_tipmon, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@vfec_moneda", SqlDbType.VarChar, fec_moneda, ParameterDirection.Input));
                 parameters.Add(VCEDBContext<RowAffected>.AddParams("@vValorVM", SqlDbType.Decimal, valor, ParameterDirection.Input));
+                parameters.Add(VCEDBContext<RowAffected>.AddParams("@pUsuario", SqlDbType.VarChar, usuario, ParameterDirection.Input));
 
                 return VCEDBContext<MonedaMensual>.CallStoreProcedure(StoredProcedures.CO_CatalogosValoresMonedaMensual, parameters, x => new MonedaMensual
                 {

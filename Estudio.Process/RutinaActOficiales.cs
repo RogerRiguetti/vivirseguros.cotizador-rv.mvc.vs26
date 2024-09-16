@@ -30,7 +30,7 @@ namespace Estudio.Process
             List<beTasaFacVac> ModelFacVac, List<bePorcenLegales> ModelPorcenLeg,
             List<beTasasPromedio> ModelTasPro, List<beCurvaTasas> ModelTasCurva, string banderaPanta, int asesor, string banderaWS, string casoEx)
         {
-            
+
             beResultados Resultados = new beResultados();
             beResultados ListaResultador = new beResultados();
             RutinaPorcentaje RP = new RutinaPorcentaje();
@@ -256,42 +256,89 @@ namespace Estudio.Process
                     //PrcCom = (item.PrcCom + 0.2) * 1.42;
                     //PrcCom = (item.PrcCom + 0.46) * 1.47;
                     //if ((item.BanderaComision == "" || item.BanderaComision == null) && banderaWS != "WS")
+
+                    _log.Info("Inicia el log para revisar los asesores asignados con cic < 100k. Numerocotizacion=" + vlNumCot);
+
                     if ((item.BanderaComision == "" || item.BanderaComision == null))
                     {
-                        if (asesor == 0 && item.MtoPri < 50000)
+                        _log.Info("es nulo o vacio BanderaComision=" + item.BanderaComision);
+                        if (asesor == 0 && item.MtoPri < 100000)
                         {
                             //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
+                            _log.Info("no tiene asesor Asignado:" + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                         }
                         else
                         {
-                            if (item.TipRen == "2")
+                            if (asesor != 0 && item.MtoPri < 100000)
                             {
-                                //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
-                                PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                             }
                             else
                             {
-                                //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
-                                PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " mayores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                             }
                         }
                     }
                     else
                     {
-                        if (asesor == 0 && item.MtoPri < 50000)
+                        _log.Info("si viene con dato BanderaComision=" + item.BanderaComision);
+                        if (asesor == 0 && item.MtoPri < 100000)
                         {
+                            //PrcCom = 0.00;
                             PrcCom = (Convert.ToDouble((Convert.ToDecimal(0.00) + item.PrccomS) * item.Prcfaclab));
-                        }
-                        if (item.TipRen == "2")
-                        {
-                            //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
-                            PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                            _log.Info("no tiene asesor Asignado:" + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
                         }
                         else
                         {
-                            //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
-                            PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                            if (asesor != 0 && item.MtoPri < 100000)
+                            {
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " menores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
+                            }
+                            else
+                            {
+                                if (item.TipRen == "2")
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                }
+                                else
+                                {
+                                    //PrcCom = (Convert.ToDouble((item.Prc_Inicial + item.PrccomS) * item.Prcfaclab));
+                                    PrcCom = (Convert.ToDouble((item.Prc_Inicial_1 + item.PrccomS) * item.Prcfaclab));
+                                }
+                                _log.Info(" si tiene asesor Asignado: " + asesor + " mayores a 100k PRIMA " + item.MtoPri + "Comision=" + PrcCom);
+                            }
                         }
                     }
                 }
@@ -392,7 +439,7 @@ namespace Estudio.Process
                     vlVecesCot = 2;
                     Totpor = 0;
 
-                   
+
                     foreach (var itembencop in ModelBen)
                     {
                         CopiaBen.Add(new beDatosBen { CodPar = itembencop.CodPar, NacHM = itembencop.NacHM });
@@ -452,7 +499,7 @@ namespace Estudio.Process
                 var TGfil = ModelTas.Where(x => x.CodMon == Mone && x.TipPen == Cober && x.CodReg == Depto && x.TipRea == TipRea).ToList();
                 foreach (var itemGas in TGfil)
                 {
-                    if(banderaPanta == "E")
+                    if (banderaPanta == "E")
                     {
                         tasac_t = itemGas.PrcTir;             //'Tasa de Costo Capital
                     }
@@ -710,7 +757,7 @@ namespace Estudio.Process
                         //'1 . -OBTENGO LOS PORCENTAJES A LA FECHA DE PROCESO  ***********************************************************************
                         //'***************************************************************************************************************************
 
-                        
+
                         ModelBenTmp = RP.PorcentajeBen(ModelBen, FecCot, ind_cob, Cober, EdaLim, ModelPorcenLeg, CopiaBen);
                         foreach (var itemBen in ModelBenTmp)
                         {
@@ -2396,7 +2443,7 @@ namespace Estudio.Process
                         }
                     }
                 }
-                
+
                 for (int ir = 0; ir <= Fintab; ir++)
                 {
                     Exced[ir] = 0;
@@ -2549,7 +2596,7 @@ namespace Estudio.Process
                 tirmax_ori = tirmax;
                 TTirMax = tirmax;
                 //CalPer:
-                if((Math.Truncate(PERDI * 1000) / 1000) == 0.000)
+                if ((Math.Truncate(PERDI * 1000) / 1000) == 0.000)
                 {
                     PERDI = 0;
                 }
@@ -2557,13 +2604,13 @@ namespace Estudio.Process
                 {
                     goto CalTva;
                 }
-            
+
                 else
                 {   //PR
-                //if (Math.Round(tasatirc, 2) > tasac)
-                //{
-                //    goto CalTva;
-                //}
+                    //if (Math.Round(tasatirc, 2) > tasac)
+                    //{
+                    //    goto CalTva;
+                    //}
                 }
                 //tirmax = TTirMax;
                 if (PERDI < 0)
@@ -2774,7 +2821,7 @@ namespace Estudio.Process
                 difre1 = 0;
                 tir = 0;
                 tinc = 0.00001;
-                
+
             CalTce2:
 
                 //EMPIEZA LA RUTINA DEL CALCULO DE TCE 
@@ -2784,13 +2831,13 @@ namespace Estudio.Process
                 cr = 1;
                 for (i = 0; i <= nmax; i++)
                     for (i = 0; i <= nmax; i++)
-                {
-                    if (i < mescosto)
                     {
+                        if (i < mescosto)
+                        {
                             //vpte2 = vpte2 + ((Flupen[i + 1] * penanu) / 1);
-                    }
+                        }
                         else
-                    {
+                        {
                             if (i == 850)
                             {
                                 r = 1;
@@ -2988,7 +3035,7 @@ namespace Estudio.Process
                 tprc_per = Math.Round(perdis, 2);
 
                 //FIN////
-                
+
 
 
                 #endregion

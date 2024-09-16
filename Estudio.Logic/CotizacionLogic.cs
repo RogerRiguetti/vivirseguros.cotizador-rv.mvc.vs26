@@ -4,6 +4,7 @@ using Estudio.Repository.Helpers;
 using Estudio.Repository.Persistence.Repositories;
 using log4net;
 using log4net.Config;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -102,7 +103,7 @@ namespace Estudio.Logic
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public Response RegistrarModificarCotizacion(char bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
+        public Response RegistrarModificarCotizacion(string bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
         {
             try
             {
@@ -142,7 +143,7 @@ namespace Estudio.Logic
                 cotizacionRpt = _cotizacionRepository.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiariosDT, idsModalidadesDT);
                 res.Object = cotizacionRpt;
                 _log.Info("Registro de cotizacion");
-                if (bandera == 'C')
+                if (bandera == "C")
                     res.Message = "Cotización creada con éxito.";
                 else
                 {
@@ -215,7 +216,7 @@ namespace Estudio.Logic
                     res.Object = new { idCotizacion = idCotizacion, bandera = bandera };
                     res.IsOk = false;
                 }
-                
+
                 return res;
             }
             catch (Exception ex)
@@ -881,7 +882,7 @@ namespace Estudio.Logic
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto representante al detalle de una cotización </returns>
 
-        public Response RegistrarModificarCotizacionDetalle(char bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
+        public Response RegistrarModificarCotizacionDetalle(string bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
         {
             try
             {
@@ -921,7 +922,7 @@ namespace Estudio.Logic
                 cotizacionRpt = _cotizacionRepository.RegistrarModificarCotizacion(bandera, cotizacion, idsBeneficiariosDT, idsModalidadesDT);
                 res.Object = cotizacionRpt;
                 _log.Info("Registro de cotizacion");
-                if (bandera == 'C')
+                if (bandera == "C")
                     res.Message = "Cotización creada con éxito.";
                 else
                 {
@@ -949,10 +950,10 @@ namespace Estudio.Logic
                 rutinaDt.Columns.Add("PrcTasatir", typeof(double));
                 rutinaDt.Columns.Add("PrcTasavta", typeof(double));
                 rutinaDt.Columns.Add("PrimaUnica", typeof(double));
-
                 _log.Info("Comenzara a ejecutar la rutina");
                 rutina = _pruebaRutinaProcess.Rutina(idCotizacion);
                 _log.Info("Termino ejecucion de rutina");
+
                 foreach (var item in rutina)
                 {
                     if (item.Mensaje == null)
@@ -970,7 +971,6 @@ namespace Estudio.Logic
                         row["PrcTasatir"] = item.PRC_TASATIR;
                         row["PrcTasavta"] = item.PRC_TASAVTA;
                         row["PrimaUnica"] = item.PRIMA_UNICA;
-
                         rutinaDt.Rows.Add(row);
                     }
                     else
@@ -979,6 +979,62 @@ namespace Estudio.Logic
                         break;
                     }
                 }
+
+                /*RUTINA DT ADD*/
+                DataTable rutinaDtAdd = new DataTable();
+                rutinaDtAdd.Columns.Add("Marcasob", typeof(string));
+                rutinaDtAdd.Columns.Add("MtoAjusteipc", typeof(double));
+                rutinaDtAdd.Columns.Add("MtoPension", typeof(double));
+                rutinaDtAdd.Columns.Add("MtoPriunidif", typeof(double));
+                rutinaDtAdd.Columns.Add("MtoResmat", typeof(double));
+                rutinaDtAdd.Columns.Add("NumCorrelativo", typeof(int));
+                rutinaDtAdd.Columns.Add("NumCotestudio", typeof(string));
+                rutinaDtAdd.Columns.Add("PrcPercon", typeof(double));
+                rutinaDtAdd.Columns.Add("PrcTasatce", typeof(double));
+                rutinaDtAdd.Columns.Add("PrcTasatir", typeof(double));
+                rutinaDtAdd.Columns.Add("PrcTasavta", typeof(double));
+                rutinaDtAdd.Columns.Add("PrimaUnica", typeof(double));
+                rutinaDtAdd.Columns.Add("PrimaAFP", typeof(double));
+                rutinaDtAdd.Columns.Add("PensionAFP", typeof(double));
+                rutinaDtAdd.Columns.Add("IdCotizacionjubilare", typeof(int));
+                rutinaDtAdd.Columns.Add("IdModalidadjubilare", typeof(int));
+
+                int index = 0;
+                foreach (var item in rutina)
+                {
+                    if (item.Mensaje == null)
+                    {
+                        DataRow row = rutinaDtAdd.NewRow();
+                        row["Marcasob"] = item.MARCASOB;
+                        row["MtoAjusteipc"] = item.MTO_AJUSTEIPC;
+                        row["MtoPension"] = item.MTO_PENSION;
+                        row["MtoPriunidif"] = item.MTO_PRIUNIDIF;
+                        row["MtoResmat"] = item.MTO_RESMAT;
+                        row["NumCorrelativo"] = item.NUM_CORRELATIVO;
+                        row["NumCotestudio"] = item.NUM_COTESTUDIO;
+                        row["PrcPercon"] = item.PRC_PERCON;
+                        row["PrcTasatce"] = item.PRC_TASATCE;
+                        row["PrcTasatir"] = item.PRC_TASATIR;
+                        row["PrcTasavta"] = item.PRC_TASAVTA;
+                        row["PrimaUnica"] = item.PRIMA_UNICA;
+                        row["PrimaAFP"] = item.MTO_CTAINDAFP;
+                        row["PensionAFP"] = item.MTO_RENTATMPAFP;
+                        row["IdCotizacionjubilare"] = cotizacion.IdCotizacionjubilare[0];
+                        row["IdModalidadjubilare"] = cotizacion.IdModalidadjubilare[index];
+
+                        rutinaDtAdd.Rows.Add(row);
+                        index++;
+                    }
+                    else
+                    {
+                        mensaje = item.Mensaje;
+                        break;
+                    }
+                }
+
+                // Serializar la tabla de datos a JSON
+                string jsonRutina = JsonConvert.SerializeObject(rutinaDt, Formatting.Indented);
+
 
                 if (mensaje == "" || mensaje == null)
                 {
@@ -992,7 +1048,8 @@ namespace Estudio.Logic
                     res.Object = new { idCotizacion = idCotizacion, bandera = bandera };
                     res.IsOk = false;
                 }
-                res.Object = rutinaDt;
+                //res.Object = rutinaDt;
+                res.Object = rutinaDtAdd;
                 return res;
             }
             catch (Exception ex)

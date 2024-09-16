@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using System.Linq;
 using Estudio.Logic;
 using Estudio.Repository.Core.Domain;
-
 using CrystalDecisions.CrystalReports.Engine;
 using Estudio.Repository;
 using Estudio.Repository.Helpers;
@@ -293,7 +292,7 @@ namespace Estudio.Controllers.Controllers
         /// <param name="segundoTramo"> Porcentaje del primer tramo </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public ActionResult RegistrarModificarModalidad(char bandera, int idModalidad, decimal primerTramo, Modalidad modalidad)
+        public ActionResult RegistrarModificarModalidad(string bandera, int idModalidad, decimal primerTramo, Modalidad modalidad)
         {
             try
             {
@@ -487,7 +486,7 @@ namespace Estudio.Controllers.Controllers
         /// <param name="idsModalidades"> Lista de ids de modalidades pertenecientes a la cotización </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public ActionResult RegistrarModificarCotizacion(char bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
+        public ActionResult RegistrarModificarCotizacion(string bandera, Cotizacion cotizacion, List<string> idsBeneficiarios, List<string> idsModalidades)
         {
             try
             {
@@ -771,6 +770,49 @@ namespace Estudio.Controllers.Controllers
         }
 
         #endregion
+        #endregion
+
+        #region JubilareController
+        private string GetNameFile()
+        {
+            string fileName = "CarteraJubilare";
+            DateTime now = DateTime.Now;
+
+            string formattedDate = now.ToString("yyyyMMdd");
+            string formattedTime = now.ToString("HHmm");
+            return $"{fileName}_{formattedDate}_{formattedTime}.xlsx";
+        }
+
+        [HttpGet]
+        public ActionResult GetCarteraCompleta()
+        {
+            _log.Info("Inicia solicitud de GetCartera Completa");
+            string folderPath = @"D:\ExportacionesJubilare";
+
+            _log.Info("Verificando la existencia del directorio ExportacionesJubilare en disco D");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                _log.Info("Se crea el directorio ExportacionesJubilare en disco D");
+            }
+
+            string fileName = GetNameFile();
+            string filePath = Path.Combine(folderPath, fileName);
+            _log.Info("Se genera el filePath");
+            JubilareExportData jubilareExportData = new JubilareExportData();
+            _log.Info("Se hace llamado del service de jubilareExportData");
+            jubilareExportData.ExportToExcelPagination(filePath);
+            _log.Info("Fin de Solicitud de GetCartera Completa");
+            return File(filePath, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
+
+        /*
+           Test
+         */
+        public ActionResult Test()
+        {
+            return Json("test para jubilare", JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region No Transaccionales

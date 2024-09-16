@@ -33,7 +33,7 @@ namespace Estudio.Logic
         /// <param name="segundoTramo"> Porcentaje del primer tramo </param>
         /// <returns> Regresa una respuesta que contiene mensaje y el objeto recuperado de la operación </returns>
 
-        public Response RegistrarModificarModalidad(char bandera, int idModalidad, Modalidad modalidad)
+        public Response RegistrarModificarModalidad(string bandera, int idModalidad, Modalidad modalidad)
         {
             try
             {
@@ -41,16 +41,18 @@ namespace Estudio.Logic
                 res.IsOk = true;
                 res.Object = _modalidadesRepository.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
                 res.Message = "Operación exitosa";
-                return res;
+                return res; // Devolver el objeto Response completo en lugar de res.Object
             }
             catch (Exception ex)
             {
                 Response res = new Response();
                 res.IsOk = false;
-                res.Message = "Ocurrió un error. Por favor vuelve a intentar o contacta al área de Sistemas ";
+                res.Message = "Ocurrió un error. Por favor vuelve a intentar o contacta al área de Sistemas";
                 return res;
             }
         }
+
+
 
         /// <summary>
         /// Antonio Quezada
@@ -206,7 +208,7 @@ namespace Estudio.Logic
                         modalidad.IdModalidad = idModalidad;
                         modalidad.PorcentajeRentabilidadAfp = Convert.ToDecimal(codafp);
 
-                        _modalidadesRepository.RegistrarModificarModalidad('U', idModalidad, modalidad);
+                        _modalidadesRepository.RegistrarModificarModalidad("U", idModalidad, modalidad);
                     }
                 }
 

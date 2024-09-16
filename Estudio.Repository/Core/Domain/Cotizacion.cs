@@ -36,6 +36,7 @@ namespace Estudio.Repository.Core.Domain
         public string ClaveSexo { get; set; }
         public string PorAfp { get; set; }
         public int Estado { get; set; }
-
+        public int[] IdCotizacionjubilare { get; set; }
+        public int[] IdModalidadjubilare { get; set; }
     }
 }
