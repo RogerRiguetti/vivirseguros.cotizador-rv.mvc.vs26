@@ -93,6 +93,7 @@
     <Compile Include="Core\Domain\beResultadosFlujosTot.cs" />
     <Compile Include="Core\Domain\beResultadosResBas.cs" />
     <Compile Include="Core\Domain\beResultadosResBasBen.cs" />
+    <Compile Include="Core\Domain\beSolicitudBeneficiario.cs" />
     <Compile Include="Core\Domain\beTasaAnclaje.cs" />
     <Compile Include="Core\Domain\beTasaFacVac.cs" />
     <Compile Include="Core\Domain\beTasaMercado.cs" />

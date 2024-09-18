@@ -385,6 +385,7 @@ namespace Estudio.Logic
 
                     beneficiario = _beneficiariosRepository.ConsultarBeneficiario(Convert.ToInt32(item));
                     beneficiario.IdBeneficiario = Convert.ToInt32(item);
+                    
                     //FecDev = Convert.ToDateTime(beneficiario.FecDev).ToString("yyyyMMdd");
                     if (beneficiario.Parentesco == "TITULAR")
                     {
@@ -436,7 +437,7 @@ namespace Estudio.Logic
 
                 if (titular > 0)
                 {
-                    beneficiarios = (from b in beneficiarios select b).OrderByDescending(b => b.CodigoElemento).ToList();
+                    //beneficiarios = (from b in beneficiarios select b).OrderByDescending(b => b.CodigoElemento).ToList();
 
                     foreach (var item in beneficiarios)
                     {
