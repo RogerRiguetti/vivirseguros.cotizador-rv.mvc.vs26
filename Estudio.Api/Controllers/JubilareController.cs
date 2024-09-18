@@ -30,7 +30,7 @@ namespace Estudio.Api.Controllers
         {
             _log.Info("Inicia solicitud de GetCartera Completa");
 
-            string folderPath = @"D:\ExportacionesJubilare";
+            string folderPath = @"D:\ExportacionesJubilareCarteraCompleta";
 
             // Verificar si el directorio existe, si no, crearlo
             if (!Directory.Exists(folderPath))
@@ -44,7 +44,7 @@ namespace Estudio.Api.Controllers
             string filePath = Path.Combine(folderPath, fileName);
 
             // Llamar a la función para exportar datos paginados a Excel
-            JubilareExportData jubilareExportData = new JubilareExportData();
+            JubilareExportDataPagination jubilareExportData = new JubilareExportDataPagination();
             jubilareExportData.ExportToExcelPagination(filePath);
 
             // Retornar el archivo como descarga
@@ -64,6 +64,15 @@ namespace Estudio.Api.Controllers
             });
         }
 
+
+        [HttpGet]
+        [Route("Planilla/{id}")]
+        public IHttpActionResult Planilla(int id)
+        {
+            string folderPath = @"D:\ExportacionesJubilarePlanilla";
+
+            return Ok($"ID de Planilla: {id}");
+        }
 
         [HttpGet]
         [Route("Test")]
