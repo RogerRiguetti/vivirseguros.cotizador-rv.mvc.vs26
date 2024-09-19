@@ -14,9 +14,9 @@ namespace Estudio.Api.Controllers
     public class JubilareController : ApiController
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private string GetNameFile()
+        private string GetNameFile(string fileName)
         {
-            string fileName = "CarteraJubilare";
+            //string fileName = "CarteraJubilare";
             DateTime now = DateTime.Now;
 
             string formattedDate = now.ToString("yyyyMMdd");
@@ -40,12 +40,12 @@ namespace Estudio.Api.Controllers
             }
 
             // Obtener el nombre del archivo
-            string fileName = GetNameFile();
+            string fileName = GetNameFile("CarteraJubilare");
             string filePath = Path.Combine(folderPath, fileName);
 
             // Llamar a la función para exportar datos paginados a Excel
-            JubilareExportDataPagination jubilareExportData = new JubilareExportDataPagination();
-            jubilareExportData.ExportToExcelPagination(filePath);
+            JubilareExportDataPagination jubilareExportDataPagination = new JubilareExportDataPagination();
+            jubilareExportDataPagination.ExportToExcelPagination(filePath);
 
             // Retornar el archivo como descarga
             return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
@@ -70,6 +70,23 @@ namespace Estudio.Api.Controllers
         public IHttpActionResult Planilla(int id)
         {
             string folderPath = @"D:\ExportacionesJubilarePlanilla";
+
+            // Verificar si el directorio existe, si no, crearlo
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                _log.Info("Se crea el directorio ExportacionesJubilarePlanilla en disco D");
+            }
+
+            // Obtener el nombre del archivo
+            string fileName = GetNameFile("CarteraJubilare");
+            string filePath = Path.Combine(folderPath, fileName);
+
+            JubilareExportData jubilareExportData = new JubilareExportData();
+
+            var planilla = jubilareExportData.ExportToExcel(filePath, id);
+
+            return Ok(planilla);
 
             return Ok($"ID de Planilla: {id}");
         }

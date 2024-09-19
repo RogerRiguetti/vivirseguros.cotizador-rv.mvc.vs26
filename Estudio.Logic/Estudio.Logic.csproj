@@ -119,6 +119,7 @@
     <Compile Include="GenArMelerLogic.cs" />
     <Compile Include="Identity.cs" />
     <Compile Include="JubilareExportData.cs" />
+    <Compile Include="JubilareExportDataPagination.cs" />
     <Compile Include="LimiteCotizacionExtraOficialLogic.cs" />
     <Compile Include="LimiteCotizacionInicialLogic.cs" />
     <Compile Include="LimiteCotizacionMejoradaLogic.cs" />
