@@ -25,6 +25,7 @@ namespace Estudio.Logic
 
         }
 
+        // Ver la forma de programarlo para que sea dinamico
         private List<DataTable> GetDataStoredProcedure(int idPlanilla)
         {
             var usp_Sel_JubilarePlanillaComision = SRVDBContext<DataTable>.CallStoreProcedureDt(StoredProcedures.usp_Sel_JubilarePlanillaComision, SqlParameters(idPlanilla));
