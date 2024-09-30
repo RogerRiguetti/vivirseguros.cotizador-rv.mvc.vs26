@@ -169,6 +169,19 @@ namespace Estudio.Process.Muestra
                         TablaPar.RenTmp = item.PorcentajeRentaTemporal;
                     }
 
+                    if (TablaPar.MesDif == 0)
+                    {
+                        TablaPar.PrcCom = (Convert.ToDouble(3.2) + Convert.ToDouble(1.71)) * Convert.ToDouble(1.47);
+                    }
+                    else
+                    {
+                        TablaPar.PrcCom = (Convert.ToDouble(2.4) + Convert.ToDouble(1.71)) * Convert.ToDouble(1.47);
+                    }
+                    //TablaPar.PrccomS = Convert.ToDecimal(1.71);
+                    //TablaPar.Prcfaclab = Convert.ToDecimal(1.47);
+                    //TablaPar.Prc_Inicial_1 = Convert.ToDecimal(3.2);
+                    //TablaPar.Prc_Inicial = Convert.ToDecimal(2.4);
+
                     ListaModalidades.Add(ListaPar);
                 }
                 else
