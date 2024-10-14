@@ -61,8 +61,70 @@ namespace Estudio.Api.Controllers
                 var CodigoPension = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("CodigoPension", request.Asegurado.TipoPension);
                 var PorAfp = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("PorAfp", request.Asegurado.TipoAFP);
 
+                //VALIDA DATOS DE LA COTIZACION
+                if (IdAsesor == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion62;
+                    return response;
+                }
+
+                if (IdTipoDocumento == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion02;
+                    return response;
+                }
+
+                if (IdDepartamento == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion46;
+                    return response;
+                }
+
+                if (IdProvincia == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion52;
+                    return response;
+                }
+
+                if (IdDistrito == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion53;
+                    return response;
+                }
+
+                if (IdAfp == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion77;
+                    return response;
+                }
+
+                if (IdPension == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion78;
+                    return response;
+                }
+
+                if (PorAfp == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion82;
+                    return response;
+                }
+
+
+
                 // Declarar una lista para almacenar los ObjetoModalidad
                 List<string> ModalidadIDs = new List<string>();
+                List<string> Mod_moneda = new List<string>();
+                List<string> Mod_tipren = new List<string>();
+                List<decimal> Mod_tippes = new List<decimal>();
 
                 foreach (var mod in request.Modalidad)
                 {
@@ -72,15 +134,39 @@ namespace Estudio.Api.Controllers
                     var Gratificacion = mod.Gratificacion;
                     var IdModalidadCat = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdModalidadCat", mod.TipoModalidad);
                     var IdTipoRenta = _cotizacionLogic.ConsultarDataCotizacionExtraOficial("IdTipoRenta", mod.TipoRenta);
-                    var PorcentajeRentaTemporal = mod.RentaTemp;
-                    var PorcentajeRentabilidadAfp = mod.TasaRentaAFP;
+                    var PorcentajeRentaTemporal = 50;//mod.RentaTemp;
+                    var PorcentajeRentabilidadAfp = decimal.Parse(PorAfp);//mod.TasaRentaAFP;
+                    var SegundoTramo = mod.SegundoTramo;
+                    var PrimerTramo = mod.PrimerTramo;
 
-                    if (IdMoneda == "00" || IdModalidadCat == "00" || IdTipoRenta == "00")
+                    //if (IdMoneda == "00" || IdModalidadCat == "00" || IdTipoRenta == "00")
+                    //{
+                    //    response.IsOk = false;
+                    //    response.Message = CatalogoErrores.Cotizacion00;
+                    //    return response;
+                    //}
+
+                    if (IdMoneda == "00")
                     {
                         response.IsOk = false;
-                        response.Message = CatalogoErrores.Cotizacion00;
+                        response.Message = CatalogoErrores.Cotizacion60;
                         return response;
                     }
+
+                    //if (IdModalidadCat == "00")
+                    //{
+                    //    response.IsOk = false;
+                    //    response.Message = CatalogoErrores.Cotizacion00;
+                    //    return response;
+                    //}
+
+                    if (IdTipoRenta == "00")
+                    {
+                        response.IsOk = false;
+                        response.Message = CatalogoErrores.Cotizacion61;
+                        return response;
+                    }
+
 
                     var modalidad = new Repository.Core.Domain.Modalidad
                     {
@@ -92,7 +178,9 @@ namespace Estudio.Api.Controllers
                         IdMoneda = int.Parse(IdMoneda),
                         IdTipoRenta = int.Parse(IdTipoRenta),
                         PorcentajeRentaTemporal = PorcentajeRentaTemporal,
-                        PorcentajeRentabilidadAfp = PorcentajeRentabilidadAfp
+                        PorcentajeRentabilidadAfp = PorcentajeRentabilidadAfp,
+                        PrimerTramo = PrimerTramo,
+                        SegundoTramo = SegundoTramo,
                     };
 
                     var ObjetoModalidad = _modalidadesLogic.RegistrarModificarModalidad(bandera, idModalidad, modalidad);
@@ -103,7 +191,9 @@ namespace Estudio.Api.Controllers
                         int idModalidadDevuelto = (int)ObjetoModalidad.Object.GetType().GetProperty("IdModalidad").GetValue(ObjetoModalidad.Object);
                         ModalidadIDs.Add(idModalidadDevuelto.ToString());
                     }
-
+                    Mod_moneda.Add(IdMoneda);
+                    Mod_tipren.Add(IdTipoRenta);
+                    Mod_tippes.Add(SegundoTramo);
                 }
 
 
@@ -130,6 +220,38 @@ namespace Estudio.Api.Controllers
                 string fechaFallecimiento = null;
                 var FechaDevengueAsegurado = request.Asegurado.FechaDevengue;
 
+                //VALIDA DATOS DE ASEGURADO
+                if (IdSexoBeneficiarioAseg == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion51;
+                    return response;
+                }
+                if (IdTipoDocumentoBeneficiarioAseg == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion02;
+                    return response;
+                }
+                if (string.IsNullOrEmpty(DocumentoAseg) == true)
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion03;
+                    return response;
+                }
+                if (string.IsNullOrEmpty(FechaNacimientoAseg.ToString()) == true)
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion08;
+                    return response;
+                }
+                if (IdSituacionInvalidezBeneficiarioAseg == "00")
+                {
+                    response.IsOk = false;
+                    response.Message = CatalogoErrores.Cotizacion09;
+                    return response;
+                }
+                //-----------------------------------------------------------
 
                 if (request.Asegurado.TipoPension == "SOBREVIVENCIA")
                 {
@@ -151,8 +273,7 @@ namespace Estudio.Api.Controllers
                     FechaFallecimientoStr = fechaFallecimiento
                 };
 
-
-               var ObjetoAsegurado = _beneficiariosLogic.RegistrarInsertBeneficiario(bandera, asegurado);
+                var ObjetoAsegurado = _beneficiariosLogic.RegistrarInsertBeneficiario(bandera, asegurado);
 
                 if (ObjetoAsegurado is Repository.Core.Domain.Beneficiario beneficiarioResult)
                 {
@@ -188,9 +309,50 @@ namespace Estudio.Api.Controllers
                         Documento = Documento,
                         IdSexo = int.Parse(IdSexoBeneficiario),
                         IdSituacionInvalidez = int.Parse(IdSituacionInvalidezBeneficiario),
-                        FechaFallecimientoStr = fechaFallecimiento,
+                        FechaFallecimientoStr = "",
                         PorcentajeBen = "0",
                     };
+
+
+                    //VALIDACIONES BENEFICIARIOS
+                    //if (IdTipoDocumentoBeneficiario == "00")
+                    //{
+                    //    response.IsOk = false;
+                    //    response.Message = CatalogoErrores.Cotizacion57;
+                    //    return response;
+                    //}
+                    //if (string.IsNullOrEmpty(Documento) == true)
+                    //{
+                    //    response.IsOk = false;
+                    //    response.Message = CatalogoErrores.Cotizacion57;
+                    //    return response;
+                    //}
+                    if (IdSituacionInvalidezBeneficiario == "00")
+                    {
+                        response.IsOk = false;
+                        response.Message = CatalogoErrores.Cotizacion10;
+                        return response;
+                    }
+                    if (string.IsNullOrEmpty(FechaNacimiento.ToString()) == true)
+                    {
+                        response.IsOk = false;
+                        response.Message = CatalogoErrores.Cotizacion11;
+                        return response;
+                    }
+                    if (IdSexoBeneficiario == "00")
+                    {
+                        response.IsOk = false;
+                        response.Message = CatalogoErrores.Cotizacion12;
+                        return response;
+                    }
+                    if (idParentesco == "00")
+                    {
+                        response.IsOk = false;
+                        response.Message = CatalogoErrores.Cotizacion13;
+                        return response;
+                    }
+                    
+                    //-------------------
 
                     ObjetoAsegurado = _beneficiariosLogic.RegistrarInsertBeneficiario(bandera, beneficiario);
 
@@ -205,15 +367,46 @@ namespace Estudio.Api.Controllers
                 }
 
                 var BenfeDatos = _CotizacionController.PorcentajesBeneficiarios(BenficiariosIDs, int.Parse(IdPensionAsegurado), fechaFallecimiento, FechaDevengueAsegurado.ToString("dd/MM/yyyy"));
+                
+       
+                List<string> Benf_prc_pension = new List<string>();
 
-
-                if (IdAsesor == "00" || IdSexo == "00" || IdTipoDocumento == "00" || IdDepartamento == "00" || IdProvincia == "00" ||
-                    IdDistrito == "00" || IdAfp == "00" || IdPension == "00" || CodigoPension == "00" || PorAfp == "00")
+                if (BenfeDatos is JsonResult jsonResult && jsonResult.Data != null)
                 {
-                    response.IsOk = false;
-                    response.Message = CatalogoErrores.Cotizacion00;
-                    return response;
+                    dynamic datos = jsonResult.Data;
+                    var ObjectData = datos.Object;
+
+                    if (ObjectData != null && ObjectData is IEnumerable<object>)
+                    {
+                        foreach (var elemento in ObjectData)
+                        {
+                            if (elemento.PorcentajeBenDbl != null && elemento.PorcentajeBenDbl is double)
+                            {
+                                Benf_prc_pension.Add(elemento.PorcentajeBenDbl.ToString());
+                            }
+                        }
+                    }
                 }
+
+
+                //if (IdAsesor == "00" || IdSexo == "00" || IdTipoDocumento == "00" || IdDepartamento == "00" || IdProvincia == "00" ||
+                //    IdDistrito == "00" || IdAfp == "00" || IdPension == "00" || CodigoPension == "00" || PorAfp == "00")
+                //{
+                //    response.IsOk = false;
+                //    response.Message = CatalogoErrores.Cotizacion00;
+                //    return response;
+                //}
+               
+
+                // Crear una lista para guardar todos los IdBeneficiarioJubilare
+                List<int> idBeneficiariosJubilare = new List<int>();
+
+                // Agregar el IdBeneficiarioJubilare del asegurado
+                idBeneficiariosJubilare.Add(request.Asegurado.IdBeneficiarioJubilare);
+
+                // Agregar los IdBeneficiarioJubilare de los beneficiarios
+                idBeneficiariosJubilare.AddRange(request.Beneficiario.Select(b => b.IdBeneficiarioJubilare));
+
 
                 var cotizacion = new Cotizacion
                 {
@@ -231,8 +424,8 @@ namespace Estudio.Api.Controllers
                     FechaDevengueStr = null,
                     FechaEstudio = DateTime.Now,
                     FechaEstudioStr = null,
-                    GastoSepelio = request.GastoSepelio,
-                    TipoCambio = request.TipoCambio,
+                    GastoSepelio = decimal.Parse(_cotizacionLogic.ConsultaGastoSepelio()),//request.GastoSepelio,
+                    TipoCambio = _cotizacionLogic.ConsultaTipoCambio(),//request.TipoCambio,
                     FechaCotizacion = DateTime.Now,
                     FechaCotizacionStr = null,
                     IdAsesor = int.Parse(IdAsesor),
@@ -251,7 +444,13 @@ namespace Estudio.Api.Controllers
                     PorAfp = PorAfp,
                     Estado = 0,
                     IdCotizacionjubilare = new int[] { request.IdCotizacionJubilare },
-                    IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray()
+                    IdModalidadjubilare = request.Modalidad.Select(m => m.IdModalidadJubilare).ToArray(),
+                    IdBeneficiariojubilare = idBeneficiariosJubilare.ToArray(),
+                    Benf_prc_pension = Benf_prc_pension.ToArray(),
+                    Tipo_Pension = request.Asegurado.TipoPension,
+                    Mod_mon = Mod_moneda.ToArray(),
+                    Mod_tre = Mod_tipren.ToArray(),
+                    Mod_pes = Mod_tippes.ToArray(),
                 };
 
                 response = _cotizacionLogic.RegistrarModificarCotizacionDetalle(bandera, cotizacion, BenficiariosIDs, ModalidadIDs);
