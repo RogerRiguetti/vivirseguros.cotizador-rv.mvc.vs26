@@ -79,16 +79,20 @@ namespace Estudio.Api.Controllers
             }
 
             // Obtener el nombre del archivo
-            string fileName = GetNameFile("Planilla");
+            string fileName = GetNameFile($"Planilla{id}");
             string filePath = Path.Combine(folderPath, fileName);
+
+            //return Ok(filePath);
 
             JubilareExportData jubilareExportData = new JubilareExportData();
 
-            jubilareExportData.ExportToExcel(filePath, id); // Generacion de la planilla
+            var aux = jubilareExportData.ExportToExcel(filePath, id); // Generacion de la planilla
 
+
+            return Ok(aux);
             //return Ok(planilla);
 
-            return Ok($"ID de Planilla: {id}");
+            //return Ok($"{aux}");
         }
 
         [HttpGet]
