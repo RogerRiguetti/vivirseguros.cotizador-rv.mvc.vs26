@@ -285,7 +285,9 @@ namespace Estudio.Repository.Persistence.Repositories
                     ClaveMoneda = x.GetString(13),
                     CodigoTipoReajuste = x.GetInt32(14),
                     ValorComision = x.GetDecimal(15),
-                    DerGra = x.GetString(5) == "Si" ? "S" : "N"
+                    DerGra = x.GetString(5) == "Si" ? "S" : "N",
+                    Prc_Minimo = x.GetDecimal(16),
+                    Prc_Minimo_1 = x.GetDecimal(16)
                 }).ToList();
             }
             catch (Exception ex)

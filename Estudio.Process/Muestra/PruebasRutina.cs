@@ -155,7 +155,7 @@ namespace Estudio.Process.Muestra
                     TablaPar.MinRC = 0;
                     TablaPar.RepRC = 0;
                     TablaPar.ValCam = Convert.ToDouble(cotizacion.TipoCambio);
-                    ListaPar.Add(TablaPar);
+                    
 
                     // Tipo de Renta
                     if (item.CodigoTiposRenta == "6")
@@ -177,11 +177,14 @@ namespace Estudio.Process.Muestra
                     {
                         TablaPar.PrcCom = (Convert.ToDouble(2.4) + Convert.ToDouble(1.71)) * Convert.ToDouble(1.47);
                     }
+                    TablaPar.Prc_Minimo = item.Prc_Minimo;
+                    TablaPar.Prc_Minimo_1 = item.Prc_Minimo_1;
                     //TablaPar.PrccomS = Convert.ToDecimal(1.71);
                     //TablaPar.Prcfaclab = Convert.ToDecimal(1.47);
                     //TablaPar.Prc_Inicial_1 = Convert.ToDecimal(3.2);
                     //TablaPar.Prc_Inicial = Convert.ToDecimal(2.4);
 
+                    ListaPar.Add(TablaPar);
                     ListaModalidades.Add(ListaPar);
                 }
                 else
