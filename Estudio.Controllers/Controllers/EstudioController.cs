@@ -763,7 +763,7 @@ namespace Estudio.Controllers.Controllers
             string fileName = GetNameFile();
             string filePath = Path.Combine(folderPath, fileName);
             _log.Info("Se genera el filePath");
-            JubilareExportData jubilareExportData = new JubilareExportData();
+            JubilareExportDataPagination jubilareExportData = new JubilareExportDataPagination();
             _log.Info("Se hace llamado del service de jubilareExportData");
             jubilareExportData.ExportToExcelPagination(filePath);
             _log.Info("Fin de Solicitud de GetCartera Completa");

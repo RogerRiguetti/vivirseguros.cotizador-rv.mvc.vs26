@@ -1,81 +1,99 @@
-﻿using System;
+﻿using Estudio.Repository;
+using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using Estudio.Repository;
-using OfficeOpenXml;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Estudio.Logic
 {
     public class JubilareExportData
     {
-        // Tamaño del lote para la paginación
-        private const int batchSize = 10000;
 
-        public void ExportToExcelPagination(string filePath)
+        //List<DataTable>
+        public List<DataTable> ExportToExcel(string filePath, int idPlanilla)
         {
+            //return idPlanilla;
             // Configura el contexto de licencia de EPPlus
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // O LicenseContext.Commercial si tienes una licencia comercial
 
-            // Crear y configurar el archivo Excel
-            using (var package = new ExcelPackage())
+            // Llamar al procedimiento almacenado paginado
+            List<DataTable> dataTables = GetDataStoredProcedure(idPlanilla);
+            string[] nameSheets = { "Comisiones", "Premios" };
+
+            BuildingSheets(dataTables, nameSheets, filePath); // ! Esta funcion es la encargada de la generacion del excel con hojas adicionales
+
+            return dataTables;
+        }
+
+        public void BuildingSheets(List<DataTable> dataTables, string[] nameSheets, string filePath)
+        {
+            // Configura el contexto de licencia de EPPlus
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            // Crear un nuevo archivo Excel
+            using (ExcelPackage excelPackage = new ExcelPackage())
             {
-                var worksheet = package.Workbook.Worksheets.Add("Cartera Completa");
-
-                int rowNumber = 1;  // Fila donde empezar a escribir
-                int offset = 0;  // Valor inicial del offset para la paginación
-                bool hasData;  // Variable para verificar si hay datos en cada paginación
-
-                do
+                // Asegurarse de que la cantidad de hojas y DataTables coincidan
+                if (dataTables.Count != nameSheets.Length)
                 {
-                    // Llamar al procedimiento almacenado paginado
-                    DataTable dt = GetDataStoredProcedure(offset, batchSize);
-                    hasData = dt.Rows.Count > 0; // Si el DataTable tiene filas, continuamos
+                    throw new ArgumentException("El número de DataTables debe coincidir con el número de hojas.");
+                }
 
-                    if (hasData)
+                // Agregar las hojas y escribir los datos de cada DataTable
+                for (int i = 0; i < nameSheets.Length; i++)
+                {
+                    // Agregar la hoja
+                    var worksheet = excelPackage.Workbook.Worksheets.Add(nameSheets[i]);
+
+                    // Obtener el DataTable correspondiente
+                    DataTable dataTable = dataTables[i];
+
+                    // Imprimir los nombres de las columnas
+                    for (int col = 0; col < dataTable.Columns.Count; col++)
                     {
-                        // Agregar encabezados en la primera iteración
-                        if (offset == 0)
-                        {
-                            for (int col = 0; col < dt.Columns.Count; col++)
-                            {
-                                worksheet.Cells[rowNumber, col + 1].Value = dt.Columns[col].ColumnName; // Escribe los nombres de las columnas
-                            }
-                            rowNumber++; // Avanzamos a la siguiente fila después de los encabezados
-                        }
-
-                        // Agregar los datos de la paginación al archivo Excel
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            for (int col = 0; col < dt.Columns.Count; col++)
-                            {
-                                worksheet.Cells[rowNumber, col + 1].Value = row[col]; // Escribir cada celda
-                            }
-                            rowNumber++; // Avanzamos a la siguiente fila
-                        }
-
-                        // Aumentar el offset para la siguiente paginación
-                        offset += batchSize;
+                        worksheet.Cells[1, col + 1].Value = dataTable.Columns[col].ColumnName; // Las columnas empiezan en 1
                     }
 
-                } while (hasData);  // Continuar mientras haya datos
+                    // Imprimir los datos de cada fila
+                    for (int row = 0; row < dataTable.Rows.Count; row++)
+                    {
+                        for (int col = 0; col < dataTable.Columns.Count; col++)
+                        {
+                            worksheet.Cells[row + 2, col + 1].Value = dataTable.Rows[row][col]; // Las filas empiezan en 2
+                        }
+                    }
+                }
 
-                // Guardar el archivo Excel
-                package.SaveAs(new FileInfo(filePath));
+                // Guardar el archivo en la ruta especificada
+                FileInfo file = new FileInfo(filePath);
+                excelPackage.SaveAs(file);
             }
         }
 
-        // Método para obtener datos de la paginación desde el procedimiento almacenado
-        private DataTable GetDataStoredProcedure(int offset, int batchSize)
+        // Ver la forma de programarlo de forma dinamica
+        private List<DataTable> GetDataStoredProcedure(int idPlanilla)
         {
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@Offset", offset),
-                new SqlParameter("@FetchNext", batchSize)
-            };
+            var usp_Sel_JubilarePlanillaComision = SRVDBContext<DataTable>.CallStoreProcedureDt(StoredProcedures.usp_Sel_JubilarePlanillaComision, SqlParameters(idPlanilla));
+            var usp_Sel_JubilarePlanillaPremios = SRVDBContext<DataTable>.CallStoreProcedureDt(StoredProcedures.usp_Sel_JubilarePlanillaPremios, SqlParameters(idPlanilla));
 
-            return SRVDBContext<DataTable>.CallStoreProcedureDt(StoredProcedures.usp_Jub_Sel_CarteraCompleta_Paginado, parameters);
+            List<DataTable> planilla = new List<DataTable>();
+
+            planilla.Add(usp_Sel_JubilarePlanillaComision);
+            planilla.Add(usp_Sel_JubilarePlanillaPremios);
+            return planilla;
         }
+
+        private List<SqlParameter> SqlParameters(int idPlanilla)
+        {
+            return new List<SqlParameter> { new SqlParameter("@ID_PLANILLA", idPlanilla) };
+        }
+
+
     }
+
 }
