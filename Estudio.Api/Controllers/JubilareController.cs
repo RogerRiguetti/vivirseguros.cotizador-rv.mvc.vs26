@@ -14,9 +14,9 @@ namespace Estudio.Api.Controllers
     public class JubilareController : ApiController
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private string GetNameFile()
+        private string GetNameFile(string fileName)
         {
-            string fileName = "CarteraJubilare";
+            //string fileName = "CarteraJubilare";
             DateTime now = DateTime.Now;
 
             string formattedDate = now.ToString("yyyyMMdd");
@@ -30,7 +30,7 @@ namespace Estudio.Api.Controllers
         {
             _log.Info("Inicia solicitud de GetCartera Completa");
 
-            string folderPath = @"D:\ExportacionesJubilare";
+            string folderPath = @"D:\ExportacionesJubilareCarteraCompleta";
 
             // Verificar si el directorio existe, si no, crearlo
             if (!Directory.Exists(folderPath))
@@ -40,12 +40,12 @@ namespace Estudio.Api.Controllers
             }
 
             // Obtener el nombre del archivo
-            string fileName = GetNameFile();
+            string fileName = GetNameFile("CarteraJubilare");
             string filePath = Path.Combine(folderPath, fileName);
 
             // Llamar a la función para exportar datos paginados a Excel
-            JubilareExportData jubilareExportData = new JubilareExportData();
-            jubilareExportData.ExportToExcelPagination(filePath);
+            JubilareExportDataPagination jubilareExportDataPagination = new JubilareExportDataPagination();
+            jubilareExportDataPagination.ExportToExcelPagination(filePath);
 
             // Retornar el archivo como descarga
             return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
@@ -64,6 +64,36 @@ namespace Estudio.Api.Controllers
             });
         }
 
+
+        [HttpGet]
+        [Route("Planilla/{id}")]
+        public IHttpActionResult Planilla(int id)
+        {
+            string folderPath = @"D:\ExportacionesJubilarePlanilla";
+
+            // Verificar si el directorio existe, si no, crearlo
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                _log.Info("Se crea el directorio ExportacionesJubilarePlanilla en disco D");
+            }
+
+            // Obtener el nombre del archivo
+            string fileName = GetNameFile($"Planilla{id}");
+            string filePath = Path.Combine(folderPath, fileName);
+
+            //return Ok(filePath);
+
+            JubilareExportData jubilareExportData = new JubilareExportData();
+
+            var aux = jubilareExportData.ExportToExcel(filePath, id); // Generacion de la planilla
+
+
+            return Ok(aux);
+            //return Ok(planilla);
+
+            //return Ok($"{aux}");
+        }
 
         [HttpGet]
         [Route("Test")]

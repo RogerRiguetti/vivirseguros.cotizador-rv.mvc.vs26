@@ -107,5 +107,9 @@ namespace Estudio.Repository
         public const string usp_Jub_Sel_CarteraCompleta = "usp_Jub_Sel_CarteraCompleta";
         //public const string usp_Jub_Sel_CarteraCompleta_Paginado = "usp_Jub_Sel_CarteraCompleta_Paginado";
         public const string usp_Jub_Sel_CarteraCompleta_Paginado = "usp_Jub_Sel_CarteraCompleta_Paginado2";
+        public const string usp_Sel_JubilarePlanilla = "usp_Sel_JubilarePlanilla";
+        public const string usp_Sel_JubilarePlanillaComision = "usp_Sel_JubilarePlanillaComision";
+        public const string usp_Sel_JubilarePlanillaPremios = "usp_Sel_JubilarePlanillaPremios";
+
     }
 }
