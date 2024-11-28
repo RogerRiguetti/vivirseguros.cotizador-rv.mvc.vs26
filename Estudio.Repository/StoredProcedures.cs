@@ -111,6 +111,11 @@ namespace Estudio.Repository
         public const string usp_Sel_JubilarePlanillaComision = "usp_Sel_JubilarePlanillaComision";
         public const string usp_Sel_JubilarePlanillaPremios = "usp_Sel_JubilarePlanillaPremios";
         public const string insertFechaActual = "insertFechaActual";
+        public const string usp_Sel_CarteraClientesVS = "usp_Sel_CarteraClientesVS";
+        public const string usp_Sel_SOAT = "usp_Sel_SOAT";
+        public const string usp_Sel_VIVEMAX = "usp_Sel_VIVEMAX";
+        public const string usp_Sel_RENTASVITALICIAS = "usp_Sel_RENTASVITALICIAS";
+        public const string usp_Sel_RENTAPRIVADA = "usp_Sel_RENTAPRIVADA";
 
     }
 }
