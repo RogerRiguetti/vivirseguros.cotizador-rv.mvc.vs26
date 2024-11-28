@@ -110,6 +110,7 @@ namespace Estudio.Repository
         public const string usp_Sel_JubilarePlanilla = "usp_Sel_JubilarePlanilla";
         public const string usp_Sel_JubilarePlanillaComision = "usp_Sel_JubilarePlanillaComision";
         public const string usp_Sel_JubilarePlanillaPremios = "usp_Sel_JubilarePlanillaPremios";
+        public const string insertFechaActual = "insertFechaActual";
 
     }
 }

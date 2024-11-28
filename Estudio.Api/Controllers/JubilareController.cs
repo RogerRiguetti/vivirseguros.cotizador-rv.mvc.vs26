@@ -96,6 +96,19 @@ namespace Estudio.Api.Controllers
         }
 
         [HttpGet]
+        [Route("VivirPlusClientes")]
+        public IHttpActionResult VivirPlusClientes()
+        {
+
+            VivirPlusClientesExport vivirPlusClientesExport = new VivirPlusClientesExport();
+
+            var aux = vivirPlusClientesExport.extractData();
+
+            return Ok(aux);
+           
+        }
+
+        [HttpGet]
         [Route("Test")]
         public IHttpActionResult Test()
         {
