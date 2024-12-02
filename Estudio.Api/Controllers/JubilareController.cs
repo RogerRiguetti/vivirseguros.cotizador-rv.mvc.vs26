@@ -65,7 +65,7 @@ namespace Estudio.Api.Controllers
             });
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         [Route("Planilla/{id}")]
         public IHttpActionResult Planilla(int id)
@@ -106,14 +106,15 @@ namespace Estudio.Api.Controllers
         //    var aux = vivirPlusClientesExport.extractData();
 
         //    return Ok(aux);
-           
+
         //}
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("Test")]
         public IHttpActionResult Test()
         {
-            return Ok("tessat");
+            return Ok("ANONYMOUSSSS");
         }
     }
 
