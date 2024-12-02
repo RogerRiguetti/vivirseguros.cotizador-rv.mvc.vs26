@@ -24,6 +24,7 @@ namespace Estudio.Api.Controllers
             return $"{fileName}_{formattedDate}_{formattedTime}.xlsx";
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetCarteraCompleta")]
         public IHttpActionResult GetCarteraCompleta()
@@ -64,7 +65,7 @@ namespace Estudio.Api.Controllers
             });
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         [Route("Planilla/{id}")]
         public IHttpActionResult Planilla(int id)
@@ -95,11 +96,25 @@ namespace Estudio.Api.Controllers
             //return Ok($"{aux}");
         }
 
+        //[HttpGet]
+        //[Route("VivirPlusClientes")]
+        //public IHttpActionResult VivirPlusClientes()
+        //{
+
+        //    VivirPlusClientesExport vivirPlusClientesExport = new VivirPlusClientesExport();
+
+        //    var aux = vivirPlusClientesExport.extractData();
+
+        //    return Ok(aux);
+
+        //}
+
+        [AllowAnonymous]
         [HttpGet]
         [Route("Test")]
         public IHttpActionResult Test()
         {
-            return Ok("tessat");
+            return Ok("ANONYMOUSSSS");
         }
     }
 
