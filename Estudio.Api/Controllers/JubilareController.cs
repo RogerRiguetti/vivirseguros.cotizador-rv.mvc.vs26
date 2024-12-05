@@ -87,10 +87,24 @@ namespace Estudio.Api.Controllers
 
             JubilareExportData jubilareExportData = new JubilareExportData();
 
-            var aux = jubilareExportData.ExportToExcel(filePath, id); // Generacion de la planilla
+            jubilareExportData.ExportToExcel(filePath, id); // Generacion de la planilla
 
+            // Retornar el archivo como descarga
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
+                {
+                    Headers =
+                {
+                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = fileName
+                    },
+                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                }
+                }
+            });
 
-            return Ok(aux);
             //return Ok(planilla);
 
             //return Ok($"{aux}");
