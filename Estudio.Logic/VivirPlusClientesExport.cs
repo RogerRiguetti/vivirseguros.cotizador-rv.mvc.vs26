@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Estudio.Repository;
 using System.Data.SqlClient;
+using System.IO;
+using Estudio.Repository;
+using OfficeOpenXml;
+
 
 namespace Estudio.Logic
 {
@@ -68,9 +68,9 @@ namespace Estudio.Logic
 
         private void InsertFechaActual()
         {
-            List<SqlParameter> parameters = new List<SqlParameter> { };
+            //List<SqlParameter> parameters = new List<SqlParameter> { };
 
-            DataTable result = SRVDBContext<object>.CallStoreProcedureDt(StoredProcedures.insertFechaActual, parameters);
+            //DataTable result = SRVDBContext<object>.CallStoreProcedureDt(StoredProcedures.insertFechaActual, parameters);
         }
 
     }

@@ -123,6 +123,21 @@ namespace Estudio.Api.Controllers
 
         //}
 
+        [AllowAnonymous] 
+        [HttpGet]
+        [Route("VivirPlusClientes")]
+        public IHttpActionResult VivirPlusClientes()
+        {
+
+            VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
+
+            var x = vivirPlusClientes.extractData();
+
+            
+
+            return Ok(x);
+        }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("Test")]
