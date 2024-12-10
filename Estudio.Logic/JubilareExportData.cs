@@ -15,7 +15,7 @@ namespace Estudio.Logic
     {
 
         //List<DataTable>
-        public List<DataTable> ExportToExcel(string filePath, int idPlanilla)
+        public void ExportToExcel(string filePath, int idPlanilla)
         {
             //return idPlanilla;
             // Configura el contexto de licencia de EPPlus
@@ -27,7 +27,7 @@ namespace Estudio.Logic
 
             BuildingSheets(dataTables, nameSheets, filePath); // ! Esta funcion es la encargada de la generacion del excel con hojas adicionales
 
-            return dataTables;
+            //return dataTables;
         }
 
         public void BuildingSheets(List<DataTable> dataTables, string[] nameSheets, string filePath)
