@@ -120,7 +120,7 @@ namespace Estudio.Logic
 
             using (var package = new ExcelPackage())
             {
-                var worksheet = package.Workbook.Worksheets.Add("Clientes");
+                var worksheet = package.Workbook.Worksheets.Add("VivirPlusClientes");
 
                 // Escribir los encabezados
                 for (int col = 0; col < dataTable.Columns.Count; col++)
@@ -128,6 +128,14 @@ namespace Estudio.Logic
                     worksheet.Cells[1, col + 1].Value = dataTable.Columns[col].ColumnName;
                 }
 
+                // Escribir filas
+                for (int rowIdx = 0; rowIdx < dataTable.Rows.Count; rowIdx++)
+                {
+                    for (int col = 0; col < dataTable.Columns.Count; col++)
+                    {
+                        worksheet.Cells[rowIdx + 2, col + 1].Value = dataTable.Rows[rowIdx][col];
+                    }
+                }
 
                 // Guardar el archivo
                 package.SaveAs(new FileInfo(filePath));
