@@ -101,7 +101,7 @@ namespace Estudio.Logic
         // Funcion auxiliar para envio de parametros, ya que en un formato se envia mas un año
         private List<SqlParameter> SqlParameters(string fecha, bool op)
         {
-            fecha = "11/05/2024";
+            //fecha = "11/05/2024"; // ! Fecha de prueba
             string fechaAnioMas = fecha.Substring(0, fecha.Length - 4) + (int.Parse(fecha.Substring(fecha.Length - 4)) + 1);
             return (op) ?
                 new List<SqlParameter> {
