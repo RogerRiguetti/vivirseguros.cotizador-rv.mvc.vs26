@@ -17,7 +17,7 @@ namespace Estudio.Logic
             return record.GetDateTime(record.GetOrdinal("fecha"));
         }
 
-        private string fechaAnteriorUltimaHistorica(string formato)
+        private string FechaAnteriorUltimaHistorica(string formato)
         {
             string query = @"
             SELECT TOP 1 fecha
@@ -39,7 +39,7 @@ namespace Estudio.Logic
         }
 
         //DataTable
-        public DataTable extractData()
+        public DataTable ExtractData()
         {
             // Primero insertamos la fecha de consulta actual
             InsertFechaActual();
@@ -48,15 +48,15 @@ namespace Estudio.Logic
             string formato1 = "MM/dd/yyyy";
             string formato2 = "yyyyMMdd";
 
-            string MM_dd_yyyy = fechaAnteriorUltimaHistorica(formato1);
-            string yyyyMMdd = fechaAnteriorUltimaHistorica(formato2);
+            string MM_dd_yyyy = FechaAnteriorUltimaHistorica(formato1);
+            string yyyyMMdd = FechaAnteriorUltimaHistorica(formato2);
             bool _false = false;
 
-            DataTable usp_Sel_CarteraClientesVS = callStoredProcedure(StoredProcedures.usp_Sel_CarteraClientesVS, MM_dd_yyyy, _false);
-            DataTable usp_Sel_SOAT = callStoredProcedure(StoredProcedures.usp_Sel_SOAT, MM_dd_yyyy, _false);
-            DataTable usp_Sel_VIVEMAX = callStoredProcedure(StoredProcedures.usp_Sel_VIVEMAX, MM_dd_yyyy, true); // Aumenta en un año
-            DataTable usp_Sel_RENTASVITALICIAS = callStoredProcedure(StoredProcedures.usp_Sel_RENTASVITALICIAS, yyyyMMdd, _false);
-            DataTable usp_Sel_RENTAPRIVADA = callStoredProcedure(StoredProcedures.usp_Sel_RENTAPRIVADA, MM_dd_yyyy, _false);
+            DataTable usp_Sel_CarteraClientesVS = CallStoredProcedure(StoredProcedures.usp_Sel_CarteraClientesVS, MM_dd_yyyy, _false);
+            DataTable usp_Sel_SOAT = CallStoredProcedure(StoredProcedures.usp_Sel_SOAT, MM_dd_yyyy, _false);
+            DataTable usp_Sel_VIVEMAX = CallStoredProcedure(StoredProcedures.usp_Sel_VIVEMAX, MM_dd_yyyy, true); // Aumenta en un año
+            DataTable usp_Sel_RENTASVITALICIAS = CallStoredProcedure(StoredProcedures.usp_Sel_RENTASVITALICIAS, yyyyMMdd, _false);
+            DataTable usp_Sel_RENTAPRIVADA = CallStoredProcedure(StoredProcedures.usp_Sel_RENTAPRIVADA, MM_dd_yyyy, _false);
 
             // Crear un DataTable final con la misma estructura que las tablas de origen
             DataTable finalTable = usp_Sel_CarteraClientesVS.Clone(); // Clona la estructura de columnas
@@ -92,7 +92,7 @@ namespace Estudio.Logic
         }
 
         // Funcion auxiliar para llamado de procedimientos almacenados
-        private DataTable callStoredProcedure(string storedProcedure, string fecha, bool op)
+        private DataTable CallStoredProcedure(string storedProcedure, string fecha, bool op)
         {
             List<SqlParameter> sqlParameter = SqlParameters(fecha, op);
             return SRVDBContext<DataTable>.CallStoreProcedureDt(storedProcedure, sqlParameter);

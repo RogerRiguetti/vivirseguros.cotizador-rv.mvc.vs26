@@ -104,24 +104,7 @@ namespace Estudio.Api.Controllers
                 }
                 }
             });
-
-            //return Ok(planilla);
-
-            //return Ok($"{aux}");
         }
-
-        //[HttpGet]
-        //[Route("VivirPlusClientes")]
-        //public IHttpActionResult VivirPlusClientes()
-        //{
-
-        //    VivirPlusClientesExport vivirPlusClientesExport = new VivirPlusClientesExport();
-
-        //    var aux = vivirPlusClientesExport.extractData();
-
-        //    return Ok(aux);
-
-        //}
 
         [AllowAnonymous] 
         [HttpGet]
@@ -129,11 +112,22 @@ namespace Estudio.Api.Controllers
         public IHttpActionResult VivirPlusClientes()
         {
 
+            string folderPath = @"D:\ExportacionesVivirPlus";
+            // Verificar si el directorio existe, si no, crearlo
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                _log.Info("Se crea el directorio ExportacionesVivirPlus en disco D");
+            }
+
+            // Obtener el nombre del archivo
+            string fileName = GetNameFile($"VivirPlusClientes");
+            string filePath = Path.Combine(folderPath, fileName);
+
+
             VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
 
-            var x = vivirPlusClientes.extractData();
-
-            
+            var x = vivirPlusClientes.ExtractData();
 
             return Ok(x);
         }
