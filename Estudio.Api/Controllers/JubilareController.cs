@@ -126,10 +126,23 @@ namespace Estudio.Api.Controllers
 
 
             VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
+            vivirPlusClientes.ExportExcel(filePath);
 
-            var x = vivirPlusClientes.ExtractData();
-
-            return Ok(x);
+            // Retornar el archivo como descarga
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
+                {
+                    Headers =
+                {
+                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = fileName
+                    },
+                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                }
+                }
+            });
         }
 
         [AllowAnonymous]

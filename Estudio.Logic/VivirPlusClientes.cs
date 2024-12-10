@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using Estudio.Repository;
 using System.Data.SqlClient;
+using OfficeOpenXml;
 
 namespace Estudio.Logic
 {
@@ -39,7 +39,7 @@ namespace Estudio.Logic
         }
 
         //DataTable
-        public DataTable ExtractData()
+        private DataTable ExtractData()
         {
             // Primero insertamos la fecha de consulta actual
             InsertFechaActual();
@@ -111,6 +111,34 @@ namespace Estudio.Logic
                 new List<SqlParameter> {
                     new SqlParameter("@fecha", fecha)
                 };
+        }
+
+        private void BuildingSheet(DataTable dataTable, string filePath)
+        {
+            // Configura el contexto de licencia de EPPlus
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Clientes");
+
+                // Escribir los encabezados
+                for (int col = 0; col < dataTable.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dataTable.Columns[col].ColumnName;
+                }
+
+
+                // Guardar el archivo
+                package.SaveAs(new FileInfo(filePath));
+            }
+
+        }
+
+        public void ExportExcel(string filePath)
+        {
+            DataTable dataCateraClientes = ExtractData();
+            BuildingSheet(dataCateraClientes, filePath);
         }
 
     }
