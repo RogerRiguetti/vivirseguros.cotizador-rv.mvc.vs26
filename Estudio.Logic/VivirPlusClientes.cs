@@ -41,9 +41,6 @@ namespace Estudio.Logic
         //DataTable
         private DataTable ExtractData()
         {
-            // Primero insertamos la fecha de consulta actual
-            InsertFechaActual();
-
             // Procesamos el formato de fechas, dentro de estas funciones ya se extrae la ultima fecha anterior a la fecha de consulta
             string formato1 = "MM/dd/yyyy";
             string formato2 = "yyyyMMdd";
@@ -145,6 +142,8 @@ namespace Estudio.Logic
 
         public void ExportExcel(string filePath)
         {
+            // Primero insertamos la fecha de consulta actual
+            InsertFechaActual();
             DataTable dataCateraClientes = ExtractData();
             BuildingSheet(dataCateraClientes, filePath);
         }
