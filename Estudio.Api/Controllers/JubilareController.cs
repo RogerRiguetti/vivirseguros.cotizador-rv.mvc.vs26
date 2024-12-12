@@ -14,6 +14,38 @@ namespace Estudio.Api.Controllers
     public class JubilareController : ApiController
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        // Validar existencia de directorio
+        private string CreateDirectoryIfNotExists(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                _log.Info($"Se crea el directorio {folderPath}");
+            }
+            return folderPath;
+        }
+
+        // Retornar el archivo como descarga
+        private HttpResponseMessage GenerateFileResponse(string filePath, string fileName)
+        {
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
+                {
+                    Headers =
+                    {
+                        ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                        {
+                            FileName = fileName
+                        },
+                        ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    }
+                }
+            };
+        }
+
+        // getNameFile
         private string GetNameFile(string fileName)
         {
             //string fileName = "CarteraJubilare";
@@ -31,16 +63,8 @@ namespace Estudio.Api.Controllers
         {
             _log.Info("Inicia solicitud de GetCartera Completa");
 
-            string folderPath = @"D:\ExportacionesJubilareCarteraCompleta";
-
-            // Verificar si el directorio existe, si no, crearlo
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-                _log.Info("Se crea el directorio ExportacionesJubilare en disco D");
-            }
-
             // Obtener el nombre del archivo
+            string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesJubilareCarteraCompleta");
             string fileName = GetNameFile("CarteraJubilare");
             string filePath = Path.Combine(folderPath, fileName);
 
@@ -48,21 +72,7 @@ namespace Estudio.Api.Controllers
             JubilareExportDataPagination jubilareExportDataPagination = new JubilareExportDataPagination();
             jubilareExportDataPagination.ExportToExcelPagination(filePath);
 
-            // Retornar el archivo como descarga
-            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
-                {
-                    Headers =
-                {
-                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = fileName
-                    },
-                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                }
-                }
-            });
+            return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
         [AllowAnonymous]
@@ -70,40 +80,16 @@ namespace Estudio.Api.Controllers
         [Route("Planilla/{id}")]
         public IHttpActionResult Planilla(int id)
         {
-            string folderPath = @"D:\ExportacionesJubilarePlanilla";
-
-            // Verificar si el directorio existe, si no, crearlo
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-                _log.Info("Se crea el directorio ExportacionesJubilarePlanilla en disco D");
-            }
-
             // Obtener el nombre del archivo
+            string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesJubilarePlanilla");
             string fileName = GetNameFile($"Planilla{id}");
             string filePath = Path.Combine(folderPath, fileName);
 
-            //return Ok(filePath);
-
             JubilareExportData jubilareExportData = new JubilareExportData();
-
             jubilareExportData.ExportToExcel(filePath, id); // Generacion de la planilla
 
             // Retornar el archivo como descarga
-            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
-                {
-                    Headers =
-                {
-                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = fileName
-                    },
-                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                }
-                }
-            });
+            return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
         [AllowAnonymous] 
@@ -111,38 +97,15 @@ namespace Estudio.Api.Controllers
         [Route("VivirPlusClientes")]
         public IHttpActionResult VivirPlusClientes()
         {
-
-            string folderPath = @"D:\ExportacionesVivirPlus";
-            // Verificar si el directorio existe, si no, crearlo
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-                _log.Info("Se crea el directorio ExportacionesVivirPlus en disco D");
-            }
-
             // Obtener el nombre del archivo
+            string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesVivirPlus");
             string fileName = GetNameFile($"VivirPlusClientes");
             string filePath = Path.Combine(folderPath, fileName);
 
-
             VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
             vivirPlusClientes.ExportExcel(filePath);
-
-            // Retornar el archivo como descarga
-            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
-                {
-                    Headers =
-                {
-                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                    {
-                        FileName = fileName
-                    },
-                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                }
-                }
-            });
+   
+            return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
         [AllowAnonymous]
