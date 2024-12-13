@@ -2677,9 +2677,18 @@ namespace Estudio.Repository.Persistence.Repositories
                         //int InfoEstadoCErr = (from l in listaInfoRenta where l.codigoElemento == datos[i]. select l).Count();
                         //int InfoClienteErr = (from l in listaInfoRenta where l.codigoElemento == datos[i].strTipRen select l).Count();
                         int InfoMonedaErr = (from l in listaMonedas where l.codigoElemento == datos[i].strMon select l).Count();
-                        int InfoMontosErr = (from l in listaMontos where l.mtoPriDesde <= Convert.ToDouble(datos[i].strMtoCIC) && l.mtoPriHasta >= Convert.ToDouble(datos[i].strMtoCIC) select l).Count();
+                        int InfoMontosErr = 0;
+                        //RRR 13.12.2024
+                        if (datos[i].strMon == "S/.")
+                        {
+                            InfoMontosErr = (from l in listaMontos where 100000 <= Convert.ToDouble(datos[i].strMtoCIC) && l.mtoPriHasta >= Convert.ToDouble(datos[i].strMtoCIC) select l).Count();
+                        }
+                        else
+                        {
+                            InfoMontosErr = (from l in listaMontos where l.mtoPriDesde <= Convert.ToDouble(datos[i].strMtoCIC) && l.mtoPriHasta >= Convert.ToDouble(datos[i].strMtoCIC) select l).Count();
 
-
+                        }
+                        //fin RRR 13.12.2024
                         _log.Info("Restricciones realizadas correctamente");
 
 
