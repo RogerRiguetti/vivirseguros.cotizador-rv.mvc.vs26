@@ -70,6 +70,8 @@ namespace Estudio.Api.Controllers
         [Route("Planilla/{id}")]
         public IHttpActionResult Planilla(int id)
         {
+
+            _log.Info($"Inicia solicitud de Planilla {id}");
             string folderPath = @"D:\ExportacionesJubilarePlanilla";
 
             // Verificar si el directorio existe, si no, crearlo
@@ -104,31 +106,55 @@ namespace Estudio.Api.Controllers
                 }
                 }
             });
-
-            //return Ok(planilla);
-
-            //return Ok($"{aux}");
         }
 
-        //[HttpGet]
-        //[Route("VivirPlusClientes")]
-        //public IHttpActionResult VivirPlusClientes()
-        //{
+        [AllowAnonymous] 
+        [HttpGet]
+        [Route("VivirPlusClientes")]
+        public IHttpActionResult VivirPlusClientes()
+        {
 
-        //    VivirPlusClientesExport vivirPlusClientesExport = new VivirPlusClientesExport();
+            string folderPath = @"D:\ExportacionesVivirPlus";
+            // Verificar si el directorio existe, si no, crearlo
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+                _log.Info("Se crea el directorio ExportacionesVivirPlus en disco D");
+            }
 
-        //    var aux = vivirPlusClientesExport.extractData();
+            // Obtener el nombre del archivo
+            string fileName = GetNameFile($"VivirPlusClientes");
+            string filePath = Path.Combine(folderPath, fileName);
 
-        //    return Ok(aux);
 
-        //}
+            VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
+            vivirPlusClientes.ExportExcel(filePath);
+
+            // Retornar el archivo como descarga
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ByteArrayContent(File.ReadAllBytes(filePath))
+                {
+                    Headers =
+                {
+                    ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = fileName
+                    },
+                    ContentType = new MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                }
+                }
+            });
+        }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("Test")]
-        public IHttpActionResult Test()
+        [Route("Test/{op}")]
+        public IHttpActionResult Test(int op)
         {
-            return Ok("ANONYMOUSSSS");
+            string ambiente = (op == 1) ? "PROD" : "QA";
+            _log.Info($"ESTAS TESTEANDO CORRECTAMENTE {ambiente}");
+            return Ok($"ANONYMOUSSSS | {ambiente}");
         }
     }
 
