@@ -6,11 +6,16 @@ using System.IO;
 using Estudio.Repository;
 using System.Data.SqlClient;
 using OfficeOpenXml;
+using log4net;
+using System.Reflection;
 
 namespace Estudio.Logic
 {
     public class VivirPlusClientes
     {
+
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         // Mapeo de fecha
         private static DateTime MapFecha(IDataRecord record)
         {
@@ -52,22 +57,40 @@ namespace Estudio.Logic
             DataTable usp_Sel_CarteraClientesVS = CallStoredProcedure(StoredProcedures.usp_Sel_CarteraClientesVS, MM_dd_yyyy, _false);
             DataTable usp_Sel_SOAT = CallStoredProcedure(StoredProcedures.usp_Sel_SOAT, MM_dd_yyyy, _false);
             DataTable usp_Sel_VIVEMAX = CallStoredProcedure(StoredProcedures.usp_Sel_VIVEMAX, MM_dd_yyyy, true); // Aumenta en un año
-            DataTable usp_Sel_RENTASVITALICIAS = CallStoredProcedure(StoredProcedures.usp_Sel_RENTASVITALICIAS, yyyyMMdd, _false);
+            DataTable usp_Sel_RENTASVITALICIAS = CallStoredProcedure(StoredProcedures.usp_Sel_RENTASVITALICIAS, yyyyMMdd, _false); // yyyyMMdd
             DataTable usp_Sel_RENTAPRIVADA = CallStoredProcedure(StoredProcedures.usp_Sel_RENTAPRIVADA, MM_dd_yyyy, _false);
 
             // Crear un DataTable final con la misma estructura que las tablas de origen
             DataTable finalTable = usp_Sel_CarteraClientesVS.Clone(); // Clona la estructura de columnas
 
+            if (usp_Sel_SOAT.Columns.Contains("PLACA")) usp_Sel_SOAT.Columns["PLACA"].MaxLength = int.MaxValue;
+
+            if (finalTable.Columns.Contains("PLACA")) finalTable.Columns["PLACA"].MaxLength = int.MaxValue;
+
             // Ajustar MaxLength de la columna "PRODUCTO" para evitar el error
             if (finalTable.Columns.Contains("PRODUCTO")) finalTable.Columns["PRODUCTO"].MaxLength = int.MaxValue; // O un valor más grande, como 1000
-
+                 
             // Concatenar todas las tablas
-            AddTableRows(finalTable, usp_Sel_CarteraClientesVS);
-            AddTableRows(finalTable, usp_Sel_SOAT);
-            AddTableRows(finalTable, usp_Sel_VIVEMAX);
-            AddTableRows(finalTable, usp_Sel_RENTASVITALICIAS);
-            AddTableRows(finalTable, usp_Sel_RENTAPRIVADA);
+            try
+            {
+                _log.Info("EMPIEZA EL ADDTABLE");
 
+                _log.Info($"REGISTROS DE RENTAS VITALICIAS {usp_Sel_RENTASVITALICIAS} | Registros: {usp_Sel_RENTASVITALICIAS.Rows.Count}");
+
+                AddTableRows(finalTable, usp_Sel_CarteraClientesVS);
+                AddTableRows(finalTable, usp_Sel_SOAT);
+                AddTableRows(finalTable, usp_Sel_VIVEMAX);
+                AddTableRows(finalTable, usp_Sel_RENTASVITALICIAS);
+                AddTableRows(finalTable, usp_Sel_RENTAPRIVADA);
+                _log.Info("FIN DE ADDTABLE");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error {ex.Message}");
+                _log.Info($"ERROR: {ex.Message}");
+            }
+
+            
             return finalTable;
         }
 
@@ -98,7 +121,7 @@ namespace Estudio.Logic
         // Funcion auxiliar para envio de parametros, ya que en un formato se envia mas un año
         private List<SqlParameter> SqlParameters(string fecha, bool op)
         {
-            //fecha = "11/05/2024"; // ! Fecha de prueba
+            // fecha = "20241202"; // ! Fecha de prueba 11/05 - tener cuidado con el formato de rentasvitalicias
             string fechaAnioMas = fecha.Substring(0, fecha.Length - 4) + (int.Parse(fecha.Substring(fecha.Length - 4)) + 1);
             return (op) ?
                 new List<SqlParameter> {
