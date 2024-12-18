@@ -110,10 +110,12 @@ namespace Estudio.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("Test")]
-        public IHttpActionResult Test()
+        [Route("Test/{op}")]
+        public IHttpActionResult Test(int op)
         {
-            return Ok("ANONYMOUSSSS");
+            string ambiente = (op == 1) ? "PROD" : "QA";
+            _log.Info($"ESTAS TESTEANDO CORRECTAMENTE {ambiente}");
+            return Ok($"ANONYMOUSSSS | {ambiente}");
         }
     }
 
