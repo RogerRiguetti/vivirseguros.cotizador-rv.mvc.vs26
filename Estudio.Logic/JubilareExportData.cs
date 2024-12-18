@@ -8,15 +8,18 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
+using System.Reflection;
 
 namespace Estudio.Logic
 {
     public class JubilareExportData
     {
-
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         //List<DataTable>
         public void ExportToExcel(string filePath, int idPlanilla)
         {
+            _log.Info($"Exportando Excel de planilla");
             //return idPlanilla;
             // Configura el contexto de licencia de EPPlus
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // O LicenseContext.Commercial si tienes una licencia comercial
