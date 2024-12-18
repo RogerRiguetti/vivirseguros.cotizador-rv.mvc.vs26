@@ -70,6 +70,8 @@ namespace Estudio.Api.Controllers
         [Route("Planilla/{id}")]
         public IHttpActionResult Planilla(int id)
         {
+
+            _log.Info($"Inicia solicitud de Planilla {id}");
             string folderPath = @"D:\ExportacionesJubilarePlanilla";
 
             // Verificar si el directorio existe, si no, crearlo
@@ -147,10 +149,12 @@ namespace Estudio.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("Test")]
-        public IHttpActionResult Test()
+        [Route("Test/{op}")]
+        public IHttpActionResult Test(int op)
         {
-            return Ok("ANONYMOUSSSS");
+            string ambiente = (op == 1) ? "PROD" : "QA";
+            _log.Info($"ESTAS TESTEANDO CORRECTAMENTE {ambiente}");
+            return Ok($"ANONYMOUSSSS | {ambiente}");
         }
     }
 
