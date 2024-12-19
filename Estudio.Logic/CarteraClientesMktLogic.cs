@@ -15,7 +15,6 @@ namespace Estudio.Logic
 {
     public class CarteraClientesMktLogic
     {
-
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         // List<DataTable>
@@ -51,7 +50,6 @@ namespace Estudio.Logic
 
         public void BuildingSheets(List<DataTable> dataTables, string[] nameSheets, string filePath)
         {
-
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (ExcelPackage excelPackage = new ExcelPackage())
@@ -77,16 +75,13 @@ namespace Estudio.Logic
                         for (int col = 0; col < dataTable.Columns.Count; col++)
                         {
                             worksheet.Cells[row + 2, col + 1].Value = dataTable.Rows[row][col];
-                        }                    }
+                        }
+                    }
                 }
 
                 FileInfo file = new FileInfo(filePath);
                 excelPackage.SaveAs(file);
             }
         }
-
-
-
-
     }
 }
