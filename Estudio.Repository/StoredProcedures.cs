@@ -116,6 +116,10 @@ namespace Estudio.Repository
         public const string usp_Sel_VIVEMAX = "usp_Sel_VIVEMAX";
         public const string usp_Sel_RENTASVITALICIAS = "usp_Sel_RENTASVITALICIAS";
         public const string usp_Sel_RENTAPRIVADA = "usp_Sel_RENTAPRIVADA";
+        public const string usp_Sel_RRVV_BRD = "usp_Sel_RRVV_BRD";
+        public const string usp_Sel_RRPP_BRD = "usp_Sel_RRPP_BRD";
+        public const string usp_Sel_FM_BRD = "usp_Sel_FM_BRD";
+        public const string usp_Sel_SOAT_BRD = "usp_Sel_SOAT_BRD";
 
     }
 }
