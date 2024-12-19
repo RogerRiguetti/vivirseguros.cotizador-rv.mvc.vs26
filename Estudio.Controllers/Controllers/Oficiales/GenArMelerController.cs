@@ -111,7 +111,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                 string nombreArchivo = "SolicitudesGeneradas";
                 List<string> nombresHojas = new List<string>();
 
-                ExportarExcel expExcel = new ExportarExcel();
+                ExportarExcelLogic expExcel = new ExportarExcelLogic();
 
                 Random r = new Random();
                 int aleatorio3 = r.Next(100, 999);
@@ -146,7 +146,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                     Thread myThread = new Thread(delegate ()
                     {
 
-                        ExportarExcel exportar = new ExportarExcel();
+                        ExportarExcelLogic exportar = new ExportarExcelLogic();
                         exportar.ExportExcel(path + nombreArchivo, listaResultado, nombresHojas);
 
                     });
