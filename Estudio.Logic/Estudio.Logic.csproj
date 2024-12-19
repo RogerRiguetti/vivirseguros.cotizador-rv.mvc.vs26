@@ -106,7 +106,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VivirPlusClientes.cs" />
+    <Compile Include="CarteraClientesMktLogic.cs" />
+    <Compile Include="VivirPlusClientesLogic.cs" />
     <Compile Include="ActualizaInfOfiLogic.cs" />
     <Compile Include="BeneficiariosLogic.cs" />
     <Compile Include="CalcularAsignacionIntermediarioLogic.cs" />
@@ -118,12 +119,12 @@
     <Compile Include="Elog.cs" />
     <Compile Include="EstudioLogic.cs" />
     <Compile Include="ExcepcionesLogic.cs" />
-    <Compile Include="ExportarExcel.cs" />
+    <Compile Include="ExportarExcelLogic.cs" />
     <Compile Include="GastosSepelioLogic.cs" />
     <Compile Include="GenArMelerLogic.cs" />
     <Compile Include="Identity.cs" />
-    <Compile Include="JubilareExportData.cs" />
-    <Compile Include="JubilareExportDataPagination.cs" />
+    <Compile Include="JubilareExportDataLogic.cs" />
+    <Compile Include="JubilareExportDataPaginationLogic.cs" />
     <Compile Include="LimiteCotizacionExtraOficialLogic.cs" />
     <Compile Include="LimiteCotizacionInicialLogic.cs" />
     <Compile Include="LimiteCotizacionMejoradaLogic.cs" />

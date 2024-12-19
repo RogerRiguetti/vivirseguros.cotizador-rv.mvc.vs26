@@ -102,7 +102,7 @@ namespace Estudio.Api.Controllers
         [Route("VivirPlusClientes")]
         public IHttpActionResult VivirPlusClientes()
         {
-            VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
+            VivirPlusClientesLogic vivirPlusClientes = new VivirPlusClientesLogic();
 
             // Obtener el nombre del archivo
             string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesVivirPlus");
@@ -127,11 +127,11 @@ namespace Estudio.Api.Controllers
             string fileName = GetNameFile($"CarteraClientesMkt");
             string filePath = Path.Combine(folderPath, fileName);
 
+            CarteraClientesMktLogic carteraClientesMktLogic = new CarteraClientesMktLogic();
+            //string[] das = carteraClientesMktLogic.ExportCarteraClientesMkt(filePath);
+            carteraClientesMktLogic.ExportCarteraClientesMkt(filePath);
 
-            //string[] nameSheets = { "RRVV", "RRPP", "FM", "SOAT" };
-
-
-            return Ok("CarteraClientesMkt");
+            return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
 
