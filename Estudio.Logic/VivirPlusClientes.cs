@@ -22,7 +22,7 @@ namespace Estudio.Logic
             return record.GetDateTime(record.GetOrdinal("fecha"));
         }
 
-        private string FechaAnteriorUltimaHistorica(string formato)
+        public string FechaAnteriorUltimaHistorica(string formato)
         {
             string query = @"
             SELECT TOP 1 fecha

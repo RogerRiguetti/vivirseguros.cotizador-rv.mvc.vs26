@@ -72,6 +72,7 @@ namespace Estudio.Api.Controllers
             JubilareExportDataPagination jubilareExportDataPagination = new JubilareExportDataPagination();
             jubilareExportDataPagination.ExportToExcelPagination(filePath);
 
+            // Retornar el archivo como descarga
             return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
@@ -80,6 +81,9 @@ namespace Estudio.Api.Controllers
         [Route("Planilla/{id}")]
         public IHttpActionResult Planilla(int id)
         {
+
+            _log.Info($"Inicia solicitud de Planilla {id}");
+
             // Obtener el nombre del archivo
             string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesJubilarePlanilla");
             string fileName = GetNameFile($"Planilla{id}");
@@ -97,14 +101,16 @@ namespace Estudio.Api.Controllers
         [Route("VivirPlusClientes")]
         public IHttpActionResult VivirPlusClientes()
         {
+            VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
+
             // Obtener el nombre del archivo
             string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesVivirPlus");
-            string fileName = GetNameFile($"VivirPlusClientes");
+            string fechaAnterior = vivirPlusClientes.FechaAnteriorUltimaHistorica("yyyyMMdd");
+            string fileName = GetNameFile($"VivirPlusClientes{fechaAnterior}");
             string filePath = Path.Combine(folderPath, fileName);
-
-            VivirPlusClientes vivirPlusClientes = new VivirPlusClientes();
             vivirPlusClientes.ExportExcel(filePath);
-   
+
+            // Retornar el archivo como descarga
             return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
