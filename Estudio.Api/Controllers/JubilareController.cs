@@ -96,6 +96,7 @@ namespace Estudio.Api.Controllers
             return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
+        // Ultimos clientes ingresados
         [AllowAnonymous] 
         [HttpGet]
         [Route("VivirPlusClientes")]
@@ -113,6 +114,26 @@ namespace Estudio.Api.Controllers
             // Retornar el archivo como descarga
             return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
+
+        // Cientes que ya estan registrados
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("CarteraClientesMkt")]
+        public IHttpActionResult CarteraClientesMkt()
+        {
+            _log.Info($"Inicia solicitud CarteraClientesMkt");
+            // Obtener el nombre del archivo
+            string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesCarteraClientesMkt");
+            string fileName = GetNameFile($"CarteraClientesMkt");
+            string filePath = Path.Combine(folderPath, fileName);
+
+
+            //string[] nameSheets = { "RRVV", "RRPP", "FM", "SOAT" };
+
+
+            return Ok("CarteraClientesMkt");
+        }
+
 
         [AllowAnonymous]
         [HttpGet]
