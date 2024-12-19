@@ -8,6 +8,6 @@ namespace Estudio.Logic
 {
     public class CarteraClientesMktLogic
     {
-        asdsad
+
     }
 }
