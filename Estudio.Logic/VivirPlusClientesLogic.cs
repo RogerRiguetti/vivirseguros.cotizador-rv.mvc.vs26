@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace Estudio.Logic
 {
-    public class VivirPlusClientes
+    public class VivirPlusClientesLogic
     {
 
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);

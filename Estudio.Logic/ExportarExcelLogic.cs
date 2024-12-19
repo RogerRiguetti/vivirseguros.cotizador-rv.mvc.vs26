@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Estudio.Logic
 {
-    public class ExportarExcel
+    public class ExportarExcelLogic
     {
         // creamos el documento excel
         NPOI.HSSF.UserModel.HSSFWorkbook documentoExcel = new NPOI.HSSF.UserModel.HSSFWorkbook();
