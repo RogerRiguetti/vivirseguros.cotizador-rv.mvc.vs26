@@ -162,6 +162,7 @@ namespace Estudio.Controllers.Controllers.Oficiales
                 _log.Info("numOperacion: " + nroOperacion);
                 _log.Info("JSON: " + json);
                 string respuestaws = wsActualizaP.ActualizarProducto(nroOperacion, json);
+                _log.Info("respuestaws: " + respuestaws);
                 if (respuestaws == "OK")
                 {
                     _log.Info("Datos guardados y enviados con exito");
