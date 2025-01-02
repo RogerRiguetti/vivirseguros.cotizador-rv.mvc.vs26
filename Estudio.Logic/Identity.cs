@@ -105,6 +105,9 @@ namespace Estudio.Logic
         //FondosMAX 
         public bool FMMenu { get; set; }
 
+        //Gestor de Activos
+        public bool GestorActivos { get; set; }
+
         #endregion
     }
 }

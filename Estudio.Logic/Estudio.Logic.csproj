@@ -200,6 +200,10 @@
     <None Include="Web References\xmlEnvio\AdmIntegracionCotizador.disco" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Estudio.Helpers\Estudio.Helpers.csproj">
+      <Project>{0255aa47-e86d-440d-bd8c-7b19f2c51659}</Project>
+      <Name>Estudio.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Estudio.Process\Estudio.Process.csproj">
       <Project>{3bd4f8ca-d128-455d-872f-3853c5cf6c79}</Project>
       <Name>Estudio.Process</Name>
