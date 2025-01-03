@@ -12,6 +12,7 @@
     string urlEmision = System.Configuration.ConfigurationManager.AppSettings["UrlEmision"] + userIdEncrypted;
     string urlFondosMax = System.Configuration.ConfigurationManager.AppSettings["UrlFondosMax"] + userIdEncrypted;
     string urlGestorActivos = System.Configuration.ConfigurationManager.AppSettings["UrlGestorActivos"] + userIdEncrypted;
+    string UrlGestorReportes = System.Configuration.ConfigurationManager.AppSettings["UrlGestorReportes"] + userIdEncrypted;
 }
 
 <div class="nav-side-menu col-lg-2 col-md-3 col-sm-3 col-xs-12">
@@ -244,7 +245,7 @@
             <li id="CuentaNav" data-toggle="collapse" data-target="#Cuenta" class="collapsed PesPriUl">
                 <a href="#"><i class="fa fa-user fa-lg icono-menu" aria-hidden="true"></i> Cuenta </a><span class="arrow"></span>
             </li>
-        
+
 
             <ul class="sub-menu collapse prop" id="Cuenta">
                 @if (identity.RoleIndex)
@@ -270,13 +271,21 @@
                 </li>
             }
 
+            <!-- * ACCESO AL GESTOR DE ACTIVOS -->
+            @if (true) // identity.GestorActivos
+            {
+                <li id="RentaPrivadaNav" data-toggle="collapse" data-target="#GestorActivos" class="collapsed PesPriUl">
+                    <a href=@UrlGestorReportes target="_blank"><i class="fa fa-file fa-lg icono-menu" aria-hidden="true"></i>&nbsp&nbspGestor de Reportes</a>
+                </li>
+            }
+
             <li data-toggle="collapse" data-target="#Sesion" class="collapsed">
                 <a href="@Url.Action("LogOut","Estudio")">
                     <i class="fa fa-sign-out fa-lg icono-menu" aria-hidden="true"></i> Cerrar Sesión
                 </a>
                 <span class="arrow"></span>
             </li>
-       
+
         </ul>
     </div>
 </div>
