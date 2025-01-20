@@ -77,7 +77,8 @@ namespace Estudio.Logic
                         for (int col = 0; col < dataTable.Columns.Count; col++)
                         {
                             worksheet.Cells[row + 2, col + 1].Value = dataTable.Rows[row][col];
-                        }                    }
+                        }
+                    }
                 }
 
                 FileInfo file = new FileInfo(filePath);
