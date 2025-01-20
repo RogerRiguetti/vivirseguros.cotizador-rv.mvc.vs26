@@ -15,7 +15,6 @@ namespace Estudio.Logic
 {
     public class CarteraClientesMktLogic
     {
-
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         // List<DataTable>
@@ -51,7 +50,6 @@ namespace Estudio.Logic
 
         public void BuildingSheets(List<DataTable> dataTables, string[] nameSheets, string filePath)
         {
-
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
             using (ExcelPackage excelPackage = new ExcelPackage())

@@ -78,7 +78,7 @@ namespace Estudio.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("Planilla/{id}")]
+        [Route("Planilla/{id}")] // Planilla Comercial
         public IHttpActionResult Planilla(int id)
         {
 
@@ -134,6 +134,39 @@ namespace Estudio.Api.Controllers
             return ResponseMessage(GenerateFileResponse(filePath, fileName));
         }
 
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("CuadroComisiones")]
+        public IHttpActionResult CuadroComisiones()
+        {
+            _log.Info($"Inicio solicitud de reporte de Cuadro de Comisiones");
+            string folderPath = CreateDirectoryIfNotExists(@"D:\ExportacionesCuadroComisiones");
+            string fileName = GetNameFile($"CuadroComisiones");
+            string filePath = Path.Combine(folderPath, fileName);
+
+            CuadroComisiones cuadroComisiones = new CuadroComisiones();
+            cuadroComisiones.ExportCuadroComisiones(filePath);
+
+            return ResponseMessage(GenerateFileResponse(filePath, fileName));
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route]
+        public IHttpActionResult ReporteFelipe() 
+        {
+            return Ok("");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route]
+        public IHttpActionResult RegionesPorAsesores() // Por trabajar
+        {
+            return Ok("");
+        }
 
         [AllowAnonymous]
         [HttpGet]
