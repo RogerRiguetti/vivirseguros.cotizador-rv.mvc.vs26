@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using System.Reflection;
+using Estudio.Helpers;
 
 namespace Estudio.Logic
 {
@@ -27,6 +28,8 @@ namespace Estudio.Logic
             // Llamar al procedimiento almacenado paginado
             List<DataTable> dataTables = GetDataStoredProcedure(idPlanilla);
             string[] nameSheets = { "Comisiones", "Premios" };
+
+            //BuildingSheetsHelper.BuildingSheets(dataTables, nameSheets, filePath);
 
             BuildingSheets(dataTables, nameSheets, filePath); // ! Esta funcion es la encargada de la generacion del excel con hojas adicionales
 

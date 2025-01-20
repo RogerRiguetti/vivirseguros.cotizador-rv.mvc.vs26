@@ -11,7 +11,14 @@
     string urlRentaPrivada = System.Configuration.ConfigurationManager.AppSettings["UrlRentaPrivada"] + userIdEncrypted;
     string urlEmision = System.Configuration.ConfigurationManager.AppSettings["UrlEmision"] + userIdEncrypted;
     string urlFondosMax = System.Configuration.ConfigurationManager.AppSettings["UrlFondosMax"] + userIdEncrypted;
-    string urlGestorActivos = System.Configuration.ConfigurationManager.AppSettings["UrlGestorActivos"] + userIdEncrypted;
+    string urlGestorActivos = "http://localhost:62857/";
+    string PROD_API = "https://rentamax.vivirseguros.pe/EstudioApi/api/Jubilare";
+    string QA_API = "https://rentamax-qa.vivirseguros.pe/EstudioApi/api/Jubilare";
+    string LOCAL_API = "http://localhost:44329/api/Jubilare";
+    string urlReporteCuadroComisiones = $"{PROD_API}/CuadroComisiones";
+
+
+    //System.Configuration.ConfigurationManager.AppSettings["UrlGestorActivos"] + userIdEncrypted;
     string UrlGestorReportes = System.Configuration.ConfigurationManager.AppSettings["UrlGestorReportes"] + userIdEncrypted;
 }
 
@@ -136,6 +143,7 @@
                                 <li id="ReportesNav" data-toggle="collapse" data-target="#Reportes" class="collapsed PesTerUl"><a href="#"><img class="icono-submenu" src="~/Resources/img/iconos/rombo2.png" /> Reportes</a><span class="arrow"></span></li>
                                 <ul class="sub-menu collapse prop" id="Reportes">
                                     <li id="ReportesLi" class=""><a href="@Url.Action("Index","Reportes")"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Reporte Casos Ganados</a></li>
+                                    <li id="ReportesLi" class=""><a target="_blank" href="@urlReporteCuadroComisiones"><img class="icono-submenu" src="~/Resources/img/iconos/rombo1.png" /> Reporte Cuadro de Comisiones</a></li>
                                 </ul>
                             }
                             @if (identity.SolicitudCotIndex)

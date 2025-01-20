@@ -120,6 +120,7 @@ namespace Estudio.Repository
         public const string usp_Sel_RRPP_BRD = "usp_Sel_RRPP_BRD";
         public const string usp_Sel_FM_BRD = "usp_Sel_FM_BRD";
         public const string usp_Sel_SOAT_BRD = "usp_Sel_SOAT_BRD";
+        public const string usp_Sel_Cuadro_Comisiones = "usp_Sel_Cuadro_Comisiones";
 
     }
 }

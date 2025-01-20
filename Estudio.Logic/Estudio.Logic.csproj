@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarteraClientesMktLogic.cs" />
+    <Compile Include="CuadroComisiones.cs" />
     <Compile Include="VivirPlusClientesLogic.cs" />
     <Compile Include="ActualizaInfOfiLogic.cs" />
     <Compile Include="BeneficiariosLogic.cs" />
