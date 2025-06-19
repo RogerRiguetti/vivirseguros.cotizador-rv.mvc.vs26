@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using System.Reflection;
-using Estudio.Helpers;
 
 namespace Estudio.Logic
 {

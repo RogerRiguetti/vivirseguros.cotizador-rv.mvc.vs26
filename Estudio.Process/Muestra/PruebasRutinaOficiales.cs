@@ -1285,7 +1285,13 @@ namespace Estudio.Process.Muestra
 
                             if (rutina.PRC_TASAVTA < 0.5)
                             {
-                                rutina.PRC_TASAVTA = 0.5;
+                                //rutina.PRC_TASAVTA = 0.5;
+                                rutina.FecCal = FecCal;
+                                rutina.Cod_Rechazo = "999";
+                                rutina.Mensaje = "No se cotiza por tasa Negativa";
+                                rutina.NUM_COTESTUDIO = operacion;
+                                rutina.NUM_CORRELATIVO = correlativo;
+                                rutina.INDFILTROCOTIZA = "N";
                             }
                             
                             if ((tasaVtaAnterior >= rutina.PRC_TASAVTA || mtopensis >= rutina.MTO_PENSION) && casoMej == "mejoras" )

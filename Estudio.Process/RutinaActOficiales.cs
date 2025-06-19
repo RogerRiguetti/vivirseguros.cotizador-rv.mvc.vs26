@@ -213,7 +213,7 @@ namespace Estudio.Process
                 Fintab = item.FinTab;
                 Nben = ModelBen.Count - 1;
                 Cober = item.Tippen;  //cober
-                TipPen = item.Tippen;  //TipoPension
+                TipPen = item.Tippen; //TipoPension
                 TipRen = item.TipRen; //Indi
                 TipMod = item.TipMod; //alt
                 Mesgar = item.MesGar;

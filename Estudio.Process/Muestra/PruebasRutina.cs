@@ -286,7 +286,10 @@ namespace Estudio.Process.Muestra
                     RActuarial = new RutinaActOficiales();
                     rutina = RActuarial.RutinaPension(item, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, "E",0, "", null);
 
-                    ResultadoCot.Add(rutina);
+                    if (rutina.PRC_TASAVTA > 0)
+                    {
+                        ResultadoCot.Add(rutina);
+                    }
 
                     Console.WriteLine("Memory used before collection:       {0:N0}",
                             GC.GetTotalMemory(false));
