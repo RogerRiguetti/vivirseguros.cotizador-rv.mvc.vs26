@@ -162,6 +162,9 @@ namespace Estudio.Repository.Core.Domain
         public double pensionSis { get; set; }
         public double tasaSis { get; set; }
 
+        //RRR - 08/09/2025
+        public int SISVSok { get; set; }
+
         //REPORTE DE RESUMEN
         #region Reporte de Resumen
         public int NUM_ARCH_RESUMEN { get; set; }

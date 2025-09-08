@@ -12,6 +12,7 @@ namespace Estudio.Repository.Core.Domain
         public decimal PensionSISCO { get; set; }
         public decimal TasaInteres { get; set; }
         public int Ind_SISCO { get; set; }
+        public int SISCO_VS { get; set; }
 
     }
 }

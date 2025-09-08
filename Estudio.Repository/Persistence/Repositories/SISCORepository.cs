@@ -23,7 +23,9 @@ namespace Estudio.Repository.Persistence.Repositories
                 {
                     SISCO_OK = x.GetInt16(0),
                     PensionSISCO = x.GetDecimal(1),
-                    TasaInteres = x.GetDecimal(2)
+                    TasaInteres = x.GetDecimal(2),
+                    SISCO_VS = x.GetInt16(3)
+
                 }).FirstOrDefault();
             }
             catch (Exception ex)
