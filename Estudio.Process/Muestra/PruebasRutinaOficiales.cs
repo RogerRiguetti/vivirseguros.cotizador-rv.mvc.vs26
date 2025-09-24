@@ -456,7 +456,7 @@ namespace Estudio.Process.Muestra
                 TablaPar.Prc_Minimo = item.Prc_Minimo;
                 TablaPar.Prc_Minimo_1 = item.Prc_Minimo_1;
                 TablaPar.BanderaComision = _ExcepcionesRepository == null ? "" : "ME";
-                
+                TablaPar.ExcepcionSisco = item.Excepsiscovs;
                 ListaPar.Add(TablaPar);
 
                 ListaModalidades.Add(ListaPar);
@@ -615,14 +615,15 @@ namespace Estudio.Process.Muestra
             List<Task> tareas = new List<Task>();
             foreach (var item in ListaModalidades)
             {
-                string caso = "";
+                string caso = item[0].ExcepcionSisco;
                 double nuevaCO = 0;
                 double ComisionInicial = 0;
                 if (_ExcepcionesRepository != null)
                 {
                    caso = _ExcepcionesRepository.caso;
-                    nuevaCO = _ExcepcionesRepository.nuevaCO;
+                   nuevaCO = _ExcepcionesRepository.nuevaCO;
                 }
+                
                 var task = ResultadoCotMetodo(item, ListaBen, ListaTas, ListaTM, ListaTA, 
                                             ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, 
                                             ListaCurvaTasas, FecCal, caso, TirIni, nuevaCO, NumArch, item[0].CodMon, item[0].TipRea, item[0].ComisionInicial, asesor, bandera);
@@ -653,6 +654,7 @@ namespace Estudio.Process.Muestra
             {
                 RutinaActOficiales RActuarial = new RutinaActOficiales();
                 RutinaActMej RActuarialMej = new RutinaActMej();
+                RutinaActSiscoVS RutinaActSiscoVS = new RutinaActSiscoVS();
                 beResultados rutina = new beResultados();
                 var operacion = ListaModalidades[0].NumCot;
                 var correlativo = Convert.ToInt32(ListaModalidades[0].NumCor);
@@ -1199,7 +1201,7 @@ namespace Estudio.Process.Muestra
                                 strCobCon = x.GetString(3),
                                 tasaSis = (double)x.GetDecimal(4),
                                 strMod = x.GetString(5),
-                                SISVSok = x.GetInt32(6)
+                                SISVSok = x.GetInt32(1)
                             }).ToList();
                             
                             int valsisco = sis[0].Ind_Sis;
@@ -1213,89 +1215,100 @@ namespace Estudio.Process.Muestra
                             {
                                 if(valsiscoVS == 1)
                                 {
-                                    rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 5, mtopensis);
-                                    rutina.MTO_PENSION = mtopensis;
-                                    if (rutina.PRC_TASAVTA == 5)
-                                    {
-                                        rutina.PRC_TASAVTA = 0.5;
-                                    }
+                                    rutina = RutinaActSiscoVS.RutinaPension_SiscoVS(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, tasaVtaAnterior, mtopensis);
+                                    //rutina.MTO_PENSION = mtopensis;
+                                    //if (rutina.PRC_TASAVTA == 5)
+                                    //{
+                                    //    rutina.PRC_TASAVTA = 0.5;
+                                    //}
                                     Console.WriteLine("Memory used before collection:       {0:N0}",
                                     GC.GetTotalMemory(true));
                                 }
                                 else
                                 {
-                                    var listBeneficiarios = _calculoCotizacionRepository.getBeneficiariosRutina(Convert.ToInt32(rutina.NUM_COTESTUDIO));
-                                    double suma = 0;
-                                    double pensionrutina = rutina.MTO_PENSION;
-                                    switch (tippension)
-                                    {
-                                        case "08":
-                                            for (int i = 0; i < listBeneficiarios.Count; i++)
-                                            {
-
-                                                if (listBeneficiarios[i].Num_Corr == rutina.NUM_CORRELATIVO && listBeneficiarios[i].Num_Operacion == Convert.ToInt32(rutina.NUM_COTESTUDIO))
-                                                {
-                                                    suma = suma + pensionrutina * Convert.ToDouble((listBeneficiarios[i].prc_Pension / 100));
-                                                    pensionrutina = suma;
-                                                }
-                                            }
-                                            break;
-                                        //Problema de sisco si una cotizacion de invalidez sisco esta saliendo mal por el tema de los % de pension 50% y 70%
-                                        case "07":
-                                            if (cobertura == "S")
-                                                pensionrutina = (Convert.ToDouble(pensionrutina) * (0.5));
-                                            else
-                                                pensionrutina = Convert.ToDouble(pensionrutina);
-                                            break;
-                                        case "06":
-                                            if (cobertura == "S")
-                                                pensionrutina = (Convert.ToDouble(pensionrutina) * (0.7));
-                                            else
-                                                pensionrutina = Convert.ToDouble(pensionrutina);
-                                            break;
-                                        case "05":
-                                            pensionrutina = Convert.ToDouble(pensionrutina);
-                                            break;
-                                        case "04":
-                                            pensionrutina = Convert.ToDouble(pensionrutina);
-                                            break;
-                                    }
-
-                                    if (mtopensis > pensionrutina)
-                                    {
-                                        if (codMoneda == "NS" && tiporeaj == 1)
+                                    rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 5, mtopensis);
+                                    rutina.MTO_PENSION = mtopensis;
+                                    //if (rutina.PRC_TASAVTA == 5)
+                                    //{
+                                    //    rutina.PRC_TASAVTA = 0.5;
+                                    //}
+                                    Console.WriteLine("Memory used before collection:       {0:N0}",
+                                    GC.GetTotalMemory(true));
+                                }
+                            }
+                            else
+                            {
+                                var listBeneficiarios = _calculoCotizacionRepository.getBeneficiariosRutina(Convert.ToInt32(rutina.NUM_COTESTUDIO));
+                                double suma = 0;
+                                double pensionrutina = rutina.MTO_PENSION;
+                                switch (tippension)
+                                {
+                                    case "08":
+                                        for (int i = 0; i < listBeneficiarios.Count; i++)
                                         {
-                                            rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 5, mtopensis);
-                                            rutina.MTO_PENSION = mtopensis;
-                                            if (rutina.PRC_TASAVTA == 5)
+
+                                            if (listBeneficiarios[i].Num_Corr == rutina.NUM_CORRELATIVO && listBeneficiarios[i].Num_Operacion == Convert.ToInt32(rutina.NUM_COTESTUDIO))
                                             {
-                                                rutina.PRC_TASAVTA = 0.5;
+                                                suma = suma + pensionrutina * Convert.ToDouble((listBeneficiarios[i].prc_Pension / 100));
+                                                pensionrutina = suma;
                                             }
-                                            Console.WriteLine("Memory used before collection:       {0:N0}",
-                                            GC.GetTotalMemory(true));
                                         }
-                                        else if (codMoneda == "NS" && tiporeaj == 2)
-                                        {
-                                            rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 10, mtopensis);
-                                            rutina.MTO_PENSION = mtopensis;
-                                            if (rutina.PRC_TASAVTA == 10)
-                                            {
-                                                rutina.PRC_TASAVTA = 0.5;
-                                            }
-                                            Console.WriteLine("Memory used before collection:       {0:N0}",
-                                            GC.GetTotalMemory(true));
-                                        }
+                                        break;
+                                    //Problema de sisco si una cotizacion de invalidez sisco esta saliendo mal por el tema de los % de pension 50% y 70%
+                                    case "07":
+                                        if (cobertura == "S")
+                                            pensionrutina = (Convert.ToDouble(pensionrutina) * (0.5));
                                         else
+                                            pensionrutina = Convert.ToDouble(pensionrutina);
+                                        break;
+                                    case "06":
+                                        if (cobertura == "S")
+                                            pensionrutina = (Convert.ToDouble(pensionrutina) * (0.7));
+                                        else
+                                            pensionrutina = Convert.ToDouble(pensionrutina);
+                                        break;
+                                    case "05":
+                                        pensionrutina = Convert.ToDouble(pensionrutina);
+                                        break;
+                                    case "04":
+                                        pensionrutina = Convert.ToDouble(pensionrutina);
+                                        break;
+                                }
+
+                                if (mtopensis > pensionrutina)
+                                {
+                                    if (codMoneda == "NS" && tiporeaj == 1)
+                                    {
+                                        rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 5, mtopensis);
+                                        rutina.MTO_PENSION = mtopensis;
+                                        if (rutina.PRC_TASAVTA == 5)
                                         {
-                                            rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 7, mtopensis);
-                                            rutina.MTO_PENSION = mtopensis;
-                                            if (rutina.PRC_TASAVTA == 7)
-                                            {
-                                                rutina.PRC_TASAVTA = 0.5;
-                                            }
-                                            Console.WriteLine("Memory used before collection:       {0:N0}",
-                                            GC.GetTotalMemory(true));
+                                            rutina.PRC_TASAVTA = 0.5;
                                         }
+                                        Console.WriteLine("Memory used before collection:       {0:N0}",
+                                        GC.GetTotalMemory(true));
+                                    }
+                                    else if (codMoneda == "NS" && tiporeaj == 2)
+                                    {
+                                        rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 10, mtopensis);
+                                        rutina.MTO_PENSION = mtopensis;
+                                        if (rutina.PRC_TASAVTA == 10)
+                                        {
+                                            rutina.PRC_TASAVTA = 0.5;
+                                        }
+                                        Console.WriteLine("Memory used before collection:       {0:N0}",
+                                        GC.GetTotalMemory(true));
+                                    }
+                                    else
+                                    {
+                                        rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 7, mtopensis);
+                                        rutina.MTO_PENSION = mtopensis;
+                                        if (rutina.PRC_TASAVTA == 7)
+                                        {
+                                            rutina.PRC_TASAVTA = 0.5;
+                                        }
+                                        Console.WriteLine("Memory used before collection:       {0:N0}",
+                                        GC.GetTotalMemory(true));
                                     }
                                 }
                             }

@@ -185,6 +185,7 @@ namespace Estudio.Logic
                         rutinaOficiales.Add(await _pruebasRutinaOficiales.RutinaOficiales(informacion[i].intNumOpe, informacion[i].strNumCot, Num_Archivo, LisTabDin, LisTabMD, VarMTGS, VarAFP, VarREG, LisTabPL, ListaTA, ListaCPK, ListaRen, ListaTasProm, ListaCurvaTasas, null, "", informacion[i].idAsignado));
                         //_SISCORepository.ConsultaSISCO(informacion[i].intNumOpe.ToString(), informacion[i].strCussp);
                         //SISCO valSISCO = new SISCO();
+
                         //valSISCO = _SISCORepository.ConsultaSISCO(informacion[i].intNumOpe.ToString(), informacion[i].strCussp);
                         //CotSISCO.Add(valSISCO);
                         

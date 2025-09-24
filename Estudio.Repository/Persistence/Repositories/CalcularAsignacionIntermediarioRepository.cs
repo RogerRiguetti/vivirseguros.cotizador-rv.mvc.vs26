@@ -1331,7 +1331,8 @@ namespace Estudio.Repository.Persistence.Repositories
                     Prc_Inicial_1 = x.GetDecimal(16),
                     Prc_Inicial = x.GetDecimal(17),
                     Prc_Minimo_1 = x.GetDecimal(18),
-                    Prc_Minimo = x.GetDecimal(19)
+                    Prc_Minimo = x.GetDecimal(19),
+                    Excepsiscovs = x.GetString(20)
                 }).ToList();
             }
             catch (Exception ex)

@@ -119,6 +119,7 @@ namespace Estudio.WebService
                 }
 
                 _log.Info("SE EMPEZARÁ A REALIZAR LAS VALIDACIONES ");
+                
                 var resSNC = _realizarCalculoXML.datosSiguiente(numArch);
                 if (resSNC.IsOk == false)
                 {

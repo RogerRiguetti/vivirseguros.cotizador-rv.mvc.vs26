@@ -2577,7 +2577,8 @@ namespace Estudio.Repository.Persistence.Repositories
                             {
                                 SISok = x.GetInt16(0),
                                 pensionSis = Convert.ToDouble(x.GetDecimal(1)),
-                                tasaSis = Convert.ToDouble(x.GetDecimal(2))
+                                tasaSis = Convert.ToDouble(x.GetDecimal(2)),
+                                SISVSok = x.GetInt16(3)
                             }).FirstOrDefault();
 
                             _log.Info("Datos SISCO " + dato);
@@ -2586,8 +2587,16 @@ namespace Estudio.Repository.Persistence.Repositories
                             {
                                 if (dato.SISok == 0)
                                 {
-                                    querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
-                                        ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                    if(dato.SISVSok == 0)
+                                    {
+                                        querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                                    ", IND_SISCO = 1, IND_FILTROCOTIZA = 'N', COD_RECHAZO=902, PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                    }
+                                    else
+                                    {
+                                        querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                                    ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                    }
                                 }
                                 else
                                 {

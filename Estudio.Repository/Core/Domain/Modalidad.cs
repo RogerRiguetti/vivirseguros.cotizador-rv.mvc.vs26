@@ -40,5 +40,6 @@ namespace Estudio.Repository.Core.Domain
         public decimal Prc_Inicial { get; set; }
         public decimal Prc_Minimo_1 { get; set; }
         public decimal Prc_Minimo { get; set; }
+        public string Excepsiscovs { get; set; }
     }
 }
