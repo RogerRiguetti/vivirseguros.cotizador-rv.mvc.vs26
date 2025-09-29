@@ -1211,23 +1211,12 @@ namespace Estudio.Process.Muestra
                             string cobertura = sis[0].strCobCon;
                             double tasaVtaAnterior = sis[0].tasaSis;
 
-                            if (valsisco == 1)
+                            if (valsisco == 0)
                             {
-                                if(valsiscoVS == 1)
+                                if (valsiscoVS == 1)
                                 {
-                                    rutina = RutinaActSiscoVS.RutinaPension_SiscoVS(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, tasaVtaAnterior, mtopensis);
+                                    rutina = RutinaActSiscoVS.RutinaPension_SiscoVS(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, tasaVtaAnterior, 0);
                                     //rutina.MTO_PENSION = mtopensis;
-                                    //if (rutina.PRC_TASAVTA == 5)
-                                    //{
-                                    //    rutina.PRC_TASAVTA = 0.5;
-                                    //}
-                                    Console.WriteLine("Memory used before collection:       {0:N0}",
-                                    GC.GetTotalMemory(true));
-                                }
-                                else
-                                {
-                                    rutina = RActuarialMej.RutinaPension_mej(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, 5, mtopensis);
-                                    rutina.MTO_PENSION = mtopensis;
                                     //if (rutina.PRC_TASAVTA == 5)
                                     //{
                                     //    rutina.PRC_TASAVTA = 0.5;

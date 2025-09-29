@@ -531,7 +531,7 @@ namespace Estudio.Logic
 
                 _log.Info("Comenzara la validacion Sicotiza no cotiza");
                 string querySN = _SolicitudCotizacionesRepository.validacionesSiNoCotiza(numArch);
-                _log.Info("Se ejecutara el query " +querySN);
+                _log.Info("Se ejecutara el query " + querySN);
                 if (querySN != "")
                 {
                     _SolicitudCotizacionesRepository.EjecutarScript(querySN);

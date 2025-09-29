@@ -2594,13 +2594,14 @@ namespace Estudio.Repository.Persistence.Repositories
                                 {
                                     if (dato.SISVSok == 1)
                                     {
+                                        //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                         querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
-                                                    ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                                    ", IND_SISCO = 0, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                     }
                                     else
                                     {
                                         querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
-                                                    ", IND_SISCO = 1, IND_FILTROCOTIZA = 'N', COD_RECHAZO=902, PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                                    ", IND_SISCO = 0, IND_FILTROCOTIZA = 'N', COD_RECHAZO=902, PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                     }
                                     //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                 }
