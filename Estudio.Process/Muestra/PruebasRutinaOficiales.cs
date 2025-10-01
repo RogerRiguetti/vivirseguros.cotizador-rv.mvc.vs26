@@ -1185,7 +1185,11 @@ namespace Estudio.Process.Muestra
         
         #endregion
                             string querySisco = "";
-                            querySisco = "SELECT dc.MTO_PENSION, dc.ind_sisco, c.cod_tippension, c.ind_cob, dc.prc_tasavta, isnull(CODIGO.COD_SCOMP, ' '), isnull(SBS.SISCO_VS, 0) SISCO_VS FROM PT_TMAE_DETCOTIZACION DC" +
+                            querySisco = "SELECT dc.MTO_PENSION, dc.ind_sisco, c.cod_tippension, c.ind_cob, dc.prc_tasavta, isnull(CODIGO.COD_SCOMP, ' ')," +
+                            //RRR 30092025
+                            " case when isnull(convert(int,SBS.SISCO_VS), 0) = 1 and DC.NUM_MESDIF=0 and DC.NUM_MESGAR=0 then 1 else 0 end SISCO_VS" +
+                            " FROM PT_TMAE_DETCOTIZACION DC" +
+                            //RRR 30092025
                             " JOIN PT_TMAE_COTIZACION C ON C.NUM_OPERACION = DC.NUM_OPERACION" +
                             " JOIN MA_TPAR_TABCOD CODIGO ON DC.cod_tipren = CODIGO.COD_ELEMENTO and cod_tabla = 'TR'" +
                             " JOIN VCAMARA.Negocio.SBSCotiza SBS ON DC.NUM_OPERACION=SBS.NumeroOp " +
@@ -1201,7 +1205,7 @@ namespace Estudio.Process.Muestra
                                 strCobCon = x.GetString(3),
                                 tasaSis = (double)x.GetDecimal(4),
                                 strMod = x.GetString(5),
-                                SISVSok = x.GetInt32(1)
+                                SISVSok = x.GetInt32(6)
                             }).ToList();
                             
                             int valsisco = sis[0].Ind_Sis;

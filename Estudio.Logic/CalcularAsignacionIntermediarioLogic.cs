@@ -212,33 +212,33 @@ namespace Estudio.Logic
                             if (producto.Cod_Rechazo == "0")
                             {
                                 query = "UPDATE PT_TMAE_DETCOTIZACION " +
-                                            "SET " +
-                                            "MTO_AJUSTEIPC = " + producto.MTO_AJUSTEIPC + ", \n" +
-                                            "MTO_CTAINDAFP = " + producto.MTO_CTAINDAFP + ", \n" +
-                                            "MTO_PENSION = " + producto.MTO_PENSION + ", \n" +
-                                            "MTO_PRIUNIDIF = " + producto.MTO_PRIUNIDIF + ", \n" +
-                                            "MTO_RENTATMPAFP = " + producto.MTO_RENTATMPAFP + ", \n" +
-                                            "MTO_RESMAT = " + producto.MTO_RESMAT + ", \n" +
-                                            "PRC_PERCON = " + producto.PRC_PERCON + ", \n" +
-                                            "PRC_TASATCE = " + producto.PRC_TASATCE + ", \n" +
-                                            "PRC_TASATIR = " + producto.PRC_TASATIR + ", \n" +
-                                            "PRC_TIRINI = " + producto.PRC_TASATIR + ", \n" +
-                                            "PRC_TASAVTA = " + producto.PRC_TASAVTA + ", \n" +
-                                            "FEC_CALCULO = '" + producto.FecCal + "', \n" +
-                                            "PRC_CORCOM = 0, \n" +
-                                            "--IND_SISCO = 0, \n" +
-                                            "--IND_FILTROCOTIZA = 'S', \n" +
-                                            "COD_ESTCOT = 'S', \n" +
-                                            "MTO_PENANUAL = " + producto.MTO_PENANUAL + ", \n " +
-                                            "MTO_PENSIONGAR = " + producto.MTO_PENSIONGAR + ", \n " +
-                                            "MTO_PRIUNISIM = " + producto.MTO_PRIUNISIM + ", \n " +
-                                            "MTO_RMGTOSEP = " + producto.MTO_RMGTOSEP + ", \n " +
-                                            "MTO_RMGTOSEPRV = " + producto.MTO_RMGTOSEPRV + ", \n	" +
-                                            "MTO_VALREAJUSTEMEN = (CASE WHEN(cod_tipreajuste = 2) THEN 0.16515813 ELSE 0 END), \n" +
-                                            "MTO_VALREAJUSTETRI = (CASE WHEN(cod_tipreajuste = 2) THEN 0.49629316 ELSE 0 END), \n" +
-                                            "MTO_VALPREPENTMP = CASE WHEN(" + producto.MTO_RENTATMPAFP + " = 0) THEN 0  \n" +
-                                            "ELSE ROUND((" + producto.MTO_CTAINDAFP + " / " + producto.MTO_RENTATMPAFP + "), 2) END \n" +
-                                            "WHERE NUM_CORRELATIVO = " + producto.NUM_CORRELATIVO + " AND NUM_OPERACION = '" + producto.NUM_COTESTUDIO + "';";
+                                        "SET " +
+                                        "MTO_AJUSTEIPC = " + producto.MTO_AJUSTEIPC + ", \n" +
+                                        "MTO_CTAINDAFP = " + producto.MTO_CTAINDAFP + ", \n" +
+                                        "MTO_PENSION = " + producto.MTO_PENSION + ", \n" +
+                                        "MTO_PRIUNIDIF = " + producto.MTO_PRIUNIDIF + ", \n" +
+                                        "MTO_RENTATMPAFP = " + producto.MTO_RENTATMPAFP + ", \n" +
+                                        "MTO_RESMAT = " + producto.MTO_RESMAT + ", \n" +
+                                        "PRC_PERCON = " + producto.PRC_PERCON + ", \n" +
+                                        "PRC_TASATCE = " + producto.PRC_TASATCE + ", \n" +
+                                        "PRC_TASATIR = " + producto.PRC_TASATIR + ", \n" +
+                                        "PRC_TIRINI = " + producto.PRC_TASATIR + ", \n" +
+                                        "PRC_TASAVTA = " + producto.PRC_TASAVTA + ", \n" +
+                                        "FEC_CALCULO = '" + producto.FecCal + "', \n" +
+                                        "PRC_CORCOM = 0, \n" +
+                                        "--IND_SISCO = 0, \n" +
+                                        "--IND_FILTROCOTIZA = 'S', \n" +
+                                        "COD_ESTCOT = 'S', \n" +
+                                        "MTO_PENANUAL = " + producto.MTO_PENANUAL + ", \n " +
+                                        "MTO_PENSIONGAR = " + producto.MTO_PENSIONGAR + ", \n " +
+                                        "MTO_PRIUNISIM = " + producto.MTO_PRIUNISIM + ", \n " +
+                                        "MTO_RMGTOSEP = " + producto.MTO_RMGTOSEP + ", \n " +
+                                        "MTO_RMGTOSEPRV = " + producto.MTO_RMGTOSEPRV + ", \n	" +
+                                        "MTO_VALREAJUSTEMEN = (CASE WHEN(cod_tipreajuste = 2) THEN 0.16515813 ELSE 0 END), \n" +
+                                        "MTO_VALREAJUSTETRI = (CASE WHEN(cod_tipreajuste = 2) THEN 0.49629316 ELSE 0 END), \n" +
+                                        "MTO_VALPREPENTMP = CASE WHEN(" + producto.MTO_RENTATMPAFP + " = 0) THEN 0  \n" +
+                                        "ELSE ROUND((" + producto.MTO_CTAINDAFP + " / " + producto.MTO_RENTATMPAFP + "), 2) END \n" +
+                                        "WHERE NUM_CORRELATIVO = " + producto.NUM_CORRELATIVO + " AND NUM_OPERACION = '" + producto.NUM_COTESTUDIO + "';";
                             }
                             else
                             {
