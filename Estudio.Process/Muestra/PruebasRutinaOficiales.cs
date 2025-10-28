@@ -1187,7 +1187,7 @@ namespace Estudio.Process.Muestra
                             string querySisco = "";
                             querySisco = "SELECT dc.MTO_PENSION, dc.ind_sisco, c.cod_tippension, c.ind_cob, dc.prc_tasavta, isnull(CODIGO.COD_SCOMP, ' ')," +
                             //RRR 30092025
-                            " case when isnull(convert(int,SBS.SISCO_VS), 0) = 1 and DC.NUM_MESDIF=0 and DC.NUM_MESGAR=0 then 1 else 0 end SISCO_VS, DC.MTO_PRIUNIMOD" +
+                            " case when isnull(convert(int,SBS.SISCO_VS), 0) = 1 and DC.NUM_MESDIF=0 and DC.NUM_MESGAR=0 then 1 else 0 end SISCO_VS, DC.MTO_PRIUNIMOD, convert(int,SBS.SISCO_OK)" +
                             " FROM PT_TMAE_DETCOTIZACION DC" +
                             //RRR 30092025
                             " JOIN PT_TMAE_COTIZACION C ON C.NUM_OPERACION = DC.NUM_OPERACION" +
@@ -1205,12 +1205,14 @@ namespace Estudio.Process.Muestra
                                 strCobCon = x.GetString(3),
                                 tasaSis = (double)x.GetDecimal(4),
                                 strMod = x.GetString(5),
-                                SISVSok = x.GetInt32(6),
-                                MtoCIc = (double)x.GetDecimal(7)
+                                SISVSvs = x.GetInt32(6),
+                                MtoCIc = (double)x.GetDecimal(7),
+                                SISVSok = x.GetInt32(8),
                             }).ToList();
                             
                             int valsisco = sis[0].Ind_Sis;
-                            int valsiscoVS = sis[0].SISVSok;
+                            int valsiscoOK = sis[0].SISVSok;
+                            int valsiscoVS = sis[0].SISVSvs;
                             double mtopensis = sis[0].pensionSis;
                             string tippension = sis[0].strTipPen;
                             string cobertura = sis[0].strCobCon;
@@ -1223,7 +1225,7 @@ namespace Estudio.Process.Muestra
                             }
                             else
                             {
-                                if (valsiscoVS == 1 && mtoCic <= 100000)
+                                if (valsiscoOK ==1 && valsiscoVS == 1 && mtoCic <= 100000)
                                 {
                                     rutina = RutinaActSiscoVS.RutinaPension_SiscoVS(ListaModalidades, ListaBen, ListaTas, ListaTM, ListaTA, ListaMor, ListaCPK, ListaRen, ListaVac, LisTabPL, ListaTasProm, ListaCurvaTasas, Convert.ToDouble(ComisionInicial), 0.00001, tasaVtaAnterior, 0);
                                     //rutina.MTO_PENSION = mtopensis;

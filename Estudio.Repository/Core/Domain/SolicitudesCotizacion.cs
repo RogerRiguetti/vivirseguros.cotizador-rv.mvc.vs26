@@ -164,6 +164,7 @@ namespace Estudio.Repository.Core.Domain
 
         //RRR - 08/09/2025
         public int SISVSok { get; set; }
+        public int SISVSvs { get; set; }
         public double MtoCIc { get; set; }
 
         //REPORTE DE RESUMEN
