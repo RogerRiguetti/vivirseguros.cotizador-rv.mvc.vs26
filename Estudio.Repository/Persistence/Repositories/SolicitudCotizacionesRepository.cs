@@ -2578,7 +2578,8 @@ namespace Estudio.Repository.Persistence.Repositories
                                 SISok = x.GetInt16(0),
                                 pensionSis = Convert.ToDouble(x.GetDecimal(1)),
                                 tasaSis = Convert.ToDouble(x.GetDecimal(2)),
-                                SISVSok = x.GetInt16(3)
+                                SISVSok = x.GetInt16(3),
+                                MtoCIc = Convert.ToDouble(x.GetDecimal(4))
                             }).FirstOrDefault();
 
                             _log.Info("Datos SISCO " + dato);
@@ -2592,7 +2593,7 @@ namespace Estudio.Repository.Persistence.Repositories
                                 }
                                 else
                                 {
-                                    if (dato.SISVSok == 1)
+                                    if (dato.SISVSok == 1 && dato.MtoCIc <= 100000)
                                     {
                                         //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                         querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
@@ -2600,8 +2601,9 @@ namespace Estudio.Repository.Persistence.Repositories
                                     }
                                     else
                                     {
-                                        querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
-                                                    ", IND_SISCO = 0, IND_FILTROCOTIZA = 'N', COD_RECHAZO=902, PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                        //            ", IND_SISCO = 0, IND_FILTROCOTIZA = 'N', COD_RECHAZO=0, PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                     }
                                     //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
                                 }
