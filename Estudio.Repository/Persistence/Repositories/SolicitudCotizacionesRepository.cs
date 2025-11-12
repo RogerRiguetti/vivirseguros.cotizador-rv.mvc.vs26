@@ -2543,7 +2543,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 XmlConfigurator.Configure();
                 _log.Info("VALIDACIONES SISCO");
                 List<SolicitudesCotizacion> datos = new List<SolicitudesCotizacion>();
-                string query = "SELECT C.NUM_OPERACION, C.COD_CUSPP, DC.COD_TIPREN, DC.NUM_MESDIF, DC.NUM_MESGAR, DC.NUM_CORRELATIVO, DC.COD_TIPREAJUSTE " +
+                string query = "SELECT C.NUM_OPERACION, C.COD_CUSPP, DC.COD_TIPREN, DC.NUM_MESDIF, DC.NUM_MESGAR, DC.NUM_CORRELATIVO, DC.COD_TIPREAJUSTE, DC.COD_TIPREAJUSTE " +
                                "FROM PT_TMAE_COTIZACION C " +
                                "INNER JOIN PT_TMAE_DETCOTIZACION DC ON C.NUM_ARCHIVO = DC.NUM_ARCHIVO AND C.NUM_OPERACION = DC.NUM_OPERACION " +
                                "where C.NUM_ARCHIVO = '" + numArch + "' ";
@@ -2556,7 +2556,8 @@ namespace Estudio.Repository.Persistence.Repositories
                     intNumDif = x.GetInt32(3),
                     intNumGar = x.GetInt32(4),
                     intCor = x.GetInt32(5),
-                    strReajuste = x.GetString(6)
+                    strReajuste = x.GetString(6),
+                    codtipreajuste = x.GetString(7)
                 }).ToList();
 
                 _log.Info("Datos de la consulta" + datos.ToList());
@@ -2593,11 +2594,24 @@ namespace Estudio.Repository.Persistence.Repositories
                                 }
                                 else
                                 {
-                                    if (dato.SISVSok == 1 && dato.MtoCIc <= 100000)
+                                    if (dato.SISVSok == 1)
                                     {
-                                        //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
-                                        querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
-                                                    ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        if(datos[i].codtipreajuste == "1")
+                                        {
+                                            if(dato.MtoCIc <= 100000)
+                                            {
+                                                querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                                            ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (dato.MtoCIc <= 30000)
+                                            {
+                                                querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                                            ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                            }
+                                        }
                                     }
                                     else
                                     {

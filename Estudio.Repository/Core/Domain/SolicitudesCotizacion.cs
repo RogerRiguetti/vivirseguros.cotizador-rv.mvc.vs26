@@ -166,6 +166,7 @@ namespace Estudio.Repository.Core.Domain
         public int SISVSok { get; set; }
         public int SISVSvs { get; set; }
         public double MtoCIc { get; set; }
+        public string codtipreajuste { get; set; }
 
         //REPORTE DE RESUMEN
         #region Reporte de Resumen
