@@ -211,6 +211,10 @@ namespace Estudio.Logic
                 ListaCurvaTasas = _rutinaOficialesRepository.ConsultaCurvaTasas("");
 
                 datos.asesor = _ExcepcionesRepository.ConsultaAsesor(datos.numOperacion.ToString());
+                if (datos.asesor == "")
+                {
+                    datos.asesor = "0";
+                }
 
                 Console.WriteLine("Memory used before collection:       {0:N0}",
                 GC.GetTotalMemory(false));

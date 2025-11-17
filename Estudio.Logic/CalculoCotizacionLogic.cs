@@ -108,7 +108,8 @@ namespace Estudio.Logic
                                 }
                                 if (valSISCO != null)
                                 {
-                                    if (ListaRep[b].Ind_SISCO == 1)
+                                    if (valSISCO.SISCO_OK == 0)
+                                    //if (ListaRep[b].Ind_SISCO == 1)
                                     {
                                         montoPenSISCO = valSISCO.PensionSISCO.ToString();
                                         montoTasV = valSISCO.TasaInteres.ToString();
@@ -126,10 +127,12 @@ namespace Estudio.Logic
                                             SNCotiza = "S";
                                         }
                                     }
-
                                     else
                                         {
+                                            if (valSISCO.SISCO_VS == 1)
+                                            {
                                                 ListaRep[b].Mto_Pension = ListaRep[b].Mto_Pension;
+                                            }
                                         }
                                     }
                                     else {

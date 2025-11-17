@@ -2579,7 +2579,8 @@ namespace Estudio.Repository.Persistence.Repositories
                                 pensionSis = Convert.ToDouble(x.GetDecimal(1)),
                                 tasaSis = Convert.ToDouble(x.GetDecimal(2)),
                                 SISVSok = x.GetInt16(3),
-                                MtoCIc = Convert.ToDouble(x.GetDecimal(4))
+                                MtoCIc = Convert.ToDouble(x.GetDecimal(4)),
+                                TipoMoneda = x.GetString(5),
                             }).FirstOrDefault();
 
                             _log.Info("Datos SISCO " + dato);
@@ -2593,11 +2594,22 @@ namespace Estudio.Repository.Persistence.Repositories
                                 }
                                 else
                                 {
-                                    if (dato.SISVSok == 1 && dato.MtoCIc <= 100000)
+                                    if (dato.SISVSok == 1)
                                     {
-                                        //querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
-                                        querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
-                                                    ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        if (dato.TipoMoneda.Trim() == "Soles Indexados" && dato.MtoCIc <= 100000)
+                                        {
+                                            querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                                        ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        } 
+                                        else if (dato.TipoMoneda.Trim() == "Soles Ajustados" && dato.TipoMoneda.Trim() == "Soles Ajustados" && dato.MtoCIc <= 30000)
+                                        {
+                                            querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET MTO_PENSION = " + dato.pensionSis.ToString("0.00") +
+                                                        ", IND_SISCO = 1, IND_FILTROCOTIZA = 'S', PRC_TASAVTA = " + dato.tasaSis.ToString("0.00") + " WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        }
+                                        else
+                                        {
+                                            querys += "\nUPDATE PT_TMAE_DETCOTIZACION SET IND_SISCO = 0 WHERE NUM_ARCHIVO = " + numArch + " AND NUM_OPERACION = " + datos[i].intNumOpe + " AND NUM_CORRELATIVO = " + datos[i].intCor;
+                                        }
                                     }
                                     else
                                     {

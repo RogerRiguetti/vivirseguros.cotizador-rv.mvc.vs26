@@ -167,6 +167,8 @@ namespace Estudio.Repository.Core.Domain
         public int SISVSvs { get; set; }
         public double MtoCIc { get; set; }
 
+        public string TipoMoneda { get; set; }
+
         //REPORTE DE RESUMEN
         #region Reporte de Resumen
         public int NUM_ARCH_RESUMEN { get; set; }
