@@ -2543,7 +2543,7 @@ namespace Estudio.Repository.Persistence.Repositories
                 XmlConfigurator.Configure();
                 _log.Info("VALIDACIONES SISCO");
                 List<SolicitudesCotizacion> datos = new List<SolicitudesCotizacion>();
-                string query = "SELECT C.NUM_OPERACION, C.COD_CUSPP, DC.COD_TIPREN, DC.NUM_MESDIF, DC.NUM_MESGAR, DC.NUM_CORRELATIVO, DC.COD_TIPREAJUSTE " +
+                string query = "SELECT C.NUM_OPERACION, C.COD_CUSPP, DC.COD_TIPREN, DC.NUM_MESDIF, DC.NUM_MESGAR, DC.NUM_CORRELATIVO, DC.COD_TIPREAJUSTE, DC.COD_TIPREAJUSTE " +
                                "FROM PT_TMAE_COTIZACION C " +
                                "INNER JOIN PT_TMAE_DETCOTIZACION DC ON C.NUM_ARCHIVO = DC.NUM_ARCHIVO AND C.NUM_OPERACION = DC.NUM_OPERACION " +
                                "where C.NUM_ARCHIVO = '" + numArch + "' ";
@@ -2556,7 +2556,8 @@ namespace Estudio.Repository.Persistence.Repositories
                     intNumDif = x.GetInt32(3),
                     intNumGar = x.GetInt32(4),
                     intCor = x.GetInt32(5),
-                    strReajuste = x.GetString(6)
+                    strReajuste = x.GetString(6),
+                    codtipreajuste = x.GetString(7)
                 }).ToList();
 
                 _log.Info("Datos de la consulta" + datos.ToList());
