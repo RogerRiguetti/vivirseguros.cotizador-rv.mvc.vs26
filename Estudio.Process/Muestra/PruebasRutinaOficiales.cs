@@ -1314,7 +1314,7 @@ namespace Estudio.Process.Muestra
                                 }
                             }
 
-                            if (rutina.PRC_TASAVTA < 0.5)
+                            if (rutina.PRC_TASAVTA <= 0)
                             {
                                 //rutina.PRC_TASAVTA = 0.5;
                                 rutina.FecCal = FecCal;
