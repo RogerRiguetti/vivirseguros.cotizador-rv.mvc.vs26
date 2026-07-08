@@ -14,16 +14,16 @@
 #pragma warning disable 1591
 
 namespace Estudio.WebService.webPrueba {
-    using System;
-    using System.Web.Services;
     using System.Diagnostics;
-    using System.Web.Services.Protocols;
+    using System;
     using System.Xml.Serialization;
     using System.ComponentModel;
+    using System.Web.Services.Protocols;
+    using System.Web.Services;
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1590.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="AdmIntegracionCotizadorSoap", Namespace="http://tempuri.org/")]
@@ -37,7 +37,7 @@ namespace Estudio.WebService.webPrueba {
         
         /// <remarks/>
         public AdmIntegracionCotizador() {
-            this.Url = global::Estudio.WebService.Properties.Settings.Default.Estudio_WebService_webPrueba_AdmIntegracionCotizador;
+            this.Url = "http://192.168.0.149:82/AdmIntegracionCotizador.asmx";
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -85,17 +85,7 @@ namespace Estudio.WebService.webPrueba {
                         nombreArchivoXML});
             return ((string)(results[0]));
         }
-
-        /// <remarks/>
-        //[System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/calculoMejoras", RequestNamespace = "http://tempuri.org/", ResponseNamespace = "http://tempuri.org/", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        //public string CalculoMejoras(object contenidoArchivoXML/*, string nombreArchivoXML*/)
-        //{
-        //    object[] results = this.Invoke("CalculoMejoras", new object[] {
-        //                contenidoArchivoXML
-        //                /*nombreArchivoXML*/});
-        //    return ((string)(results[0]));
-        //}
-
+        
         /// <remarks/>
         public void CargarCotizacionesOficialesAsync(string contenidoArchivoXML, string nombreArchivoXML) {
             this.CargarCotizacionesOficialesAsync(contenidoArchivoXML, nombreArchivoXML, null);
@@ -169,11 +159,11 @@ namespace Estudio.WebService.webPrueba {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1590.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     public delegate void CargarCotizacionesOficialesCompletedEventHandler(object sender, CargarCotizacionesOficialesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1590.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CargarCotizacionesOficialesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -195,11 +185,11 @@ namespace Estudio.WebService.webPrueba {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1590.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     public delegate void ActualizarProductoCompletedEventHandler(object sender, ActualizarProductoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1590.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ActualizarProductoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

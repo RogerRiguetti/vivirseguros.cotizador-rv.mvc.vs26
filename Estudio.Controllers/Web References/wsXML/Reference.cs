@@ -14,16 +14,16 @@
 #pragma warning disable 1591
 
 namespace Estudio.Controllers.wsXML {
-    using System;
-    using System.Web.Services;
     using System.Diagnostics;
-    using System.Web.Services.Protocols;
+    using System;
     using System.Xml.Serialization;
     using System.ComponentModel;
+    using System.Web.Services.Protocols;
+    using System.Web.Services;
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="AdmIntegracionCotizadorSoap", Namespace="http://tempuri.org/")]
@@ -37,7 +37,7 @@ namespace Estudio.Controllers.wsXML {
         
         /// <remarks/>
         public AdmIntegracionCotizador() {
-            this.Url = global::Estudio.Controllers.Properties.Settings.Default.Estudio_Controllers_wsXML_AdmIntegracionCotizador;
+            this.Url = "http://192.168.0.149:82/AdmIntegracionCotizador.asmx";
             if ((this.IsLocalFileSystemWebService(this.Url) == true)) {
                 this.UseDefaultCredentials = true;
                 this.useDefaultCredentialsSetExplicitly = false;
@@ -159,11 +159,11 @@ namespace Estudio.Controllers.wsXML {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     public delegate void CargarCotizacionesOficialesCompletedEventHandler(object sender, CargarCotizacionesOficialesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CargarCotizacionesOficialesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -185,11 +185,11 @@ namespace Estudio.Controllers.wsXML {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     public delegate void ActualizarProductoCompletedEventHandler(object sender, ActualizarProductoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9032.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.9221.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ActualizarProductoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

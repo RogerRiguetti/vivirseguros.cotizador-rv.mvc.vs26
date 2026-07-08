@@ -75,8 +75,8 @@ namespace Estudio.Controllers
         {
             //XmlConfigurator.Configure();
 
-            Exceptiones mod = new Exceptiones();
             JavaScriptSerializer ser = new JavaScriptSerializer();
+            Exceptiones mod = new Exceptiones();
             Response datos = new Response();
             try
             {
