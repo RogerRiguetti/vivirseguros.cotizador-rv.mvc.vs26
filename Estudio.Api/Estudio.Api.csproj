@@ -339,6 +339,10 @@
       <Project>{b5039039-7b68-478b-ba08-862ae6f7d655}</Project>
       <Name>Estudio.Controllers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Estudio.Logic\Estudio.Logic.csproj">
+      <Project>{126b47d6-d44f-4276-854c-c2fdc190308b}</Project>
+      <Name>Estudio.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Estudio.Process\Estudio.Process.csproj">
       <Project>{3bd4f8ca-d128-455d-872f-3853c5cf6c79}</Project>
       <Name>Estudio.Process</Name>
@@ -351,7 +355,6 @@
       <Project>{2699dce8-ea19-4141-97c5-a54feab2cf25}</Project>
       <Name>Estudio.WebService</Name>
     </ProjectReference>
-	<ProjectReference Include="..\Estudio.Logic\Estudio.Logic.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
