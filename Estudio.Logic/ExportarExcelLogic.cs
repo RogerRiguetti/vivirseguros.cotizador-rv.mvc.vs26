@@ -54,9 +54,11 @@ namespace Estudio.Logic
             NPOI.HSSF.UserModel.HSSFSheet hoja = (NPOI.HSSF.UserModel.HSSFSheet)documentoExcel.CreateSheet(Sistema);
 
             // estilos de los textos
-            NPOI.SS.UserModel.IFont letraNegritaBlanco = documentoExcel.CreateFont();
+            // CreateFont devuelve una implementación concreta (HSSFFont) que expone Boldweight.
+            NPOI.HSSF.UserModel.HSSFFont letraNegritaBlanco = (NPOI.HSSF.UserModel.HSSFFont)documentoExcel.CreateFont();
             letraNegritaBlanco.Color = NPOI.HSSF.Util.HSSFColor.White.Index;
-            letraNegritaBlanco.Boldweight = (short)NPOI.SS.UserModel.FontBoldWeight.Bold;
+            // En versiones recientes de NPOI se usa la propiedad IsBold
+            letraNegritaBlanco.IsBold = true;
 
             // estilos de las celdas
             //NPOI.HSSF.UserModel.HSSFCellStyle celdaTituloAzul = (NPOI.HSSF.UserModel.HSSFCellStyle)documentoExcel.CreateCellStyle();
